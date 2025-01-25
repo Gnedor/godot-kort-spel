@@ -36,7 +36,6 @@ signal end_round
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("gaming")
 	round_label.text = "Round: " + str(Global.round)
 	money_label.text = str(Global.total_money) + "$"
 	hand_info.text = ("")
