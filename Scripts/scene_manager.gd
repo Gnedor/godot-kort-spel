@@ -1,0 +1,107 @@
+extends Node2D
+
+@onready var sten: Node2D = $"../sten"
+@onready var deck: Node2D = $"../TroopDeck"
+@onready var discard_pile: Node2D = $"../DiscardPile"
+@onready var ui: Node2D = $"../UI"
+@onready var card_slots: Node2D = $"../CardSlots"
+@onready var card_manager: Node2D = $"../CardManager"
+@onready var battle_manager: Node2D = $"../BattleManager"
+@onready var timer_1: Timer = $Timer1
+@onready var timer_2: Timer = $Timer2
+@onready var spell_deck: Node2D = $"../SpellDeck"
+@onready var round_box: ColorRect = $"../Round Box"
+@onready var money_box: ColorRect = $"../Round Box/Money Box"
+@onready var tiles_folder: Node2D = $"../TilesFolder"
+
+var battle_scene_up
+var battle_scene_down
+
+var cards_to_be_removed
+
+func _ready() -> void:
+	battle_manager.end_round.connect(remove_battle_scene)
+	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder]
+	battle_scene_down = [deck, spell_deck, discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter")]
+	
+	move_battle_ui_out()
+	await add_battle_ui()
+	
+	deck.add_cards_on_start()
+	tiles_folder.add_tiles_on_start()
+	call_deferred("after_ready")
+	
+func remove_battle_scene():
+	# Sequentially animate each card
+	if card_manager.played_cards:
+		timer_1.start()
+	elif card_manager.cards_in_hand:
+		timer_2.start()
+	else:
+		remove_battle_ui()
+		
+func _on_timer_1_timeout() -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property(card_manager.played_cards[0], "position", Vector2(2200, 300), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	deck.cards_in_troop_deck.append(card_manager.played_cards[0])
+	card_manager.played_cards.pop_front()
+	if card_manager.played_cards:
+		timer_1.start()
+	else:
+		timer_1.stop()
+		if card_manager.cards_in_hand:
+			timer_2.start()
+		else:
+			remove_battle_ui()
+		
+func _on_timer_2_timeout() -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property(card_manager.cards_in_hand[0], "position", Vector2(2200, 500), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	deck.cards_in_troop_deck.append(card_manager.cards_in_hand[0])
+	card_manager.cards_in_hand.pop_front()
+	if card_manager.cards_in_hand:
+		timer_2.start()
+	else:
+		timer_2.stop()
+		remove_battle_ui()
+		
+func remove_battle_ui():
+	var tween = get_tree().create_tween()
+	
+	for node in battle_scene_up:
+		tween.parallel().tween_property(node, "position:y", node.position.y - 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
+	for node in battle_scene_down:
+		tween.parallel().tween_property(node, "position:y", node.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		
+	await tween.finished
+	for card in card_manager.discarded_cards:
+		deck.cards_in_troop_deck.append(card)
+	Global.stored_cards.clear()
+	Global.store_card_data(deck.cards_in_troop_deck)
+	Global.store_card_data(deck.cards_in_spell_deck)
+	call_deferred("_change_scene")
+	
+func add_battle_ui():
+	var tween = get_tree().create_tween()
+	
+	for node in battle_scene_up:
+		tween.parallel().tween_property(node, "position:y", node.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
+	for node in battle_scene_down:
+		tween.parallel().tween_property(node, "position:y", node.position.y - 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		
+	await tween.finished
+	
+func move_battle_ui_out():
+	for node in battle_scene_up:
+		node.position.y -= 1000
+	for node in battle_scene_down:
+		node.position.y += 1000
+		
+func after_ready():
+	card_manager.draw_cards(3, 2)
+	
+func _change_scene():
+	get_tree().change_scene_to_file("res://Scenes/end_of_round_screen.tscn")
+	
