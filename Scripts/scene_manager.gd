@@ -36,12 +36,6 @@ func _ready() -> void:
 func remove_battle_scene():
 	# Sequentially animate each card
 	timer.start()
-	#if card_manager.played_cards:
-		#timer_1.start()
-	#elif card_manager.cards_in_hand:
-		#timer_2.start()
-	#else:
-		#remove_battle_ui()
 		
 func _on_timer_timeout() -> void:
 	if card_manager.played_cards and step == 1:
@@ -104,6 +98,7 @@ func remove_battle_ui():
 		deck.cards_in_troop_deck.append(card)
 	Global.stored_cards.clear()
 	Global.store_card_data(deck.cards_in_troop_deck)
+	Global.stored_tiles.clear()
 	Global.store_card_data(deck.cards_in_spell_deck)
 	Global.store_tile_data(tiles_folder.owned_tiles)
 	call_deferred("_change_scene")
