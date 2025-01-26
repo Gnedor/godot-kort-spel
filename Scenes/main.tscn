@@ -32,11 +32,12 @@ script = ExtResource("2_1l3wp")
 [node name="SceneManager" type="Node2D" parent="."]
 script = ExtResource("2_eoi1u")
 
-[node name="Timer1" type="Timer" parent="SceneManager"]
+[node name="Timer" type="Timer" parent="SceneManager"]
 wait_time = 0.05
+one_shot = true
 
-[node name="Timer2" type="Timer" parent="SceneManager"]
-wait_time = 0.05
+[node name="PauseTimer" type="Timer" parent="SceneManager"]
+one_shot = true
 
 [node name="BattleManager" type="Node2D" parent="."]
 script = ExtResource("3_uetve")
@@ -297,8 +298,7 @@ metadata/_edit_use_anchors_ = true
 [node name="TilesFolder" parent="." instance=ExtResource("16_lcit8")]
 position = Vector2(960, -172)
 
-[connection signal="timeout" from="SceneManager/Timer1" to="SceneManager" method="_on_timer_1_timeout"]
-[connection signal="timeout" from="SceneManager/Timer2" to="SceneManager" method="_on_timer_2_timeout"]
+[connection signal="timeout" from="SceneManager/Timer" to="SceneManager" method="_on_timer_timeout"]
 [connection signal="button_down" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_button_down"]
 [connection signal="button_up" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_button_up"]
 [connection signal="pressed" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_pressed"]

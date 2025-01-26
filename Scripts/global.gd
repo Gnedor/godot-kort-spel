@@ -19,7 +19,7 @@ func store_card_data(cards : Array):
 		}
 		stored_cards.append(card_data)
 
-func store_environment_data(tiles : Array):
+func store_tile_data(tiles : Array):
 	for tile in tiles:
 		stored_tiles.append(tile.tile_name)
 	
