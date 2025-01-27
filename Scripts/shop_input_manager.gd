@@ -3,8 +3,10 @@ extends Node2D
 @onready var shop: Node2D = $".."
 
 var hovered_card : Node2D
+var hovered_tile : Node2D
 
 const CARD_MASK = 2
+const TILE_MASK = 128
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -20,7 +22,12 @@ func _process(delta: float) -> void:
 	else:
 		hovered_card = null
 		
-	shop.hovered_card = hovered_card
+	var hovering_tiles = raycast_check(TILE_MASK)
+	if hovering_tiles:
+		var highest_tile = check_for_highest_z_index(hovering_tiles)
+		hovered_tile = highest_tile
+	else:
+		hovered_tile = null
 	
 func raycast_check(mask : int):
 	var space_state = get_world_2d().direct_space_state

@@ -12,12 +12,18 @@ var tile_scene = load("res://Scenes/tile.tscn")
 @onready var money_label: Label = $ColorRect/ColorRect2/ColorRect/ColorRect/Label2
 @onready var shop_scene_manager: Node2D = $ShopSceneManager
 @onready var continue_label: Label = $ContinueButton/Label
+@onready var shop_input_manager: Node2D = $ShopInputManager
+@onready var tile_clip_mask: ColorRect = $TileClipMask
 
 var reroll_count : int = 0
 var shop_card_amount : int = 5
 var hovered_card : Node2D
+var hovered_tile : Node2D
+
 var bought_cards = []
 var cards_in_shop = []
+var tiles_in_shop = []
+
 var start_process : bool = false
 var reroll_label_position_y
 var continue_label_position_y
@@ -25,6 +31,7 @@ var continue_label_position_y
 signal exit_shop
 
 const CARD_MASK = 2
+const LABEL_MAX_SIZE = 280
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,10 +42,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if start_process:
 		card_hover_effect()
+		tile_hover_effect()
 		money_label.text = str(Global.total_money) + "$"
 	
 func add_items_on_start():
 	make_new_cards()
+	make_new_tiles()
 	round_label.text = "Round: " + str(Global.round)
 	
 	reroll_label_position_y = reroll_label.position.y
@@ -56,10 +65,11 @@ func get_random_card(amount):
 func get_random_tile():
 	var tile_keys = tile_database.TILES.keys()
 	var random_tiles = []
-	for i in 2:
+	for i in range(2):
 		var random_index = randi() % tile_keys.size()
 		var random_tile_name = tile_keys[random_index]
 		random_tiles.append(random_tile_name)
+	print(random_tiles)
 	return random_tiles
 	
 func connect_card_signal(card):
@@ -86,7 +96,6 @@ func make_new_cards():
 	animate_card_reroll(cards_in_shop)
 	cards_in_shop.clear()
 	for card_name in cards:
-
 		var new_card_instance = card_scene.instantiate()
 		new_card_instance.z_index = 0
 
@@ -113,7 +122,7 @@ func make_new_cards():
 		else:
 			print("Sprite node not found in card instance")
 		
-		card_clip_mask.add_child(new_card_instance)
+		card_clip_mask.add_child(new_card_instance)  
 		cards_in_shop.append(new_card_instance)
 		connect_card_signal(new_card_instance)
 		
@@ -123,8 +132,34 @@ func make_new_cards():
 	add_price_text()
 	
 func make_new_tiles():
-	var tiles = get_random_tile
-	
+	var tiles = get_random_tile()
+	tiles_in_shop.clear()
+	for tile_name in tiles:
+		var new_tile_instance = tile_scene.instantiate()
+		var tile_ability_script_path = tile_database.TILES[tile_name][1]
+		new_tile_instance.ability_script = load(tile_ability_script_path).new()
+		tile_clip_mask.add_child(new_tile_instance)
+		
+		new_tile_instance.description.visible = false
+		new_tile_instance.z_index = 3
+		new_tile_instance.tile_name = tile_name
+		var random_price = randi() % (5 + reroll_count * 2) + (4 + reroll_count)
+		new_tile_instance.price = random_price
+		new_tile_instance.tile_type = tile_database.TILES[tile_name][2]
+		new_tile_instance.name_label.text = tile_name
+		new_tile_instance.description_label.text = "[center]" + str(tile_database.TILES[tile_name][0]) + "[/center]"
+		adjust_description_text(new_tile_instance.description_label)
+		color_text(new_tile_instance.description_label)
+		
+		var image_path = "res://Assets/Images/Tiles/" + tile_name + "_tile.png"
+		var texture = load(image_path)
+		var sprite = new_tile_instance.get_node("Sprite2D")
+		if sprite:
+			sprite.texture = texture
+		else:
+			print("Sprite node not found in card instance")
+		tiles_in_shop.append(new_tile_instance)
+	align_new_tiles(tiles_in_shop)
 	
 func animate_card_reroll(cards):
 	var width : float = card_clip_mask.get_size().x
@@ -136,6 +171,9 @@ func animate_card_reroll(cards):
 		adjust_text_size(card)
 		if card.card_type != "Spell":
 			card.get_node("Textures/ScaleNode/StatDisplay").visible = true
+			
+func animate_tile_reroll(tiles):
+	pass
 		
 func align_new_cards(cards):
 	var width : float = card_clip_mask.get_size().x
@@ -144,12 +182,18 @@ func align_new_cards(cards):
 		card.position.x = width * (i / (cards.size() + 1)) - width
 		card.position.y = card_clip_mask.get_size().y / 2
 		i += 1
+		
+func align_new_tiles(tiles):
+	pass
+	tiles[0].position = Vector2(152, 160)
+	tiles[1].position = Vector2(488, 160)
 
 func _on_button_pressed() -> void:
 	reroll_count += 1
 	reroll_label.modulate = Color(0.8, 0.8, 0.8)
 	button.disabled = true
 	make_new_cards()
+	make_new_tiles()
 	await Global.timer(0.7)
 	reroll_label.modulate = Color(1.0, 1.0, 1.0)
 	button.disabled = false
@@ -161,12 +205,23 @@ func _on_button_button_up() -> void:
 	reroll_label.position.y = reroll_label_position_y
 	
 func card_hover_effect():
+	hovered_card = shop_input_manager.hovered_card
 	for card in cards_in_shop:
 		var card_texture = card.get_node("Textures")
 		if card == hovered_card and card_texture.scale != Vector2(1.05, 1.05):
 			card_texture.scale = Vector2(1.05, 1.05)
 		elif card != hovered_card and card_texture.scale == Vector2(1.05, 1.05):
 			card_texture.scale = Vector2(1, 1)
+			
+func tile_hover_effect():
+	hovered_tile = shop_input_manager.hovered_tile
+	for tile in tiles_in_shop:
+		if tile == hovered_tile:
+			tile.scale = Vector2(1.05, 1.05)
+			tile.description.visible = true
+		elif tile != hovered_tile:
+			tile.scale = Vector2(1, 1)
+			tile.description.visible = false
 			
 func add_price_text():
 	for card in cards_in_shop:
@@ -199,4 +254,23 @@ func _on_continue_button_button_down() -> void:
 	continue_label.position.y = continue_label_position_y + 3
 
 func _on_continue_button_button_up() -> void:
-	continue_label.position.y = continue_label_position_y - 3
+	continue_label.position.y = continue_label_position_y
+	
+func adjust_description_text(label):
+	label.custom_minimum_size = Vector2(LABEL_MAX_SIZE, 0)
+	label.set_autowrap_mode(2)
+	
+	if label.get_line_count() <= 1:
+		label.custom_minimum_size = Vector2(0, 0)
+		label.set_autowrap_mode(0)
+
+func color_text(label):
+	var target_word = "Damage"
+	var color = Color.html("#ac3232")
+	var colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
+	label.text = label.text.replace(target_word, colored_word)
+	
+	target_word = "Actions"
+	color = Color.html("#639bff")
+	colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
+	label.text = label.text.replace(target_word, colored_word)

@@ -1,8 +1,8 @@
 extends Node2D
 
 @onready var card_slot: ColorRect = $"../CardSlot"
-@onready var tile_slot_2: ColorRect = $"../TileSlot2"
 @onready var tile_slot: ColorRect = $"../TileSlot"
+@onready var tile_slot_2: ColorRect = $"../TileSlot2"
 @onready var button: Button = $"../Button"
 @onready var round_display: ColorRect = $"../ColorRect"
 @onready var money_display: ColorRect = $"../ColorRect/ColorRect2"
