@@ -2,6 +2,8 @@ extends Node2D
 
 var card_database = preload("res://Scripts/card_database.gd")
 var card_scene = preload("res://Scenes/card.tscn")
+var tile_database = preload("res://Scripts/tile_database.gd")
+var tile_scene = load("res://Scenes/tile.tscn")
 
 @onready var card_clip_mask: ColorRect = $CardSlot/ColorRect/ColorRect/CardClipMask
 @onready var button: Button = $Button
@@ -50,6 +52,15 @@ func get_random_card(amount):
 		var random_card_name = card_keys[random_index]
 		random_cards.append(random_card_name)
 	return random_cards
+	
+func get_random_tile():
+	var tile_keys = tile_database.TILES.keys()
+	var random_tiles = []
+	for i in 2:
+		var random_index = randi() % tile_keys.size()
+		var random_tile_name = tile_keys[random_index]
+		random_tiles.append(random_tile_name)
+	return random_tiles
 	
 func connect_card_signal(card):
 	card.buy_card.connect(buy_card)
@@ -110,6 +121,10 @@ func make_new_cards():
 	animate_card_reroll(cards_in_shop)
 	await Global.timer(0.5)
 	add_price_text()
+	
+func make_new_tiles():
+	var tiles = get_random_tile
+	
 	
 func animate_card_reroll(cards):
 	var width : float = card_clip_mask.get_size().x

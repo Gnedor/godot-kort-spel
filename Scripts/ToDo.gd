@@ -4,7 +4,7 @@
 # fixa quotas 
 
 # Buggar:
-# Fixa så att när man drar kort för första gånger warpar dem inte
+# Fixa så att när man drar kort för första gånger warpar dem istället för animera
 # Fixa spell går ibland ner i handen efter man har spelat dem
 #end round animationen tiles kan sätta sig på fel plats i foldern
 
