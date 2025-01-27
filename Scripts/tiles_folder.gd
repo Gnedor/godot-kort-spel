@@ -110,6 +110,7 @@ func create_tile(tile_name: String):
 	add_child(new_tile_instance)
 	
 	new_tile_instance.name_label.text = tile_name
+	new_tile_instance.tile_type = tile_database.TILES[tile_name][2]
 	new_tile_instance.tile_name = tile_name
 	new_tile_instance.description_label.text = "[center]" + str(tile_database.TILES[tile_name][0]) + "[/center]"
 	color_text(new_tile_instance.description_label)
@@ -157,16 +158,16 @@ func find_duration(pos1, pos2, speed):
 	return duration
 	
 func place_tile_on_slot(slot):
-	if !slot.has_tile:
+	if !slot.occupied_tile:
 		dragged_tile.z_index = -1
 		dragged_tile.is_placed = true
 		dragged_tile.global_position = slot.position
 		
 		tiles_in_folder.erase(dragged_tile)
 		played_tiles.append(dragged_tile)
+		slot.occupied_tile = dragged_tile
 		
 		dragged_tile = null
-		slot.has_tile = true
 	align_tiles()
 		
 func adjust_description_text(label):

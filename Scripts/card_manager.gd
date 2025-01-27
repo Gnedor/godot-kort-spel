@@ -64,17 +64,25 @@ func place_card_on_slot(slot):
 		cards_in_hand.erase(dragged_card)
 		dragged_card.z_index = 3
 		dragged_card.position = slot.position
+		
 		slot.is_occupied = true
 		dragged_card.is_placed = true
+		
 		hover_off_effect(dragged_card)
 		played_cards.append(dragged_card)
+		
 		dragged_card.stat_display.visible = true
 		dragged_card.actions -= 1
-		update_card(dragged_card)
+		
 		sort_played_cards()
+
+		if slot.occupied_tile:
+			if slot.occupied_tile.tile_type == "OnPlay":
+				slot.occupied_tile.ability_script.tile_ability(dragged_card)
 		
 		if dragged_card.card_type == "OnPlayTroop":
 			dragged_card.ability_script.trigger_ability(dragged_card, battle_manager, deck, self)
+		update_card(dragged_card)
 	align_cards()
 	
 func _on_size_changed():

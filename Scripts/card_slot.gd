@@ -4,4 +4,4 @@ extends Node2D
 # INGEN LOGIK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 var is_occupied : bool = false
-var has_tile : bool = false
+var occupied_tile : Node2D

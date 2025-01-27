@@ -70,6 +70,7 @@ func attack(played_cards):
 		for card in played_cards:
 			if card.is_selected:
 				card.actions -= 1
+				check_for_tile(card)
 				card_manager.update_card(card)
 				card.stat_display.visible = false
 				animate_attack(card, sten.attack_point.global_position, get_rotation_angle(card), 0.15)
@@ -83,6 +84,13 @@ func attack(played_cards):
 				
 				Global.total_damage += card.attack
 				total_damage_label.text = str(Global.total_damage)
+				
+func check_for_tile(card):
+	for slot in card_manager.card_slots.get_children():
+		if slot.global_position.x == card.global_position.x:
+			if slot.occupied_tile:
+				if slot.occupied_tile.tile_type == "OnAttack":
+					slot.occupied_tile.ability_script.tile_ability(card)
 			
 			
 func _on_attack_timer_timeout() -> void:

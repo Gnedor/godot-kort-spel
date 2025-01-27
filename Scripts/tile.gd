@@ -5,6 +5,7 @@ extends Node2D
 @onready var description_label: RichTextLabel = $Description/MarginContainer/MarginContainer/DescriptionLabel
 
 var tile_name : String
+var tile_type : String
 var ability_script
 var is_placed : bool = false
 
@@ -15,3 +16,4 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+	
