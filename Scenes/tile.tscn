@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cx30ut2ciemib"]
 
 [ext_resource type="Texture2D" uid="uid://b4kmpdnb6auvk" path="res://Assets/images/Tiles/Speed Tile_tile.png" id="1_mfqbn"]
-[ext_resource type="Script" path="res://Scenes/tile.gd" id="1_o02j0"]
+[ext_resource type="Script" path="res://Scripts/tile.gd" id="1_o02j0"]
 [ext_resource type="Texture2D" uid="uid://b2glqsv82oek1" path="res://Assets/images/textruta.png" id="2_x7xbm"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_lp0nw"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="4_qadc6"]

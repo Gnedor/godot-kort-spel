@@ -14,22 +14,27 @@ var shop_card_amount : int = 5
 var hovered_card : Node2D
 var bought_cards = []
 var cards_in_shop = []
-
+var start_process : bool = false
 var reroll_label_position_y
 
 const CARD_MASK = 2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	round_label.text = "Round: " + str(Global.round)
+	money_label.text = str(Global.total_money) + "$"
+	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	if start_process:
+		card_hover_effect()
+		money_label.text = str(Global.total_money) + "$"
+	
+func add_items_on_start():
 	make_new_cards()
 	round_label.text = "Round: " + str(Global.round)
 	
 	reroll_label_position_y = reroll_label.position.y
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	card_hover_effect()
-	money_label.text = str(Global.total_money) + "$"
 	
 func get_random_card(amount):
 	var card_keys = card_database.CARDS.keys()
@@ -164,3 +169,4 @@ func _change_scene(scene_path : String):
 func _on_button_2_pressed() -> void:
 	Global.store_card_data(bought_cards)
 	_change_scene("res://Scenes/main.tscn")
+	

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c8tbmwqdapnsc"]
+[gd_scene load_steps=7 format=3 uid="uid://c8tbmwqdapnsc"]
 
 [ext_resource type="Script" path="res://Scripts/shop.gd" id="1_obqh1"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="1_s31jl"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="2_7pymf"]
 [ext_resource type="Script" path="res://Scripts/shop_input_manager.gd" id="3_ernqd"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_ral8i"]
+[ext_resource type="Script" path="res://Scripts/shop_scene_manager.gd" id="6_e8hkw"]
 
 [node name="Shop" type="Node2D"]
 script = ExtResource("1_obqh1")
@@ -16,6 +17,7 @@ offset_right = 1616.0
 offset_bottom = 424.0
 mouse_filter = 2
 color = Color(0.18359, 0.18359, 0.18359, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="CardSlot"]
 z_index = 1
@@ -30,6 +32,7 @@ offset_right = 1280.22
 offset_bottom = 304.0
 mouse_filter = 2
 color = Color(0.106237, 0.106237, 0.106237, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="CardSlot/ColorRect"]
 z_index = 1
@@ -45,6 +48,7 @@ offset_right = 624.002
 offset_bottom = 143.904
 mouse_filter = 2
 color = Color(0.00234459, 0.00234459, 0.00234459, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="CardClipMask" type="ColorRect" parent="CardSlot/ColorRect/ColorRect"]
 clip_children = 1
@@ -62,14 +66,14 @@ offset_bottom = 189.072
 mouse_filter = 2
 color = Color(0.00234459, 0.00234459, 0.00234459, 1)
 
-[node name="EnvironmentSlot" type="ColorRect" parent="."]
+[node name="TileSlot" type="ColorRect" parent="."]
 offset_left = 312.0
 offset_top = 456.0
 offset_right = 704.0
 offset_bottom = 912.0
 color = Color(0.184314, 0.184314, 0.184314, 1)
 
-[node name="ColorRect" type="ColorRect" parent="EnvironmentSlot"]
+[node name="ColorRect" type="ColorRect" parent="TileSlot"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
@@ -77,14 +81,14 @@ offset_right = 384.0
 offset_bottom = 448.0
 color = Color(0.105882, 0.105882, 0.105882, 1)
 
-[node name="EnvironmentSlot2" type="ColorRect" parent="."]
+[node name="TileSlot2" type="ColorRect" parent="."]
 offset_left = 744.0
 offset_top = 456.0
 offset_right = 1136.0
 offset_bottom = 912.0
 color = Color(0.184314, 0.184314, 0.184314, 1)
 
-[node name="ColorRect" type="ColorRect" parent="EnvironmentSlot2"]
+[node name="ColorRect" type="ColorRect" parent="TileSlot2"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
@@ -123,6 +127,7 @@ offset_left = 32.0
 offset_right = 288.0
 offset_bottom = 104.0
 color = Color(0.184314, 0.184314, 0.184314, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="ColorRect"]
 layout_mode = 0
@@ -207,6 +212,9 @@ offset_top = 912.0
 offset_right = 1912.0
 offset_bottom = 1072.0
 text = "Continue"
+
+[node name="ShopSceneManager" type="Node2D" parent="."]
+script = ExtResource("6_e8hkw")
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
