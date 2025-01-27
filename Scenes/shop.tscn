@@ -206,12 +206,23 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Button2" type="Button" parent="."]
-offset_left = 1632.0
-offset_top = 912.0
-offset_right = 1912.0
-offset_bottom = 1072.0
+[node name="ContinueButton" type="Button" parent="."]
+self_modulate = Color(0.207843, 0.207843, 0.207843, 1)
+offset_left = 1616.0
+offset_top = 896.0
+offset_right = 1896.0
+offset_bottom = 1056.0
+theme = ExtResource("2_7pymf")
+
+[node name="Label" type="Label" parent="ContinueButton"]
+layout_mode = 0
+offset_right = 280.0
+offset_bottom = 160.0
+theme_override_fonts/font = ExtResource("4_ral8i")
+theme_override_font_sizes/font_size = 32
 text = "Continue"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ShopSceneManager" type="Node2D" parent="."]
 script = ExtResource("6_e8hkw")
@@ -219,4 +230,6 @@ script = ExtResource("6_e8hkw")
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="button_down" from="ContinueButton" to="." method="_on_continue_button_button_down"]
+[connection signal="button_up" from="ContinueButton" to="." method="_on_continue_button_button_up"]
+[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]

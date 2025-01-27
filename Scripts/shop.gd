@@ -8,6 +8,8 @@ var card_scene = preload("res://Scenes/card.tscn")
 @onready var reroll_label: Label = $Button/Label
 @onready var round_label: Label = $ColorRect/ColorRect/ColorRect/Label2
 @onready var money_label: Label = $ColorRect/ColorRect2/ColorRect/ColorRect/Label2
+@onready var shop_scene_manager: Node2D = $ShopSceneManager
+@onready var continue_label: Label = $ContinueButton/Label
 
 var reroll_count : int = 0
 var shop_card_amount : int = 5
@@ -16,6 +18,9 @@ var bought_cards = []
 var cards_in_shop = []
 var start_process : bool = false
 var reroll_label_position_y
+var continue_label_position_y
+
+signal exit_shop
 
 const CARD_MASK = 2
 
@@ -35,6 +40,7 @@ func add_items_on_start():
 	round_label.text = "Round: " + str(Global.round)
 	
 	reroll_label_position_y = reroll_label.position.y
+	continue_label_position_y = continue_label.position.y
 	
 func get_random_card(amount):
 	var card_keys = card_database.CARDS.keys()
@@ -168,5 +174,14 @@ func _change_scene(scene_path : String):
 
 func _on_button_2_pressed() -> void:
 	Global.store_card_data(bought_cards)
-	_change_scene("res://Scenes/main.tscn")
+	exit_shop.emit()
 	
+func _on_continue_button_pressed() -> void:
+	Global.store_card_data(bought_cards)
+	exit_shop.emit()
+
+func _on_continue_button_button_down() -> void:
+	continue_label.position.y = continue_label_position_y + 3
+
+func _on_continue_button_button_up() -> void:
+	continue_label.position.y = continue_label_position_y - 3
