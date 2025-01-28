@@ -68,6 +68,7 @@ color = Color(0.00234459, 0.00234459, 0.00234459, 1)
 
 [node name="TileClipMask" type="ColorRect" parent="."]
 clip_children = 1
+z_index = 1
 offset_left = 312.0
 offset_top = 472.0
 offset_right = 952.0

@@ -3,10 +3,13 @@
 # fixa korten så att de följer efter musen på ett bättre sätt
 # fixa quotas 
 
+# gör en price label under tiles som minskar under reroll animationen och sedan skrivs ut igen efter rerollen
+
 # Buggar:
 # Fixa så att när man drar kort för första gånger warpar dem istället för animera
 # Fixa spell går ibland ner i handen efter man har spelat dem
-#end round animationen tiles kan sätta sig på fel plats i foldern
+# end round animationen tiles kan sätta sig på fel plats i foldern
+# kanske skoldatorns fel, endofround screenen är inte animerad första gången den visas
 
 #Ideer:
 #Tile som duplicerar kort som spelas på den

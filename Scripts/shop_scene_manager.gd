@@ -8,6 +8,7 @@ extends Node2D
 @onready var money_display: ColorRect = $"../ColorRect/ColorRect2"
 @onready var shop: Node2D = $".."
 @onready var continue_button: Button = $"../ContinueButton"
+@onready var tile_clip_mask: ColorRect = $"../TileClipMask"
 
 var shop_scene_up
 var shop_scene_down
@@ -16,7 +17,7 @@ var shop_scene_down
 func _ready() -> void:
 	shop.exit_shop.connect(remove_shop_ui)
 	shop_scene_up = [card_slot, button, round_display, money_display]
-	shop_scene_down = [tile_slot, tile_slot_2, continue_button]
+	shop_scene_down = [tile_slot, tile_slot_2, continue_button, tile_clip_mask]
 	
 	instant_remove_shop_ui()
 	await add_shop_ui()

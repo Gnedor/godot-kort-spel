@@ -69,7 +69,6 @@ func get_random_tile():
 		var random_index = randi() % tile_keys.size()
 		var random_tile_name = tile_keys[random_index]
 		random_tiles.append(random_tile_name)
-	print(random_tiles)
 	return random_tiles
 	
 func connect_card_signal(card):
@@ -133,6 +132,7 @@ func make_new_cards():
 	
 func make_new_tiles():
 	var tiles = get_random_tile()
+	animate_tile_reroll(tiles_in_shop)
 	tiles_in_shop.clear()
 	for tile_name in tiles:
 		var new_tile_instance = tile_scene.instantiate()
@@ -141,7 +141,7 @@ func make_new_tiles():
 		tile_clip_mask.add_child(new_tile_instance)
 		
 		new_tile_instance.description.visible = false
-		new_tile_instance.z_index = 3
+		new_tile_instance.z_index = 1
 		new_tile_instance.tile_name = tile_name
 		var random_price = randi() % (5 + reroll_count * 2) + (4 + reroll_count)
 		new_tile_instance.price = random_price
@@ -159,9 +159,13 @@ func make_new_tiles():
 		else:
 			print("Sprite node not found in card instance")
 		tiles_in_shop.append(new_tile_instance)
+		
 	align_new_tiles(tiles_in_shop)
+	animate_tile_reroll(tiles_in_shop)
+	await Global.timer(0.5)
 	
 func animate_card_reroll(cards):
+	print(cards.size())
 	var width : float = card_clip_mask.get_size().x
 	for card in cards:
 		var tween = get_tree().create_tween()
@@ -173,7 +177,9 @@ func animate_card_reroll(cards):
 			card.get_node("Textures/ScaleNode/StatDisplay").visible = true
 			
 func animate_tile_reroll(tiles):
-	pass
+	for tile in tiles:
+		var tween = get_tree().create_tween()
+		tween.tween_property(tile, "position:y", tile.position.y + 400, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 		
 func align_new_cards(cards):
 	var width : float = card_clip_mask.get_size().x
@@ -184,9 +190,8 @@ func align_new_cards(cards):
 		i += 1
 		
 func align_new_tiles(tiles):
-	pass
-	tiles[0].position = Vector2(152, 160)
-	tiles[1].position = Vector2(488, 160)
+	tiles[0].position = Vector2(152, -240)
+	tiles[1].position = Vector2(488, -240)
 
 func _on_button_pressed() -> void:
 	reroll_count += 1
