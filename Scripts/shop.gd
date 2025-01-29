@@ -100,17 +100,18 @@ func buy_card(card):
 func buy_tile(tile_slot):
 	var bought_tile
 	var tween = get_tree().create_tween()
-	if tiles_in_shop[0].global_position.x == tile_slot.global_position_x:
+	if tile_slot == $TileSlot:
 		buy_button_1.button.visible = false
 		bought_tile = tiles_in_shop[0]
 	else:
 		buy_button_2.button.visible = false
 		bought_tile = tiles_in_shop[1]		
 		
-		Global.total_money -= bought_tile.price
-		tween.tween_property(bought_tile, "scale", Vector2(0.9, 0.9), 0.05)
-		await tween.finished
-		bought_tiles.append(bought_tile)
+	Global.total_money -= bought_tile.price
+	tween.tween_property(bought_tile, "scale", Vector2(0.9, 0.9), 0.05)
+	await tween.finished
+	bought_tile.visible = false
+	bought_tiles.append(bought_tile)
 	
 func make_new_cards():
 	#card_slot.clip_contents = true
@@ -262,9 +263,9 @@ func add_card_price_text():
 		
 func add_tile_price_text():
 	var i = 0
+	buy_button_1.button.visible = true
+	buy_button_2.button.visible = true
 	for label in tile_labels:
-		label.get_parent().visible = true
-		label.get_parent().visible = true
 		var tween = get_tree().create_tween()
 		label.visible_ratio = 0.0
 		label.text = "BUY " + str(tiles_in_shop[0].price) + "$"
@@ -275,6 +276,9 @@ func remove_tile_price_text():
 	for label in tile_labels:
 		var tween = get_tree().create_tween()
 		tween.tween_property(label, "visible_ratio", 0.0, 0.2)
+	await Global.timer(0.2)
+	buy_button_1.button.visible = false
+	buy_button_2.button.visible = false
 		
 func adjust_text_size(card):
 	var label = card.get_node("Textures/NamnLabel")
@@ -285,13 +289,10 @@ func adjust_text_size(card):
 		
 func _change_scene(scene_path : String):
 	get_tree().change_scene_to_file(scene_path)
-
-func _on_button_2_pressed() -> void:
-	Global.store_card_data(bought_cards)
-	exit_shop.emit()
 	
 func _on_continue_button_pressed() -> void:
 	Global.store_card_data(bought_cards)
+	Global.store_tile_data(bought_tiles)
 	exit_shop.emit()
 
 func _on_continue_button_button_down() -> void:

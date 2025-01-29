@@ -4,6 +4,7 @@
 # fixa quotas 
 
 # gör en price label under tiles som minskar under reroll animationen och sedan skrivs ut igen efter rerollen
+# gör så att tile labelserna byter sida beroende vart på skärmen de är
 
 # Buggar:
 # Fixa så att när man drar kort för första gånger warpar dem istället för animera
