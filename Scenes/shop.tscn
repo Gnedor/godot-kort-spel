@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8tbmwqdapnsc"]
+[gd_scene load_steps=8 format=3 uid="uid://c8tbmwqdapnsc"]
 
 [ext_resource type="Script" path="res://Scripts/shop.gd" id="1_obqh1"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="1_s31jl"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="2_7pymf"]
+[ext_resource type="PackedScene" uid="uid://854dmrdy2jd0" path="res://Scenes/buy_button.tscn" id="2_ggx4j"]
 [ext_resource type="Script" path="res://Scripts/shop_input_manager.gd" id="3_ernqd"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_ral8i"]
 [ext_resource type="Script" path="res://Scripts/shop_scene_manager.gd" id="6_e8hkw"]
@@ -104,6 +105,9 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.00392157, 0.00392157, 0.00392157, 1)
 
+[node name="BuyButton1" parent="TileSlot" instance=ExtResource("2_ggx4j")]
+position = Vector2(152, 385)
+
 [node name="TileSlot2" type="ColorRect" parent="."]
 anchors_preset = -1
 anchor_left = 1.105
@@ -143,6 +147,9 @@ offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.00392157, 0.00392157, 0.00392157, 1)
+
+[node name="BuyButton2" parent="TileSlot2" instance=ExtResource("2_ggx4j")]
+position = Vector2(152, 385)
 
 [node name="Button" type="Button" parent="."]
 self_modulate = Color(0.207512, 0.207512, 0.207512, 1)

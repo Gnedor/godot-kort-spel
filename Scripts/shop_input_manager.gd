@@ -53,3 +53,8 @@ func check_for_highest_z_index(cards):
 		return highest_card
 	else:
 		return
+		
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_BACKSPACE:
+			Global.total_money += 10

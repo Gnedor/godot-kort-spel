@@ -8,7 +8,7 @@
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="5_htu7g"]
 [ext_resource type="Texture2D" uid="uid://tpb2pr6lpho2" path="res://Assets/images/ball.png" id="7_28c2y"]
 [ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="7_ynav2"]
-[ext_resource type="Theme" uid="uid://b80031dk3mg5e" path="res://Assets/themes/button_theme.tres" id="9_tbrhl"]
+[ext_resource type="PackedScene" uid="uid://854dmrdy2jd0" path="res://Scenes/buy_button.tscn" id="10_2hy3d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ve337"]
 shader = ExtResource("1_rdoxh")
@@ -149,43 +149,6 @@ animation = &"Ball"
 frame = 4
 frame_progress = 1.0
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -11.0
-offset_top = 112.0
-offset_right = 11.0
-offset_bottom = 152.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Button" type="Button" parent="MarginContainer"]
+[node name="BuyButton" parent="." instance=ExtResource("10_2hy3d")]
 visible = false
-layout_mode = 2
-theme = ExtResource("9_tbrhl")
-keep_pressed_outside = true
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-mouse_filter = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_right = 10
-
-[node name="Price" type="Label" parent="MarginContainer/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 1
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_ynav2")
-theme_override_font_sizes/font_size = 24
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[connection signal="button_down" from="MarginContainer/Button" to="." method="_on_button_button_down"]
-[connection signal="button_up" from="MarginContainer/Button" to="." method="_on_button_button_up"]
-[connection signal="pressed" from="MarginContainer/Button" to="." method="_on_button_pressed"]
+position = Vector2(0, 128)

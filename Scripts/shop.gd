@@ -14,6 +14,9 @@ var tile_scene = load("res://Scenes/tile.tscn")
 @onready var continue_label: Label = $ContinueButton/Label
 @onready var shop_input_manager: Node2D = $ShopInputManager
 @onready var tile_clip_mask: ColorRect = $TileClipMask
+@onready var buy_button_1: Node2D = $TileSlot/BuyButton1
+@onready var buy_button_2: Node2D = $TileSlot2/BuyButton2
+
 
 var reroll_count : int = 0
 var shop_card_amount : int = 5
@@ -21,8 +24,10 @@ var hovered_card : Node2D
 var hovered_tile : Node2D
 
 var bought_cards = []
+var bought_tiles = []
 var cards_in_shop = []
 var tiles_in_shop = []
+var tile_labels = []
 
 var start_process : bool = false
 var reroll_label_position_y
@@ -35,6 +40,9 @@ const LABEL_MAX_SIZE = 280
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	tile_labels = [buy_button_1.label, buy_button_2.label]
+	buy_button_1.buy_button_pressed.connect(buy_tile)
+	buy_button_2.buy_button_pressed.connect(buy_tile)
 	round_label.text = "Round: " + str(Global.round)
 	money_label.text = str(Global.total_money) + "$"
 	
@@ -72,13 +80,13 @@ func get_random_tile():
 	return random_tiles
 	
 func connect_card_signal(card):
-	card.buy_card.connect(buy_card)
+	#card.buy_card.connect(buy_card)
+	card.buy_button.buy_button_pressed.connect(buy_card)
 	
 func buy_card(card):
 	var tween = get_tree().create_tween()
 	if Global.total_money >= card.price:
-		card.price_label.visible = false
-		card.button.visible = false
+		card.buy_button.visible = false
 		tween.tween_property(card, "scale", Vector2(0.9, 0.9), 0.05)
 		await tween.finished
 		
@@ -86,8 +94,23 @@ func buy_card(card):
 		card.visible = false
 		Global.total_money -= card.price
 	else:
-		tween.tween_property(card.button, "modulate", Color(1.0, 0.5, 0.5), 0.0) # tween för att overrita faden under denna om den är igång
-		tween.tween_property(card.button, "modulate", Color(1.0, 1.0, 1.0), 0.5)
+		tween.tween_property(card.buy_button.button, "modulate", Color(1.0, 0.5, 0.5), 0.0) # tween för att overrita faden under denna om den är igång
+		tween.tween_property(card.buy_button.button, "modulate", Color(1.0, 1.0, 1.0), 0.5)
+	
+func buy_tile(tile_slot):
+	var bought_tile
+	var tween = get_tree().create_tween()
+	if tiles_in_shop[0].global_position.x == tile_slot.global_position_x:
+		buy_button_1.button.visible = false
+		bought_tile = tiles_in_shop[0]
+	else:
+		buy_button_2.button.visible = false
+		bought_tile = tiles_in_shop[1]		
+		
+		Global.total_money -= bought_tile.price
+		tween.tween_property(bought_tile, "scale", Vector2(0.9, 0.9), 0.05)
+		await tween.finished
+		bought_tiles.append(bought_tile)
 	
 func make_new_cards():
 	#card_slot.clip_contents = true
@@ -128,12 +151,13 @@ func make_new_cards():
 	align_new_cards(cards_in_shop)
 	animate_card_reroll(cards_in_shop)
 	await Global.timer(0.5)
-	add_price_text()
+	add_card_price_text()
 	
 func make_new_tiles():
 	var tiles = get_random_tile()
 	animate_tile_reroll(tiles_in_shop)
 	tiles_in_shop.clear()
+	remove_tile_price_text()
 	for tile_name in tiles:
 		var new_tile_instance = tile_scene.instantiate()
 		var tile_ability_script_path = tile_database.TILES[tile_name][1]
@@ -143,8 +167,7 @@ func make_new_tiles():
 		new_tile_instance.description.visible = false
 		new_tile_instance.z_index = 1
 		new_tile_instance.tile_name = tile_name
-		var random_price = randi() % (5 + reroll_count * 2) + (4 + reroll_count)
-		new_tile_instance.price = random_price
+		new_tile_instance.price = (5 + reroll_count * 2)
 		new_tile_instance.tile_type = tile_database.TILES[tile_name][2]
 		new_tile_instance.name_label.text = tile_name
 		new_tile_instance.description_label.text = "[center]" + str(tile_database.TILES[tile_name][0]) + "[/center]"
@@ -163,9 +186,9 @@ func make_new_tiles():
 	align_new_tiles(tiles_in_shop)
 	animate_tile_reroll(tiles_in_shop)
 	await Global.timer(0.5)
+	add_tile_price_text()
 	
 func animate_card_reroll(cards):
-	print(cards.size())
 	var width : float = card_clip_mask.get_size().x
 	for card in cards:
 		var tween = get_tree().create_tween()
@@ -228,14 +251,30 @@ func tile_hover_effect():
 			tile.scale = Vector2(1, 1)
 			tile.description.visible = false
 			
-func add_price_text():
+func add_card_price_text():
 	for card in cards_in_shop:
-		card.button.visible = true
+		card.buy_button.visible = true
 		var tween = get_tree().create_tween()
-		var button_label = card.get_node("MarginContainer/MarginContainer/Price")
+		var button_label = card.get_node("BuyButton").label
 		button_label.visible_ratio = 0.0
 		button_label.text = "BUY " + str(card.price) + "$"
 		tween.tween_property(button_label, "visible_ratio", 1.0, 0.2)
+		
+func add_tile_price_text():
+	var i = 0
+	for label in tile_labels:
+		label.get_parent().visible = true
+		label.get_parent().visible = true
+		var tween = get_tree().create_tween()
+		label.visible_ratio = 0.0
+		label.text = "BUY " + str(tiles_in_shop[0].price) + "$"
+		tween.tween_property(label, "visible_ratio", 1.0, 0.2)
+		i += 1
+		
+func remove_tile_price_text():
+	for label in tile_labels:
+		var tween = get_tree().create_tween()
+		tween.tween_property(label, "visible_ratio", 0.0, 0.2)
 		
 func adjust_text_size(card):
 	var label = card.get_node("Textures/NamnLabel")

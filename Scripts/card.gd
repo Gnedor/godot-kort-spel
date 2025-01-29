@@ -11,8 +11,7 @@ extends Node2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var namn_label: Label = $Textures/NamnLabel
 @onready var area_2d: Area2D = $Area2D
-@onready var button: Button = $MarginContainer/Button
-@onready var price_label: Label = $MarginContainer/MarginContainer/Price
+@onready var buy_button: Node2D = $BuyButton
 
 signal buy_card
 
@@ -37,12 +36,3 @@ func _ready() -> void:
 	#get_parent().connect_card_signals(self)
 	var unique_material = card_sprite.material.duplicate()
 	card_sprite.material = unique_material
-
-func _on_button_pressed() -> void:
-	buy_card.emit(self)
-
-func _on_button_button_down() -> void:
-	price_label.position.y += 2
-
-func _on_button_button_up() -> void:
-	price_label.position.y -= 2

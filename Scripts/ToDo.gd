@@ -13,3 +13,4 @@
 
 #Ideer:
 #Tile som duplicerar kort som spelas på den
+#Olika former för olika dificulties  t.ex en kvadrat sitället för sten

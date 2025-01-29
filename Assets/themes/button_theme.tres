@@ -1,6 +1,6 @@
-[gd_resource type="Theme" load_steps=13 format=4 uid="uid://b80031dk3mg5e"]
+[gd_resource type="Theme" load_steps=11 format=4 uid="uid://b80031dk3mg5e"]
 
-[ext_resource type="Texture2D" uid="uid://b6ujnu2klh3vc" path="res://Assets/images/button.png" id="1_2x2br"]
+[ext_resource type="Texture2D" uid="uid://btt1go5swo1fd" path="res://Assets/images/button.png" id="1_2x2br"]
 
 [sub_resource type="Image" id="Image_486f0"]
 data = {
@@ -1736,22 +1736,16 @@ region_rect = Rect2(80, 0, 32, 32)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7tdk2"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dqfef"]
-load_path = "res://.godot/imported/button.png-87d95d515afa393d765b8d3570144eff.ctex"
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8m6v8"]
-texture = SubResource("CompressedTexture2D_dqfef")
+texture = ExtResource("1_2x2br")
 texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
 texture_margin_bottom = 8.0
 region_rect = Rect2(40, 0, 32, 32)
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qlgo5"]
-load_path = "res://.godot/imported/button.png-87d95d515afa393d765b8d3570144eff.ctex"
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_svb2d"]
-texture = SubResource("CompressedTexture2D_qlgo5")
+texture = ExtResource("1_2x2br")
 texture_margin_left = 8.0
 texture_margin_top = 8.0
 texture_margin_right = 8.0
