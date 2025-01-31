@@ -25,6 +25,7 @@ const TILE_MOVE_SPEED = 3000 # pixels per second
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	window_size = get_viewport().size
 	input_manager.tile_relesed_on_slot.connect(place_tile_on_slot)
 	
 	window_size = Vector2(1920, 1080)
@@ -131,6 +132,9 @@ func hover_effect(tile):
 	tile.description.visible = true
 	if !tile.is_placed:
 		tile.scale = Vector2(1.1, 1.1)
+
+	if tile.global_position.x < window_size.x / 2:
+		# fixa i anchor, justera offsets och sätt grow direction
 	
 func hover_off_effect(tile):
 	tile.description.visible = false

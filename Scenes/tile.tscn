@@ -20,13 +20,13 @@ texture = ExtResource("1_mfqbn")
 
 [node name="Description" type="MarginContainer" parent="."]
 z_index = 100
-anchors_preset = 1
+anchors_preset = -1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -308.0
+offset_left = -304.0
 offset_top = -112.0
-offset_right = -104.0
-offset_bottom = -46.0
+offset_right = -100.0
+offset_bottom = -20.0
 grow_horizontal = 0
 
 [node name="NinePatchRect" type="NinePatchRect" parent="Description"]
