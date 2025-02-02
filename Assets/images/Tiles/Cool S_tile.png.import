@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bio3s2ntinwfm"
-path="res://.godot/imported/Attack Tile_tile.png-1e55622dcdf5d1c4b59cfaaf9d97a4a1.ctex"
+uid="uid://blib0ceex1fro"
+path="res://.godot/imported/Cool S_tile.png-9a7e6de1d1cb97ffd99d8062f2bce375.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Tiles/Attack Tile_tile.png"
-dest_files=["res://.godot/imported/Attack Tile_tile.png-1e55622dcdf5d1c4b59cfaaf9d97a4a1.ctex"]
+source_file="res://Assets/images/Tiles/Cool S_tile.png"
+dest_files=["res://.godot/imported/Cool S_tile.png-9a7e6de1d1cb97ffd99d8062f2bce375.ctex"]
 
 [params]
 

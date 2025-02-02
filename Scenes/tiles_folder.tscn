@@ -41,15 +41,14 @@ color = Color(0.184314, 0.184314, 0.184314, 1)
 
 [node name="ColorRect" type="ColorRect" parent="Folder/ColorRect"]
 layout_mode = 0
-offset_left = 16.0
-offset_right = 1904.0
+offset_right = 1920.0
 offset_bottom = 424.0
 color = Color(0.105882, 0.105882, 0.105882, 1)
 
 [node name="ColorRect" type="ColorRect" parent="Folder/ColorRect/ColorRect"]
 layout_mode = 0
-offset_left = 16.0
-offset_right = 1872.0
+offset_left = -32.0
+offset_right = 1920.0
 offset_bottom = 408.0
 color = Color(0.00392157, 0.00392157, 0.00392157, 1)
 

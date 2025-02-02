@@ -180,13 +180,13 @@ func check_for_highest_z_index(cards):
 	
 func align_card_hover(hovered_card):
 	for card in cards_in_hand:
-		if card == hovered_card:
+		if card == hovered_card and !card.is_hovering:
 			if !card.is_selected:
 				hover_effect(card)
-				card.is_selected = true
-		else:
+				card.is_hovering = true
+		elif card != hovered_card:
 			hover_off_effect(card)
-			card.is_selected = false
+			card.is_hovering = false
 			
 func animate_card_snap(card, position, speed):
 	var tween = get_tree().create_tween()

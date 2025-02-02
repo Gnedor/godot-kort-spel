@@ -58,8 +58,10 @@ func _on_timer_timeout() -> void:
 			
 		tiles_folder.played_tiles[0].is_placed = false
 		tiles_folder.tiles_in_folder.append(tiles_folder.played_tiles[0])
-		tiles_folder.align_tiles()
 		tiles_folder.played_tiles.pop_front()
+		await (pause(0.05))
+		tiles_folder.align_tiles()
+
 		
 		if !tiles_folder.played_tiles:
 			await (pause(0.15))

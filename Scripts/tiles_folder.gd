@@ -21,7 +21,7 @@ var hovered_tile : Node2D
 const FOLDER_BOUNDRY = 1792
 const LABEL_MAX_SIZE = 280
 
-const TILE_MOVE_SPEED = 3000 # pixels per second
+const TILE_MOVE_SPEED = 4000 # pixels per second
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -89,7 +89,7 @@ func align_tiles():
 		if tile != dragged_tile and !tile.is_placed:
 			var tile_pos_x = (window_size.x / 2) - (FOLDER_BOUNDRY / 2) + (FOLDER_BOUNDRY * (i + 1) / (tiles_in_folder.size() + 1))
 			var new_pos = Vector2(tile_pos_x, folder.global_position.y)
-			animate_card_snap(tile, new_pos, TILE_MOVE_SPEED)
+			animate_tile_snap(tile, new_pos, TILE_MOVE_SPEED)
 			tile.z_index = i + 1
 		i += 1
 		
@@ -132,9 +132,6 @@ func hover_effect(tile):
 	tile.description.visible = true
 	if !tile.is_placed:
 		tile.scale = Vector2(1.1, 1.1)
-
-	if tile.global_position.x < window_size.x / 2:
-		# fixa i anchor, justera offsets och sätt grow direction
 	
 func hover_off_effect(tile):
 	tile.description.visible = false
@@ -147,7 +144,7 @@ func align_tile_hover(hovered_tile):
 		else:
 			hover_off_effect(tile)
 			
-func animate_card_snap(tile, position, speed):
+func animate_tile_snap(tile, position, speed):
 	var tween = get_tree().create_tween()
 
 	if tile.global_position.y != folder.global_position.y:

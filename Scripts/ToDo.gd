@@ -15,3 +15,9 @@
 #Ideer:
 #Tile som duplicerar kort som spelas på den
 #Olika former för olika dificulties  t.ex en kvadrat sitället för sten
+
+#Tiles:
+#Team Dynamic: gör mer skada ju mer av samma kort som man spelar
+#Cool S: /3 skada, kort som spelat på attackerar varje gång ett annat kort attackerar
+
+#Kort:
