@@ -22,6 +22,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Button" type="Button" parent="MarginContainer"]
+visible = false
 layout_mode = 2
 theme = ExtResource("2_3mp88")
 keep_pressed_outside = true

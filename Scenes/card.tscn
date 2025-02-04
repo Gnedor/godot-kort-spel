@@ -150,5 +150,4 @@ frame = 4
 frame_progress = 1.0
 
 [node name="BuyButton" parent="." instance=ExtResource("10_2hy3d")]
-visible = false
 position = Vector2(0, 128)

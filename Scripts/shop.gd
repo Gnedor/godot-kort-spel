@@ -263,7 +263,7 @@ func tile_hover_effect():
 			
 func add_card_price_text():
 	for card in cards_in_shop:
-		card.buy_button.visible = true
+		card.buy_button.button.visible = true
 		var tween = get_tree().create_tween()
 		var button_label = card.get_node("BuyButton").label
 		button_label.visible_ratio = 0.0
