@@ -2,7 +2,7 @@ extends Node
 
 var quota : float = 40
 var total_money : float = 0
-var base_money : float = 10
+var base_money : float = 5
 var total_damage : float
 var round : int = 1
 var stored_cards = []

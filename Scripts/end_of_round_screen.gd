@@ -7,6 +7,7 @@ extends Node2D
 @onready var equals_label: Label = $UI/Row3/ColorRect5/EqualsLabel
 @onready var total_money: Label = $UI/Row3/ColorRect6/TotalMoney
 @onready var round_label: Label = $UI/ColorRect4/RoundLabel
+@onready var continue_label: Label = $UI/Button/Label
 
 var base_money = 3
 
@@ -49,7 +50,14 @@ func animate_screen_scale():
 func _on_button_pressed() -> void:
 	await move_off_screen()
 	_change_scene("res://Scenes/shop.tscn")
+	Global.quota *= 2
 	Global.round += 1
+	
+func _on_button_button_down() -> void:
+	continue_label.position.y += 2
+
+func _on_button_button_up() -> void:
+	continue_label.position.y -= 2
 	
 func add_text(label):
 	var tween = get_tree().create_tween()
@@ -64,5 +72,3 @@ func move_off_screen():
 func _change_scene(scene_path : String):
 	Global.total_damage = 0
 	get_tree().change_scene_to_file(scene_path)
-	
-	

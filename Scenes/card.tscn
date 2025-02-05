@@ -61,7 +61,7 @@ animations = [{
 }]
 
 [node name="Card" type="Node2D"]
-z_index = 3
+z_index = 1
 script = ExtResource("1_kahvh")
 
 [node name="Textures" type="Node2D" parent="."]

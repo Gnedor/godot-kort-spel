@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 			clamp(get_global_mouse_position().x, 0, window_size.x), 
 			clamp(get_global_mouse_position().y, 0, window_size.y))
 			#sätter de selectade kortet längst fram
-		dragged_tile.z_index = owned_tiles.size() + 4
+		dragged_tile.z_index = owned_tiles.size() + 1000
 		sort_by_x_position(tiles_in_folder)
 
 		

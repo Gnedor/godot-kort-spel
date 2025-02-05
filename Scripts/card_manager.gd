@@ -41,7 +41,7 @@ func _process(delta: float) -> void:
 			clamp(get_global_mouse_position().x, 0, window_size.x), 
 			clamp(get_global_mouse_position().y, 0, window_size.y))
 			#sätter de selectade kortet längst fram
-		dragged_card.z_index = cards_in_hand.size() + 4
+		dragged_card.z_index = cards_in_hand.size() + 1000
 		sort_by_x_position(cards_in_hand)
 			
 func sort_by_x_position(array: Array):

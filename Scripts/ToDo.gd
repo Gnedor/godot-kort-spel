@@ -1,23 +1,18 @@
 # gör så att man klan klicak och se sitt deck sortera kort klumpar
-# fixa shopen
 # fixa korten så att de följer efter musen på ett bättre sätt
 # fixa quotas 
-
-# gör en price label under tiles som minskar under reroll animationen och sedan skrivs ut igen efter rerollen
-# gör så att tile labelserna byter sida beroende vart på skärmen de är
 
 # Buggar:
 # Fixa så att när man drar kort för första gånger warpar dem istället för animera
 # Fixa spell går ibland ner i handen efter man har spelat dem
-# end round animationen tiles kan sätta sig på fel plats i foldern
 # kanske skoldatorns fel, endofround screenen är inte animerad första gången den visas
 
 #Ideer:
 #Tile som duplicerar kort som spelas på den
 #Olika former för olika dificulties  t.ex en kvadrat sitället för sten
+# När man dör kommer det ner en stor verition av det man körde mot t.ex stenen som visar stats:
+	#Highest damage, round, highest money, cards in deck (båda), tiles, 
 
 #Tiles:
-#Team Dynamic: gör mer skada ju mer av samma kort som man spelar
-#Cool S: /3 skada, kort som spelat på attackerar varje gång ett annat kort attackerar
 
 #Kort:

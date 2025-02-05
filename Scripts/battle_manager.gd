@@ -23,7 +23,6 @@ var card_index : int
 var total_damage : int
 var turn : int = 1
 var invert_tween
-var quota : int
 var active_select : bool = false
 var deck_select :  bool = false
 var selected_card : Node2D
@@ -38,6 +37,7 @@ signal end_round
 func _ready() -> void:
 	round_label.text = "Round: " + str(Global.round)
 	money_label.text = str(Global.total_money) + "$"
+	total_damage_label.text = "0/" + str(Global.quota)
 	hand_info.text = ("")
 	input_manager.click_on_sten.connect(attack)
 	input_manager.trigger_ability.connect(enter_active_card_activate)
@@ -48,7 +48,7 @@ func _ready() -> void:
 	
 	end_turn_label_position_y = end_turn_label.position.y
 	
-func new_round():
+func new_turn():
 	if turn <= 2:
 		turn += 1	
 		turn_counter.text = "Turn: " + str(turn) + "/3"
@@ -83,7 +83,7 @@ func attack(played_cards):
 				camera_2d.apply_shake()
 				
 				Global.total_damage += card.attack
-				total_damage_label.text = str(Global.total_damage)
+				total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
 				
 func check_for_tile(card):
 	for slot in card_manager.card_slots.get_children():
@@ -114,7 +114,7 @@ func get_rotation_angle(card : Node2D):
 	return rotation - PI/2
 
 func _on_end_turn_pressed() -> void:
-	new_round()
+	new_turn()
 	
 func _on_end_turn_button_down() -> void:
 	end_turn_label.position.y = end_turn_label_position_y + 3
