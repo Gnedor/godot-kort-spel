@@ -11,7 +11,9 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Chip" : [0, 1, "Spell", "Add one action", "res://Scripts/kortAbilities/Chip.gd"],
 	"Glaggle" : [1, 3, "Troop", "Yippie", "res://Scripts/kortAbilities/Glaggle.gd"],
 	"BIG ASS SHOE" : [0, 1, "Spell", "Replaces all played cards with random cards from deck", "res://Scripts/kortAbilities/BigAssShoe.gd"],
-	"Banan" : [10, 10, "Troop", null, null]
+	"Banan" : [10, 10, "Troop", null, null],
+	"Impossible Shape" : [1, 1, "Troop", null, null],
+	"Gambler" : [1, 1, "Troop", null, null]
 }
 
 const EXAMPLE_DECK = [
@@ -28,4 +30,6 @@ const EXAMPLE_DECK = [
 	{"name": "Glaggle", "amount": 3},
 	{"name": "BIG ASS SHOE", "amount": 5},
 	{"name": "Banan", "amount": 5},
+	{"name": "Impossible Shape", "amount": 5},
+	{"name": "Gambler", "amount": 5}
 ]

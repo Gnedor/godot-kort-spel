@@ -235,6 +235,7 @@ func enter_chose_deck(played_card, draw_amount):
 		card.get_node("Area2D/CollisionShape2D").disabled = true
 	played_card.get_node("Area2D/CollisionShape2D").disabled = true
 	end_turn.disabled = true
+	tiles_folder.button.disabled = true
 	played_card.z_index = card_manager.cards_in_hand.size() + 10
 	deck.z_index = card_manager.cards_in_hand.size() + 10
 	deck.spell_deck.z_index = card_manager.cards_in_hand.size() + 10
@@ -263,6 +264,7 @@ func exit_chose_deck():
 	await brighten_screen()
 	
 	end_turn.disabled = false
+	tiles_folder.button.disabled = false
 	
 	for card in card_manager.cards_in_hand:
 		card.get_node("Area2D/CollisionShape2D").disabled = false

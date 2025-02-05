@@ -5,6 +5,7 @@ var tile_scene = load("res://Scenes/tile.tscn")
 @onready var input_manager: Node2D = $"../InputManager"
 @onready var folder: Node2D = $Folder
 @onready var arrow: Sprite2D = $Folder/Button/arrow
+@onready var button: Button = $Folder/Button
 
 var menu_up : bool = true
 
@@ -53,29 +54,32 @@ func compare_x_position(a, b):
 	return false
 
 func _on_button_pressed() -> void:
-	arrow.rotation_degrees += 180
 	if menu_up:
 		animate_folder_down()
 	else:
 		animate_folder_up()
 	
 func animate_folder_down():
-	var tween = get_tree().create_tween()
-	tween.tween_property(folder, "global_position:y", position.y + 312, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	for tile in owned_tiles:
-		if !tile.is_placed:
-			tween.parallel() 
-			tween.tween_property(tile, "global_position:y", position.y + 312, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	menu_up = false
+	if menu_up:
+		arrow.rotation_degrees += 180
+		var tween = get_tree().create_tween()
+		tween.tween_property(folder, "global_position:y", position.y + 312, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		for tile in owned_tiles:
+			if !tile.is_placed:
+				tween.parallel() 
+				tween.tween_property(tile, "global_position:y", position.y + 312, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		menu_up = false
 			
 func animate_folder_up():
-	var tween = get_tree().create_tween()
-	tween.tween_property(folder, "global_position:y", position.y, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	for tile in owned_tiles:
-		if !tile.is_placed:
-			tween.parallel() 
-			tween.tween_property(tile, "global_position:y", position.y, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	menu_up = true
+	if !menu_up:
+		arrow.rotation_degrees += 180
+		var tween = get_tree().create_tween()
+		tween.tween_property(folder, "global_position:y", position.y, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		for tile in owned_tiles:
+			if !tile.is_placed:
+				tween.parallel() 
+				tween.tween_property(tile, "global_position:y", position.y, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		menu_up = true
 	
 func _on_button_button_up() -> void:
 	arrow.position.y -= 3
