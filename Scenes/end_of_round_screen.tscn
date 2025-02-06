@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://haftrks0la1y"]
+[gd_scene load_steps=9 format=3 uid="uid://haftrks0la1y"]
 
 [ext_resource type="Script" path="res://Scripts/end_of_round_screen.gd" id="1_ajpby"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="1_ef32e"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d48fil2fy2do" path="res://Assets/images/equals.png" id="3_pg3j8"]
 [ext_resource type="Texture2D" uid="uid://evf007ggceo8" path="res://Assets/images/multiply.png" id="4_1vqt7"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="7_1nflb"]
+[ext_resource type="PackedScene" uid="uid://b2fq8qe77ht7c" path="res://Scenes/fail_screen.tscn" id="8_n63ae"]
 
 [node name="EndOfRoundScreen" type="Node2D"]
 position = Vector2(960, 540)
@@ -223,6 +224,7 @@ scale = Vector2(3.7, 3.7)
 texture = ExtResource("3_pg3j8")
 
 [node name="Button" type="Button" parent="UI"]
+modulate = Color(0.542318, 0.542318, 0.542318, 1)
 self_modulate = Color(0.262745, 0.262745, 0.262745, 1)
 z_index = 3
 offset_left = 90.6667
@@ -231,16 +233,22 @@ offset_right = 229.667
 offset_bottom = 125.667
 theme = ExtResource("7_1nflb")
 theme_override_fonts/font = ExtResource("1_ef32e")
+disabled = true
 keep_pressed_outside = true
 
 [node name="Label" type="Label" parent="UI/Button"]
 layout_mode = 0
 offset_right = 139.0
 offset_bottom = 45.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_ef32e")
 text = "Continue"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="FailScreen" parent="." instance=ExtResource("8_n63ae")]
+z_index = 5
+position = Vector2(0, -1244)
 
 [connection signal="button_down" from="UI/Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="UI/Button" to="." method="_on_button_button_up"]

@@ -23,7 +23,7 @@ size = Vector2(1919, 758.5)
 [node name="Main" type="Node2D"]
 
 [node name="sten" parent="." instance=ExtResource("1_qqevy")]
-position = Vector2(960, 0)
+position = Vector2(960, -24)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

@@ -8,6 +8,8 @@ extends Node2D
 @onready var total_money: Label = $UI/Row3/ColorRect6/TotalMoney
 @onready var round_label: Label = $UI/ColorRect4/RoundLabel
 @onready var continue_label: Label = $UI/Button/Label
+@onready var button: Button = $UI/Button
+@onready var fail_screen: Node2D = $FailScreen
 
 var base_money = 3
 
@@ -42,6 +44,15 @@ func start_end_screen():
 		
 	Global.total_money += money_gain
 	
+	if Global.total_damage >= Global.quota:
+		button.disabled = false
+		button.modulate = Color(1, 1, 1)
+	else:
+		var tween = get_tree().create_tween()
+		tween.tween_property(fail_screen, "global_position:y", Global.window_size.y / 2, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+		await tween.finished
+		ui.visible = false
+	
 func animate_screen_scale():
 	var tween = get_tree().create_tween()
 	tween.tween_property(ui, "scale", Vector2(1.5, 1.5), 0.05)
@@ -50,8 +61,8 @@ func animate_screen_scale():
 func _on_button_pressed() -> void:
 	await move_off_screen()
 	_change_scene("res://Scenes/shop.tscn")
-	Global.quota *= 2
 	Global.round += 1
+	Global.quota = Global.round * 40
 	
 func _on_button_button_down() -> void:
 	continue_label.position.y += 2

@@ -5,7 +5,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Knowledge" : [0, 1, "Spell", "Draw 2 cards from either deck", "res://Scripts/kortAbilities/Knowledge.gd"],
 	"Shaman" : [1, 2, "ActiveTroop", "Give a unit +2 damage for 1 turn", "res://Scripts/kortAbilities/Shaman.gd"],
 	"Evil man" : [2, 2, "OnPlayTroop", "Halves damage on all alies and give all removed damage to itself", "res://Scripts/kortAbilities/EvilMan.gd"],
-	"Number game" : [0, 1, "Spell", "All cards get either +2 damager or -2 damage", "res://Scripts/kortAbilities/NumberGame.gd"],
+	"Number game" : [0, 1, "Spell", "All cards get either +2 damage or -2 damage", "res://Scripts/kortAbilities/NumberGame.gd"],
 	"Inevitability" :[3, 2, "OnPlayTroop", "When played, make two random cards in deck a copy of this card", "res://Scripts/kortAbilities/Inevitability.gd"],
 	"Eldritch" : [10, 2, "Troop", "On start of turn, chance to destroy ANY two played cards", "res://Scripts/kortAbilities/Eldritch.gd"],
 	"Chip" : [0, 1, "Spell", "Add one action", "res://Scripts/kortAbilities/Chip.gd"],

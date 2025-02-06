@@ -141,15 +141,14 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 	card_manager.update_card(new_card_instance)
 		
 func add_cards_on_start():
+	cards_in_troop_deck.clear()
+	cards_in_spell_deck.clear()
 	if Global.round == 1:
 		selected_deck = card_database.EXAMPLE_DECK
 			
 		for card in selected_deck:
 			add_new_card_to_deck(card["name"], card["amount"])
 	else:
-		cards_in_troop_deck.clear()
-		cards_in_spell_deck.clear()
-		
 		for card in Global.stored_cards:
 			add_card_to_deck(card["name"], card["attack"], card["actions"])
 			

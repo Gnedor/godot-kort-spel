@@ -83,6 +83,7 @@ func place_card_on_slot(slot):
 		if dragged_card.card_type == "OnPlayTroop":
 			dragged_card.ability_script.trigger_ability(dragged_card, battle_manager, deck, self)
 		update_card(dragged_card)
+		Global.played_cards.append(dragged_card.card_name)
 	align_cards()
 	
 func _on_size_changed():

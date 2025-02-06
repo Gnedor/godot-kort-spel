@@ -20,7 +20,6 @@ extends Node2D
 
 var turns : int
 var card_index : int
-var total_damage : int
 var turn : int = 1
 var invert_tween
 var active_select : bool = false
@@ -62,8 +61,13 @@ func new_turn():
 		end_turn.disabled = false
 
 		await get_tree().create_timer(0.5).timeout
-	else:
+	else:		
+		if Global.total_damage > Global.highest_damage:
+			Global.highest_damage = Global.total_damage
+		if Global.total_money > Global.highest_money:
+			Global.highest_money = Global.total_money
 		on_end_round()
+
 	
 func attack(played_cards):
 	if tiles_folder.menu_up:
@@ -91,7 +95,6 @@ func check_for_tile(card):
 			if slot.occupied_tile:
 				if slot.occupied_tile.tile_type == "OnAttack":
 					slot.occupied_tile.ability_script.tile_ability(card)
-			
 			
 func _on_attack_timer_timeout() -> void:
 	pass # Replace with function body.
@@ -274,7 +277,6 @@ func exit_chose_deck():
 	
 	ability_card.z_index = 1
 	card_manager.discard_selected_cards(cards, "Hand")
-	
 	
 func darken_screen():
 	var tween = get_tree().create_tween()
