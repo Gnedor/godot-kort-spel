@@ -8,6 +8,8 @@ var card_scene = load("res://Scenes/card.tscn")
 @onready var battle_manager: Node2D = $"../BattleManager"
 @onready var input_manager: Node2D = $"../InputManager"
 @onready var end_turn_label: Label = $"../BattleManager/EndTurn/EndTurnLabel"
+@onready var card_collection: Node2D = $"../CardCollection"
+@onready var back_label: Label = $"../CardCollection/Button/BackLabel"
 
 var dragged_card : Node2D
 var window_size : Vector2
@@ -17,6 +19,8 @@ var highest_card
 var played_cards = []
 var discarded_cards = []
 var cards_in_hand = []
+
+var viewing_collection : bool = false
 
 const CARD_MOVE_SPEED = 3000 # pixels per second
 const CARD_DRAW_SPEED = 8000
@@ -32,6 +36,7 @@ func _ready() -> void:
 	input_manager.card_relesed_on_slot.connect(place_card_on_slot)
 	input_manager.card_clicked_on_slot.connect(select_card)
 	input_manager.click_on_discard.connect(discard_selected_cards)
+	input_manager.click_on_deck.connect(show_card_collection)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -243,4 +248,27 @@ func discard_selected_cards(cards, status : String):
 			await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED)
 			discarded_cards.append(card)
 			card.visible = false
-	
+			
+func show_card_collection():
+	for child in card_collection.get_children().duplicate():
+		if child is Node2D:
+			child.queue_free()
+			
+	viewing_collection = true
+	card_collection.create_cards(deck)
+	var tween = get_tree().create_tween()
+	tween.tween_property(card_collection, "position", Vector2(0, 0), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	battle_manager.darken_screen()
+
+func _on_button_button_down() -> void:
+	back_label.position.y += 2
+
+func _on_button_button_up() -> void:
+		back_label.position.y -= 2
+
+func _on_button_pressed() -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property(card_collection, "position", Vector2(0, Global.window_size.y), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	await tween.finished
+	battle_manager.brighten_screen()
+	viewing_collection = false

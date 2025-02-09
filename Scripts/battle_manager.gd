@@ -47,6 +47,7 @@ func _ready() -> void:
 	
 	end_turn_label_position_y = end_turn_label.position.y
 	
+	
 func new_turn():
 	if turn <= 2:
 		turn += 1	
@@ -89,6 +90,7 @@ func attack(played_cards):
 				Global.total_damage += card.attack
 				total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
 				
+				
 func check_for_tile(card):
 	for slot in card_manager.card_slots.get_children():
 		if slot.global_position.x == card.global_position.x:
@@ -96,8 +98,10 @@ func check_for_tile(card):
 				if slot.occupied_tile.tile_type == "OnAttack":
 					slot.occupied_tile.ability_script.tile_ability(card)
 			
+			
 func _on_attack_timer_timeout() -> void:
 	pass # Replace with function body.
+	
 	
 func animate_attack(card : Node2D, position : Vector2, rotation : float, speed : float):
 	var original_position = card.position
@@ -112,24 +116,31 @@ func animate_attack(card : Node2D, position : Vector2, rotation : float, speed :
 	tween_position.tween_property(card, "position", original_position, speed).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween_rotation.tween_property(card, "rotation", original_rotation, speed).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	
+	
 func get_rotation_angle(card : Node2D):
 	var rotation = sten.get_node("AttackPoint").global_position.angle_to_point(card.position)
 	return rotation - PI/2
 
+
 func _on_end_turn_pressed() -> void:
 	new_turn()
+	
 	
 func _on_end_turn_button_down() -> void:
 	end_turn_label.position.y = end_turn_label_position_y + 3
 	
+	
 func _on_end_turn_button_up() -> void:
 	end_turn_label.position.y = end_turn_label_position_y
+	
 	
 func on_end_round():
 	end_round.emit()
 	
+	
 func toggle_invert(node, enable : bool):
 	node.material.set("shader_parameter/invert_strength", 1.0 if enable else 0.0)
+	
 	
 func animate_invert_blink(node):
 	var sprite_node = node.get_node("Sprite2D")
@@ -140,6 +151,7 @@ func animate_invert_blink(node):
 	
 	invert_tween = create_tween()
 	invert_tween.tween_property(sprite_node.material, "shader_parameter/invert_strength", 0.0, 0.5)
+	
 	
 func ability_effect(card : Node2D):
 	var tween_in = get_tree().create_tween()
@@ -180,6 +192,7 @@ func throw_projectile_from_card(animation_name : String, card : Node2D, time : f
 	Global.total_damage += damage
 	total_damage_label.text = str(Global.total_damage)
 	
+	
 func enter_active_card_activate():
 	if card_manager.played_cards:
 		active_select = true
@@ -198,6 +211,7 @@ func enter_active_card_activate():
 		await darken_screen()
 		add_text(hand_info)
 	
+	
 func activate_card_abilities():
 	for card in card_manager.played_cards:
 		
@@ -208,6 +222,7 @@ func activate_card_abilities():
 			card_manager.deselect_effect(card)
 			
 	exit_active_card_activate()
+		
 		
 func exit_active_card_activate():
 	for card in card_manager.cards_in_hand:
@@ -226,6 +241,7 @@ func exit_active_card_activate():
 		
 	hand_info.z_index = card_manager.cards_in_hand.size() + 5
 	hand_info.text = ("")
+	
 	
 func enter_chose_deck(played_card, draw_amount):
 	amount_to_draw = draw_amount
@@ -248,6 +264,7 @@ func enter_chose_deck(played_card, draw_amount):
 	await darken_screen()
 	add_text(hand_info)
 	
+	
 func on_deck_chosen(chosen_deck):
 	var cards = []
 	cards.append(ability_card)
@@ -258,6 +275,7 @@ func on_deck_chosen(chosen_deck):
 		await card_manager.draw_cards(0, amount_to_draw)
 	await Global.timer(0.2)
 	exit_chose_deck()
+	
 	
 func exit_chose_deck():
 	var cards = []
@@ -278,20 +296,24 @@ func exit_chose_deck():
 	ability_card.z_index = 1
 	card_manager.discard_selected_cards(cards, "Hand")
 	
+	
 func darken_screen():
 	var tween = get_tree().create_tween()
 	tween.tween_property(darken_background, "color", Color(0, 0, 0, 0.7), 0.1)
 	await tween.finished
+		
 		
 func brighten_screen():
 	var tween = get_tree().create_tween()
 	tween.tween_property(darken_background, "color", Color(0, 0, 0, 0), 0.1)
 	await tween.finished
 	
+	
 func add_text(label):
 	var tween = get_tree().create_tween()
 	tween.tween_property(label, "visible_ratio", 1.0, 0.2)
 	await tween.finished
+	
 	
 func remove_text(label):
 	var tween = get_tree().create_tween()

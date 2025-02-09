@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://col4ncuar707o"]
+[gd_scene load_steps=19 format=3 uid="uid://col4ncuar707o"]
 
 [ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_qqevy"]
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="2_1l3wp"]
@@ -16,6 +16,7 @@
 [ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="8_flwld"]
 [ext_resource type="PackedScene" uid="uid://dlf5nf8ot7glp" path="res://Scenes/spell_deck.tscn" id="9_bsubj"]
 [ext_resource type="PackedScene" uid="uid://daa4mye5x3rm5" path="res://Scenes/tiles_folder.tscn" id="16_lcit8"]
+[ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="17_ln450"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cy588"]
 size = Vector2(1919, 758.5)
@@ -90,6 +91,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DarkenBackground" type="ColorRect" parent="BattleManager"]
+z_index = 100
 offset_right = 1920.0
 offset_bottom = 1080.0
 mouse_filter = 2
@@ -298,9 +300,39 @@ metadata/_edit_use_anchors_ = true
 [node name="TilesFolder" parent="." instance=ExtResource("16_lcit8")]
 position = Vector2(960, -172)
 
+[node name="CardCollection" parent="." instance=ExtResource("17_ln450")]
+z_index = 1000
+position = Vector2(0, 1080)
+
+[node name="Button" type="Button" parent="CardCollection"]
+self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
+offset_left = 64.0
+offset_top = 936.0
+offset_right = 288.0
+offset_bottom = 1056.0
+theme = ExtResource("5_jdip0")
+keep_pressed_outside = true
+
+[node name="BackLabel" type="Label" parent="CardCollection/Button"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_7t6y8")
+theme_override_font_sizes/font_size = 32
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="timeout" from="SceneManager/Timer" to="SceneManager" method="_on_timer_timeout"]
 [connection signal="button_down" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_button_down"]
 [connection signal="button_up" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_button_up"]
 [connection signal="pressed" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_pressed"]
 [connection signal="timeout" from="BattleManager/AttackTimer" to="BattleManager" method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="TroopDeck/DrawAnimation" to="TroopDeck" method="_on_draw_animation_timeout"]
+[connection signal="button_down" from="CardCollection/Button" to="CardManager" method="_on_button_button_down"]
+[connection signal="button_up" from="CardCollection/Button" to="CardManager" method="_on_button_button_up"]
+[connection signal="pressed" from="CardCollection/Button" to="CardManager" method="_on_button_pressed"]

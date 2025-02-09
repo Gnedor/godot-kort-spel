@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=3 uid="uid://4gv81wu465g1"]
+
+[ext_resource type="Script" path="res://Scripts/card_collection.gd" id="1_nxfqe"]
+[ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="2_tvad7"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="3_ots7o"]
+
+[node name="CardCollection" type="Node2D"]
+script = ExtResource("1_nxfqe")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 128.0
+offset_top = 64.0
+offset_right = 1792.0
+offset_bottom = 1016.0
+color = Color(0.219501, 0.219501, 0.219501, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="ColorRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 476.0
+offset_right = 1648.0
+offset_bottom = 936.0
+color = Color(0.128344, 0.128344, 0.128344, 1)
+
+[node name="Label2" type="Label" parent="ColorRect/ColorRect2"]
+layout_mode = 0
+offset_left = 176.0
+offset_right = 636.0
+offset_bottom = 176.0
+rotation = 1.5708
+theme_override_fonts/font = ExtResource("2_tvad7")
+theme_override_font_sizes/font_size = 64
+text = "Spells"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 1648.0
+offset_bottom = 476.0
+color = Color(0.0323822, 0.0323822, 0.0323822, 1)
+
+[node name="Label" type="Label" parent="ColorRect/ColorRect"]
+layout_mode = 0
+offset_left = 176.0
+offset_right = 636.0
+offset_bottom = 175.0
+rotation = 1.5708
+theme_override_fonts/font = ExtResource("2_tvad7")
+theme_override_font_sizes/font_size = 64
+text = "Guys"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorRect3" type="ColorRect" parent="ColorRect"]
+layout_mode = 0
+offset_left = -127.0
+offset_top = -64.0
+offset_right = 1784.0
+offset_bottom = 1016.0
+color = Color(1, 1, 1, 0)
+
+[node name="Button2" type="Button" parent="."]
+self_modulate = Color(0.258082, 0.258082, 0.258082, 1)
+offset_left = 48.0
+offset_top = 437.0
+offset_right = 128.0
+offset_bottom = 643.0
+theme = ExtResource("3_ots7o")
+
+[node name="Button" type="Button" parent="."]
+self_modulate = Color(0.258082, 0.258082, 0.258082, 1)
+offset_left = 1792.0
+offset_top = 437.0
+offset_right = 1872.0
+offset_bottom = 643.0
+theme = ExtResource("3_ots7o")

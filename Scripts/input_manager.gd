@@ -4,6 +4,7 @@ extends Node2D
 @onready var deck: Node2D = $"../TroopDeck"
 @onready var battle_manager: Node2D = $"../BattleManager"
 @onready var tiles_folder: Node2D = $"../TilesFolder"
+@onready var card_collection: Node2D = $"../CardCollection"
 
 signal card_relesed_on_slot
 signal tile_relesed_on_slot
@@ -14,6 +15,7 @@ signal trigger_ability
 signal untrigger_ability
 signal select_target_card
 signal select_deck
+signal click_on_deck
 
 const CARD_MASK = 2
 const CARD_SLOT_MASK = 4
@@ -22,6 +24,7 @@ const STEN_MASK = 16
 const DISCARD_MASK = 32
 const SPELL_AREA_MASK = 64
 const TILE_MASK = 128
+const COLLECTION_CARD_MASK = 256
 
 var hovered_card : Node2D
 var dragged_card : Node2D
@@ -32,20 +35,26 @@ var dragged_tile : Node2D
 var selected_slot : Node2D
 
 func _process(delta: float) -> void:
-	if raycast_check(CARD_MASK) and !card_manager.dragged_card and !dragged_tile:
+	if raycast_check(CARD_MASK) and !card_manager.dragged_card and !dragged_tile and !card_manager.viewing_collection:
 		var highest_card = check_for_highest_z_index(raycast_check(CARD_MASK))
+		hovered_card = highest_card
+	elif raycast_check(COLLECTION_CARD_MASK): 
+		var highest_card = check_for_highest_z_index(raycast_check(COLLECTION_CARD_MASK))
 		hovered_card = highest_card
 	else:
 		hovered_card = null
 		
-	card_manager.align_card_hover(hovered_card)
-	
-	if raycast_check(TILE_MASK) and !tiles_folder.dragged_tile and !dragged_card:
+	if !card_manager.viewing_collection:
+		card_manager.align_card_hover(hovered_card)
+	else:
+		card_collection.align_card_hover(hovered_card)
+		
+	if raycast_check(TILE_MASK) and !tiles_folder.dragged_tile and !dragged_card and !card_manager.viewing_collection:
 		var highest_tile = check_for_highest_z_index(raycast_check(TILE_MASK))
 		hovered_tile = highest_tile
 	else:
 		hovered_tile = null
-		
+	
 	tiles_folder.align_tile_hover(hovered_tile)
 	
 # kollar vilket knapp som trycks
@@ -69,9 +78,11 @@ func _input(event):
 			if raycast_check(DISCARD_MASK):
 				click_on_discard.emit(card_manager.played_cards, "played")
 				
-			if raycast_check(DECK_MASK):
+			if raycast_check(DECK_MASK) and !card_manager.viewing_collection:
 				if battle_manager.deck_select:
 					select_deck.emit(raycast_check(DECK_MASK))
+				else: 
+					click_on_deck.emit()
 					
 			if hovered_tile and !hovered_tile.is_placed:
 				tiles_folder.dragged_tile = hovered_tile
@@ -156,3 +167,4 @@ func check_for_highest_z_index(cards):
 		return highest_card
 	else:
 		return
+		

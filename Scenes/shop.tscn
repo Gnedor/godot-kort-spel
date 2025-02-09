@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8tbmwqdapnsc"]
+[gd_scene load_steps=10 format=3 uid="uid://c8tbmwqdapnsc"]
 
 [ext_resource type="Script" path="res://Scripts/shop.gd" id="1_obqh1"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="1_s31jl"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://Scripts/shop_input_manager.gd" id="3_ernqd"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_ral8i"]
 [ext_resource type="Script" path="res://Scripts/shop_scene_manager.gd" id="6_e8hkw"]
+[ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="8_pd30o"]
+[ext_resource type="Texture2D" uid="uid://5s37xrvdyfoq" path="res://Assets/images/TrachCan2.png" id="9_7hr24"]
 
 [node name="Shop" type="Node2D"]
 script = ExtResource("1_obqh1")
@@ -282,6 +284,34 @@ vertical_alignment = 1
 
 [node name="ShopSceneManager" type="Node2D" parent="."]
 script = ExtResource("6_e8hkw")
+
+[node name="TrashCard" type="Button" parent="."]
+self_modulate = Color(0.212305, 0.212305, 0.212305, 1)
+offset_left = 1008.0
+offset_top = 472.0
+offset_right = 1712.0
+offset_bottom = 792.0
+theme = ExtResource("2_7pymf")
+keep_pressed_outside = true
+
+[node name="Node2D" type="Node2D" parent="TrashCard"]
+
+[node name="Label" type="Label" parent="TrashCard/Node2D"]
+offset_left = 80.0
+offset_top = 24.0
+offset_right = 354.0
+offset_bottom = 288.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("8_pd30o")
+theme_override_font_sizes/font_size = 80
+text = "TRASH
+CARD"
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="TrashCard/Node2D"]
+position = Vector2(528, 160)
+scale = Vector2(3, 3)
+texture = ExtResource("9_7hr24")
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]

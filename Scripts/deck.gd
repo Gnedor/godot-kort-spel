@@ -185,4 +185,34 @@ func replace_card_with_copy(card, copy_card):
 		sprite.texture = texture
 	else:
 		print("Sprite node not found in card instance")
+	adjust_text_size(card)
 	card_manager.update_card(card)
+	
+func create_card_copy(card):
+	var card_copy = card_scene.instantiate()
+	
+	card_copy.card_name = card.card_name
+	card_copy.card_type = card.card_type
+	card_copy.base_attack = card.turn_attack
+	card_copy.turn_attack = card_copy.base_attack
+	card_copy.attack = card_copy.base_attack
+	card_copy.base_actions = card.turn_actions
+	card_copy.actions = card_copy.base_actions
+	card_copy.turn_actions = card_copy.base_actions
+	card_copy.card_type = card.card_type
+	card_copy.card_name = card.card_name
+	card_copy.ability_script = card.ability_script
+
+	card_copy.get_node("Textures/NamnLabel").text = card.get_node("Textures/NamnLabel").text
+	var image_path = "res://Assets/Images/kort/" + card.card_name + "_card.png"
+	var texture = load(image_path)
+	var sprite = card_copy.get_node("Textures/ScaleNode/CardSprite")
+	if sprite:
+		sprite.texture = texture
+	else:
+		print("Sprite node not found in card instance")
+
+	get_parent().get_node("CardCollection").add_child(card_copy)
+	card_manager.update_card(card_copy)
+	adjust_text_size(card_copy)
+	return card_copy
