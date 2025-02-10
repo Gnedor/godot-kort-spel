@@ -5,6 +5,19 @@ const CARD_BOUNDRY = 1300
 var troop_cards = []
 var spell_cards = []
 var cards_in_collection = []
+var page_indicators = []
+
+var page : int = 0
+var max_page : int = 0
+
+@onready var arrow_left: Sprite2D = $Button_left/Arrow_left
+@onready var arrow_right: Sprite2D = $Button_right/Arrow_right
+
+@onready var button_left: Button = $Button_left
+@onready var button_right: Button = $Button_right
+
+var page_indicator: PackedScene = preload("res://Scenes/page_indicator.tscn")
+@onready var h_box_container: HBoxContainer = $HBoxContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -40,27 +53,39 @@ func create_cards(deck_reference):
 	align_cards()
 
 func align_cards():
-	var page = 0
-	var max_page : int
+	update_page_indicators()
+	for card in cards_in_collection:
+		card.position = Vector2(-1000, -1000)
+	
 	if troop_cards.size() > spell_cards.size():
-		max_page = (troop_cards.size() / 6)
+		max_page = ((troop_cards.size() - 1) / 12)
 	else:
-		max_page = (spell_cards.size() / 6)
+		max_page = ((spell_cards.size() - 1) / 12)
+		
+	if page == 0:
+		button_left.disabled = true
+	else:
+		button_left.disabled = false
+		
+	if page == max_page:
+		button_right.disabled = true
+	else:
+		button_right.disabled = false
 		
 	for i in range(6):
-		if troop_cards[i + (12 * page)]:
+		if troop_cards.size() >= i + (12 * page) + 1:
 			var card = troop_cards[i + (12 * page)]
 			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 192)
 		
-		if troop_cards[(6 + i) + (12 * page)]:
+		if troop_cards.size() >= (6 + i) + (12 * page) + 1:
 			var card = troop_cards[(6 + i) + (12 * page)]
 			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 428)
 			
-		if spell_cards[i + (12 * page)]:
+		if spell_cards.size() >= i + (12 * page) + 1:
 			var card = spell_cards[i + (12 * page)]
 			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 652)
 		
-		if spell_cards[(6 + i) + (12 * page)]:
+		if spell_cards.size() >= ((6 + i) + (12 * page)) + 1:
 			var card = spell_cards[(6 + i) + (12 * page)]
 			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 888)
 		
@@ -85,4 +110,44 @@ func hover_off_effect(card):
 	card.scale = Vector2(1, 1)
 	card.get_node("Textures/ScaleNode/StatDisplay").visible = false
 			
-	
+func create_page_indicators():
+	if h_box_container.get_child_count() != max_page + 1:
+		for dot in page_indicators.duplicate():
+			dot.queue_free()
+			page_indicators.pop_front()
+		
+		for i in range(max_page + 1):
+			var new_indicator = page_indicator.instantiate()
+			h_box_container.add_child(new_indicator)
+			page_indicators.append(new_indicator)
+		update_page_indicators()
+		
+func update_page_indicators():
+	for i in page_indicators.size():
+		if i == page:
+			page_indicators[i].modulate = Color(1, 1, 1)
+		else:
+			page_indicators[i].modulate = Color(0.4, 0.4, 0.4)
+
+func _on_button_left_pressed() -> void:
+	if page > 0:
+		page -= 1
+		align_cards()
+
+func _on_button_left_button_up() -> void:
+	arrow_left.position.y -= 2
+
+func _on_button_left_button_down() -> void:
+	arrow_left.position.y += 2
+
+
+func _on_button_right_button_down() -> void:
+	arrow_right.position.y += 2
+
+func _on_button_right_button_up() -> void:
+	arrow_right.position.y -= 2
+
+func _on_button_right_pressed() -> void:
+	if page < max_page:
+		page += 1
+		align_cards()

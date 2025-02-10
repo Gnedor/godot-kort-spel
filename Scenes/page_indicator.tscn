@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcw44nu6c53s4"]
+
+[ext_resource type="Texture2D" uid="uid://evf007ggceo8" path="res://Assets/images/multiply.png" id="1_4l3uq"]
+
+[node name="TextureRect" type="TextureRect"]
+size_flags_horizontal = 4
+texture = ExtResource("1_4l3uq")
+expand_mode = 2

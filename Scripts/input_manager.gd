@@ -62,14 +62,14 @@ func _input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		# On Press
 		if event.pressed:
-			if hovered_card:
+			if hovered_card and !card_manager.viewing_collection:
 				card_manager.dragged_card = hovered_card
 				dragged_card = hovered_card
 				if battle_manager.active_select:
 					battle_manager.selected_card = hovered_card
 					select_target_card.emit()
 				
-			if raycast_check(CARD_SLOT_MASK) and hovered_card:
+			if raycast_check(CARD_SLOT_MASK) and hovered_card and !card_manager.viewing_collection:
 				card_clicked_on_slot.emit(hovered_card)
 				
 			if raycast_check(STEN_MASK):

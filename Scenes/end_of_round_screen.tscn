@@ -248,7 +248,7 @@ vertical_alignment = 1
 
 [node name="FailScreen" parent="." instance=ExtResource("8_n63ae")]
 z_index = 5
-position = Vector2(0, -1244)
+position = Vector2(0, -1400)
 
 [connection signal="button_down" from="UI/Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="UI/Button" to="." method="_on_button_button_up"]

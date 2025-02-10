@@ -1803,8 +1803,6 @@ texture_margin_bottom = 16.0
 region_rect = Rect2(0, 0, 64, 64)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sppw6"]
-content_margin_top = 4.0
-content_margin_bottom = 2.0
 texture = ExtResource("1_ym7su")
 texture_margin_left = 16.0
 texture_margin_top = 16.0

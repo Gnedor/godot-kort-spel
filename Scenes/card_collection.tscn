@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://4gv81wu465g1"]
+[gd_scene load_steps=5 format=3 uid="uid://4gv81wu465g1"]
 
 [ext_resource type="Script" path="res://Scripts/card_collection.gd" id="1_nxfqe"]
 [ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="2_tvad7"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="3_ots7o"]
+[ext_resource type="Texture2D" uid="uid://bixpneadw16wk" path="res://Assets/images/open button.png" id="4_e8gi0"]
 
 [node name="CardCollection" type="Node2D"]
 script = ExtResource("1_nxfqe")
@@ -62,18 +63,53 @@ offset_right = 1784.0
 offset_bottom = 1016.0
 color = Color(1, 1, 1, 0)
 
-[node name="Button2" type="Button" parent="."]
-self_modulate = Color(0.258082, 0.258082, 0.258082, 1)
+[node name="Button_left" type="Button" parent="."]
+z_index = -1
 offset_left = 48.0
-offset_top = 437.0
-offset_right = 128.0
-offset_bottom = 643.0
+offset_top = 440.0
+offset_right = 136.0
+offset_bottom = 646.0
 theme = ExtResource("3_ots7o")
+keep_pressed_outside = true
 
-[node name="Button" type="Button" parent="."]
-self_modulate = Color(0.258082, 0.258082, 0.258082, 1)
-offset_left = 1792.0
-offset_top = 437.0
+[node name="Arrow_left" type="Sprite2D" parent="Button_left"]
+position = Vector2(40.0833, 100.25)
+rotation = 1.5708
+scale = Vector2(4, 4)
+texture = ExtResource("4_e8gi0")
+
+[node name="Button_right" type="Button" parent="."]
+z_index = -1
+offset_left = 1784.0
+offset_top = 440.0
 offset_right = 1872.0
-offset_bottom = 643.0
+offset_bottom = 646.0
 theme = ExtResource("3_ots7o")
+keep_pressed_outside = true
+
+[node name="Arrow_right" type="Sprite2D" parent="Button_right"]
+position = Vector2(48, 96)
+rotation = -1.5708
+scale = Vector2(4, 4)
+texture = ExtResource("4_e8gi0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 896.0
+offset_top = 1024.0
+offset_right = 1024.0
+offset_bottom = 1064.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[connection signal="button_down" from="Button_left" to="." method="_on_button_left_button_down"]
+[connection signal="button_up" from="Button_left" to="." method="_on_button_left_button_up"]
+[connection signal="pressed" from="Button_left" to="." method="_on_button_left_pressed"]
+[connection signal="button_down" from="Button_right" to="." method="_on_button_right_button_down"]
+[connection signal="button_up" from="Button_right" to="." method="_on_button_right_button_up"]
+[connection signal="pressed" from="Button_right" to="." method="_on_button_right_pressed"]

@@ -28,6 +28,7 @@ position = Vector2(960, -24)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
+ignore_rotation = false
 script = ExtResource("2_1l3wp")
 
 [node name="SceneManager" type="Node2D" parent="."]
@@ -304,7 +305,7 @@ position = Vector2(960, -172)
 z_index = 1000
 position = Vector2(0, 1080)
 
-[node name="Button" type="Button" parent="CardCollection"]
+[node name="BackButton" type="Button" parent="CardCollection"]
 self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
 offset_left = 64.0
 offset_top = 936.0
@@ -313,7 +314,7 @@ offset_bottom = 1056.0
 theme = ExtResource("5_jdip0")
 keep_pressed_outside = true
 
-[node name="BackLabel" type="Label" parent="CardCollection/Button"]
+[node name="BackLabel" type="Label" parent="CardCollection/BackButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -333,6 +334,6 @@ vertical_alignment = 1
 [connection signal="pressed" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_pressed"]
 [connection signal="timeout" from="BattleManager/AttackTimer" to="BattleManager" method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="TroopDeck/DrawAnimation" to="TroopDeck" method="_on_draw_animation_timeout"]
-[connection signal="button_down" from="CardCollection/Button" to="CardManager" method="_on_button_button_down"]
-[connection signal="button_up" from="CardCollection/Button" to="CardManager" method="_on_button_button_up"]
-[connection signal="pressed" from="CardCollection/Button" to="CardManager" method="_on_button_pressed"]
+[connection signal="button_down" from="CardCollection/BackButton" to="CardManager" method="_on_back_button_button_down"]
+[connection signal="button_up" from="CardCollection/BackButton" to="CardManager" method="_on_back_button_button_up"]
+[connection signal="pressed" from="CardCollection/BackButton" to="CardManager" method="_on_back_button_pressed"]

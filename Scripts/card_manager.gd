@@ -9,7 +9,7 @@ var card_scene = load("res://Scenes/card.tscn")
 @onready var input_manager: Node2D = $"../InputManager"
 @onready var end_turn_label: Label = $"../BattleManager/EndTurn/EndTurnLabel"
 @onready var card_collection: Node2D = $"../CardCollection"
-@onready var back_label: Label = $"../CardCollection/Button/BackLabel"
+@onready var back_label: Label = $"../CardCollection/BackButton/BackLabel"
 
 var dragged_card : Node2D
 var window_size : Vector2
@@ -257,18 +257,20 @@ func show_card_collection():
 	viewing_collection = true
 	card_collection.create_cards(deck)
 	var tween = get_tree().create_tween()
+	card_collection.create_page_indicators()
 	tween.tween_property(card_collection, "position", Vector2(0, 0), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	battle_manager.darken_screen()
 
-func _on_button_button_down() -> void:
+func _on_back_button_button_down() -> void:
 	back_label.position.y += 2
 
-func _on_button_button_up() -> void:
-		back_label.position.y -= 2
+func _on_back_button_button_up() -> void:
+	back_label.position.y -= 2
 
-func _on_button_pressed() -> void:
+func _on_back_button_pressed() -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(card_collection, "position", Vector2(0, Global.window_size.y), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
 	battle_manager.brighten_screen()
+	card_collection.page = 0
 	viewing_collection = false
