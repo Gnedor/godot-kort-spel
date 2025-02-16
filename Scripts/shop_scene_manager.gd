@@ -9,6 +9,8 @@ extends Node2D
 @onready var shop: Node2D = $".."
 @onready var continue_button: Button = $"../ContinueButton"
 @onready var tile_clip_mask: ColorRect = $"../TileClipMask"
+@onready var trash_card: Button = $"../TrashCard"
+@onready var card_collection: Node2D = $"../CardCollection"
 
 var shop_scene_up
 var shop_scene_down
@@ -16,8 +18,8 @@ var shop_scene_down
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	shop.exit_shop.connect(remove_shop_ui)
-	shop_scene_up = [card_slot, button, round_display, money_display]
-	shop_scene_down = [tile_slot, tile_slot_2, continue_button, tile_clip_mask]
+	shop_scene_up = [card_slot, button, round_display]
+	shop_scene_down = [tile_slot, tile_slot_2, continue_button, tile_clip_mask, trash_card]
 	
 	instant_remove_shop_ui()
 	await add_shop_ui()
@@ -58,3 +60,19 @@ func instant_remove_shop_ui():
 		node.position.y -= 1000
 	for node in shop_scene_down:
 		node.position.y += 1000
+
+func move_to_trash_card():
+	var tween = get_tree().create_tween()
+	for node in shop_scene_up:
+		tween.parallel().tween_property(node, "global_position:x", node.position.x - Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	for node in shop_scene_down:
+		tween.parallel().tween_property(node, "global_position:x", node.position.x - Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(card_collection, "global_position:x", 0, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+func move_from_trash_card():
+	var tween = get_tree().create_tween()
+	for node in shop_scene_up:
+		tween.parallel().tween_property(node, "global_position:x", node.position.x + Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	for node in shop_scene_down:
+		tween.parallel().tween_property(node, "global_position:x", node.position.x + Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(card_collection, "global_position:x", Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)

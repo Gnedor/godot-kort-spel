@@ -63,7 +63,8 @@ func _input(event):
 		# On Press
 		if event.pressed:
 			if hovered_card and !card_manager.viewing_collection:
-				card_manager.dragged_card = hovered_card
+				if !hovered_card.is_placed:
+					card_manager.dragged_card = hovered_card
 				dragged_card = hovered_card
 				if battle_manager.active_select:
 					battle_manager.selected_card = hovered_card

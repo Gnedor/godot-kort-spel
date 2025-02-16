@@ -77,7 +77,7 @@ func add_text(label):
 	
 func move_off_screen():
 	var tween = get_tree().create_tween()
-	tween.parallel().tween_property(ui, "position:y", ui.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(ui, "position:y", ui.position.y + 1500, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
 	
 func _change_scene(scene_path : String):

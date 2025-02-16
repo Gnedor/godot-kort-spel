@@ -121,7 +121,7 @@ func create_tile(tile_name: String):
 	color_text(new_tile_instance.description_label)
 	adjust_description_text(new_tile_instance.description_label)
 
-	var image_path = "res://Assets/Images/Tiles/" + tile_name + "_tile.png"
+	var image_path = "res://Assets/images/Tiles/" + tile_name + "_tile.png"
 	var texture = load(image_path)
 	var sprite = new_tile_instance.get_node("Sprite2D")
 	if sprite:
@@ -176,9 +176,6 @@ func place_tile_on_slot(slot):
 	align_tiles()
 		
 func adjust_description_text(label):
-	label.custom_minimum_size = Vector2(LABEL_MAX_SIZE, 0)
-	label.set_autowrap_mode(2)
-	
 	if label.get_line_count() <= 1:
 		label.custom_minimum_size = Vector2(0, 0)
 		label.set_autowrap_mode(0)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c8tbmwqdapnsc"]
+[gd_scene load_steps=11 format=3 uid="uid://c8tbmwqdapnsc"]
 
 [ext_resource type="Script" path="res://Scripts/shop.gd" id="1_obqh1"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="1_s31jl"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/shop_scene_manager.gd" id="6_e8hkw"]
 [ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="8_pd30o"]
 [ext_resource type="Texture2D" uid="uid://5s37xrvdyfoq" path="res://Assets/images/TrachCan2.png" id="9_7hr24"]
+[ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="10_banbt"]
 
 [node name="Shop" type="Node2D"]
 script = ExtResource("1_obqh1")
@@ -305,13 +306,39 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("8_pd30o")
 theme_override_font_sizes/font_size = 80
 text = "TRASH
-CARD"
+CARD: 5$"
 vertical_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="TrashCard/Node2D"]
-position = Vector2(528, 160)
+position = Vector2(568, 152)
 scale = Vector2(3, 3)
 texture = ExtResource("9_7hr24")
+
+[node name="CardCollection" parent="." instance=ExtResource("10_banbt")]
+position = Vector2(3840, 0)
+
+[node name="BackButton" type="Button" parent="CardCollection"]
+self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
+offset_left = 64.0
+offset_top = 936.0
+offset_right = 288.0
+offset_bottom = 1056.0
+theme = ExtResource("2_7pymf")
+keep_pressed_outside = true
+
+[node name="BackLabel" type="Label" parent="CardCollection/BackButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_ral8i")
+theme_override_font_sizes/font_size = 32
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
@@ -319,3 +346,5 @@ texture = ExtResource("9_7hr24")
 [connection signal="button_down" from="ContinueButton" to="." method="_on_continue_button_button_down"]
 [connection signal="button_up" from="ContinueButton" to="." method="_on_continue_button_button_up"]
 [connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="TrashCard" to="." method="_on_trash_card_pressed"]
+[connection signal="pressed" from="CardCollection/BackButton" to="." method="_on_back_button_pressed"]

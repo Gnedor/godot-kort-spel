@@ -41,7 +41,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# kollar om man har klickat på ett kort och flyttar kortet till muspekaren
-	if dragged_card and !dragged_card.is_placed:
+	if dragged_card:
 		dragged_card.position = Vector2(
 			clamp(get_global_mouse_position().x, 0, window_size.x), 
 			clamp(get_global_mouse_position().y, 0, window_size.y))
@@ -162,14 +162,16 @@ func hover_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1.05, 1.05)
 	animate_card_snap(card_textures, Vector2(0, -75), 2000)
+	card.description.visible = true
 	if card.card_type != "Spell":
-		card.get_node("Textures/ScaleNode/StatDisplay").visible = true
+		card.stat_display.visible = true
 		
 func hover_off_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1, 1)
 	animate_card_snap(card_textures, Vector2(0, 0), 2000)
-	card.get_node("Textures/ScaleNode/StatDisplay").visible = false
+	card.description.visible = false
+	card.stat_display.visible = false
 	
 func select_effect(card):
 	card.scale = Vector2(1.1, 1.1)
@@ -193,6 +195,11 @@ func align_card_hover(hovered_card):
 		elif card != hovered_card:
 			hover_off_effect(card)
 			card.is_hovering = false
+	for card in played_cards:
+		if card == hovered_card and !card.description.visible and card.card_type != "Troop":
+			card.description.visible = true
+		elif card != hovered_card and card.description.visible:
+			card.description.visible = false
 			
 func animate_card_snap(card, position, speed):
 	var tween = get_tree().create_tween()
@@ -255,7 +262,7 @@ func show_card_collection():
 			child.queue_free()
 			
 	viewing_collection = true
-	card_collection.create_cards(deck)
+	card_collection.create_cards_deck(deck)
 	var tween = get_tree().create_tween()
 	card_collection.create_page_indicators()
 	tween.tween_property(card_collection, "position", Vector2(0, 0), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
@@ -274,3 +281,6 @@ func _on_back_button_pressed() -> void:
 	battle_manager.brighten_screen()
 	card_collection.page = 0
 	viewing_collection = false
+	
+func trigger_card_ability(card):
+	card.ability_script.trigger_ability(card, battle_manager, deck, self)

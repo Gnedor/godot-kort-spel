@@ -13,3 +13,8 @@
 	#Tile som duplicerar kort som spelas på den
 	
 #Kort:
+
+
+
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# kortens abilities ska stå som tile abilities och den blanka delen ska istället ha buffs med iconer

@@ -52,17 +52,21 @@ func new_turn():
 	if turn <= 2:
 		turn += 1	
 		turn_counter.text = "Turn: " + str(turn) + "/3"
-		card_manager.draw_cards(3, 1)		
+		card_manager.draw_cards(3, 1)
 		for card in card_manager.played_cards:
 			card.attack = card.turn_attack
 			card.actions = card.turn_actions
 			card_manager.update_card(card)
+			
+			#if card.card_type == "TurnStartTroop":
+				
 		end_turn.disabled = true
 		await Global.timer(0.1)
 		end_turn.disabled = false
 
 		await get_tree().create_timer(0.5).timeout
-	else:		
+	else:
+		end_turn.disabled = true
 		if Global.total_damage > Global.highest_damage:
 			Global.highest_damage = Global.total_damage
 		if Global.total_money > Global.highest_money:
@@ -159,15 +163,12 @@ func ability_effect(card : Node2D):
 	tween_in.parallel().tween_property(card.card_sprite.material, "shader_parameter/hit_opacity", 1.0, 0.1).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween_in.parallel().tween_property(card.namn_label, "theme_override_colors/font_color", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	
-	tween_in.parallel().tween_property(card.ability_description_text, "theme_override_colors/font_color", Color(1, 1, 1, 1), 0.1).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	
 	await tween_in.finished
 	
 	var tween_out = get_tree().create_tween()
 	tween_out.parallel().tween_property(card, "scale", Vector2(1, 1), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween_out.parallel().tween_property(card.card_sprite.material, "shader_parameter/hit_opacity", 0.0, 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	
-	tween_out.parallel().tween_property(card.ability_description_text, "theme_override_colors/font_color", Color(0, 0, 0, 1), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween_out.parallel().tween_property(card.namn_label, "theme_override_colors/font_color", Color(0, 0, 0, 1), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	
 	await tween_out.finished

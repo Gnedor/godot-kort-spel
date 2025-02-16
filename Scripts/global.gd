@@ -41,7 +41,7 @@ func reset_game():
 	round = 1
 	played_cards.clear()
 	
-func most_common_card():
+func find_common_card():
 	var frequency := {}
 	
 	# Count occurrences

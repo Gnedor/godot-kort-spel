@@ -52,6 +52,7 @@ func add_new_card_to_deck(card_name : String, times : int):
 	for i in range(times):
 		var new_card_instance = card_scene.instantiate()
 		var card_type = card_database.CARDS[card_name][2]
+		card_manager.add_child(new_card_instance)
 		
 		if card_type != "Spell":
 			new_card_instance.position = position
@@ -70,28 +71,13 @@ func add_new_card_to_deck(card_name : String, times : int):
 		new_card_instance.actions = new_card_instance.base_actions
 		new_card_instance.card_type = card_database.CARDS[card_name][2]
 		new_card_instance.card_name = card_name
-		new_card_instance.get_node("Textures/NamnLabel").text = card_name
-		adjust_text_size(new_card_instance)
-	
-		if card_type != "Troop":
-			new_card_instance.get_node("Textures/AbilityDescriptionText").text = card_database.CARDS[card_name][3]
-			var new_card_ability_script_path = card_database.CARDS[card_name][4]
-			new_card_instance.ability_script = load(new_card_ability_script_path).new()
+		
+		adjust_card_details_and_script(new_card_instance)
 			
 		if card_type != "Spell":
 			cards_in_troop_deck.append(new_card_instance)
 		else:
 			cards_in_spell_deck.append(new_card_instance)
-			
-		card_manager.add_child(new_card_instance)
-		
-		var image_path = "res://Assets/Images/kort/" + card_name + "_card.png"
-		var texture = load(image_path)
-		var sprite = new_card_instance.get_node("Textures/ScaleNode/CardSprite")
-		if sprite:
-			sprite.texture = texture
-		else:
-			print("Sprite node not found in card instance")
 		
 		card_manager.update_card(new_card_instance)
 		
@@ -103,6 +89,7 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 		new_card_instance.position = position
 	else:
 		new_card_instance.position = spell_deck.position
+	card_manager.add_child(new_card_instance)
 	
 	new_card_instance.z_index = 0
 	new_card_instance.visible = false
@@ -116,27 +103,13 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 	new_card_instance.turn_actions = card_actions
 	new_card_instance.card_type = card_database.CARDS[card_name][2]
 	new_card_instance.card_name = card_name
-	new_card_instance.get_node("Textures/NamnLabel").text = card_name
 	
-	if card_type != "Troop":
-		new_card_instance.get_node("Textures/AbilityDescriptionText").text = card_database.CARDS[card_name][3]
-		var new_card_ability_script_path = card_database.CARDS[card_name][4]
-		new_card_instance.ability_script = load(new_card_ability_script_path).new()
+	adjust_card_details_and_script(new_card_instance)
 	
 	if card_type != "Spell":
 		cards_in_troop_deck.append(new_card_instance)
 	else:
 		cards_in_spell_deck.append(new_card_instance)
-		
-	card_manager.add_child(new_card_instance)
-	
-	var image_path = "res://Assets/Images/kort/" + card_name + "_card.png"
-	var texture = load(image_path)
-	var sprite = new_card_instance.get_node("Textures/ScaleNode/CardSprite")
-	if sprite:
-		sprite.texture = texture
-	else:
-		print("Sprite node not found in card instance")
 		
 	card_manager.update_card(new_card_instance)
 		
@@ -177,19 +150,15 @@ func replace_card_with_copy(card, copy_card):
 	card.card_type = copy_card.card_type
 	card.card_name = copy_card.card_name
 	card.ability_script = copy_card.ability_script
-	card.get_node("Textures/NamnLabel").text = copy_card.get_node("Textures/NamnLabel").text
-	var image_path = "res://Assets/Images/kort/" + card.card_name + "_card.png"
-	var texture = load(image_path)
-	var sprite = card.get_node("Textures/ScaleNode/CardSprite")
-	if sprite:
-		sprite.texture = texture
-	else:
-		print("Sprite node not found in card instance")
+	
+	adjust_card_details_and_script(card)
+		
 	adjust_text_size(card)
 	card_manager.update_card(card)
 	
 func create_card_copy(card):
 	var card_copy = card_scene.instantiate()
+	get_parent().get_node("CardCollection").add_child(card_copy)
 	
 	card_copy.card_name = card.card_name
 	card_copy.card_type = card.card_type
@@ -202,17 +171,63 @@ func create_card_copy(card):
 	card_copy.card_type = card.card_type
 	card_copy.card_name = card.card_name
 	card_copy.ability_script = card.ability_script
-
-	card_copy.get_node("Textures/NamnLabel").text = card.get_node("Textures/NamnLabel").text
-	var image_path = "res://Assets/Images/kort/" + card.card_name + "_card.png"
+	
+	adjust_card_details_and_script(card_copy)
+	
+	return card_copy
+	
+func adjust_description_text(label):
+	if label.get_line_count() <= 1:
+		label.custom_minimum_size = Vector2(0, 0)
+		print(label.text)
+		print(label.custom_minimum_size)
+		label.set_autowrap_mode(0)
+		
+func color_text(label):
+	var target_word = "Damage"
+	var color = Color.html("#ac3232")
+	var colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
+	label.text = label.text.replace(target_word, colored_word)
+	
+	target_word = "Actions"
+	color = Color.html("#639bff")
+	colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
+	label.text = label.text.replace(target_word, colored_word)
+	
+func adjust_card_details_and_script(card):
+	var card_name = card.card_name
+	card.get_node("Textures/NamnLabel").text = card_name
+	adjust_text_size(card)
+	card.name_label.text = card_name
+		
+	if card_database.CARDS[card_name][3]:
+		card.description_label.text = "[center]" + str(card_database.CARDS[card_name][3]) + "[/center]"
+		color_text(card.description_label)
+	else:
+		card.description_label.text = "[center]Does nothing[/center]"
+	adjust_description_text(card.description_label)
+	
+	if card.card_type != "Troop":
+		var new_card_ability_script_path = card_database.CARDS[card_name][4]
+		card.ability_script = load(new_card_ability_script_path).new()
+			
+	var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
 	var texture = load(image_path)
-	var sprite = card_copy.get_node("Textures/ScaleNode/CardSprite")
+	var sprite = card.card_sprite
 	if sprite:
 		sprite.texture = texture
 	else:
-		print("Sprite node not found in card instance")
+		print("Sprite node not found")
+		
+	sprite = card.action_sprite
+	if card.card_type != "Troop":
+		image_path = "res://Assets/images/ActionTypes/" + card.card_type + "_type.png"
+		texture = load(image_path)
 
-	get_parent().get_node("CardCollection").add_child(card_copy)
-	card_manager.update_card(card_copy)
-	adjust_text_size(card_copy)
-	return card_copy
+		if sprite:
+			sprite.texture = texture
+		else:
+			print("Sprite node not found")
+	else:
+		sprite.texture = null
+	

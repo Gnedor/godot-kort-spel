@@ -7,13 +7,14 @@ extends Node2D
 @onready var stat_display: Sprite2D = $Textures/ScaleNode/StatDisplay
 @onready var attack_label: Label = $Textures/ScaleNode/StatDisplay/AttackLabel
 @onready var actions_label: Label = $Textures/ScaleNode/StatDisplay/ActionsLabel
-@onready var ability_description_text: Label = $Textures/AbilityDescriptionText
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var namn_label: Label = $Textures/NamnLabel
 @onready var area_2d: Area2D = $Area2D
 @onready var buy_button: Node2D = $BuyButton
-
-signal buy_card
+@onready var description_label: RichTextLabel = $Textures/Description/MarginContainer/MarginContainer/DescriptionLabel
+@onready var name_label: Label = $Textures/Description/MarginContainer/NameLabel
+@onready var description: MarginContainer = $Textures/Description
+@onready var action_sprite: TextureRect = $Textures/Description/NinePatchRect/TextureRect
 
 var is_placed : bool = false
 var is_hovering : bool = false
@@ -23,7 +24,7 @@ var is_discarded : bool = false
 
 var attack : int
 var turn_attack : int # what attack should be to end of round
-var base_attack: int # what attack should be at start of round
+var base_attack: int # what attack should be at start of turn
 var actions : int
 var turn_actions : int # what actions should be to end of round
 var base_actions : int # what actions should be at start of turn
@@ -33,6 +34,5 @@ var ability_script
 var price : int
 
 func _ready() -> void:
-	#get_parent().connect_card_signals(self)
 	var unique_material = card_sprite.material.duplicate()
 	card_sprite.material = unique_material

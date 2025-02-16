@@ -30,6 +30,7 @@ var tiles_in_shop = []
 var tile_labels = []
 
 var start_process : bool = false
+var rerolling : bool = false
 var reroll_label_position_y
 var continue_label_position_y
 
@@ -49,8 +50,9 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if start_process:
-		card_hover_effect()
-		tile_hover_effect()
+		if !rerolling:
+			card_hover_effect()
+			tile_hover_effect()
 		money_label.text = str(Global.total_money) + "$"
 	
 func add_items_on_start():
@@ -80,7 +82,6 @@ func get_random_tile():
 	return random_tiles
 	
 func connect_card_signal(card):
-	#card.buy_card.connect(buy_card)
 	card.buy_button.buy_button_pressed.connect(buy_card)
 	
 func buy_card(card):
@@ -126,6 +127,7 @@ func make_new_cards():
 	#card_slot.clip_contents = true
 	var cards = get_random_card(shop_card_amount)
 	animate_card_reroll(cards_in_shop)
+	remove_old_cards(cards_in_shop.duplicate())
 	cards_in_shop.clear()
 	for card_name in cards:
 		var new_card_instance = card_scene.instantiate()
@@ -139,33 +141,54 @@ func make_new_cards():
 		new_card_instance.card_name = card_name
 		var random_price = randi() % (3 + reroll_count) + (4 + reroll_count)
 		new_card_instance.price = random_price
-		
-		#new_card_instance.get_node("Textures/DescriptionText").text = card_database.CARDS[card_name][4]
-		new_card_instance.get_node("Textures/NamnLabel").text = card_name
-		
-		if card_database.CARDS[card_name][2] != "Troop":
-			new_card_instance.get_node("Textures/AbilityDescriptionText").text = card_database.CARDS[card_name][3]
 			
-		var image_path = "res://Assets/Images/kort/" + card_name + "_card.png"
-		var texture = load(image_path)
-		var sprite = new_card_instance.get_node("Textures/ScaleNode/CardSprite")
-		if sprite:
-			sprite.texture = texture
-		else:
-			print("Sprite node not found in card instance")
-		
+		if new_card_instance.card_type == "Spell":
+			new_card_instance.get_node("Textures/ScaleNode/StatDisplay").visible = false
 		card_clip_mask.add_child(new_card_instance)  
 		cards_in_shop.append(new_card_instance)
 		connect_card_signal(new_card_instance)
+		adjust_card_details(new_card_instance)
 		
 	align_new_cards(cards_in_shop)
 	animate_card_reroll(cards_in_shop)
 	await Global.timer(0.5)
 	add_card_price_text()
 	
+func adjust_card_details(card):
+	var card_name = card.card_name
+	card.get_node("Textures/NamnLabel").text = card_name
+	adjust_text_size(card)
+	card.name_label.text = card_name
+		
+	if card_database.CARDS[card_name][3]:
+		card.description_label.text = "[center]" + str(card_database.CARDS[card_name][3]) + "[/center]"
+		color_text(card.description_label)
+	else:
+		card.description_label.text = "[center]Does nothing[/center]"
+	adjust_description_text(card.description_label)
+			
+	var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
+	var texture = load(image_path)
+	var sprite = card.card_sprite
+	if sprite:
+		sprite.texture = texture
+	else:
+		print("Sprite node not found")
+	card.description.visible = false
+		
+	if card.card_type != "Troop":
+		image_path = "res://Assets/images/ActionTypes/" + card.card_type + "_type.png"
+		texture = load(image_path)
+		sprite = card.action_sprite
+		if sprite:
+			sprite.texture = texture
+		else:
+			print("Sprite node not found")
+	
 func make_new_tiles():
 	var tiles = get_random_tile()
 	animate_tile_reroll(tiles_in_shop)
+	remove_old_tiles(tiles_in_shop.duplicate())
 	tiles_in_shop.clear()
 	remove_tile_price_text()
 	for tile_name in tiles:
@@ -181,6 +204,7 @@ func make_new_tiles():
 		new_tile_instance.tile_type = tile_database.TILES[tile_name][2]
 		new_tile_instance.name_label.text = tile_name
 		new_tile_instance.description_label.text = "[center]" + str(tile_database.TILES[tile_name][0]) + "[/center]"
+		
 		adjust_description_text(new_tile_instance.description_label)
 		color_text(new_tile_instance.description_label)
 		
@@ -227,6 +251,7 @@ func align_new_tiles(tiles):
 	tiles[1].position = Vector2(488, -240)
 
 func _on_button_pressed() -> void:
+	rerolling = true
 	reroll_count += 1
 	reroll_label.modulate = Color(0.8, 0.8, 0.8)
 	button.disabled = true
@@ -235,6 +260,7 @@ func _on_button_pressed() -> void:
 	await Global.timer(0.7)
 	reroll_label.modulate = Color(1.0, 1.0, 1.0)
 	button.disabled = false
+	rerolling = false
 	
 func _on_button_button_down() -> void:
 	reroll_label.position.y = reroll_label_position_y + 3
@@ -248,18 +274,21 @@ func card_hover_effect():
 		var card_texture = card.get_node("Textures")
 		if card == hovered_card and card_texture.scale != Vector2(1.05, 1.05):
 			card_texture.scale = Vector2(1.05, 1.05)
+			card.description.visible = true
 		elif card != hovered_card and card_texture.scale == Vector2(1.05, 1.05):
 			card_texture.scale = Vector2(1, 1)
+			card.description.visible = false
 			
 func tile_hover_effect():
 	hovered_tile = shop_input_manager.hovered_tile
-	for tile in tiles_in_shop:
-		if tile == hovered_tile:
-			tile.scale = Vector2(1.05, 1.05)
-			tile.description.visible = true
-		elif tile != hovered_tile:
-			tile.scale = Vector2(1, 1)
-			tile.description.visible = false
+	if tiles_in_shop:
+		for tile in tiles_in_shop:
+			if tile == hovered_tile:
+				tile.scale = Vector2(1.05, 1.05)
+				tile.description.visible = true
+			elif tile != hovered_tile:
+				tile.scale = Vector2(1, 1)
+				tile.description.visible = false
 			
 func add_card_price_text():
 	for card in cards_in_shop:
@@ -328,3 +357,21 @@ func color_text(label):
 	color = Color.html("#639bff")
 	colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
 	label.text = label.text.replace(target_word, colored_word)
+	
+func remove_old_cards(cards):
+	await Global.timer(0.5)
+	for card in cards:
+		card.queue_free()
+		
+func remove_old_tiles(tiles):
+	await Global.timer(0.5)
+	for tile in tiles:
+		tile.queue_free()
+
+
+func _on_trash_card_pressed() -> void:
+	shop_scene_manager.move_to_trash_card()
+
+
+func _on_back_button_pressed() -> void:
+	shop_scene_manager.move_from_trash_card()

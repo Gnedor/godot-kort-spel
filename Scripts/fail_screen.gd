@@ -12,8 +12,8 @@ func _ready() -> void:
 	damage_label.text = str(Global.highest_damage)
 	money_label.text = str(Global.highest_money) + "$"
 	round_label.text = str(Global.round)
-	if Global.most_common_card():
-		card_label.text = Global.most_common_card()
+	if Global.find_common_card():
+		card_label.text = Global.find_common_card()
 	else:
 		card_label.text = "None"
 

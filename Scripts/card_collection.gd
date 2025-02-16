@@ -27,11 +27,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 	
-func create_cards(deck_reference):
+func create_cards_deck(deck_reference):
 	troop_cards.clear()
 	spell_cards.clear()
 	cards_in_collection.clear()
-	var next_deck : int = 1
 	
 	var troop_deck = deck_reference.cards_in_troop_deck.duplicate()
 	troop_deck.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
@@ -51,6 +50,13 @@ func create_cards(deck_reference):
 		spell_cards.append(card_copy)
 		cards_in_collection.append(card_copy)
 	align_cards()
+	
+func create_cards_global():
+	troop_cards.clear()
+	spell_cards.clear()
+	cards_in_collection.clear()
+	
+	var troop_deck = true
 
 func align_cards():
 	update_page_indicators()
@@ -102,12 +108,14 @@ func align_card_hover(hovered_card):
 func hover_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1.05, 1.05)
+	card.description.visible = true
 	if card.card_type != "Spell":
 		card.get_node("Textures/ScaleNode/StatDisplay").visible = true
 		
 func hover_off_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1, 1)
+	card.description.visible = false
 	card.get_node("Textures/ScaleNode/StatDisplay").visible = false
 			
 func create_page_indicators():
