@@ -51,6 +51,30 @@ func create_cards_deck(deck_reference):
 		cards_in_collection.append(card_copy)
 	align_cards()
 	
+func move_in_cards(deck_reference):
+	var troop_deck = deck_reference.cards_in_troop_deck
+	var spell_deck = deck_reference.cards_in_spell_deck
+	
+	troop_cards = troop_deck.duplicate()
+	spell_cards = spell_deck.duplicate()
+	
+	troop_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+	spell_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+	
+	for card in troop_cards:
+		card.z_index = 1050
+		card.visible = true
+		card.get_node("Area2D").collision_layer = 1 << 8
+		cards_in_collection.append(card)
+		
+	for card in spell_cards:
+		card.z_index = 1050
+		card.visible = true
+		card.get_node("Area2D").collision_layer = 1 << 8
+		cards_in_collection.append(card)
+
+	align_cards()
+	
 func create_cards_global():
 	troop_cards.clear()
 	spell_cards.clear()
@@ -117,19 +141,19 @@ func hover_off_effect(card):
 	card.scale = Vector2(1, 1)
 	card.description.visible = false
 	card.get_node("Textures/ScaleNode/StatDisplay").visible = false
-			
+
 func create_page_indicators():
 	if h_box_container.get_child_count() != max_page + 1:
 		for dot in page_indicators.duplicate():
 			dot.queue_free()
 			page_indicators.pop_front()
-		
+
 		for i in range(max_page + 1):
 			var new_indicator = page_indicator.instantiate()
 			h_box_container.add_child(new_indicator)
 			page_indicators.append(new_indicator)
 		update_page_indicators()
-		
+
 func update_page_indicators():
 	for i in page_indicators.size():
 		if i == page:
