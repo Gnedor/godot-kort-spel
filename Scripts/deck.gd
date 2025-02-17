@@ -179,8 +179,6 @@ func create_card_copy(card):
 func adjust_description_text(label):
 	if label.get_line_count() <= 1:
 		label.custom_minimum_size = Vector2(0, 0)
-		print(label.text)
-		print(label.custom_minimum_size)
 		label.set_autowrap_mode(0)
 		
 func color_text(label):

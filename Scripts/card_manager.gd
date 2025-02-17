@@ -262,10 +262,12 @@ func show_card_collection():
 			child.queue_free()
 			
 	viewing_collection = true
-	card_collection.create_cards_deck(deck)
+	card_collection.move_in_cards(deck)
 	var tween = get_tree().create_tween()
 	card_collection.create_page_indicators()
 	tween.tween_property(card_collection, "position", Vector2(0, 0), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	for card in card_collection.cards_in_collection:
+		card.position.y = card.position.y + Global.window_size.y
 	battle_manager.darken_screen()
 
 func _on_back_button_button_down() -> void:
