@@ -69,6 +69,7 @@ offset_left = 48.0
 offset_top = 440.0
 offset_right = 136.0
 offset_bottom = 646.0
+focus_mode = 0
 theme = ExtResource("3_ots7o")
 keep_pressed_outside = true
 
@@ -84,6 +85,7 @@ offset_left = 1784.0
 offset_top = 440.0
 offset_right = 1872.0
 offset_bottom = 646.0
+focus_mode = 0
 theme = ExtResource("3_ots7o")
 keep_pressed_outside = true
 

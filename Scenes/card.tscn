@@ -85,6 +85,7 @@ offset_bottom = 33.6667
 color = Color(0, 0, 0, 0.4)
 
 [node name="StatDisplay" type="Sprite2D" parent="Textures/ScaleNode"]
+z_index = 1
 position = Vector2(0, -66.6667)
 texture = ExtResource("4_4oeem")
 
@@ -125,6 +126,7 @@ autowrap_mode = 1
 justification_flags = 0
 
 [node name="Description" type="MarginContainer" parent="Textures"]
+visible = false
 z_index = 100
 anchors_preset = 1
 anchor_left = 1.0
@@ -187,7 +189,7 @@ theme_override_constants/margin_right = 10
 
 [node name="DescriptionLabel" type="RichTextLabel" parent="Textures/Description/MarginContainer/MarginContainer"]
 clip_contents = false
-custom_minimum_size = Vector2(280, 0)
+custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0

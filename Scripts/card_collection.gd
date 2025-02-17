@@ -10,6 +10,9 @@ var page_indicators = []
 var page : int = 0
 var max_page : int = 0
 
+var troop_deck_position
+var spell_deck_position
+
 @onready var arrow_left: Sprite2D = $Button_left/Arrow_left
 @onready var arrow_right: Sprite2D = $Button_right/Arrow_right
 
@@ -18,14 +21,6 @@ var max_page : int = 0
 
 var page_indicator: PackedScene = preload("res://Scenes/page_indicator.tscn")
 @onready var h_box_container: HBoxContainer = $HBoxContainer
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
 func create_cards_deck(deck_reference):
 	troop_cards.clear()
@@ -52,6 +47,7 @@ func create_cards_deck(deck_reference):
 	align_cards()
 	
 func move_in_cards(deck_reference):
+	cards_in_collection.clear()
 	var troop_deck = deck_reference.cards_in_troop_deck
 	var spell_deck = deck_reference.cards_in_spell_deck
 	
@@ -62,18 +58,26 @@ func move_in_cards(deck_reference):
 	spell_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
 	
 	for card in troop_cards:
-		card.z_index = 1050
+		card.get_node("Area2D/CollisionShape2D").disabled = false
+		card.z_index = 1010
 		card.visible = true
 		card.get_node("Area2D").collision_layer = 1 << 8
 		cards_in_collection.append(card)
 		
 	for card in spell_cards:
-		card.z_index = 1050
+		card.get_node("Area2D/CollisionShape2D").disabled = false
+		card.z_index = 1010
 		card.visible = true
 		card.get_node("Area2D").collision_layer = 1 << 8
 		cards_in_collection.append(card)
 
 	align_cards()
+	
+func move_out_cards():
+	for card in cards_in_collection:
+		card.get_node("Area2D/CollisionShape2D").disabled = true
+		card.get_node("Area2D").collision_layer = 1 << 1
+		card.z_index = 1
 	
 func create_cards_global():
 	troop_cards.clear()

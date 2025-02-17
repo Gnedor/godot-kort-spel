@@ -151,14 +151,12 @@ func replace_card_with_copy(card, copy_card):
 	card.card_name = copy_card.card_name
 	card.ability_script = copy_card.ability_script
 	
-	adjust_card_details_and_script(card)
-		
 	adjust_text_size(card)
 	card_manager.update_card(card)
+	adjust_card_details_and_script(card)
 	
 func create_card_copy(card):
 	var card_copy = card_scene.instantiate()
-	get_parent().get_node("CardCollection").add_child(card_copy)
 	
 	card_copy.card_name = card.card_name
 	card_copy.card_type = card.card_type
@@ -177,6 +175,8 @@ func create_card_copy(card):
 	return card_copy
 	
 func adjust_description_text(label):
+	label.custom_minimum_size = Vector2(260, 0)
+	label.set_autowrap_mode(2)
 	if label.get_line_count() <= 1:
 		label.custom_minimum_size = Vector2(0, 0)
 		label.set_autowrap_mode(0)

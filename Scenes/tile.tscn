@@ -19,6 +19,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("1_mfqbn")
 
 [node name="Description" type="MarginContainer" parent="."]
+visible = false
 z_index = 100
 anchors_preset = 5
 anchor_left = 0.5

@@ -2,6 +2,7 @@ extends Node2D
 
 var card_scene = load("res://Scenes/card.tscn")
 @onready var deck: Node2D = $"../TroopDeck"
+@onready var spell_deck: Node2D = $"../SpellDeck"
 @onready var hand_counter: Label = $HandCounter
 @onready var discard_pile: Node2D = $"../DiscardPile"
 @onready var card_slots: Node = $"../CardSlots"
@@ -154,6 +155,11 @@ func draw_cards(troop_amount : int, spell_amount : int):
 			
 		deck.on_draw_card(drawn_card)
 		hand_counter.text = (str(cards_in_hand.size()))
+		if drawn_card.card_type == "Spell":
+			drawn_card.global_position = spell_deck.global_position
+		else:
+			drawn_card.global_position = deck.global_position
+			
 		animate_card_snap(drawn_card, new_position, CARD_DRAW_SPEED)
 
 		await get_tree().create_timer(0.05).timeout
@@ -264,10 +270,13 @@ func show_card_collection():
 	viewing_collection = true
 	card_collection.move_in_cards(deck)
 	var tween = get_tree().create_tween()
-	card_collection.create_page_indicators()
-	tween.tween_property(card_collection, "position", Vector2(0, 0), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
 	for card in card_collection.cards_in_collection:
-		card.position.y = card.position.y + Global.window_size.y
+		card.position.y += Global.window_size.y
+		tween.parallel().tween_property(card, "position:y", card.position.y - Global.window_size.y, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		
+	card_collection.create_page_indicators()
+	tween.parallel().tween_property(card_collection, "position", Vector2(0, 0), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	battle_manager.darken_screen()
 
 func _on_back_button_button_down() -> void:
@@ -278,8 +287,12 @@ func _on_back_button_button_up() -> void:
 
 func _on_back_button_pressed() -> void:
 	var tween = get_tree().create_tween()
-	tween.tween_property(card_collection, "position", Vector2(0, Global.window_size.y), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(card_collection, "position", Vector2(0, Global.window_size.y), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	for card in card_collection.cards_in_collection:
+		tween.parallel().tween_property(card, "position:y", card.position.y + Global.window_size.y, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		
 	await tween.finished
+	card_collection.move_out_cards()
 	battle_manager.brighten_screen()
 	card_collection.page = 0
 	viewing_collection = false
