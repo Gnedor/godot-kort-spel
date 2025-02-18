@@ -64,15 +64,15 @@ func instant_remove_shop_ui():
 func move_to_trash_card():
 	var tween = get_tree().create_tween()
 	for node in shop_scene_up:
-		tween.parallel().tween_property(node, "global_position:x", node.position.x - Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		tween.parallel().tween_property(node, "global_position:x", node.position.x - Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	for node in shop_scene_down:
-		tween.parallel().tween_property(node, "global_position:x", node.position.x - Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		tween.parallel().tween_property(node, "global_position:x", node.position.x - Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	tween.parallel().tween_property(card_collection, "global_position:x", 0, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	
 func move_from_trash_card():
 	var tween = get_tree().create_tween()
 	for node in shop_scene_up:
-		tween.parallel().tween_property(node, "global_position:x", node.position.x + Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		tween.parallel().tween_property(node, "global_position:x", node.position.x + Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	for node in shop_scene_down:
-		tween.parallel().tween_property(node, "global_position:x", node.position.x + Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	tween.parallel().tween_property(card_collection, "global_position:x", Global.window_size.x * 2, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		tween.parallel().tween_property(node, "global_position:x", node.position.x + Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(card_collection, "global_position:x", Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)

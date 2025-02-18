@@ -12,7 +12,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Glaggle" : [1, 3, "Troop", "Yippie", null],
 	"BIG ASS SHOE" : [0, 1, "Spell", "Replaces all played cards with random cards from deck", "res://Scripts/kortAbilities/BigAssShoe.gd"],
 	"Banan" : [10, 10, "OnPlayTroop", "On play, give two bordering cards +1 Actions this turn", "res://Scripts/kortAbilities/Banan.gd"],
-	"Impossible Shape" : [1, 1, "Troop", null, null],
+	"Impossible Shape" : [1, 1, "Troop", "Could this object be built?", null],
 	"Gambler" : [1, 1, "Troop", null, null],
 	"Groovy guy" : [1, 4, "Troop", null , null]
 }

@@ -17,7 +17,6 @@ func _ready() -> void:
 	else:
 		card_label.text = "None"
 
-
 func _on_restart_button_button_down() -> void:
 	restart_label.position.y += 2
 

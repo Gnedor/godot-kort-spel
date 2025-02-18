@@ -315,7 +315,7 @@ scale = Vector2(3, 3)
 texture = ExtResource("9_7hr24")
 
 [node name="CardCollection" parent="." instance=ExtResource("10_banbt")]
-position = Vector2(3840, 0)
+position = Vector2(1920, 0)
 
 [node name="BackButton" type="Button" parent="CardCollection"]
 self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
