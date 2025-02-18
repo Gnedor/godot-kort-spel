@@ -202,7 +202,7 @@ func align_card_hover(hovered_card):
 			hover_off_effect(card)
 			card.is_hovering = false
 	for card in played_cards:
-		if card == hovered_card and !card.description.visible and card.card_type != "Troop":
+		if card == hovered_card and !card.description.visible and card.card_type:
 			card.description.visible = true
 		elif card != hovered_card and card.description.visible:
 			card.description.visible = false
