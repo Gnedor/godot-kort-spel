@@ -1,5 +1,10 @@
 extends Node2D
 
+const Deck = preload("res://Scripts/deck.gd")
+var deck_reference
+
+const CARD = preload("res://Scenes/card.tscn")
+
 const CARD_BOUNDRY = 1300
 
 var troop_cards = []
@@ -21,6 +26,9 @@ var spell_deck_position
 
 var page_indicator: PackedScene = preload("res://Scenes/page_indicator.tscn")
 @onready var h_box_container: HBoxContainer = $HBoxContainer
+
+func _ready() -> void:
+	deck_reference = Deck.new()
 	
 func create_cards_deck(deck_reference):
 	troop_cards.clear()
@@ -84,7 +92,24 @@ func create_cards_global():
 	spell_cards.clear()
 	cards_in_collection.clear()
 	
-	var troop_deck = true
+	var new_cards = []
+	
+	for card in Global.stored_cards:
+		
+		var new_card = CARD.instantiate()
+		add_child(new_card)
+		new_card.card_name = card["name"]
+		
+		deck_reference.adjust_card_details_and_script(new_card)
+		new_card.attack = card["attack"]
+		new_card.actions = card["actions"]
+		
+		if new_card.card_type != "Spell":
+			troop_cards.append(new_card)
+		else:
+			spell_cards.append(new_card)
+			
+	align_cards()
 
 func align_cards():
 	update_page_indicators()

@@ -5,6 +5,7 @@ var card_scene = preload("res://Scenes/card.tscn")
 var tile_database = preload("res://Scripts/tile_database.gd")
 var tile_scene = load("res://Scenes/tile.tscn")
 
+@onready var card_collection: Node2D = $CardCollection
 @onready var card_clip_mask: ColorRect = $CardSlot/ColorRect/ColorRect/CardClipMask
 @onready var button: Button = $Button
 @onready var reroll_label: Label = $Button/Label
@@ -370,6 +371,7 @@ func remove_old_tiles(tiles):
 
 
 func _on_trash_card_pressed() -> void:
+	card_collection.create_cards_global()
 	shop_scene_manager.move_to_trash_card()
 
 

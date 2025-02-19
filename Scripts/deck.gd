@@ -166,8 +166,6 @@ func create_card_copy(card):
 	card_copy.base_actions = card.turn_actions
 	card_copy.actions = card_copy.base_actions
 	card_copy.turn_actions = card_copy.base_actions
-	card_copy.card_type = card.card_type
-	card_copy.card_name = card.card_name
 	card_copy.ability_script = card.ability_script
 	
 	adjust_card_details_and_script(card_copy)
@@ -194,6 +192,7 @@ func color_text(label):
 	
 func adjust_card_details_and_script(card):
 	var card_name = card.card_name
+	card.card_type = card_database.CARDS[card_name][2]
 	card.get_node("Textures/NamnLabel").text = card_name
 	adjust_text_size(card)
 	card.name_label.text = card_name
