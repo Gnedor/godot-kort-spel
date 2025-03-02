@@ -17,6 +17,7 @@ extends Node2D
 @onready var round_label: Label = $"../Round Box/ColorRect/ColorRect/RoundLabel"
 @onready var money_label: Label = $"../Round Box/Money Box/ColorRect/ColorRect/MoneyLabel"
 @onready var tiles_folder: Node2D = $"../TilesFolder"
+@onready var scene_manager: Node2D = $"../SceneManager"
 
 var turns : int
 var card_index : int
@@ -34,19 +35,33 @@ signal end_round
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	round_label.text = "Round: " + str(Global.round)
-	money_label.text = str(Global.total_money) + "$"
-	total_damage_label.text = "0/" + str(Global.quota)
-	hand_info.text = ("")
+	scene_manager.on_scene_enter.connect(on_enter)
+	
+	#round_label.text = "Round: " + str(Global.round)
+	#money_label.text = str(Global.total_money) + "$"
+	#total_damage_label.text = "0/" + str(Global.quota)
+	#hand_info.text = ("")
 	input_manager.click_on_sten.connect(attack)
 	input_manager.trigger_ability.connect(enter_active_card_activate)
 	input_manager.untrigger_ability.connect(exit_active_card_activate)
 	input_manager.select_target_card.connect(activate_card_abilities)
 	input_manager.select_deck.connect(on_deck_chosen)
+	#toggle_invert(sten.get_node("Sprite2D"), false)
+	#
+	#end_turn_label_position_y = end_turn_label.position.y
+	
+func on_enter():
+	Global.total_damage = 0
+	turn = 1
+	end_turn.disabled = false
+	turn_counter.text = "Turn: " + str(turn) + "/3"
+	round_label.text = "Round: " + str(Global.round)
+	money_label.text = str(Global.total_money) + "$"
+	total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
+	hand_info.text = ("")
+	
 	toggle_invert(sten.get_node("Sprite2D"), false)
-	
 	end_turn_label_position_y = end_turn_label.position.y
-	
 	
 func new_turn():
 	if turn <= 2:

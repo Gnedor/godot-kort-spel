@@ -8,14 +8,29 @@ extends Node2D
 @onready var total_money: Label = $UI/Row3/ColorRect6/TotalMoney
 @onready var round_label: Label = $UI/ColorRect4/RoundLabel
 @onready var continue_label: Label = $UI/Button/Label
-@onready var button: Button = $UI/Button
+@onready var continue_button: Button = $UI/Button
 @onready var fail_screen: Node2D = $FailScreen
 
 var base_money = 3
 
+signal on_scene_enter
+signal on_scene_exit
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	ui.position = Vector2(0, 44)
+	pass
+	#ui.position = Vector2(0, 44)
+	#round_label.text = "Round " + str(Global.round) + " Results"
+	#total_damage_label.visible_ratio = 0.0
+	#quota_label.visible_ratio = 0.0
+	#money_label.visible_ratio = 0.0
+	#equals_label.visible_ratio = 0.0
+	#total_money.visible_ratio = 0.0
+	#start_end_screen()
+	
+func on_enter_scene():
+	continue_button.disabled = true
+	ui.position = Vector2(960, 588)
 	round_label.text = "Round " + str(Global.round) + " Results"
 	total_damage_label.visible_ratio = 0.0
 	quota_label.visible_ratio = 0.0
@@ -23,7 +38,8 @@ func _ready() -> void:
 	equals_label.visible_ratio = 0.0
 	total_money.visible_ratio = 0.0
 	start_end_screen()
-
+	on_scene_enter.emit()
+	
 func start_end_screen():
 	ui.scale = Vector2(1.7, 1.7)
 	await animate_screen_scale()
@@ -45,8 +61,8 @@ func start_end_screen():
 	Global.total_money += money_gain
 	
 	if Global.total_damage >= Global.quota:
-		button.disabled = false
-		button.modulate = Color(1, 1, 1)
+		continue_button.disabled = false
+		continue_button.modulate = Color(1, 1, 1)
 	else:
 		var tween = get_tree().create_tween()
 		tween.tween_property(fail_screen, "global_position:y", Global.window_size.y / 2, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
@@ -60,7 +76,8 @@ func animate_screen_scale():
 	
 func _on_button_pressed() -> void:
 	await move_off_screen()
-	_change_scene("res://Scenes/shop.tscn")
+	on_scene_exit.emit()
+	#_change_scene("res://Scenes/shop.tscn")
 	Global.round += 1
 	Global.quota = Global.round * 40
 	

@@ -8,26 +8,22 @@ var hovered_tile : Node2D
 const CARD_MASK = 2
 const TILE_MASK = 128
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var hovering_cards = raycast_check(CARD_MASK)
-	if hovering_cards:
-		var highest_card = check_for_highest_z_index(hovering_cards)
-		hovered_card = highest_card
-	else:
-		hovered_card = null
-		
-	var hovering_tiles = raycast_check(TILE_MASK)
-	if hovering_tiles:
-		var highest_tile = check_for_highest_z_index(hovering_tiles)
-		hovered_tile = highest_tile
-	else:
-		hovered_tile = null
+	if Global.scene_index == 0:
+		var hovering_cards = raycast_check(CARD_MASK)
+		if hovering_cards:
+			var highest_card = check_for_highest_z_index(hovering_cards)
+			hovered_card = highest_card
+		else:
+			hovered_card = null
+			
+		var hovering_tiles = raycast_check(TILE_MASK)
+		if hovering_tiles:
+			var highest_tile = check_for_highest_z_index(hovering_tiles)
+			hovered_tile = highest_tile
+		else:
+			hovered_tile = null
 	
 func raycast_check(mask : int):
 	var space_state = get_world_2d().direct_space_state

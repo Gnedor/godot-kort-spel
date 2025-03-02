@@ -27,6 +27,7 @@ const TILE_MOVE_SPEED = 4000 # pixels per second
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	window_size = get_viewport().size
+	#$"../BattleManager".end_round.connect(on_round_end)
 	input_manager.tile_relesed_on_slot.connect(place_tile_on_slot)
 	
 	window_size = Vector2(1920, 1080)
@@ -34,13 +35,14 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if dragged_tile:
-		dragged_tile.global_position = Vector2(
-			clamp(get_global_mouse_position().x, 0, window_size.x), 
-			clamp(get_global_mouse_position().y, 0, window_size.y))
-			#sätter de selectade kortet längst fram
-		dragged_tile.z_index = owned_tiles.size() + 1000
-		sort_by_x_position(tiles_in_folder)
+	if Global.scene_index == 1:
+		if dragged_tile:
+			dragged_tile.global_position = Vector2(
+				clamp(get_global_mouse_position().x, 0, window_size.x), 
+				clamp(get_global_mouse_position().y, 0, window_size.y))
+				#sätter de selectade kortet längst fram
+			dragged_tile.z_index = owned_tiles.size() + 1000
+			sort_by_x_position(tiles_in_folder)
 
 		
 func sort_by_x_position(array: Array):
@@ -101,10 +103,9 @@ func add_tiles_on_start():
 	var tiles
 	if Global.round == 1:
 		tiles = tile_database.EXAMPLE_DECK
-	else:
-		tiles = Global.stored_tiles
-	for tile in tiles:
-		create_tile(tile)
+		for tile in tiles:
+			create_tile(tile)
+		
 	align_tiles()
 		
 func create_tile(tile_name: String):
@@ -130,6 +131,7 @@ func create_tile(tile_name: String):
 		print("Sprite node not found in card instance")
 		
 	owned_tiles.append(new_tile_instance)
+	Global.stored_tiles.append(new_tile_instance)
 	tiles_in_folder.append(new_tile_instance)
 	
 func hover_effect(tile):

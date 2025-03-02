@@ -12,22 +12,24 @@ var stored_cards = []
 var stored_tiles = []
 var window_size : Vector2 = Vector2(1920, 1080)
 
+var scene_index : int = 0
+
 var played_cards = []
 
 var selected_deck = "EXAMPLE_DECK"
 
-func store_card_data(cards : Array):
-	for card in cards:
-		var card_data = {
-			"name" = card.card_name,
-			"attack" = card.base_attack,
-			"actions" = card.base_actions,
-		}
-		stored_cards.append(card_data)
+func store_card(card):
+	stored_cards.append(card)
+	#for card in cards:
+		#var card_data = {
+			#"name" = card.card_name,
+			#"attack" = card.base_attack,
+			#"actions" = card.base_actions,
+		#}
+		#stored_cards.append(card_data)
 
-func store_tile_data(tiles : Array):
-	for tile in tiles:
-		stored_tiles.append(tile.tile_name)
+func store_tile(tile):
+	stored_tiles.append(tile)
 	
 func timer(time):
 	await get_tree().create_timer(time).timeout

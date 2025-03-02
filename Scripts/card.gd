@@ -15,6 +15,7 @@ extends Node2D
 @onready var name_label: Label = $Textures/Description/MarginContainer/NameLabel
 @onready var description: MarginContainer = $Textures/Description
 @onready var action_sprite: TextureRect = $Textures/Description/NinePatchRect/TextureRect
+@onready var select_border: AnimatedSprite2D = $Textures/ScaleNode/SelectBorder
 
 var is_placed : bool = false
 var is_hovering : bool = false

@@ -20,6 +20,7 @@ var selected_deck
 	#if cards_in_deck.size() > 0 and draw_queue > 0:
 		#draw_animation.start()
 	
+	
 func _on_draw_animation_timeout() -> void:
 	card_manager.cards_in_hand.append(cards_in_troop_deck[0])
 	cards_in_troop_deck[0].visible = true
@@ -80,6 +81,7 @@ func add_new_card_to_deck(card_name : String, times : int):
 			cards_in_spell_deck.append(new_card_instance)
 		
 		card_manager.update_card(new_card_instance)
+		Global.store_card(new_card_instance)
 		
 func add_card_to_deck(card_name : String, card_attack : int, card_actions : int):
 	var new_card_instance = card_scene.instantiate()
@@ -103,6 +105,7 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 	new_card_instance.turn_actions = card_actions
 	new_card_instance.card_type = card_database.CARDS[card_name][2]
 	new_card_instance.card_name = card_name
+	new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
 	
 	adjust_card_details_and_script(new_card_instance)
 	
@@ -123,7 +126,16 @@ func add_cards_on_start():
 			add_new_card_to_deck(card["name"], card["amount"])
 	else:
 		for card in Global.stored_cards:
-			add_card_to_deck(card["name"], card["attack"], card["actions"])
+			card.z_index = 0
+			card.visible = false
+			if card.card_type != "Spell":
+				cards_in_troop_deck.append(card)
+				card.position = position
+			else:
+				cards_in_spell_deck.append(card)
+				card.position = spell_deck.position
+		#for card in Global.stored_cards:
+			#add_card_to_deck(card["name"], card["attack"], card["actions"])
 			
 	cards_in_troop_deck.shuffle()
 	cards_in_spell_deck.shuffle()

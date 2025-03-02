@@ -1,7 +1,6 @@
 extends Node2D
 
-const Deck = preload("res://Scripts/deck.gd")
-var deck_reference
+var deck
 
 const CARD = preload("res://Scenes/card.tscn")
 
@@ -15,9 +14,6 @@ var page_indicators = []
 var page : int = 0
 var max_page : int = 0
 
-var troop_deck_position
-var spell_deck_position
-
 @onready var arrow_left: Sprite2D = $Button_left/Arrow_left
 @onready var arrow_right: Sprite2D = $Button_right/Arrow_right
 
@@ -28,56 +24,60 @@ var page_indicator: PackedScene = preload("res://Scenes/page_indicator.tscn")
 @onready var h_box_container: HBoxContainer = $HBoxContainer
 
 func _ready() -> void:
-	deck_reference = Deck.new()
+	deck = get_tree().current_scene.get_node("BattleScene/TroopDeck")
 	
-func create_cards_deck(deck_reference):
-	troop_cards.clear()
-	spell_cards.clear()
-	cards_in_collection.clear()
 	
-	var troop_deck = deck_reference.cards_in_troop_deck.duplicate()
-	troop_deck.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+#func create_cards_deck(deck_reference):
+	#troop_cards.clear()
+	#spell_cards.clear()
+	#cards_in_collection.clear()
+	#
+	#var troop_deck = deck_reference.cards_in_troop_deck.duplicate()
+	#troop_deck.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+	#
+	#var spell_deck = deck_reference.cards_in_spell_deck.duplicate()
+	#spell_deck.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+	#
+	#for card in troop_deck:
+		#var card_copy = deck_reference.create_card_copy(card)
+		#card_copy.get_node("Area2D").collision_layer = 1 << 8
+		#troop_cards.append(card_copy)
+		#cards_in_collection.append(card_copy)
+			#
+	#for card in spell_deck:
+		#var card_copy = deck_reference.create_card_copy(card)
+		#card_copy.get_node("Area2D").collision_layer = 1 << 8
+		#spell_cards.append(card_copy)
+		#cards_in_collection.append(card_copy)
+	#align_cards()
 	
-	var spell_deck = deck_reference.cards_in_spell_deck.duplicate()
-	spell_deck.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+func move_in_cards():
+	troop_cards = deck.cards_in_troop_deck.duplicate()
+	spell_cards = deck.cards_in_spell_deck.duplicate()
+	cards_in_collection = troop_cards + spell_cards
 	
-	for card in troop_deck:
-		var card_copy = deck_reference.create_card_copy(card)
-		card_copy.get_node("Area2D").collision_layer = 1 << 8
-		troop_cards.append(card_copy)
-		cards_in_collection.append(card_copy)
-			
-	for card in spell_deck:
-		var card_copy = deck_reference.create_card_copy(card)
-		card_copy.get_node("Area2D").collision_layer = 1 << 8
-		spell_cards.append(card_copy)
-		cards_in_collection.append(card_copy)
-	align_cards()
+	#troop_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+	#spell_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
 	
-func move_in_cards(deck_reference):
-	cards_in_collection.clear()
-	var troop_deck = deck_reference.cards_in_troop_deck
-	var spell_deck = deck_reference.cards_in_spell_deck
-	
-	troop_cards = troop_deck.duplicate()
-	spell_cards = spell_deck.duplicate()
-	
-	troop_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
-	spell_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
-	
-	for card in troop_cards:
-		card.get_node("Area2D/CollisionShape2D").disabled = false
-		card.z_index = 1010
-		card.visible = true
-		card.get_node("Area2D").collision_layer = 1 << 8
-		cards_in_collection.append(card)
+	#for card in troop_cards:
+		#card.get_node("Area2D/CollisionShape2D").disabled = false
+		#card.z_index = 1010
+		#card.visible = true
+		#card.get_node("Area2D").collision_layer = 1 << 8
+		#cards_in_collection.append(card)
+		#
+	#for card in spell_cards:
+		#card.get_node("Area2D/CollisionShape2D").disabled = false
+		#card.z_index = 1010
+		#card.visible = true
+		#card.get_node("Area2D").collision_layer = 1 << 8
+		#cards_in_collection.append(card)
 		
-	for card in spell_cards:
+	for card in cards_in_collection:
 		card.get_node("Area2D/CollisionShape2D").disabled = false
 		card.z_index = 1010
 		card.visible = true
 		card.get_node("Area2D").collision_layer = 1 << 8
-		cards_in_collection.append(card)
 
 	align_cards()
 	
@@ -87,34 +87,36 @@ func move_out_cards():
 		card.get_node("Area2D").collision_layer = 1 << 1
 		card.z_index = 1
 	
-func create_cards_global():
-	troop_cards.clear()
-	spell_cards.clear()
-	cards_in_collection.clear()
-	
-	var new_cards = []
-	
-	for card in Global.stored_cards:
-		
-		var new_card = CARD.instantiate()
-		add_child(new_card)
-		new_card.card_name = card["name"]
-		
-		deck_reference.adjust_card_details_and_script(new_card)
-		new_card.attack = card["attack"]
-		new_card.actions = card["actions"]
-		
-		if new_card.card_type != "Spell":
-			troop_cards.append(new_card)
-		else:
-			spell_cards.append(new_card)
-			
-	align_cards()
+#func create_cards_from_name(cards : Array):
+	#troop_cards.clear()
+	#spell_cards.clear()
+	#cards_in_collection.clear()
+	#
+	#var new_cards = []
+	#
+	#for card in cards:
+		#var new_card = CARD.instantiate()
+		#add_child(new_card)
+		#new_card.card_name = card["name"]
+		#
+		#deck_reference.adjust_card_details_and_script(new_card)
+		#new_card.attack = card["attack"]
+		#new_card.actions = card["actions"]
+		#
+		#if new_card.card_type != "Spell":
+			#troop_cards.append(new_card)
+		#else:
+			#spell_cards.append(new_card)
+			#
+	#align_cards()
 
 func align_cards():
 	update_page_indicators()
+	troop_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+	spell_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
 	for card in cards_in_collection:
-		card.position = Vector2(-1000, -1000)
+		card.visible = true
+		card.position = Vector2 (-100, -100)
 	
 	if troop_cards.size() > spell_cards.size():
 		max_page = ((troop_cards.size() - 1) / 12)
@@ -143,11 +145,11 @@ func align_cards():
 		if spell_cards.size() >= i + (12 * page) + 1:
 			var card = spell_cards[i + (12 * page)]
 			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 652)
-		
+			
 		if spell_cards.size() >= ((6 + i) + (12 * page)) + 1:
 			var card = spell_cards[(6 + i) + (12 * page)]
 			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 888)
-		
+			
 func align_card_hover(hovered_card):
 	for card in cards_in_collection:
 		if card == hovered_card and !card.is_hovering:

@@ -18,14 +18,13 @@ var tile_scene = load("res://Scenes/tile.tscn")
 @onready var buy_button_1: Node2D = $TileSlot/BuyButton1
 @onready var buy_button_2: Node2D = $TileSlot2/BuyButton2
 
+var deck
 
 var reroll_count : int = 0
 var shop_card_amount : int = 5
 var hovered_card : Node2D
 var hovered_tile : Node2D
 
-var bought_cards = []
-var bought_tiles = []
 var cards_in_shop = []
 var tiles_in_shop = []
 var tile_labels = []
@@ -39,22 +38,32 @@ signal exit_shop
 
 const CARD_MASK = 2
 const LABEL_MAX_SIZE = 280
-
+	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	deck = get_tree().current_scene.get_node("BattleScene/TroopDeck")
+	
 	tile_labels = [buy_button_1.label, buy_button_2.label]
+	
+	shop_scene_manager.on_scene_enter.connect(on_enter)
 	buy_button_1.buy_button_pressed.connect(buy_tile)
 	buy_button_2.buy_button_pressed.connect(buy_tile)
+	
+	round_label.text = "Round: " + str(Global.round)
+	money_label.text = str(Global.total_money) + "$"
+	
+func on_enter():
 	round_label.text = "Round: " + str(Global.round)
 	money_label.text = str(Global.total_money) + "$"
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if start_process:
-		if !rerolling:
-			card_hover_effect()
-			tile_hover_effect()
-		money_label.text = str(Global.total_money) + "$"
+	if Global.scene_index == 0:
+		if start_process:
+			if !rerolling:
+				card_hover_effect()
+				tile_hover_effect()
+			money_label.text = str(Global.total_money) + "$"
 	
 func add_items_on_start():
 	make_new_cards()
@@ -92,9 +101,16 @@ func buy_card(card):
 		tween.tween_property(card, "scale", Vector2(0.9, 0.9), 0.05)
 		await tween.finished
 		
-		bought_cards.append(card)
 		card.visible = false
 		Global.total_money -= card.price
+		card.scale = Vector2(1, 1)
+		Global.store_card(card)
+		cards_in_shop.erase(card)
+		if card.card_type != "Spell":
+			deck.cards_in_troop_deck.append(card)
+		else:
+			deck.cards_in_spell_deck.append(card)
+		
 	else:
 		tween.tween_property(card.buy_button.button, "modulate", Color(1.0, 0.5, 0.5), 0.0) # tween för att overrita faden under denna om den är igång
 		tween.tween_property(card.buy_button.button, "modulate", Color(1.0, 1.0, 1.0), 0.5)
@@ -114,7 +130,7 @@ func buy_tile(tile_slot):
 		tween.tween_property(bought_tile, "scale", Vector2(0.9, 0.9), 0.05)
 		await tween.finished
 		bought_tile.visible = false
-		bought_tiles.append(bought_tile)
+		Global.store_tile(bought_tile)
 	else:
 		if tile_slot == $TileSlot:
 			tween.tween_property(buy_button_1.button, "modulate", Color(1.0, 0.5, 0.5), 0.0) # tween för att overrita faden under denna om den är igång
@@ -142,6 +158,9 @@ func make_new_cards():
 		new_card_instance.card_name = card_name
 		var random_price = randi() % (3 + reroll_count) + (4 + reroll_count)
 		new_card_instance.price = random_price
+		if new_card_instance.card_type != "Troop":
+			var new_card_ability_script_path = card_database.CARDS[card_name][4]
+			new_card_instance.ability_script = load(new_card_ability_script_path).new()
 			
 		if new_card_instance.card_type == "Spell":
 			new_card_instance.get_node("Textures/ScaleNode/StatDisplay").visible = false
@@ -330,8 +349,6 @@ func _change_scene(scene_path : String):
 	get_tree().change_scene_to_file(scene_path)
 	
 func _on_continue_button_pressed() -> void:
-	Global.store_card_data(bought_cards)
-	Global.store_tile_data(bought_tiles)
 	exit_shop.emit()
 
 func _on_continue_button_button_down() -> void:
@@ -371,9 +388,9 @@ func remove_old_tiles(tiles):
 
 
 func _on_trash_card_pressed() -> void:
-	card_collection.create_cards_global()
+	#card_collection.create_cards_global()
+	card_collection.align_cards()
 	shop_scene_manager.move_to_trash_card()
-
 
 func _on_back_button_pressed() -> void:
 	shop_scene_manager.move_from_trash_card()

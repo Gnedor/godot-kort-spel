@@ -1,0 +1,341 @@
+[gd_scene load_steps=19 format=3 uid="uid://col4ncuar707o"]
+
+[ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_qqevy"]
+[ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="2_1l3wp"]
+[ext_resource type="Script" path="res://Scripts/battle_scene_manager.gd" id="2_eoi1u"]
+[ext_resource type="Script" path="res://Scripts/card_manager.gd" id="2_qt0pu"]
+[ext_resource type="Script" path="res://Scripts/input_manager.gd" id="2_v8fcx"]
+[ext_resource type="Script" path="res://Scripts/battle_manager.gd" id="3_uetve"]
+[ext_resource type="PackedScene" uid="uid://cq8q8qchwy526" path="res://Scenes/deck.tscn" id="4_7kqj2"]
+[ext_resource type="PackedScene" uid="uid://dev8m08gchsr4" path="res://Scenes/card_slot.tscn" id="4_ta188"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="5_jdip0"]
+[ext_resource type="Script" path="res://Scripts/deck.gd" id="6_i7knv"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="7_7t6y8"]
+[ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="7_ltu7u"]
+[ext_resource type="PackedScene" uid="uid://bco7eddmnqek" path="res://Scenes/discard_pile.tscn" id="8_adfp2"]
+[ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="8_flwld"]
+[ext_resource type="PackedScene" uid="uid://dlf5nf8ot7glp" path="res://Scenes/spell_deck.tscn" id="9_bsubj"]
+[ext_resource type="PackedScene" uid="uid://daa4mye5x3rm5" path="res://Scenes/tiles_folder.tscn" id="16_lcit8"]
+[ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="17_ln450"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cy588"]
+size = Vector2(1919, 758.5)
+
+[node name="BattleScene" type="Node2D"]
+
+[node name="sten" parent="." instance=ExtResource("1_qqevy")]
+position = Vector2(960, -24)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+ignore_rotation = false
+enabled = false
+script = ExtResource("2_1l3wp")
+
+[node name="SceneManager" type="Node2D" parent="."]
+script = ExtResource("2_eoi1u")
+
+[node name="Timer" type="Timer" parent="SceneManager"]
+wait_time = 0.05
+one_shot = true
+
+[node name="PauseTimer" type="Timer" parent="SceneManager"]
+one_shot = true
+
+[node name="BattleManager" type="Node2D" parent="."]
+script = ExtResource("3_uetve")
+
+[node name="EndTurn" type="Button" parent="BattleManager"]
+self_modulate = Color(0.207843, 0.207843, 0.207843, 1)
+offset_left = 56.0
+offset_top = 504.0
+offset_right = 264.0
+offset_bottom = 629.0
+focus_mode = 0
+theme = ExtResource("5_jdip0")
+theme_override_fonts/font = ExtResource("7_ltu7u")
+theme_override_font_sizes/font_size = 24
+keep_pressed_outside = true
+
+[node name="EndTurnLabel" type="Label" parent="BattleManager/EndTurn"]
+layout_mode = 0
+offset_right = 208.0
+offset_bottom = 126.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("7_7t6y8")
+theme_override_font_sizes/font_size = 24
+text = "End turn"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AttackTimer" type="Timer" parent="BattleManager"]
+
+[node name="TotalDamage" type="Label" parent="BattleManager"]
+offset_left = 1344.0
+offset_top = 64.0
+offset_right = 1888.0
+offset_bottom = 192.0
+theme_override_fonts/font = ExtResource("7_ltu7u")
+theme_override_font_sizes/font_size = 64
+text = "0/0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnCounter" type="Label" parent="BattleManager"]
+offset_left = 56.0
+offset_top = 645.0
+offset_right = 264.0
+offset_bottom = 676.0
+theme_override_fonts/font = ExtResource("7_ltu7u")
+theme_override_font_sizes/font_size = 24
+text = "Turn: 1/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DarkenBackground" type="ColorRect" parent="BattleManager"]
+z_index = 100
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="HandInfo" type="Label" parent="BattleManager"]
+offset_left = 584.0
+offset_top = 352.0
+offset_right = 1336.0
+offset_bottom = 439.0
+theme_override_fonts/font = ExtResource("8_flwld")
+theme_override_font_sizes/font_size = 32
+text = "Select card"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputManager" type="Node2D" parent="."]
+script = ExtResource("2_v8fcx")
+
+[node name="CardManager" type="Node2D" parent="."]
+script = ExtResource("2_qt0pu")
+
+[node name="HandCounter" type="Label" parent="CardManager"]
+offset_left = 768.0
+offset_top = 1026.0
+offset_right = 1152.0
+offset_bottom = 1074.0
+theme_override_fonts/font = ExtResource("7_ltu7u")
+theme_override_font_sizes/font_size = 24
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpellDeck" parent="." instance=ExtResource("9_bsubj")]
+position = Vector2(1784, 928)
+
+[node name="SpellDeckCounter" type="Label" parent="SpellDeck"]
+offset_left = -24.0
+offset_top = 32.0
+offset_right = 24.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("7_ltu7u")
+theme_override_font_sizes/font_size = 8
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TroopDeck" parent="." instance=ExtResource("4_7kqj2")]
+position = Vector2(136, 928)
+script = ExtResource("6_i7knv")
+
+[node name="TroopDeckCounter" type="Label" parent="TroopDeck"]
+offset_left = -24.0
+offset_top = 32.0
+offset_right = 24.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("7_ltu7u")
+theme_override_font_sizes/font_size = 8
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DrawAnimation" type="Timer" parent="TroopDeck"]
+wait_time = 0.2
+
+[node name="DiscardPile" parent="." instance=ExtResource("8_adfp2")]
+position = Vector2(1784, 597)
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="HandSlot" type="ColorRect" parent="UI"]
+z_index = -2
+offset_left = 320.0
+offset_top = 824.0
+offset_right = 1600.0
+offset_bottom = 1032.0
+mouse_filter = 2
+color = Color(0.106237, 0.106237, 0.106237, 1)
+
+[node name="HandSlot2" type="ColorRect" parent="UI"]
+z_index = -3
+offset_left = 312.0
+offset_top = 816.0
+offset_right = 1608.0
+offset_bottom = 1064.0
+mouse_filter = 2
+color = Color(0.18359, 0.18359, 0.18359, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="UI"]
+offset_left = 16.0
+offset_top = 760.0
+offset_right = 1904.0
+offset_bottom = 776.0
+mouse_filter = 2
+color = Color(0.674815, 0.674815, 0.674815, 1)
+
+[node name="CardSlots" type="Node2D" parent="."]
+
+[node name="CardSlot1" parent="CardSlots" instance=ExtResource("4_ta188")]
+position = Vector2(424, 597)
+
+[node name="CardSlot2" parent="CardSlots" instance=ExtResource("4_ta188")]
+position = Vector2(696, 597)
+
+[node name="CardSlot3" parent="CardSlots" instance=ExtResource("4_ta188")]
+position = Vector2(960, 597)
+
+[node name="CardSlot4" parent="CardSlots" instance=ExtResource("4_ta188")]
+position = Vector2(1224, 597)
+
+[node name="CardSlot5" parent="CardSlots" instance=ExtResource("4_ta188")]
+position = Vector2(1496, 597)
+
+[node name="SpellPlayArea" type="Area2D" parent="."]
+collision_layer = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpellPlayArea"]
+visible = false
+position = Vector2(960.5, 380.75)
+shape = SubResource("RectangleShape2D_cy588")
+
+[node name="Round Box" type="ColorRect" parent="."]
+z_index = 1
+offset_left = 32.0
+offset_right = 288.0
+offset_bottom = 104.0
+color = Color(0.184314, 0.184314, 0.184314, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Round Box"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 248.0
+offset_bottom = 96.0
+color = Color(0.105882, 0.105882, 0.105882, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Round Box/ColorRect"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 16.0
+offset_right = 232.0
+offset_bottom = 88.0
+color = Color(0.00392157, 0.00392157, 0.00392157, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="RoundLabel" type="Label" parent="Round Box/ColorRect/ColorRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_right = 224.0
+offset_bottom = 72.0
+theme_override_fonts/font = ExtResource("7_7t6y8")
+theme_override_font_sizes/font_size = 24
+text = "Round: "
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Money Box" type="ColorRect" parent="Round Box"]
+layout_mode = 0
+offset_top = 120.0
+offset_right = 256.0
+offset_bottom = 264.0
+color = Color(0.184314, 0.184314, 0.184314, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Round Box/Money Box"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 248.0
+offset_bottom = 136.0
+color = Color(0.105882, 0.105882, 0.105882, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Round Box/Money Box/ColorRect"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 232.0
+offset_bottom = 120.0
+color = Color(0.00392157, 0.00392157, 0.00392157, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Round Box/Money Box/ColorRect/ColorRect"]
+layout_mode = 0
+offset_right = 224.0
+offset_bottom = 56.0
+theme_override_fonts/font = ExtResource("7_7t6y8")
+theme_override_font_sizes/font_size = 24
+text = "Money:"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="MoneyLabel" type="Label" parent="Round Box/Money Box/ColorRect/ColorRect"]
+layout_mode = 0
+offset_top = 56.0
+offset_right = 224.0
+offset_bottom = 112.0
+theme_override_fonts/font = ExtResource("7_7t6y8")
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TilesFolder" parent="." instance=ExtResource("16_lcit8")]
+position = Vector2(960, -172)
+
+[node name="CardCollection" parent="." instance=ExtResource("17_ln450")]
+z_index = 1000
+position = Vector2(0, 1080)
+
+[node name="BackButton" type="Button" parent="CardCollection"]
+self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
+offset_left = 64.0
+offset_top = 936.0
+offset_right = 288.0
+offset_bottom = 1056.0
+focus_mode = 0
+theme = ExtResource("5_jdip0")
+keep_pressed_outside = true
+
+[node name="BackLabel" type="Label" parent="CardCollection/BackButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_7t6y8")
+theme_override_font_sizes/font_size = 32
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="timeout" from="SceneManager/Timer" to="SceneManager" method="_on_timer_timeout"]
+[connection signal="button_down" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_button_down"]
+[connection signal="button_up" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_button_up"]
+[connection signal="pressed" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_pressed"]
+[connection signal="timeout" from="BattleManager/AttackTimer" to="BattleManager" method="_on_attack_timer_timeout"]
+[connection signal="timeout" from="TroopDeck/DrawAnimation" to="TroopDeck" method="_on_draw_animation_timeout"]
+[connection signal="button_down" from="CardCollection/BackButton" to="CardManager" method="_on_back_button_button_down"]
+[connection signal="button_up" from="CardCollection/BackButton" to="CardManager" method="_on_back_button_button_up"]
+[connection signal="pressed" from="CardCollection/BackButton" to="CardManager" method="_on_back_button_pressed"]

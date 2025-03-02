@@ -319,6 +319,7 @@ offset_left = 64.0
 offset_top = 248.0
 offset_right = 384.0
 offset_bottom = 400.0
+focus_mode = 0
 theme = ExtResource("4_k2230")
 keep_pressed_outside = true
 
@@ -342,6 +343,7 @@ offset_left = -384.0
 offset_top = 248.0
 offset_right = -64.0
 offset_bottom = 400.0
+focus_mode = 0
 theme = ExtResource("4_k2230")
 keep_pressed_outside = true
 

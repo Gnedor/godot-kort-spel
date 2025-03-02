@@ -21,20 +21,28 @@ var step : int = 1
 
 var cards_to_be_removed
 
+signal on_scene_exit
+signal on_scene_enter
+
 func _ready() -> void:
 	battle_manager.end_round.connect(remove_battle_scene)
 	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder]
 	battle_scene_down = [deck, spell_deck, discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter")]
-	
 	move_battle_ui_out()
-	await add_battle_ui()
+	#move_battle_ui_out()
+	#await add_battle_ui()
+	#
+	#deck.add_cards_on_start()
+	#tiles_folder.add_tiles_on_start()
+	#call_deferred("after_ready")
 	
-	deck.add_cards_on_start()
-	tiles_folder.add_tiles_on_start()
+func on_enter_scene():
+	on_scene_enter.emit()
 	call_deferred("after_ready")
 	
 func remove_battle_scene():
 	# Sequentially animate each card
+	step = 1
 	timer.start()
 		
 func _on_timer_timeout() -> void:
@@ -96,14 +104,8 @@ func remove_battle_ui():
 		tween.parallel().tween_property(node, "position:y", node.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		
 	await tween.finished
-	for card in card_manager.discarded_cards:
-		deck.cards_in_troop_deck.append(card)
-	Global.stored_cards.clear()
-	Global.store_card_data(deck.cards_in_troop_deck)
-	Global.stored_tiles.clear()
-	Global.store_card_data(deck.cards_in_spell_deck)
-	Global.store_tile_data(tiles_folder.owned_tiles)
-	call_deferred("_change_scene")
+	# call_deferred("_change_scene")
+	on_scene_exit.emit()
 	
 func add_battle_ui():
 	var tween = get_tree().create_tween()
@@ -123,6 +125,9 @@ func move_battle_ui_out():
 		node.position.y += 1000
 		
 func after_ready():
+	await add_battle_ui()
+	deck.add_cards_on_start()
+	tiles_folder.add_tiles_on_start()
 	card_manager.draw_cards(3, 2)
 	
 func _change_scene():

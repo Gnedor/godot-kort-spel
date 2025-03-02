@@ -10,11 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://b2fq8qe77ht7c" path="res://Scenes/fail_screen.tscn" id="8_n63ae"]
 
 [node name="EndOfRoundScreen" type="Node2D"]
-position = Vector2(960, 540)
 script = ExtResource("1_ajpby")
 
 [node name="UI" type="Node2D" parent="."]
-position = Vector2(0, 44)
+position = Vector2(960, 588)
 scale = Vector2(1.5, 1.5)
 
 [node name="ColorRect" type="ColorRect" parent="UI"]
@@ -231,9 +230,9 @@ offset_left = 90.6667
 offset_top = 74.6667
 offset_right = 229.667
 offset_bottom = 125.667
+focus_mode = 0
 theme = ExtResource("7_1nflb")
 theme_override_fonts/font = ExtResource("1_ef32e")
-disabled = true
 keep_pressed_outside = true
 
 [node name="Label" type="Label" parent="UI/Button"]
@@ -248,7 +247,7 @@ vertical_alignment = 1
 
 [node name="FailScreen" parent="." instance=ExtResource("8_n63ae")]
 z_index = 5
-position = Vector2(0, -1400)
+position = Vector2(960, -1000)
 
 [connection signal="button_down" from="UI/Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="UI/Button" to="." method="_on_button_button_up"]

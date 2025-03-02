@@ -35,27 +35,28 @@ var dragged_tile : Node2D
 var selected_slot : Node2D
 
 func _process(delta: float) -> void:
-	if raycast_check(CARD_MASK) and !card_manager.dragged_card and !dragged_tile and !card_manager.viewing_collection:
-		var highest_card = check_for_highest_z_index(raycast_check(CARD_MASK))
-		hovered_card = highest_card
-	elif raycast_check(COLLECTION_CARD_MASK): 
-		var highest_card = check_for_highest_z_index(raycast_check(COLLECTION_CARD_MASK))
-		hovered_card = highest_card
-	else:
-		hovered_card = null
+	if Global.scene_index == 1:
+		if raycast_check(CARD_MASK) and !card_manager.dragged_card and !dragged_tile and !card_manager.viewing_collection:
+			var highest_card = check_for_highest_z_index(raycast_check(CARD_MASK))
+			hovered_card = highest_card
+		elif raycast_check(COLLECTION_CARD_MASK): 
+			var highest_card = check_for_highest_z_index(raycast_check(COLLECTION_CARD_MASK))
+			hovered_card = highest_card
+		else:
+			hovered_card = null
+			
+		if !card_manager.viewing_collection:
+			card_manager.align_card_hover(hovered_card)
+		else:
+			card_collection.align_card_hover(hovered_card)
+			
+		if raycast_check(TILE_MASK) and !tiles_folder.dragged_tile and !dragged_card and !card_manager.viewing_collection:
+			var highest_tile = check_for_highest_z_index(raycast_check(TILE_MASK))
+			hovered_tile = highest_tile
+		else:
+			hovered_tile = null
 		
-	if !card_manager.viewing_collection:
-		card_manager.align_card_hover(hovered_card)
-	else:
-		card_collection.align_card_hover(hovered_card)
-		
-	if raycast_check(TILE_MASK) and !tiles_folder.dragged_tile and !dragged_card and !card_manager.viewing_collection:
-		var highest_tile = check_for_highest_z_index(raycast_check(TILE_MASK))
-		hovered_tile = highest_tile
-	else:
-		hovered_tile = null
-	
-	tiles_folder.align_tile_hover(hovered_tile)
+		tiles_folder.align_tile_hover(hovered_tile)
 	
 # kollar vilket knapp som trycks
 func _input(event):
@@ -148,7 +149,7 @@ func raycast_check(mask : int):
 		
 func _unhandled_input(event):
 	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_ENTER:
+		if event.pressed and event.keycode == KEY_1:
 			card_manager.draw_cards(3, 0)
 		elif event.pressed and event.keycode == KEY_SPACE:
 			if !battle_manager.deck_select:

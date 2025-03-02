@@ -9,6 +9,16 @@ extends Node2D
 @onready var menu_label: Label = $MenuButton/MenuLabel
 
 func _ready() -> void:
+	get_parent().on_scene_enter.connect(on_enter)
+	#damage_label.text = str(Global.highest_damage)
+	#money_label.text = str(Global.highest_money) + "$"
+	#round_label.text = str(Global.round)
+	#if Global.find_common_card():
+		#card_label.text = Global.find_common_card()
+	#else:
+		#card_label.text = "None"
+
+func on_enter():
 	damage_label.text = str(Global.highest_damage)
 	money_label.text = str(Global.highest_money) + "$"
 	round_label.text = str(Global.round)
@@ -16,7 +26,7 @@ func _ready() -> void:
 		card_label.text = Global.find_common_card()
 	else:
 		card_label.text = "None"
-
+		
 func _on_restart_button_button_down() -> void:
 	restart_label.position.y += 2
 

@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://5s37xrvdyfoq" path="res://Assets/images/TrachCan2.png" id="9_7hr24"]
 [ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="10_banbt"]
 
-[node name="Shop" type="Node2D"]
+[node name="ShopScene" type="Node2D"]
 script = ExtResource("1_obqh1")
 
 [node name="CardSlot" type="ColorRect" parent="."]
@@ -161,6 +161,7 @@ offset_left = 64.0
 offset_top = 352.0
 offset_right = 256.0
 offset_bottom = 512.0
+focus_mode = 0
 theme = ExtResource("2_7pymf")
 theme_override_fonts/font = ExtResource("1_s31jl")
 theme_override_font_sizes/font_size = 32
@@ -270,6 +271,7 @@ offset_left = 1616.0
 offset_top = 896.0
 offset_right = 1896.0
 offset_bottom = 1056.0
+focus_mode = 0
 theme = ExtResource("2_7pymf")
 keep_pressed_outside = true
 
@@ -292,6 +294,7 @@ offset_left = 1008.0
 offset_top = 472.0
 offset_right = 1712.0
 offset_bottom = 792.0
+focus_mode = 0
 theme = ExtResource("2_7pymf")
 keep_pressed_outside = true
 

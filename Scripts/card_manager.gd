@@ -28,6 +28,7 @@ const CARD_DRAW_SPEED = 8000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	battle_manager.end_round.connect(on_round_end)
 	#window_size = get_viewport().size sätt på om window size ska vara dynamisk
 	window_size = Vector2(1920, 1080)
 	hand_boundry = window_size.x * 0.6
@@ -41,14 +42,15 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	# kollar om man har klickat på ett kort och flyttar kortet till muspekaren
-	if dragged_card:
-		dragged_card.position = Vector2(
-			clamp(get_global_mouse_position().x, 0, window_size.x), 
-			clamp(get_global_mouse_position().y, 0, window_size.y))
-			#sätter de selectade kortet längst fram
-		dragged_card.z_index = cards_in_hand.size() + 1000
-		sort_by_x_position(cards_in_hand)
+	if Global.scene_index == 1:
+		# kollar om man har klickat på ett kort och flyttar kortet till muspekaren
+		if dragged_card:
+			dragged_card.position = Vector2(
+				clamp(get_global_mouse_position().x, 0, window_size.x), 
+				clamp(get_global_mouse_position().y, 0, window_size.y))
+				#sätter de selectade kortet längst fram
+			dragged_card.z_index = cards_in_hand.size() + 1000
+			sort_by_x_position(cards_in_hand)
 			
 func sort_by_x_position(array: Array):
 	array.sort_custom(compare_x_position)
@@ -160,6 +162,7 @@ func draw_cards(troop_amount : int, spell_amount : int):
 		else:
 			drawn_card.global_position = deck.global_position
 			
+		drawn_card.get_node("Area2D/CollisionShape2D").disabled = false
 		animate_card_snap(drawn_card, new_position, CARD_DRAW_SPEED)
 
 		await get_tree().create_timer(0.05).timeout
@@ -181,9 +184,11 @@ func hover_off_effect(card):
 	
 func select_effect(card):
 	card.scale = Vector2(1.1, 1.1)
+	card.select_border.visible = true
 	
 func deselect_effect(card):
 	card.scale = Vector2(1, 1)
+	card.select_border.visible = false
 		
 func check_for_highest_z_index(cards):
 	highest_card = cards[0]
@@ -263,12 +268,12 @@ func discard_selected_cards(cards, status : String):
 			card.visible = false
 			
 func show_card_collection():
-	for child in card_collection.get_children().duplicate():
-		if child is Node2D:
-			child.queue_free()
+	#for child in card_collection.get_children().duplicate():
+		#if child is Node2D:
+			#child.queue_free()
 			
 	viewing_collection = true
-	card_collection.move_in_cards(deck)
+	card_collection.move_in_cards()
 	var tween = get_tree().create_tween()
 	
 	for card in card_collection.cards_in_collection:
@@ -299,3 +304,10 @@ func _on_back_button_pressed() -> void:
 	
 func trigger_card_ability(card):
 	card.ability_script.trigger_ability(card, battle_manager, deck, self)
+	
+func on_round_end():
+	for slot in $"../CardSlots".get_children():
+		slot.is_occupied = false
+		slot.occupied_tile = null
+		for card in played_cards:
+			card.is_placed = false
