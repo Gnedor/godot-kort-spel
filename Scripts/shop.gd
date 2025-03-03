@@ -116,11 +116,12 @@ func buy_card(card):
 		tween.tween_property(card.buy_button.button, "modulate", Color(1.0, 1.0, 1.0), 0.5)
 	
 func buy_tile(tile_slot):
-	var bought_tile
+	var bought_tile : Node2D
 	var tween = get_tree().create_tween()
 	if Global.total_money >= tiles_in_shop[0].price:
 		if tile_slot == $TileSlot:
 			buy_button_1.button.visible = false
+			print(tiles_in_shop[0])
 			bought_tile = tiles_in_shop[0]
 		else:
 			buy_button_2.button.visible = false
@@ -131,6 +132,9 @@ func buy_tile(tile_slot):
 		await tween.finished
 		bought_tile.visible = false
 		Global.store_tile(bought_tile)
+		tiles_in_shop.erase(bought_tile)
+		var tiles_folder_reference = get_node("/root/Main/BattleScene/TilesFolder")
+		bought_tile.reparent(tiles_folder_reference)
 	else:
 		if tile_slot == $TileSlot:
 			tween.tween_property(buy_button_1.button, "modulate", Color(1.0, 0.5, 0.5), 0.0) # tween för att overrita faden under denna om den är igång

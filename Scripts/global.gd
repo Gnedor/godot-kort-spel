@@ -28,7 +28,7 @@ func store_card(card):
 		#}
 		#stored_cards.append(card_data)
 
-func store_tile(tile):
+func store_tile(tile : Node2D):
 	stored_tiles.append(tile)
 	
 func timer(time):

@@ -6,6 +6,7 @@ var tile_scene = load("res://Scenes/tile.tscn")
 @onready var folder: Node2D = $Folder
 @onready var arrow: Sprite2D = $Folder/Button/arrow
 @onready var button: Button = $Folder/Button
+@onready var scene_manager: Node2D = $"../SceneManager"
 
 var menu_up : bool = true
 
@@ -26,6 +27,7 @@ const TILE_MOVE_SPEED = 4000 # pixels per second
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	scene_manager.on_scene_enter.connect(on_enter)
 	window_size = get_viewport().size
 	#$"../BattleManager".end_round.connect(on_round_end)
 	input_manager.tile_relesed_on_slot.connect(place_tile_on_slot)
@@ -44,6 +46,18 @@ func _process(delta: float) -> void:
 			dragged_tile.z_index = owned_tiles.size() + 1000
 			sort_by_x_position(tiles_in_folder)
 
+func on_enter():
+	if Global.round != 1:
+		owned_tiles.clear()
+		tiles_in_folder.clear()
+		owned_tiles = Global.stored_tiles
+		tiles_in_folder = owned_tiles
+	for tile in tiles_in_folder:
+		tile.scale = Vector2(1, 1)
+		tile.global_position = Vector2(-100, -100)
+		tile.visible = true
+	print(Global.stored_tiles.size())
+	align_tiles()
 		
 func sort_by_x_position(array: Array):
 	array.sort_custom(compare_x_position)
@@ -105,7 +119,6 @@ func add_tiles_on_start():
 		tiles = tile_database.EXAMPLE_DECK
 		for tile in tiles:
 			create_tile(tile)
-		
 	align_tiles()
 		
 func create_tile(tile_name: String):
@@ -131,7 +144,7 @@ func create_tile(tile_name: String):
 		print("Sprite node not found in card instance")
 		
 	owned_tiles.append(new_tile_instance)
-	Global.stored_tiles.append(new_tile_instance)
+	Global.store_tile(new_tile_instance)
 	tiles_in_folder.append(new_tile_instance)
 	
 func hover_effect(tile):
