@@ -6,6 +6,7 @@ extends Node2D
 var scene_index : int = 0
 # Called when the node enters the scene $"../Camera2D"tree for the first time.
 func _ready() -> void:
+	print("awdawd")
 	battle_scene_manager.on_scene_exit.connect(scene_progression)
 	shop_scene_manager.on_scene_exit.connect(scene_progression)
 	round_end_scene_manager.on_scene_exit.connect(scene_progression)
