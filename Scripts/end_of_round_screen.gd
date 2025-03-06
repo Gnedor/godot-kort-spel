@@ -77,15 +77,14 @@ func animate_screen_scale():
 func _on_button_pressed() -> void:
 	await move_off_screen()
 	on_scene_exit.emit()
-	#_change_scene("res://Scenes/shop.tscn")
 	Global.round += 1
 	Global.quota = Global.round * 40
 	
 func _on_button_button_down() -> void:
-	continue_label.position.y += 2
+	continue_label.position.y += 3
 
 func _on_button_button_up() -> void:
-	continue_label.position.y -= 2
+	continue_label.position.y -= 3
 	
 func add_text(label):
 	var tween = get_tree().create_tween()

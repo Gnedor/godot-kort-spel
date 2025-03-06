@@ -86,29 +86,6 @@ func move_out_cards():
 		card.get_node("Area2D/CollisionShape2D").disabled = true
 		card.get_node("Area2D").collision_layer = 1 << 1
 		card.z_index = 1
-	
-#func create_cards_from_name(cards : Array):
-	#troop_cards.clear()
-	#spell_cards.clear()
-	#cards_in_collection.clear()
-	#
-	#var new_cards = []
-	#
-	#for card in cards:
-		#var new_card = CARD.instantiate()
-		#add_child(new_card)
-		#new_card.card_name = card["name"]
-		#
-		#deck_reference.adjust_card_details_and_script(new_card)
-		#new_card.attack = card["attack"]
-		#new_card.actions = card["actions"]
-		#
-		#if new_card.card_type != "Spell":
-			#troop_cards.append(new_card)
-		#else:
-			#spell_cards.append(new_card)
-			#
-	#align_cards()
 
 func align_cards():
 	update_page_indicators()

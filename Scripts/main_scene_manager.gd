@@ -20,13 +20,21 @@ func scene_progression():
 		0:
 			move_to_battle_scene()
 			Global.scene_index = 1
+			print("")
+			print("battle scene")
+			print(Global.stored_tiles.size())
 		1:
 			move_to_end_round_screen()
 			Global.scene_index = 2
+			print("")
+			print("end round")
+			print(Global.stored_tiles.size())
 		2:
 			move_to_shop_scene()
 			Global.scene_index = 0
-
+			print("")
+			print("shop")
+			print(Global.stored_tiles.size())
 
 func move_to_battle_scene():
 	camera.position = $"../BattleScene".position

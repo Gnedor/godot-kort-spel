@@ -121,11 +121,13 @@ func buy_tile(tile_slot):
 	if Global.total_money >= tiles_in_shop[0].price:
 		if tile_slot == $TileSlot:
 			buy_button_1.button.visible = false
-			print(tiles_in_shop[0])
 			bought_tile = tiles_in_shop[0]
 		else:
 			buy_button_2.button.visible = false
-			bought_tile = tiles_in_shop[1]		
+			if tiles_in_shop.size() > 1:
+				bought_tile = tiles_in_shop[1]
+			else:
+				bought_tile = tiles_in_shop[0]
 			
 		Global.total_money -= bought_tile.price
 		tween.tween_property(bought_tile, "scale", Vector2(0.9, 0.9), 0.05)

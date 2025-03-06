@@ -50,13 +50,12 @@ func on_enter():
 	if Global.round != 1:
 		owned_tiles.clear()
 		tiles_in_folder.clear()
-		owned_tiles = Global.stored_tiles
+		owned_tiles = Global.stored_tiles.duplicate(true)
 		tiles_in_folder = owned_tiles
 	for tile in tiles_in_folder:
 		tile.scale = Vector2(1, 1)
 		tile.global_position = Vector2(-100, -100)
 		tile.visible = true
-	print(Global.stored_tiles.size())
 	align_tiles()
 		
 func sort_by_x_position(array: Array):
