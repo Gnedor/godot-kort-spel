@@ -18,6 +18,9 @@ var tile_scene = load("res://Scenes/tile.tscn")
 @onready var buy_button_1: Node2D = $TileSlot/BuyButton1
 @onready var buy_button_2: Node2D = $TileSlot2/BuyButton2
 
+@onready var back_label: Label = $CardCollection/BackButton/BackLabel
+@onready var trash_label: Label = $CardCollection/TrashButton/TrashLabel
+
 var deck
 
 var reroll_count : int = 0
@@ -53,6 +56,7 @@ func _ready() -> void:
 	
 	round_label.text = "Round: " + str(Global.round)
 	money_label.text = str(Global.total_money) + "$"
+	
 	
 func on_enter():
 	round_label.text = "Round: " + str(Global.round)
@@ -418,6 +422,25 @@ func select_card(card):
 	selected_card.select_border.visible = true
 
 func deselect_card(card):
-	selected_card = null
-	card.scale = Vector2(1, 1)
-	card.select_border.visible = false
+	if selected_card:
+		selected_card = null
+		card.scale = Vector2(1, 1)
+		card.select_border.visible = false
+
+func _on_back_button_down() -> void:
+	back_label.position.y += 3
+
+func _on_back_button_up() -> void:
+	back_label.position.y -= 3
+
+
+func _on_trash_button_down() -> void:
+	trash_label.position.y += 3
+
+
+func _on_trash_button_up() -> void:
+	trash_label.position.y -= 3
+
+
+func _on_trash_button_pressed() -> void:
+	pass # Replace with function body.

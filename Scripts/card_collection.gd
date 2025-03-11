@@ -135,17 +135,17 @@ func _on_button_left_pressed() -> void:
 		align_cards()
 
 func _on_button_left_button_up() -> void:
-	arrow_left.position.y -= 2
+	arrow_left.position.y -= 3
 
 func _on_button_left_button_down() -> void:
-	arrow_left.position.y += 2
+	arrow_left.position.y += 3
 
 
 func _on_button_right_button_down() -> void:
-	arrow_right.position.y += 2
+	arrow_right.position.y += 3
 
 func _on_button_right_button_up() -> void:
-	arrow_right.position.y -= 2
+	arrow_right.position.y -= 3
 
 func _on_button_right_pressed() -> void:
 	if page < max_page:

@@ -343,6 +343,31 @@ text = "Back"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="TrashButton" type="Button" parent="CardCollection"]
+self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
+offset_left = 1648.0
+offset_top = 936.0
+offset_right = 1872.0
+offset_bottom = 1056.0
+theme = ExtResource("2_7pymf")
+keep_pressed_outside = true
+
+[node name="TrashLabel" type="Label" parent="CardCollection/TrashButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 10
+theme_override_fonts/font = ExtResource("4_ral8i")
+theme_override_font_sizes/font_size = 32
+text = "Trash
+5$"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
@@ -350,4 +375,9 @@ vertical_alignment = 1
 [connection signal="button_up" from="ContinueButton" to="." method="_on_continue_button_button_up"]
 [connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="TrashCard" to="." method="_on_trash_card_pressed"]
+[connection signal="button_down" from="CardCollection/BackButton" to="." method="_on_back_button_down"]
+[connection signal="button_up" from="CardCollection/BackButton" to="." method="_on_back_button_up"]
 [connection signal="pressed" from="CardCollection/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="button_down" from="CardCollection/TrashButton" to="." method="_on_trash_button_down"]
+[connection signal="button_up" from="CardCollection/TrashButton" to="." method="_on_trash_button_up"]
+[connection signal="pressed" from="CardCollection/TrashButton" to="." method="_on_trash_button_pressed"]

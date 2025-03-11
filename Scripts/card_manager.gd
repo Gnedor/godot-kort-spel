@@ -285,10 +285,10 @@ func show_card_collection():
 	battle_manager.darken_screen()
 
 func _on_back_button_button_down() -> void:
-	back_label.position.y += 2
+	back_label.position.y += 3
 
 func _on_back_button_button_up() -> void:
-	back_label.position.y -= 2
+	back_label.position.y -= 3
 
 func _on_back_button_pressed() -> void:
 	var tween = get_tree().create_tween()

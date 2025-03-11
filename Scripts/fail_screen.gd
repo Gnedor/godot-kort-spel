@@ -28,10 +28,10 @@ func on_enter():
 		card_label.text = "None"
 		
 func _on_restart_button_button_down() -> void:
-	restart_label.position.y += 2
+	restart_label.position.y += 3
 
 func _on_restart_button_button_up() -> void:
-	restart_label.position.y -= 2
+	restart_label.position.y -= 3
 
 func _on_restart_button_pressed() -> void:
 	var tween = get_tree().create_tween()
@@ -43,10 +43,10 @@ func _on_restart_button_pressed() -> void:
 
 
 func _on_menu_button_button_down() -> void:
-	menu_label.position.y += 2
+	menu_label.position.y += 3
 
 func _on_menu_button_button_up() -> void:
-	menu_label.position.y -= 2
+	menu_label.position.y -= 3
 
 func _on_menu_button_pressed() -> void:
 	Global.reset_game()
