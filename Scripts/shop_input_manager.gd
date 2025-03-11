@@ -7,6 +7,7 @@ var hovered_tile : Node2D
 
 const CARD_MASK = 2
 const TILE_MASK = 128
+const COLLECTION_CARD_MASK = 256
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -15,6 +16,10 @@ func _process(delta: float) -> void:
 		if hovering_cards:
 			var highest_card = check_for_highest_z_index(hovering_cards)
 			hovered_card = highest_card
+		elif raycast_check(COLLECTION_CARD_MASK):
+			var highest_card = check_for_highest_z_index(raycast_check(COLLECTION_CARD_MASK))
+			hovered_card = highest_card
+			shop.hovered_card = highest_card
 		else:
 			hovered_card = null
 			
@@ -24,6 +29,18 @@ func _process(delta: float) -> void:
 			hovered_tile = highest_tile
 		else:
 			hovered_tile = null
+			
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		# On Press
+		if event.pressed:
+			if hovered_card and shop.viewing_collection:
+				if hovered_card == shop.selected_card:
+					shop.deselect_card(hovered_card)
+				else:
+					shop.select_card(hovered_card)
+		else:
+			pass
 	
 func raycast_check(mask : int):
 	var space_state = get_world_2d().direct_space_state

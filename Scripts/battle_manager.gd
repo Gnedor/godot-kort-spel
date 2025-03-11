@@ -36,19 +36,11 @@ signal end_round
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	scene_manager.on_scene_enter.connect(on_enter)
-	
-	#round_label.text = "Round: " + str(Global.round)
-	#money_label.text = str(Global.total_money) + "$"
-	#total_damage_label.text = "0/" + str(Global.quota)
-	#hand_info.text = ("")
 	input_manager.click_on_sten.connect(attack)
 	input_manager.trigger_ability.connect(enter_active_card_activate)
 	input_manager.untrigger_ability.connect(exit_active_card_activate)
 	input_manager.select_target_card.connect(activate_card_abilities)
 	input_manager.select_deck.connect(on_deck_chosen)
-	#toggle_invert(sten.get_node("Sprite2D"), false)
-	#
-	#end_turn_label_position_y = end_turn_label.position.y
 	
 func on_enter():
 	Global.total_damage = 0

@@ -14,7 +14,8 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Banan" : [10, 10, "OnPlayTroop", "On play, give two bordering cards +1 Actions this turn", "res://Scripts/kortAbilities/Banan.gd"],
 	"Impossible Shape" : [1, 1, "Troop", "Could this object be built?", null],
 	"Gambler" : [1, 1, "Troop", "Guy living in the moment", null],
-	"Groovy guy" : [1, 4, "Troop", "Guy with AMAZING dance moves" , null]
+	"Groovy guy" : [1, 4, "Troop", "Guy with AMAZING dance moves" , null],
+	"Overkiller" : [5, 1, "Troop", "If this card deals at least 2x of the total Damage dealt this round, draw 1 card", "res://Scripts/kortAbilities/Overkiller.gd"],
 }
 
 const EXAMPLE_DECK = [
@@ -33,5 +34,6 @@ const EXAMPLE_DECK = [
 	{"name": "Banan", "amount": 5},
 	{"name": "Impossible Shape", "amount": 5},
 	{"name": "Gambler", "amount": 5},
-	{"name": "Groovy guy", "amount": 5}
+	{"name": "Groovy guy", "amount": 5},
+	{"name": "Overkiller", "amount": 5}
 ]

@@ -26,52 +26,10 @@ var page_indicator: PackedScene = preload("res://Scenes/page_indicator.tscn")
 func _ready() -> void:
 	deck = get_tree().current_scene.get_node("BattleScene/TroopDeck")
 	
-	
-#func create_cards_deck(deck_reference):
-	#troop_cards.clear()
-	#spell_cards.clear()
-	#cards_in_collection.clear()
-	#
-	#var troop_deck = deck_reference.cards_in_troop_deck.duplicate()
-	#troop_deck.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
-	#
-	#var spell_deck = deck_reference.cards_in_spell_deck.duplicate()
-	#spell_deck.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
-	#
-	#for card in troop_deck:
-		#var card_copy = deck_reference.create_card_copy(card)
-		#card_copy.get_node("Area2D").collision_layer = 1 << 8
-		#troop_cards.append(card_copy)
-		#cards_in_collection.append(card_copy)
-			#
-	#for card in spell_deck:
-		#var card_copy = deck_reference.create_card_copy(card)
-		#card_copy.get_node("Area2D").collision_layer = 1 << 8
-		#spell_cards.append(card_copy)
-		#cards_in_collection.append(card_copy)
-	#align_cards()
-	
 func move_in_cards():
 	troop_cards = deck.cards_in_troop_deck.duplicate()
 	spell_cards = deck.cards_in_spell_deck.duplicate()
 	cards_in_collection = troop_cards + spell_cards
-	
-	#troop_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
-	#spell_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
-	
-	#for card in troop_cards:
-		#card.get_node("Area2D/CollisionShape2D").disabled = false
-		#card.z_index = 1010
-		#card.visible = true
-		#card.get_node("Area2D").collision_layer = 1 << 8
-		#cards_in_collection.append(card)
-		#
-	#for card in spell_cards:
-		#card.get_node("Area2D/CollisionShape2D").disabled = false
-		#card.z_index = 1010
-		#card.visible = true
-		#card.get_node("Area2D").collision_layer = 1 << 8
-		#cards_in_collection.append(card)
 		
 	for card in cards_in_collection:
 		card.get_node("Area2D/CollisionShape2D").disabled = false
@@ -110,22 +68,24 @@ func align_cards():
 	else:
 		button_right.disabled = false
 		
+	var scene_pos = global_position.x
+		
 	for i in range(6):
 		if troop_cards.size() >= i + (12 * page) + 1:
 			var card = troop_cards[i + (12 * page)]
-			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 192)
+			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 192)
 		
 		if troop_cards.size() >= (6 + i) + (12 * page) + 1:
 			var card = troop_cards[(6 + i) + (12 * page)]
-			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 428)
+			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 428)
 			
 		if spell_cards.size() >= i + (12 * page) + 1:
 			var card = spell_cards[i + (12 * page)]
-			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 652)
+			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 652)
 			
 		if spell_cards.size() >= ((6 + i) + (12 * page)) + 1:
 			var card = spell_cards[(6 + i) + (12 * page)]
-			card.position = Vector2(240 + (CARD_BOUNDRY * (i + 1) / 6), 888)
+			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 888)
 			
 func align_card_hover(hovered_card):
 	for card in cards_in_collection:

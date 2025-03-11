@@ -70,8 +70,12 @@ func instant_remove_shop_ui():
 
 func move_to_trash_card():
 	var parent = get_parent()
+	card_collection.move_in_cards()
 	var tween = get_tree().create_tween()
-	tween.tween_property(get_parent(), "global_position:x", parent.position.x - 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(get_parent(), "global_position:x", parent.position.x - 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	for card in card_collection.cards_in_collection:
+		tween.parallel().tween_property(card, "global_position:x", card.position.x - 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	card_collection.create_page_indicators()
 	#for node in shop_scene_up:
 		#tween.parallel().tween_property(node, "global_position:x", node.position.x - Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	#for node in shop_scene_down:
@@ -82,6 +86,9 @@ func move_from_trash_card():
 	var parent = get_parent()
 	var tween = get_tree().create_tween()
 	tween.tween_property(get_parent(), "global_position:x", parent.position.x + 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	for card in card_collection.cards_in_collection:
+		tween.parallel().tween_property(card, "global_position:x", card.position.x + 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	card_collection.move_out_cards()
 	#for node in shop_scene_up:
 		#tween.parallel().tween_property(node, "global_position:x", node.position.x + Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	#for node in shop_scene_down:

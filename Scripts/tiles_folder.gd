@@ -43,15 +43,14 @@ func _process(delta: float) -> void:
 				clamp(get_global_mouse_position().x, 0, window_size.x), 
 				clamp(get_global_mouse_position().y, 0, window_size.y))
 				#sätter de selectade kortet längst fram
-			dragged_tile.z_index = owned_tiles.size() + 1000
+			dragged_tile.z_index = Global.stored_tiles.size() + 1000
 			sort_by_x_position(tiles_in_folder)
 
 func on_enter():
 	if Global.round != 1:
-		owned_tiles.clear()
 		tiles_in_folder.clear()
-		owned_tiles = Global.stored_tiles.duplicate(true)
-		tiles_in_folder = owned_tiles
+		for tile in Global.stored_tiles:
+			tiles_in_folder.append(tile)
 	for tile in tiles_in_folder:
 		tile.scale = Vector2(1, 1)
 		tile.global_position = Vector2(-100, -100)
@@ -79,7 +78,7 @@ func animate_folder_down():
 		arrow.rotation_degrees += 180
 		var tween = get_tree().create_tween()
 		tween.tween_property(folder, "global_position:y", position.y + 312, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		for tile in owned_tiles:
+		for tile in Global.stored_tiles:
 			if !tile.is_placed:
 				tween.parallel() 
 				tween.tween_property(tile, "global_position:y", position.y + 312, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -90,7 +89,7 @@ func animate_folder_up():
 		arrow.rotation_degrees += 180
 		var tween = get_tree().create_tween()
 		tween.tween_property(folder, "global_position:y", position.y, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		for tile in owned_tiles:
+		for tile in Global.stored_tiles:
 			if !tile.is_placed:
 				tween.parallel() 
 				tween.tween_property(tile, "global_position:y", position.y, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -142,7 +141,6 @@ func create_tile(tile_name: String):
 	else:
 		print("Sprite node not found in card instance")
 		
-	owned_tiles.append(new_tile_instance)
 	Global.store_tile(new_tile_instance)
 	tiles_in_folder.append(new_tile_instance)
 	
@@ -156,7 +154,7 @@ func hover_off_effect(tile):
 	tile.scale = Vector2(1.0, 1.0)
 	
 func align_tile_hover(hovered_tile):
-	for tile in owned_tiles:
+	for tile in Global.stored_tiles:
 		if tile == hovered_tile:
 			hover_effect(tile)
 		else:

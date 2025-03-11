@@ -24,6 +24,7 @@ var reroll_count : int = 0
 var shop_card_amount : int = 5
 var hovered_card : Node2D
 var hovered_tile : Node2D
+var selected_card : Node2D
 
 var cards_in_shop = []
 var tiles_in_shop = []
@@ -31,6 +32,7 @@ var tile_labels = []
 
 var start_process : bool = false
 var rerolling : bool = false
+var viewing_collection : bool = false
 var reroll_label_position_y
 var continue_label_position_y
 
@@ -63,6 +65,8 @@ func _process(delta: float) -> void:
 			if !rerolling:
 				card_hover_effect()
 				tile_hover_effect()
+			if viewing_collection:
+				card_collection.align_card_hover(hovered_card)
 			money_label.text = str(Global.total_money) + "$"
 	
 func add_items_on_start():
@@ -397,6 +401,23 @@ func _on_trash_card_pressed() -> void:
 	#card_collection.create_cards_global()
 	card_collection.align_cards()
 	shop_scene_manager.move_to_trash_card()
+	viewing_collection = true
 
 func _on_back_button_pressed() -> void:
 	shop_scene_manager.move_from_trash_card()
+	viewing_collection = false
+	card_collection.page = 0
+	deselect_card(selected_card)
+	
+func select_card(card):
+	if selected_card:
+		selected_card.scale = Vector2(1, 1)
+		selected_card.select_border.visible = false
+	selected_card = card
+	selected_card.scale = Vector2(1.1, 1.1)
+	selected_card.select_border.visible = true
+
+func deselect_card(card):
+	selected_card = null
+	card.scale = Vector2(1, 1)
+	card.select_border.visible = false
