@@ -33,7 +33,7 @@ func move_in_cards():
 		
 	for card in cards_in_collection:
 		card.get_node("Area2D/CollisionShape2D").disabled = false
-		card.z_index = 1010
+		card.z_index = 110
 		card.visible = true
 		card.get_node("Area2D").collision_layer = 1 << 8
 

@@ -16,7 +16,7 @@ func _process(delta: float) -> void:
 		if hovering_cards:
 			var highest_card = check_for_highest_z_index(hovering_cards)
 			hovered_card = highest_card
-		elif raycast_check(COLLECTION_CARD_MASK):
+		elif raycast_check(COLLECTION_CARD_MASK) and !shop.managing_card:
 			var highest_card = check_for_highest_z_index(raycast_check(COLLECTION_CARD_MASK))
 			hovered_card = highest_card
 			shop.hovered_card = highest_card

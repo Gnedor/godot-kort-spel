@@ -1,0 +1,90 @@
+[gd_scene load_steps=3 format=3 uid="uid://buwm6dg8acgmi"]
+
+[ext_resource type="Script" path="res://Scenes/card_manager.gd" id="1_h600g"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="1_jibvu"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_h600g")
+
+[node name="TrashButton" type="Button" parent="."]
+self_modulate = Color(0.138034, 0.138034, 0.138034, 1)
+offset_left = 1304.0
+offset_top = 560.0
+offset_right = 1848.0
+offset_bottom = 872.0
+theme = ExtResource("1_jibvu")
+
+[node name="Label" type="Label" parent="TrashButton"]
+layout_mode = 0
+offset_right = 544.0
+offset_bottom = 304.0
+theme_override_font_sizes/font_size = 32
+text = "Trash Card"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TagButton" type="Button" parent="."]
+self_modulate = Color(0.138034, 0.138034, 0.138034, 1)
+offset_left = 1304.0
+offset_top = 408.0
+offset_right = 1848.0
+offset_bottom = 536.0
+theme = ExtResource("1_jibvu")
+
+[node name="Label" type="Label" parent="TagButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.937
+offset_bottom = 0.0639954
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Add Tag"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DamageButton" type="Button" parent="."]
+self_modulate = Color(0.138034, 0.138034, 0.138034, 1)
+offset_left = 1304.0
+offset_top = 192.0
+offset_right = 1848.0
+offset_bottom = 384.0
+theme = ExtResource("1_jibvu")
+
+[node name="Label" type="Label" parent="DamageButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.958
+offset_bottom = 0.0639954
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Add Damage"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="Button" parent="."]
+self_modulate = Color(0.138034, 0.138034, 0.138034, 1)
+offset_left = 1600.0
+offset_top = 920.0
+offset_right = 1896.0
+offset_bottom = 1056.0
+theme = ExtResource("1_jibvu")
+
+[node name="Label" type="Label" parent="Back"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.958
+offset_bottom = 0.0639954
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="TrashButton" to="." method="_on_trash_button_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

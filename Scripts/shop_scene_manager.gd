@@ -11,24 +11,25 @@ extends Node2D
 @onready var tile_clip_mask: ColorRect = $"../TileClipMask"
 @onready var trash_card: Button = $"../TrashCard"
 @onready var card_collection: Node2D = $"../CardCollection"
+@onready var card_managing_position: Node2D = $"../CardCollection/CardManagingPosition"
+@onready var darken_screen: ColorRect = $DarkenScreen
+@onready var card_manager_screen: Node2D = $"../CardCollection/CardManagerScreen"
 
 var shop_scene_up
 var shop_scene_down
+
+var org_card_pos
 
 signal on_scene_enter
 signal on_scene_exit
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	card_manager_screen.back_pressed.connect(move_from_manage_card)
 	shop.exit_shop.connect(remove_shop_ui)
 	shop_scene_up = [card_slot, button, round_display]
 	shop_scene_down = [tile_slot, tile_slot_2, continue_button, tile_clip_mask, trash_card]
 	instant_remove_shop_ui()
-	
-	#await add_shop_ui()
-	#
-	#shop.add_items_on_start()
-	#shop.start_process = true
 
 func on_enter_scene():
 	await add_shop_ui()
@@ -76,11 +77,6 @@ func move_to_trash_card():
 	for card in card_collection.cards_in_collection:
 		tween.parallel().tween_property(card, "global_position:x", card.position.x - 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	card_collection.create_page_indicators()
-	#for node in shop_scene_up:
-		#tween.parallel().tween_property(node, "global_position:x", node.position.x - Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	#for node in shop_scene_down:
-		#tween.parallel().tween_property(node, "global_position:x", node.position.x - Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	#tween.parallel().tween_property(card_collection, "global_position:x", get_parent().position.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	
 func move_from_trash_card():
 	var parent = get_parent()
@@ -89,8 +85,47 @@ func move_from_trash_card():
 	for card in card_collection.cards_in_collection:
 		tween.parallel().tween_property(card, "global_position:x", card.position.x + 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	card_collection.move_out_cards()
-	#for node in shop_scene_up:
-		#tween.parallel().tween_property(node, "global_position:x", node.position.x + Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	#for node in shop_scene_down:
-		#tween.parallel().tween_property(node, "global_position:x", node.position.x + Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	#tween.parallel().tween_property(card_collection, "global_position:x", Global.window_size.x, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+func move_to_manage_card(card):
+	card_manager_screen.visible = true
+	shop.managing_card = true
+	card.z_index = 130
+	org_card_pos = card.position
+	card_manager_screen.selected_card = card
+	dissable_collection_buttons()
+	
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	
+	tween.parallel().tween_property(card, "scale", Vector2(3, 3), 0.2)
+	tween.parallel().tween_property(card, "position", card_managing_position.global_position, 0.2)
+	tween.parallel().tween_property(darken_screen, "color", Color(0, 0, 0, 0.9), 0.2)
+	tween.parallel().tween_property(card_manager_screen, "position", Vector2(0, 0), 0.2)
+	
+func move_from_manage_card(card):
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	
+	tween.parallel().tween_property(card, "scale", Vector2(1, 1), 0.2)
+	tween.parallel().tween_property(card, "position", org_card_pos, 0.2)
+	tween.parallel().tween_property(darken_screen, "color", Color(0, 0, 0, 0), 0.2)
+	tween.parallel().tween_property(card_manager_screen, "position", Vector2(1920, 0), 0.2)
+	await tween.finished
+	
+	shop.deselect_card(card)
+	enable_collection_buttons()
+	shop.managing_card = false
+	card.z_index = 110
+	card_manager_screen.visible = false
+
+func dissable_collection_buttons():
+	for child in card_collection.get_children():
+		if child is Button:
+			child.disabled = true
+			
+func enable_collection_buttons():
+	for child in card_collection.get_children():
+		if child is Button:
+			child.disabled = false

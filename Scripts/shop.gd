@@ -17,9 +17,9 @@ var tile_scene = load("res://Scenes/tile.tscn")
 @onready var tile_clip_mask: ColorRect = $TileClipMask
 @onready var buy_button_1: Node2D = $TileSlot/BuyButton1
 @onready var buy_button_2: Node2D = $TileSlot2/BuyButton2
+@onready var card_manager_screen: Node2D = $CardCollection/CardManagerScreen
 
 @onready var back_label: Label = $CardCollection/BackButton/BackLabel
-@onready var trash_label: Label = $CardCollection/TrashButton/TrashLabel
 
 var deck
 
@@ -36,6 +36,7 @@ var tile_labels = []
 var start_process : bool = false
 var rerolling : bool = false
 var viewing_collection : bool = false
+var managing_card : bool = false
 var reroll_label_position_y
 var continue_label_position_y
 
@@ -46,6 +47,7 @@ const LABEL_MAX_SIZE = 280
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	card_manager_screen.trash_pressed.connect(trash_card)
 	deck = get_tree().current_scene.get_node("BattleScene/TroopDeck")
 	
 	tile_labels = [buy_button_1.label, buy_button_2.label]
@@ -69,8 +71,10 @@ func _process(delta: float) -> void:
 			if !rerolling:
 				card_hover_effect()
 				tile_hover_effect()
-			if viewing_collection:
+				
+			if viewing_collection and !managing_card:
 				card_collection.align_card_hover(hovered_card)
+				
 			money_label.text = str(Global.total_money) + "$"
 	
 func add_items_on_start():
@@ -174,6 +178,7 @@ func make_new_cards():
 		new_card_instance.price = random_price
 		if new_card_instance.card_type != "Troop":
 			var new_card_ability_script_path = card_database.CARDS[card_name][4]
+			print(new_card_instance.card_name)
 			new_card_instance.ability_script = load(new_card_ability_script_path).new()
 			
 		if new_card_instance.card_type == "Spell":
@@ -400,7 +405,6 @@ func remove_old_tiles(tiles):
 	for tile in tiles:
 		tile.queue_free()
 
-
 func _on_trash_card_pressed() -> void:
 	#card_collection.create_cards_global()
 	card_collection.align_cards()
@@ -414,18 +418,17 @@ func _on_back_button_pressed() -> void:
 	deselect_card(selected_card)
 	
 func select_card(card):
-	if selected_card:
-		selected_card.scale = Vector2(1, 1)
-		selected_card.select_border.visible = false
 	selected_card = card
-	selected_card.scale = Vector2(1.1, 1.1)
-	selected_card.select_border.visible = true
+	#selected_card.scale = Vector2(1.1, 1.1)
+	#selected_card.select_border.visible = true
+	shop_scene_manager.move_to_manage_card(selected_card)
+	card_collection.align_card_hover(null)
+	if selected_card.card_type != "Spell":
+		selected_card.stat_display.visible = true
 
 func deselect_card(card):
-	if selected_card:
-		selected_card = null
-		card.scale = Vector2(1, 1)
-		card.select_border.visible = false
+	selected_card = null
+	card.stat_display.visible = false
 
 func _on_back_button_down() -> void:
 	back_label.position.y += 3
@@ -433,14 +436,9 @@ func _on_back_button_down() -> void:
 func _on_back_button_up() -> void:
 	back_label.position.y -= 3
 
-
-func _on_trash_button_down() -> void:
-	trash_label.position.y += 3
-
-
-func _on_trash_button_up() -> void:
-	trash_label.position.y -= 3
-
-
-func _on_trash_button_pressed() -> void:
-	pass # Replace with function body.
+func trash_card(card):
+	var tween = get_tree().create_tween()
+	tween.tween_property(card, "scale", Vector2(2, 2), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	await tween.finished
+	
+	card.visible = false
