@@ -4,7 +4,7 @@ extends Node2D
 @onready var shop_scene_manager = $"../ShopScene".get_node("ShopSceneManager")
 @onready var round_end_scene_manager = $"../EndOfRoundScreen"
 var scene_index : int = 0
-# Called when the node enters the scene $"../Camera2D"tree for the first time.
+
 func _ready() -> void:
 	battle_scene_manager.on_scene_exit.connect(scene_progression)
 	shop_scene_manager.on_scene_exit.connect(scene_progression)
@@ -26,6 +26,7 @@ func scene_progression():
 		2:
 			move_to_shop_scene()
 			Global.scene_index = 0
+			Global.round += 1
 
 func move_to_battle_scene():
 	camera.position = $"../BattleScene".position

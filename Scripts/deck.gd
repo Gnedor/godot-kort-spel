@@ -20,6 +20,8 @@ var selected_deck
 	#if cards_in_deck.size() > 0 and draw_queue > 0:
 		#draw_animation.start()
 	
+func _ready() -> void:
+	SignalManager.removed_card.connect(check_for_deleted_cards)
 	
 func _on_draw_animation_timeout() -> void:
 	card_manager.cards_in_hand.append(cards_in_troop_deck[0])
@@ -125,17 +127,18 @@ func add_cards_on_start():
 		for card in selected_deck:
 			add_new_card_to_deck(card["name"], card["amount"])
 	else:
-		for card in Global.stored_cards:
+		#for card in Global.stored_cards:
+		for card in cards_in_troop_deck:
 			card.z_index = 0
 			card.visible = false
-			if card.card_type != "Spell":
-				cards_in_troop_deck.append(card)
-				card.position = position
-			else:
-				cards_in_spell_deck.append(card)
-				card.position = spell_deck.position
-		#for card in Global.stored_cards:
-			#add_card_to_deck(card["name"], card["attack"], card["actions"])
+			cards_in_troop_deck.append(card)
+			card.position = position
+				
+		for card in cards_in_spell_deck:
+			card.z_index = 0
+			card.visible = false
+			cards_in_spell_deck.append(card)
+			card.position = spell_deck.position
 			
 	cards_in_troop_deck.shuffle()
 	cards_in_spell_deck.shuffle()
@@ -239,4 +242,13 @@ func adjust_card_details_and_script(card):
 			print("Sprite node not found")
 	else:
 		sprite.texture = null
+		
+func check_for_deleted_cards():
+	for card in cards_in_troop_deck.duplicate():
+		if !is_instance_valid(card):
+			cards_in_troop_deck.erase(card)
+			
+	for card in cards_in_spell_deck.duplicate():
+		if !is_instance_valid(card):
+			cards_in_spell_deck.erase(card)
 	

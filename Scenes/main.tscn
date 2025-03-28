@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/main_scene_manager.gd" id="4_7byqg"]
 
 [node name="Main" type="Node2D"]
+rotation = -0.000180377
 
 [node name="BattleScene" parent="." instance=ExtResource("1_a2doi")]
 

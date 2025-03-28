@@ -11,6 +11,7 @@ var card_scene = load("res://Scenes/card.tscn")
 @onready var end_turn_label: Label = $"../BattleManager/EndTurn/EndTurnLabel"
 @onready var card_collection: Node2D = $"../CardCollection"
 @onready var back_label: Label = $"../CardCollection/BackButton/BackLabel"
+@onready var darken_background: ColorRect = $"../BattleManager/DarkenBackground"
 
 var dragged_card : Node2D
 var window_size : Vector2
@@ -218,7 +219,7 @@ func animate_card_snap(card, position, speed):
 	if card.global_position.y != window_size.y - 152:
 		tween.tween_property(card, "position", position, find_duration(card.position, position, speed * 2)).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	else:
-		tween.tween_property(card, "position", position, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(card, "position", position, 2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	await tween.finished
 	
 func find_duration(pos1, pos2, speed):
@@ -268,11 +269,9 @@ func discard_selected_cards(cards, status : String):
 			card.visible = false
 			
 func show_card_collection():
-	#for child in card_collection.get_children().duplicate():
-		#if child is Node2D:
-			#child.queue_free()
-			
 	viewing_collection = true
+	darken_background.z_index = cards_in_hand.size() + 4
+	card_collection.z_index = darken_background.z_index + 1
 	card_collection.move_in_cards()
 	var tween = get_tree().create_tween()
 	

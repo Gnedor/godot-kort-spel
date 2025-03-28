@@ -56,16 +56,19 @@ func _ready() -> void:
 	buy_button_1.buy_button_pressed.connect(buy_tile)
 	buy_button_2.buy_button_pressed.connect(buy_tile)
 	
-	round_label.text = "Round: " + str(Global.round)
-	money_label.text = str(Global.total_money) + "$"
+	#round_label.text = "Round: " + str(Global.round)
+	#money_label.text = str(Global.total_money) + "$"
 	
 	
 func on_enter():
-	round_label.text = "Round: " + str(Global.round)
-	money_label.text = str(Global.total_money) + "$"
+	pass
+	#round_label.text = "Round: " + str(Global.round)
+	#money_label.text = str(Global.total_money) + "$"
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	money_label.text = str(Global.total_money) + "$"
+	
 	if Global.scene_index == 0:
 		if start_process:
 			if !rerolling:
@@ -75,12 +78,11 @@ func _process(delta: float) -> void:
 			if viewing_collection and !managing_card:
 				card_collection.align_card_hover(hovered_card)
 				
-			money_label.text = str(Global.total_money) + "$"
+
 	
 func add_items_on_start():
 	make_new_cards()
 	make_new_tiles()
-	round_label.text = "Round: " + str(Global.round)
 	
 	reroll_label_position_y = reroll_label.position.y
 	continue_label_position_y = continue_label.position.y
@@ -176,9 +178,9 @@ func make_new_cards():
 		new_card_instance.card_name = card_name
 		var random_price = randi() % (3 + reroll_count) + (4 + reroll_count)
 		new_card_instance.price = random_price
+		
 		if new_card_instance.card_type != "Troop":
 			var new_card_ability_script_path = card_database.CARDS[card_name][4]
-			print(new_card_instance.card_name)
 			new_card_instance.ability_script = load(new_card_ability_script_path).new()
 			
 		if new_card_instance.card_type == "Spell":
@@ -339,7 +341,6 @@ func add_card_price_text():
 		tween.tween_property(button_label, "visible_ratio", 1.0, 0.2)
 		
 func add_tile_price_text():
-	var i = 0
 	buy_button_1.button.visible = true
 	buy_button_2.button.visible = true
 	for label in tile_labels:
@@ -347,7 +348,6 @@ func add_tile_price_text():
 		label.visible_ratio = 0.0
 		label.text = "BUY " + str(tiles_in_shop[0].price) + "$"
 		tween.tween_property(label, "visible_ratio", 1.0, 0.2)
-		i += 1
 		
 func remove_tile_price_text():
 	for label in tile_labels:
@@ -405,26 +405,23 @@ func remove_old_tiles(tiles):
 	for tile in tiles:
 		tile.queue_free()
 
-func _on_trash_card_pressed() -> void:
+func _on_manage_card_pressed() -> void:
 	#card_collection.create_cards_global()
 	card_collection.align_cards()
-	shop_scene_manager.move_to_trash_card()
+	shop_scene_manager.move_to_card_collection()
 	viewing_collection = true
 
 func _on_back_button_pressed() -> void:
-	shop_scene_manager.move_from_trash_card()
+	shop_scene_manager.move_from_card_collection()
 	viewing_collection = false
 	card_collection.page = 0
-	deselect_card(selected_card)
 	
 func select_card(card):
 	selected_card = card
-	#selected_card.scale = Vector2(1.1, 1.1)
-	#selected_card.select_border.visible = true
 	shop_scene_manager.move_to_manage_card(selected_card)
 	card_collection.align_card_hover(null)
 	if selected_card.card_type != "Spell":
-		selected_card.stat_display.visible = true
+		selected_card.visible = true
 
 func deselect_card(card):
 	selected_card = null
@@ -437,8 +434,21 @@ func _on_back_button_up() -> void:
 	back_label.position.y -= 3
 
 func trash_card(card):
-	var tween = get_tree().create_tween()
-	tween.tween_property(card, "scale", Vector2(2, 2), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	await tween.finished
+	var trash_card_anim = card_manager_screen.trash_card
+	#var tween = get_tree().create_tween()
+	#tween.tween_property(card, "scale", Vector2(2, 2), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	trash_card_anim.get_node("AnimationPlayer").play("trash_card_anim")
+	trash_card_anim.visible = true
 	
-	card.visible = false
+	#await tween.finished
+	await Global.timer(0.15)
+	
+	selected_card = null
+	card.free()
+	SignalManager.signal_emitter("removed_card")
+
+	await Global.timer(0.4)
+	
+	trash_card_anim.get_node("AnimationPlayer").play("RESET")
+	trash_card_anim.visible = false
+	shop_scene_manager.move_from_manage_card(null)

@@ -35,12 +35,7 @@ func _input(event):
 		# On Press
 		if event.pressed:
 			if hovered_card and shop.viewing_collection:
-				if hovered_card == shop.selected_card:
-					shop.deselect_card(hovered_card)
-				else:
-					shop.select_card(hovered_card)
-		else:
-			pass
+				shop.select_card(hovered_card)
 	
 func raycast_check(mask : int):
 	var space_state = get_world_2d().direct_space_state

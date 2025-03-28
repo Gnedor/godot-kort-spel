@@ -85,7 +85,12 @@ func _on_timer_timeout() -> void:
 	if card_manager.cards_in_hand and step == 3:
 		var tween = get_tree().create_tween()
 		tween.tween_property(card_manager.cards_in_hand[0], "position", Vector2(2200, 500), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-		deck.cards_in_troop_deck.append(card_manager.cards_in_hand[0])
+		
+		if card_manager.cards_in_hand[0].card_type != "Spell":
+			deck.cards_in_troop_deck.append(card_manager.cards_in_hand[0])
+		else:
+			deck.cards_in_spell_deck.append(card_manager.cards_in_hand[0])
+			
 		card_manager.cards_in_hand.pop_front()
 		
 		if card_manager.cards_in_hand:

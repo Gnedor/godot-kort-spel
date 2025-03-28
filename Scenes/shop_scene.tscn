@@ -296,7 +296,7 @@ offset_right = 3840.0
 offset_bottom = 1080.0
 color = Color(0, 0, 0, 0)
 
-[node name="TrashCard" type="Button" parent="."]
+[node name="ManageCard" type="Button" parent="."]
 self_modulate = Color(0.212305, 0.212305, 0.212305, 1)
 offset_left = 1008.0
 offset_top = 472.0
@@ -306,21 +306,21 @@ focus_mode = 0
 theme = ExtResource("2_7pymf")
 keep_pressed_outside = true
 
-[node name="Node2D" type="Node2D" parent="TrashCard"]
+[node name="Node2D" type="Node2D" parent="ManageCard"]
 
-[node name="Label" type="Label" parent="TrashCard/Node2D"]
+[node name="Label" type="Label" parent="ManageCard/Node2D"]
 offset_left = 80.0
 offset_top = 24.0
-offset_right = 354.0
+offset_right = 409.0
 offset_bottom = 288.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("8_pd30o")
 theme_override_font_sizes/font_size = 80
-text = "TRASH
-CARD: 5$"
+text = "Manage 
+CARD"
 vertical_alignment = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="TrashCard/Node2D"]
+[node name="Sprite2D" type="Sprite2D" parent="ManageCard/Node2D"]
 position = Vector2(568, 152)
 scale = Vector2(3, 3)
 texture = ExtResource("9_7hr24")
@@ -365,7 +365,7 @@ position = Vector2(1920, 0)
 [connection signal="button_down" from="ContinueButton" to="." method="_on_continue_button_button_down"]
 [connection signal="button_up" from="ContinueButton" to="." method="_on_continue_button_button_up"]
 [connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="TrashCard" to="." method="_on_trash_card_pressed"]
+[connection signal="pressed" from="ManageCard" to="." method="_on_manage_card_pressed"]
 [connection signal="button_down" from="CardCollection/BackButton" to="." method="_on_back_button_down"]
 [connection signal="button_up" from="CardCollection/BackButton" to="." method="_on_back_button_up"]
 [connection signal="pressed" from="CardCollection/BackButton" to="." method="_on_back_button_pressed"]

@@ -52,21 +52,22 @@ func align_cards():
 	for card in cards_in_collection:
 		card.visible = true
 		card.position = Vector2 (-100, -100)
+		
+		checkPage()
+	#if troop_cards.size() > spell_cards.size():
+		#max_page = ((troop_cards.size() - 1) / 12)
+	#else:
+		#max_page = ((spell_cards.size() - 1) / 12)
 	
-	if troop_cards.size() > spell_cards.size():
-		max_page = ((troop_cards.size() - 1) / 12)
-	else:
-		max_page = ((spell_cards.size() - 1) / 12)
-		
-	if page == 0:
-		button_left.disabled = true
-	else:
-		button_left.disabled = false
-		
-	if page == max_page:
-		button_right.disabled = true
-	else:
-		button_right.disabled = false
+	#if page == 0:
+		#button_left.disabled = true
+	#else:
+		#button_left.disabled = false
+		#
+	#if page == max_page:
+		#button_right.disabled = true
+	#else:
+		#button_right.disabled = false
 		
 	var scene_pos = global_position.x
 		
@@ -98,14 +99,14 @@ func align_card_hover(hovered_card):
 			card.is_hovering = false
 			
 func hover_effect(card):
-	var card_textures = card.get_node("Textures")
+	#var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1.05, 1.05)
 	card.description.visible = true
 	if card.card_type != "Spell":
 		card.get_node("Textures/ScaleNode/StatDisplay").visible = true
 		
 func hover_off_effect(card):
-	var card_textures = card.get_node("Textures")
+	#var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1, 1)
 	card.description.visible = false
 	card.get_node("Textures/ScaleNode/StatDisplay").visible = false
@@ -120,8 +121,13 @@ func create_page_indicators():
 			var new_indicator = page_indicator.instantiate()
 			h_box_container.add_child(new_indicator)
 			page_indicators.append(new_indicator)
-		update_page_indicators()
 
+	if page > max_page:
+		page -= 1
+		align_cards()
+		
+	update_page_indicators()
+	
 func update_page_indicators():
 	for i in page_indicators.size():
 		if i == page:
@@ -151,3 +157,28 @@ func _on_button_right_pressed() -> void:
 	if page < max_page:
 		page += 1
 		align_cards()
+		
+func checkForDeletedCards():
+	for card in cards_in_collection.duplicate():
+		if !is_instance_valid(card):
+			cards_in_collection.erase(card)
+			spell_cards.erase(card)
+			troop_cards.erase(card)
+	checkPage()
+	create_page_indicators()
+	
+func checkPage():
+	if troop_cards.size() > spell_cards.size():
+		max_page = ((troop_cards.size() - 1) / 12)
+	else:
+		max_page = ((spell_cards.size() - 1) / 12)
+		
+	if page == 0:
+		button_left.disabled = true
+	else:
+		button_left.disabled = false
+		
+	if page == max_page:
+		button_right.disabled = true
+	else:
+		button_right.disabled = false

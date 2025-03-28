@@ -77,7 +77,6 @@ func animate_screen_scale():
 func _on_button_pressed() -> void:
 	await move_off_screen()
 	on_scene_exit.emit()
-	Global.round += 1
 	Global.quota = Global.round * 40
 	
 func _on_button_button_down() -> void:

@@ -153,9 +153,9 @@ func hover_off_effect(tile):
 	tile.description.visible = false
 	tile.scale = Vector2(1.0, 1.0)
 	
-func align_tile_hover(hovered_tile):
+func align_tile_hover(hover_tile):
 	for tile in Global.stored_tiles:
-		if tile == hovered_tile:
+		if tile == hover_tile:
 			hover_effect(tile)
 		else:
 			hover_off_effect(tile)

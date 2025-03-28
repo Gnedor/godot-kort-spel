@@ -9,7 +9,7 @@ extends Node2D
 @onready var shop: Node2D = $".."
 @onready var continue_button: Button = $"../ContinueButton"
 @onready var tile_clip_mask: ColorRect = $"../TileClipMask"
-@onready var trash_card: Button = $"../TrashCard"
+@onready var manage_card: Button = $"../ManageCard"
 @onready var card_collection: Node2D = $"../CardCollection"
 @onready var card_managing_position: Node2D = $"../CardCollection/CardManagingPosition"
 @onready var darken_screen: ColorRect = $DarkenScreen
@@ -28,10 +28,11 @@ func _ready() -> void:
 	card_manager_screen.back_pressed.connect(move_from_manage_card)
 	shop.exit_shop.connect(remove_shop_ui)
 	shop_scene_up = [card_slot, button, round_display]
-	shop_scene_down = [tile_slot, tile_slot_2, continue_button, tile_clip_mask, trash_card]
+	shop_scene_down = [tile_slot, tile_slot_2, continue_button, tile_clip_mask, manage_card]
 	instant_remove_shop_ui()
 
 func on_enter_scene():
+	shop.round_label.text = "Round: " + str(Global.round)
 	await add_shop_ui()
 	
 	shop.add_items_on_start()
@@ -69,7 +70,7 @@ func instant_remove_shop_ui():
 	for node in shop_scene_down:
 		node.position.y += 1000
 
-func move_to_trash_card():
+func move_to_card_collection():
 	var parent = get_parent()
 	card_collection.move_in_cards()
 	var tween = get_tree().create_tween()
@@ -78,7 +79,7 @@ func move_to_trash_card():
 		tween.parallel().tween_property(card, "global_position:x", card.position.x - 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	card_collection.create_page_indicators()
 	
-func move_from_trash_card():
+func move_from_card_collection():
 	var parent = get_parent()
 	var tween = get_tree().create_tween()
 	tween.tween_property(get_parent(), "global_position:x", parent.position.x + 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
@@ -87,7 +88,7 @@ func move_from_trash_card():
 	card_collection.move_out_cards()
 	
 func move_to_manage_card(card):
-	card_manager_screen.visible = true
+	card_manager_screen.on_enter()
 	shop.managing_card = true
 	card.z_index = 130
 	org_card_pos = card.position
@@ -108,18 +109,23 @@ func move_from_manage_card(card):
 	tween.set_trans(Tween.TRANS_QUAD)
 	tween.set_ease(Tween.EASE_IN_OUT)
 	
-	tween.parallel().tween_property(card, "scale", Vector2(1, 1), 0.2)
-	tween.parallel().tween_property(card, "position", org_card_pos, 0.2)
+	if card:
+		tween.parallel().tween_property(card, "scale", Vector2(1, 1), 0.2)
+		tween.parallel().tween_property(card, "position", org_card_pos, 0.2)
+		
 	tween.parallel().tween_property(darken_screen, "color", Color(0, 0, 0, 0), 0.2)
 	tween.parallel().tween_property(card_manager_screen, "position", Vector2(1920, 0), 0.2)
 	await tween.finished
 	
-	shop.deselect_card(card)
 	enable_collection_buttons()
+	card_collection.checkForDeletedCards()
 	shop.managing_card = false
-	card.z_index = 110
 	card_manager_screen.visible = false
-
+	
+	if card:
+		shop.deselect_card(card)
+		card.z_index = 110
+	
 func dissable_collection_buttons():
 	for child in card_collection.get_children():
 		if child is Button:

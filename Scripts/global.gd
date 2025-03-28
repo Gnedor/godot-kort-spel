@@ -20,13 +20,6 @@ var selected_deck = "EXAMPLE_DECK"
 
 func store_card(card):
 	stored_cards.append(card)
-	#for card in cards:
-		#var card_data = {
-			#"name" = card.card_name,
-			#"attack" = card.base_attack,
-			#"actions" = card.base_actions,
-		#}
-		#stored_cards.append(card_data)
 
 func store_tile(tile : Node2D):
 	stored_tiles.append(tile)
@@ -62,3 +55,4 @@ func find_common_card():
 			max_count = frequency[key]
 			most_common_card = key
 	return most_common_card
+	
