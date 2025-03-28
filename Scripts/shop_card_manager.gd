@@ -6,6 +6,7 @@ extends Node2D
 @onready var trash_card: Node2D = $TrashCard
 @onready var trash_button: Button = $TrashButton
 @onready var trash_label: Label = $TrashButton/Label
+@onready var back_label: Label = $Back/Label
 
 signal back_pressed
 signal trash_pressed
@@ -37,3 +38,10 @@ func on_enter():
 	
 func update_labels():
 	trash_label.text = "Trash Card\n\n" + str(trash_cost) + "$"  
+
+
+func _on_back_button_down() -> void:
+	back_label.position.y += 2
+
+func _on_back_button_up() -> void:
+	back_label.position.y -= 2

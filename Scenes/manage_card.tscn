@@ -79,6 +79,7 @@ offset_top = 920.0
 offset_right = 1896.0
 offset_bottom = 1056.0
 theme = ExtResource("1_jibvu")
+keep_pressed_outside = true
 
 [node name="Label" type="Label" parent="Back"]
 layout_mode = 1
@@ -88,6 +89,7 @@ anchor_bottom = 0.958
 offset_bottom = 0.0639954
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_6qlgt")
 theme_override_font_sizes/font_size = 32
 text = "Back"
 horizontal_alignment = 1
@@ -154,4 +156,6 @@ z_index = 150
 position = Vector2(512, 540)
 
 [connection signal="pressed" from="TrashButton" to="." method="_on_trash_button_pressed"]
+[connection signal="button_down" from="Back" to="." method="_on_back_button_down"]
+[connection signal="button_up" from="Back" to="." method="_on_back_button_up"]
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

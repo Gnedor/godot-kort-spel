@@ -6,6 +6,7 @@
 	# måste göra så att när man trashar ett kort disablas knappen för att sluta managa kort annars kan det krasha, gör så att den går ut automatiskt
 	# om man klickar på ett kort innan animationen för att gå till collectionen är klar förstörst placeringen av kortet
 	# animationer är för snabba på battle scenen, tiles och kort rör sig för snabbt när de byter position
+	# priset uppdaterar innan den har gåt ur ur manage card skärmen
 
 #Ideer:
 	#Olika former för olika dificulties  t.ex en kvadrat sitället för sten
