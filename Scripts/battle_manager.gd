@@ -6,7 +6,6 @@ extends Node2D
 @onready var attack_timer: Timer = $AttackTimer
 @onready var total_damage_label: Label = $TotalDamage
 @onready var turn_counter: Label = $TurnCounter
-@onready var camera_2d: Camera2D = $"../Camera2D"
 @onready var ui: Node2D = $"../UI"
 @onready var card_slots: Node2D = $"../CardSlots"
 @onready var end_turn: Button = $EndTurn
@@ -18,6 +17,7 @@ extends Node2D
 @onready var money_label: Label = $"../Round Box/Money Box/ColorRect/ColorRect/MoneyLabel"
 @onready var tiles_folder: Node2D = $"../TilesFolder"
 @onready var scene_manager: Node2D = $"../SceneManager"
+@onready var camera_2d: Camera2D
 
 var turns : int
 var card_index : int
@@ -35,6 +35,7 @@ signal end_round
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	camera_2d = get_parent().get_parent().get_node("Camera2D")
 	scene_manager.on_scene_enter.connect(on_enter)
 	input_manager.click_on_sten.connect(attack)
 	input_manager.trigger_ability.connect(enter_active_card_activate)

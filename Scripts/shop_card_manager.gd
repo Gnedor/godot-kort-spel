@@ -29,8 +29,6 @@ func _on_trash_button_pressed() -> void:
 			Global.total_money -= trash_cost
 			trash_cost += 3
 			
-			update_labels()
-			
 func on_enter():
 	trash_button.disabled = false
 	back_button.disabled = false

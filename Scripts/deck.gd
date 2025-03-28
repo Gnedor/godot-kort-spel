@@ -119,8 +119,8 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 	card_manager.update_card(new_card_instance)
 		
 func add_cards_on_start():
-	cards_in_troop_deck.clear()
-	cards_in_spell_deck.clear()
+	#cards_in_troop_deck.clear()
+	#cards_in_spell_deck.clear()
 	if Global.round == 1:
 		selected_deck = card_database.EXAMPLE_DECK
 			
@@ -131,13 +131,13 @@ func add_cards_on_start():
 		for card in cards_in_troop_deck:
 			card.z_index = 0
 			card.visible = false
-			cards_in_troop_deck.append(card)
+			#cards_in_troop_deck.append(card)
 			card.position = position
 				
 		for card in cards_in_spell_deck:
 			card.z_index = 0
 			card.visible = false
-			cards_in_spell_deck.append(card)
+			#cards_in_spell_deck.append(card)
 			card.position = spell_deck.position
 			
 	cards_in_troop_deck.shuffle()

@@ -215,12 +215,14 @@ func align_card_hover(hovered_card):
 			
 func animate_card_snap(card, position, speed):
 	var tween = get_tree().create_tween()
-
-	if card.global_position.y != window_size.y - 152:
-		tween.tween_property(card, "position", position, find_duration(card.position, position, speed * 2)).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	else:
-		tween.tween_property(card, "position", position, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	await tween.finished
+	
+	if card.global_position != position:
+		if card.global_position.y != window_size.y - 152:
+			tween.tween_property(card, "position", position, find_duration(card.position, position, speed * 2)).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		else:
+			tween.tween_property(card, "position", position, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		await tween.finished
+	
 	
 func find_duration(pos1, pos2, speed):
 	var distance = pos1.distance_to(pos2)

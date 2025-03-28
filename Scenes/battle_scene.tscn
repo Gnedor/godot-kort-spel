@@ -1,7 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://col4ncuar707o"]
+[gd_scene load_steps=18 format=3 uid="uid://col4ncuar707o"]
 
 [ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_qqevy"]
-[ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="2_1l3wp"]
 [ext_resource type="Script" path="res://Scripts/battle_scene_manager.gd" id="2_eoi1u"]
 [ext_resource type="Script" path="res://Scripts/card_manager.gd" id="2_qt0pu"]
 [ext_resource type="Script" path="res://Scripts/input_manager.gd" id="2_v8fcx"]
@@ -25,12 +24,6 @@ size = Vector2(1919, 758.5)
 
 [node name="sten" parent="." instance=ExtResource("1_qqevy")]
 position = Vector2(960, -24)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-ignore_rotation = false
-enabled = false
-script = ExtResource("2_1l3wp")
 
 [node name="SceneManager" type="Node2D" parent="."]
 script = ExtResource("2_eoi1u")

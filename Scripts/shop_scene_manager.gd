@@ -117,6 +117,7 @@ func move_from_manage_card(card):
 	tween.parallel().tween_property(card_manager_screen, "position", Vector2(1920, 0), 0.2)
 	await tween.finished
 	
+	card_manager_screen.update_labels()
 	enable_collection_buttons()
 	card_collection.checkForDeletedCards()
 	shop.managing_card = false

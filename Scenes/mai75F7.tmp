@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://c6rcddcewp3s6"]
+
+[ext_resource type="PackedScene" uid="uid://col4ncuar707o" path="res://Scenes/battle_scene.tscn" id="1_a2doi"]
+[ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="2_1l3wp"]
+[ext_resource type="PackedScene" uid="uid://c8tbmwqdapnsc" path="res://Scenes/shop_scene.tscn" id="2_mjwp7"]
+[ext_resource type="PackedScene" uid="uid://haftrks0la1y" path="res://Scenes/end_of_round_screen.tscn" id="3_cl8ig"]
+[ext_resource type="Script" path="res://Scripts/main_scene_manager.gd" id="4_7byqg"]
+
+[node name="Main" type="Node2D"]
+rotation = -0.000180377
+
+[node name="BattleScene" parent="." instance=ExtResource("1_a2doi")]
+
+[node name="ShopScene" parent="." instance=ExtResource("2_mjwp7")]
+position = Vector2(3840, 0)
+
+[node name="EndOfRoundScreen" parent="." instance=ExtResource("3_cl8ig")]
+position = Vector2(7680, 0)
+
+[node name="MainSceneManager" type="Node2D" parent="."]
+script = ExtResource("4_7byqg")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("2_1l3wp")
