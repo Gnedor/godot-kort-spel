@@ -9,7 +9,7 @@ func trigger_ability(_card_reference, _battle_manager_reference, _deck_reference
 	_card_reference.get_node("Area2D/CollisionShape2D").disabled = true
 	
 	focus_card(_battle_manager_reference, _card_manager_reference)
-	_card_manager_reference.animate_card_snap(_card_reference, Vector2(960, 200), 3000)
+	_card_manager_reference.animate_card_snap(_card_reference, Vector2(960, 200), 3000, 1)
 	
 	await Global.timer(0.5)
 	

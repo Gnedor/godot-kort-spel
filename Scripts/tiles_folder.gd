@@ -48,9 +48,10 @@ func _process(delta: float) -> void:
 
 func on_enter():
 	if Global.round != 1:
-		tiles_in_folder.clear()
 		for tile in Global.stored_tiles:
 			tiles_in_folder.append(tile)
+			owned_tiles.append(tile)
+		Global.stored_tiles.clear()
 	for tile in tiles_in_folder:
 		tile.scale = Vector2(1, 1)
 		tile.global_position = Vector2(-100, -100)
@@ -78,10 +79,10 @@ func animate_folder_down():
 		arrow.rotation_degrees += 180
 		var tween = get_tree().create_tween()
 		tween.tween_property(folder, "global_position:y", position.y + 312, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		for tile in Global.stored_tiles:
-			if !tile.is_placed:
-				tween.parallel() 
-				tween.tween_property(tile, "global_position:y", position.y + 312, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		for tile in tiles_in_folder:
+			#if !tile.is_placed:
+			tween.parallel() 
+			tween.tween_property(tile, "global_position:y", position.y + 312, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		menu_up = false
 			
 func animate_folder_up():
@@ -89,10 +90,10 @@ func animate_folder_up():
 		arrow.rotation_degrees += 180
 		var tween = get_tree().create_tween()
 		tween.tween_property(folder, "global_position:y", position.y, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-		for tile in Global.stored_tiles:
-			if !tile.is_placed:
-				tween.parallel() 
-				tween.tween_property(tile, "global_position:y", position.y, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		for tile in tiles_in_folder:
+			#if !tile.is_placed:
+			tween.parallel() 
+			tween.tween_property(tile, "global_position:y", position.y, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 		menu_up = true
 	
 func _on_button_button_up() -> void:
@@ -107,7 +108,10 @@ func align_tiles():
 		if tile != dragged_tile and !tile.is_placed:
 			var tile_pos_x = (window_size.x / 2) - (FOLDER_BOUNDRY / 2) + (FOLDER_BOUNDRY * (i + 1) / (tiles_in_folder.size() + 1))
 			var new_pos = Vector2(tile_pos_x, folder.global_position.y)
-			animate_tile_snap(tile, new_pos, TILE_MOVE_SPEED)
+			var anim : int = 1
+			if tile.global_position.y >= folder.global_position.y - 1 and tile.global_position.y <= folder.global_position.y + 1:
+				anim = 2
+			animate_tile_snap(tile, new_pos, TILE_MOVE_SPEED, anim)
 			tile.z_index = i + 1
 		i += 1
 		
@@ -141,8 +145,8 @@ func create_tile(tile_name: String):
 	else:
 		print("Sprite node not found in card instance")
 		
-	Global.store_tile(new_tile_instance)
 	tiles_in_folder.append(new_tile_instance)
+	owned_tiles.append(new_tile_instance)
 	
 func hover_effect(tile):
 	tile.description.visible = true
@@ -154,16 +158,17 @@ func hover_off_effect(tile):
 	tile.scale = Vector2(1.0, 1.0)
 	
 func align_tile_hover(hover_tile):
-	for tile in Global.stored_tiles:
+	for tile in owned_tiles:
 		if tile == hover_tile:
 			hover_effect(tile)
 		else:
 			hover_off_effect(tile)
 			
-func animate_tile_snap(tile, position, speed):
+func animate_tile_snap(tile, position, speed, num):
 	var tween = get_tree().create_tween()
 
-	if tile.global_position.y != folder.global_position.y:
+	#if tile.global_position.y != folder.global_position.y:
+	if num == 1:
 		tween.tween_property(tile, "global_position", position, find_duration(tile.global_position, position, speed * 2)).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	else:
 		tween.tween_property(tile, "global_position", position, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)

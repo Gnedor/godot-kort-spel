@@ -14,14 +14,25 @@ var selected_deck
 @onready var draw_animation: Timer = $DrawAnimation
 @onready var spell_deck: Node2D = $"../SpellDeck"
 @onready var spell_deck_counter: Label = $"../SpellDeck/SpellDeckCounter"
-	
+@onready var scene_manager: Node2D = $"../SceneManager"
+
 #func draw_card(amount : int):
 	#draw_queue = amount
 	#if cards_in_deck.size() > 0 and draw_queue > 0:
 		#draw_animation.start()
 	
 func _ready() -> void:
+	scene_manager.on_scene_enter.connect(on_enter)
 	SignalManager.removed_card.connect(check_for_deleted_cards)
+	
+func on_enter():
+	for card in Global.stored_cards:
+		card.visible = true
+		if card.card_type != "Spell":
+			cards_in_troop_deck.append(card)
+		else:
+			cards_in_spell_deck.append(card)
+	Global.stored_cards.clear()
 	
 func _on_draw_animation_timeout() -> void:
 	card_manager.cards_in_hand.append(cards_in_troop_deck[0])
@@ -83,7 +94,6 @@ func add_new_card_to_deck(card_name : String, times : int):
 			cards_in_spell_deck.append(new_card_instance)
 		
 		card_manager.update_card(new_card_instance)
-		Global.store_card(new_card_instance)
 		
 func add_card_to_deck(card_name : String, card_attack : int, card_actions : int):
 	var new_card_instance = card_scene.instantiate()

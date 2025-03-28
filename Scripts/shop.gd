@@ -124,6 +124,8 @@ func buy_card(card):
 			deck.cards_in_troop_deck.append(card)
 		else:
 			deck.cards_in_spell_deck.append(card)
+		var deck_reference = get_node("/root/Main/BattleScene/TroopDeck")
+		card.reparent(deck_reference)
 		
 	else:
 		tween.tween_property(card.buy_button.button, "modulate", Color(1.0, 0.5, 0.5), 0.0) # tween för att overrita faden under denna om den är igång

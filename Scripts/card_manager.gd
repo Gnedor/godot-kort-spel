@@ -108,7 +108,10 @@ func align_cards():
 		
 		hand_counter.text = str(cards_in_hand.size())
 		if card != dragged_card:
-			animate_card_snap(card, new_position, CARD_MOVE_SPEED)
+			var anim : int = 1
+			if card.global_position.y <= window_size.y - 151 and card.global_position.y >= window_size.y -153:
+				anim = 2
+			animate_card_snap(card, new_position, CARD_MOVE_SPEED, anim)
 			card.z_index = i + 3
 		i += 1
 		
@@ -120,7 +123,7 @@ func align_cards_on_draw(amount_drawn : int):
 		var new_position = Vector2(card_pos_x, window_size.y - 152)
 		card.z_index = i + 3
 		hand_counter.text = str(cards_in_hand.size())
-		animate_card_snap(card, new_position, CARD_DRAW_SPEED)
+		animate_card_snap(card, new_position, CARD_DRAW_SPEED, 2)
 		i += 1
 			
 func draw_cards(troop_amount : int, spell_amount : int):
@@ -164,14 +167,14 @@ func draw_cards(troop_amount : int, spell_amount : int):
 			drawn_card.global_position = deck.global_position
 			
 		drawn_card.get_node("Area2D/CollisionShape2D").disabled = false
-		animate_card_snap(drawn_card, new_position, CARD_DRAW_SPEED)
+		animate_card_snap(drawn_card, new_position, CARD_DRAW_SPEED, 2)
 
 		await get_tree().create_timer(0.05).timeout
 		
 func hover_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1.05, 1.05)
-	animate_card_snap(card_textures, Vector2(0, -75), 700)
+	animate_card_snap(card_textures, Vector2(0, -75), 700, 1)
 	card.description.visible = true
 	if card.card_type != "Spell":
 		card.stat_display.visible = true
@@ -179,7 +182,7 @@ func hover_effect(card):
 func hover_off_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1, 1)
-	animate_card_snap(card_textures, Vector2(0, 0), 10000)
+	animate_card_snap(card_textures, Vector2(0, 0), 10000, 1)
 	card.description.visible = false
 	card.stat_display.visible = false
 	
@@ -213,11 +216,12 @@ func align_card_hover(hovered_card):
 		elif card != hovered_card and card.description.visible:
 			card.description.visible = false
 			
-func animate_card_snap(card, position, speed):
+func animate_card_snap(card, position, speed, num):
 	var tween = get_tree().create_tween()
 	
 	if card.global_position != position:
-		if card.global_position.y != window_size.y - 152:
+		#if card.global_position.y != window_size.y - 152:
+		if num == 1:
 			tween.tween_property(card, "position", position, find_duration(card.position, position, speed * 2)).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		else:
 			tween.tween_property(card, "position", position, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -266,7 +270,7 @@ func discard_selected_cards(cards, status : String):
 			card.get_node("Area2D/CollisionShape2D").disabled = true
 			played_cards.erase(card)
 			card.z_index = 0
-			await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED)
+			await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED, 1)
 			discarded_cards.append(card)
 			card.visible = false
 			
