@@ -25,7 +25,7 @@ var cards_in_hand = []
 var viewing_collection : bool = false
 
 const CARD_MOVE_SPEED = 3000 # pixels per second
-const CARD_DRAW_SPEED = 8000
+const CARD_DRAW_SPEED = 4000
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -171,7 +171,7 @@ func draw_cards(troop_amount : int, spell_amount : int):
 func hover_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1.05, 1.05)
-	animate_card_snap(card_textures, Vector2(0, -75), 2000)
+	animate_card_snap(card_textures, Vector2(0, -75), 700)
 	card.description.visible = true
 	if card.card_type != "Spell":
 		card.stat_display.visible = true
@@ -179,7 +179,7 @@ func hover_effect(card):
 func hover_off_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1, 1)
-	animate_card_snap(card_textures, Vector2(0, 0), 2000)
+	animate_card_snap(card_textures, Vector2(0, 0), 10000)
 	card.description.visible = false
 	card.stat_display.visible = false
 	
@@ -219,7 +219,7 @@ func animate_card_snap(card, position, speed):
 	if card.global_position.y != window_size.y - 152:
 		tween.tween_property(card, "position", position, find_duration(card.position, position, speed * 2)).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	else:
-		tween.tween_property(card, "position", position, 2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(card, "position", position, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	await tween.finished
 	
 func find_duration(pos1, pos2, speed):
