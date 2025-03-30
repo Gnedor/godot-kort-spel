@@ -3,7 +3,7 @@ extends Node2D
 @onready var sten: Node2D = $"../sten"
 @onready var deck: Node2D = $"../TroopDeck"
 @onready var discard_pile: Node2D = $"../DiscardPile"
-@onready var ui: Node2D = $"../UI"
+@onready var ui: Node2D = $"../CardBar"
 @onready var card_slots: Node2D = $"../CardSlots"
 @onready var card_manager: Node2D = $"../CardManager"
 @onready var battle_manager: Node2D = $"../BattleManager"
@@ -92,6 +92,7 @@ func _on_timer_timeout() -> void:
 			deck.cards_in_spell_deck.append(card_manager.cards_in_hand[0])
 			
 		card_manager.cards_in_hand.pop_front()
+		card_manager.hand_counter.text = (str(card_manager.cards_in_hand.size()))
 		
 		if card_manager.cards_in_hand:
 			timer.start()

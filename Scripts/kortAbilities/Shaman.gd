@@ -1,8 +1,16 @@
 extends Node
 
-func trigger_ability(card, _battle_manager_reference, _deck_reference, _card_manager_reference, selected_card):
+var battle_manager_reference
+var card_manager_reference
+
+func _ready() -> void:
+	var battle_scene = get_tree().get_root().find_child("BattleScene", true, false)
+	battle_manager_reference = battle_scene.get_node("BattleManager")
+	card_manager_reference = battle_scene.get_node("CardManager")
+
+func trigger_ability(card, dawdaw, dwa, dawdawd, selected_card):
 	card.actions -= 1
 	selected_card.attack += 2
-	_card_manager_reference.update_card(selected_card)
-	_card_manager_reference.update_card(card)
-	await _battle_manager_reference.ability_effect(card)
+	card_manager_reference.update_card(selected_card)
+	card_manager_reference.update_card(card)
+	await battle_manager_reference.ability_effect(card)

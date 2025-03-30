@@ -16,6 +16,8 @@ extends Node2D
 @onready var description: MarginContainer = $Textures/Description
 @onready var action_sprite: TextureRect = $Textures/Description/NinePatchRect/TextureRect
 @onready var select_border: AnimatedSprite2D = $Textures/ScaleNode/SelectBorder
+@onready var trait_1_sprite: TextureRect = $Textures/ScaleNode/VBoxContainer/TextureRect
+@onready var trait_2_sprite: TextureRect = $Textures/ScaleNode/VBoxContainer/TextureRect2
 
 var is_placed : bool = false
 var is_hovering : bool = false
@@ -33,6 +35,10 @@ var card_type : String
 var card_name : String
 var ability_script
 var price : int
+var multiplier: float = 1
+
+var trait_1
+var trait_2
 
 func _ready() -> void:
 	var unique_material = card_sprite.material.duplicate()

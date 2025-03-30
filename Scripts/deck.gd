@@ -27,11 +27,10 @@ func _ready() -> void:
 	
 func on_enter():
 	for card in Global.stored_cards:
-		card.visible = true
-		if card.card_type != "Spell":
-			cards_in_troop_deck.append(card)
-		else:
-			cards_in_spell_deck.append(card)
+		card.visible = false
+		card.z_index = 0
+		card.get_node("Area2D/CollisionShape2D").disabled = true
+			
 	Global.stored_cards.clear()
 	
 func _on_draw_animation_timeout() -> void:
@@ -85,6 +84,7 @@ func add_new_card_to_deck(card_name : String, times : int):
 		new_card_instance.actions = new_card_instance.base_actions
 		new_card_instance.card_type = card_database.CARDS[card_name][2]
 		new_card_instance.card_name = card_name
+		new_card_instance.trait_1 = card_database.CARDS[card_name][5]
 		
 		adjust_card_details_and_script(new_card_instance)
 			
@@ -192,6 +192,8 @@ func create_card_copy(card):
 	card_copy.actions = card_copy.base_actions
 	card_copy.turn_actions = card_copy.base_actions
 	card_copy.ability_script = card.ability_script
+	card_copy.trait_1 = card.trait_1
+	card_copy.trait_2 = card.trait_2
 	
 	adjust_card_details_and_script(card_copy)
 	
@@ -231,7 +233,9 @@ func adjust_card_details_and_script(card):
 	
 	if card.card_type != "Troop":
 		var new_card_ability_script_path = card_database.CARDS[card_name][4]
-		card.ability_script = load(new_card_ability_script_path).new()
+		var ability_script = load(new_card_ability_script_path).new()
+		card.ability_script = ability_script
+		card.add_child(ability_script)
 			
 	var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
 	var texture = load(image_path)
@@ -252,6 +256,18 @@ func adjust_card_details_and_script(card):
 			print("Sprite node not found")
 	else:
 		sprite.texture = null
+		
+	if card.trait_1:
+		sprite = card.trait_1_sprite
+		image_path = "res://Assets/images/Traits/" + card.trait_1 + "_trait.png"
+		texture = load(image_path)
+		sprite.texture = texture
+		
+	if card.trait_2:
+		sprite = card.trait_2_sprite
+		image_path = "res://Assets/images/Traits/" + card.trait_2 + "_trait.png"
+		texture = load(image_path)
+		sprite.texture = texture
 		
 func check_for_deleted_cards():
 	for card in cards_in_troop_deck.duplicate():

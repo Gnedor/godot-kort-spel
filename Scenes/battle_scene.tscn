@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://col4ncuar707o"]
+[gd_scene load_steps=20 format=3 uid="uid://col4ncuar707o"]
 
 [ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_qqevy"]
 [ext_resource type="Script" path="res://Scripts/battle_scene_manager.gd" id="2_eoi1u"]
@@ -15,7 +15,9 @@
 [ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="8_flwld"]
 [ext_resource type="PackedScene" uid="uid://dlf5nf8ot7glp" path="res://Scenes/spell_deck.tscn" id="9_bsubj"]
 [ext_resource type="PackedScene" uid="uid://daa4mye5x3rm5" path="res://Scenes/tiles_folder.tscn" id="16_lcit8"]
+[ext_resource type="Texture2D" uid="uid://cg4rdd5x1p6xf" path="res://Assets/images/Tags/Poison.png" id="17_0y3v3"]
 [ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="17_ln450"]
+[ext_resource type="Texture2D" uid="uid://c57ji65nb7qy3" path="res://Assets/images/Tags/Fracture.png" id="18_8ajx8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cy588"]
 size = Vector2(1919, 758.5)
@@ -155,9 +157,9 @@ wait_time = 0.2
 [node name="DiscardPile" parent="." instance=ExtResource("8_adfp2")]
 position = Vector2(1784, 597)
 
-[node name="UI" type="Node2D" parent="."]
+[node name="CardBar" type="Node2D" parent="."]
 
-[node name="HandSlot" type="ColorRect" parent="UI"]
+[node name="HandSlot" type="ColorRect" parent="CardBar"]
 z_index = -2
 offset_left = 320.0
 offset_top = 824.0
@@ -166,7 +168,7 @@ offset_bottom = 1032.0
 mouse_filter = 2
 color = Color(0.106237, 0.106237, 0.106237, 1)
 
-[node name="HandSlot2" type="ColorRect" parent="UI"]
+[node name="HandSlot2" type="ColorRect" parent="CardBar"]
 z_index = -3
 offset_left = 312.0
 offset_top = 816.0
@@ -175,7 +177,7 @@ offset_bottom = 1064.0
 mouse_filter = 2
 color = Color(0.18359, 0.18359, 0.18359, 1)
 
-[node name="ColorRect2" type="ColorRect" parent="UI"]
+[node name="ColorRect2" type="ColorRect" parent="CardBar"]
 offset_left = 16.0
 offset_top = 760.0
 offset_right = 1904.0
@@ -322,6 +324,44 @@ theme_override_font_sizes/font_size = 32
 text = "Back"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DebuffIcons" type="VBoxContainer" parent="."]
+offset_left = 384.0
+offset_top = 64.0
+offset_right = 400.0
+offset_bottom = 149.0
+scale = Vector2(3, 3)
+
+[node name="TextureRect4" type="TextureRect" parent="DebuffIcons"]
+layout_mode = 2
+texture = ExtResource("17_0y3v3")
+stretch_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="DebuffIcons"]
+layout_mode = 2
+texture = ExtResource("18_8ajx8")
+stretch_mode = 3
+
+[node name="DebuffText" type="VBoxContainer" parent="."]
+offset_left = 440.0
+offset_top = 72.0
+offset_right = 532.0
+offset_bottom = 320.0
+theme_override_constants/separation = 28
+
+[node name="Label" type="Label" parent="DebuffText"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.415686, 0.745098, 0.188235, 1)
+theme_override_fonts/font = ExtResource("7_ltu7u")
+theme_override_font_sizes/font_size = 32
+text = "192"
+
+[node name="Label2" type="Label" parent="DebuffText"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.298039, 0.298039, 0.298039, 1)
+theme_override_fonts/font = ExtResource("7_ltu7u")
+theme_override_font_sizes/font_size = 32
+text = "40%"
 
 [connection signal="timeout" from="SceneManager/Timer" to="SceneManager" method="_on_timer_timeout"]
 [connection signal="button_down" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_button_down"]

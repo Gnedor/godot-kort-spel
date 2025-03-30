@@ -6,7 +6,6 @@ extends Node2D
 @onready var attack_timer: Timer = $AttackTimer
 @onready var total_damage_label: Label = $TotalDamage
 @onready var turn_counter: Label = $TurnCounter
-@onready var ui: Node2D = $"../UI"
 @onready var card_slots: Node2D = $"../CardSlots"
 @onready var end_turn: Button = $EndTurn
 @onready var darken_background: ColorRect = $DarkenBackground
@@ -29,6 +28,9 @@ var selected_card : Node2D
 var ability_card : Node2D
 var amount_to_draw : int
 
+var poison : float = 0
+var fracture : float = 0
+
 var end_turn_label_position_y
 
 signal end_round
@@ -45,6 +47,10 @@ func _ready() -> void:
 	
 func on_enter():
 	Global.total_damage = 0
+	
+	poison = 0
+	fracture = 0
+	
 	turn = 1
 	end_turn.disabled = false
 	turn_counter.text = "Turn: " + str(turn) + "/3"
@@ -57,6 +63,9 @@ func on_enter():
 	end_turn_label_position_y = end_turn_label.position.y
 	
 func new_turn():
+	Global.total_damage += poison
+	update_labels()
+	
 	if turn <= 2:
 		turn += 1	
 		turn_counter.text = "Turn: " + str(turn) + "/3"
@@ -65,7 +74,7 @@ func new_turn():
 			card.attack = card.turn_attack
 			card.actions = card.turn_actions
 			card_manager.update_card(card)
-			
+
 			#if card.card_type == "TurnStartTroop":
 				
 		end_turn.disabled = true
@@ -80,6 +89,7 @@ func new_turn():
 		if Global.total_money > Global.highest_money:
 			Global.highest_money = Global.total_money
 		on_end_round()
+
 
 	
 func attack(played_cards):
@@ -99,9 +109,17 @@ func attack(played_cards):
 				animate_invert_blink(sten)
 				camera_2d.apply_shake()
 				
-				Global.total_damage += card.attack
-				total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
+				var damage = int(round(card.attack * card.multiplier * ((100 + fracture) / 100)))
+				Global.total_damage += damage
+				card.multiplier = 1
 				
+				if card.trait_1:
+					match card.trait_1:
+						"Poison":
+							poison += damage
+						"Fracture":
+							fracture += 10
+	update_labels()
 				
 func check_for_tile(card):
 	for slot in card_manager.card_slots.get_children():
@@ -328,4 +346,7 @@ func remove_text(label):
 	var tween = get_tree().create_tween()
 	tween.tween_property(label, "visible_ratio", 0, 0.2)
 	await tween.finished
+	
+func update_labels():
+	total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
 	

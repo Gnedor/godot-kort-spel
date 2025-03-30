@@ -1,25 +1,26 @@
-const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, ability script]
-	"Guy" : [3, 2, "Troop", "Just a silly guy", null],
-	"Angry guy" : [5, 1, "Troop", "Just a silly guy, but angry", null],
-	"Magic man" : [2, 2, "OnPlayTroop", "On play, deal 3 Damage", "res://Scripts/kortAbilities/MagicMan.gd"],
-	"Knowledge" : [0, 1, "Spell", "Draw 2 cards from either deck", "res://Scripts/kortAbilities/Knowledge.gd"],
-	"Shaman" : [1, 2, "ActiveTroop", "Give a unit +2 Damage for 1 turn", "res://Scripts/kortAbilities/Shaman.gd"],
-	"Evil man" : [2, 2, "OnPlayTroop", "On play, halves Damage on all other played cards and give all removed Damage to self", "res://Scripts/kortAbilities/EvilMan.gd"],
-	"Number game" : [0, 1, "Spell", "All played cards get either +2 Damage or -2 Damage this round", "res://Scripts/kortAbilities/NumberGame.gd"],
-	"Inevitability" :[3, 2, "OnPlayTroop", "On play, make two random cards in deck a copy of this card", "res://Scripts/kortAbilities/Inevitability.gd"],
-	"Eldritch" : [10, 2, "TurnStartTroop", "Each turn, Destroy two random played cards (including self)", "res://Scripts/kortAbilities/Eldritch.gd"],
-	"Chip" : [0, 1, "Spell", "Give card +2 Actions this turn", "res://Scripts/kortAbilities/Chip.gd"],
-	"Glaggle" : [1, 3, "Troop", "Yippie", null],
-	"BIG ASS SHOE" : [0, 1, "Spell", "Replaces all played cards with random cards from deck", "res://Scripts/kortAbilities/BigAssShoe.gd"],
-	"Banan" : [10, 10, "OnPlayTroop", "On play, give two bordering cards +1 Actions this turn", "res://Scripts/kortAbilities/Banan.gd"],
-	"Impossible Shape" : [1, 1, "Troop", "Could this object be built?", null],
-	"Gambler" : [1, 1, "Troop", "Guy living in the moment", null],
-	"Groovy guy" : [1, 4, "Troop", "Guy with AMAZING dance moves" , null],
-	"Overkiller" : [5, 1, "Troop", "If this card deals over 2x the total Damage done this round, gain +1 Actions this round", "res://Scripts/kortAbilities/Overkiller.gd"],
+const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, ability script, starting trait]
+	"Guy" : [3, 2, "Troop", "Just a silly guy", null, null],
+	"Angry guy" : [5, 1, "Troop", "Just a silly guy, but angry", null, null],
+	"Magic man" : [2, 2, "OnPlayTroop", "On play, deal 3 Damage", "res://Scripts/kortAbilities/MagicMan.gd", null],
+	"Knowledge" : [0, 1, "Spell", "Draw 2 cards from either deck", "res://Scripts/kortAbilities/Knowledge.gd", null],
+	"Shaman" : [1, 2, "ActiveTroop", "Give a unit +2 Damage for 1 turn", "res://Scripts/kortAbilities/Shaman.gd", null],
+	"Evil man" : [2, 2, "OnPlayTroop", "On play, halves Damage on all other played cards and give all removed Damage to self", "res://Scripts/kortAbilities/EvilMan.gd", null],
+	"Number game" : [0, 1, "Spell", "All played cards get either +2 Damage or -2 Damage this round", "res://Scripts/kortAbilities/NumberGame.gd", null],
+	"Inevitability" :[3, 2, "OnPlayTroop", "On play, make two random cards in deck a copy of this card", "res://Scripts/kortAbilities/Inevitability.gd", null],
+	"Eldritch" : [10, 2, "TurnStartTroop", "Each turn, Destroy two random played cards (including self)", "res://Scripts/kortAbilities/Eldritch.gd", null],
+	"Chip" : [0, 1, "Spell", "Give card +2 Actions this turn", "res://Scripts/kortAbilities/Chip.gd", null],
+	"Glaggle" : [1, 3, "Troop", "Yippie", null, null],
+	"BIG ASS SHOE" : [0, 1, "Spell", "Replaces all played cards with random cards from deck", "res://Scripts/kortAbilities/BigAssShoe.gd", null],
+	"Banan" : [10, 10, "OnPlayTroop", "On play, give two bordering cards +1 Actions this turn", "res://Scripts/kortAbilities/Banan.gd", null],
+	"Impossible Shape" : [1, 1, "Troop", "Could this object be built?", null, null],
+	"Gambler" : [1, 1, "Troop", "Guy living in the moment", null, null],
+	"Groovy guy" : [1, 4, "Troop", "Guy with AMAZING dance moves" , null, null],
+	"Overkiller" : [5, 1, "Troop", "If this card deals over 2x the total Damage done this round, gain +1 Actions this round", "res://Scripts/kortAbilities/Overkiller.gd", null],
+	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "Poison"]
 	
 	#behöver sprites
-	#"Juice Up" : [0, 1, "Spell", "Give a card x3 Damage for 1 turn, the card permanently looses 3 Damage after effect", null],
-	#"Trash Man" : [3, 2, "OnTrashCard", "When trashed, permanently gain 3 Damage", null],
+	#"Juice Up" : [0, 1, "Spell", "Give a card x3 Damage for 1 turn, the card permanently looses 3 Damage after effect", null, null],
+	#"Trash Man" : [3, 2, "OnTrashCard", "When trashed, permanently gain 3 Damage", null, null],
 
 }
 
@@ -40,5 +41,6 @@ const EXAMPLE_DECK = [
 	{"name": "Impossible Shape", "amount": 5},
 	{"name": "Gambler", "amount": 5},
 	{"name": "Groovy guy", "amount": 5},
-	{"name": "Overkiller", "amount": 5}
+	{"name": "Overkiller", "amount": 5},
+	{"name": "Goop", "amount": 5}
 ]

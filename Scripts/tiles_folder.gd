@@ -126,8 +126,11 @@ func add_tiles_on_start():
 func create_tile(tile_name: String):
 	var new_tile_instance = tile_scene.instantiate()
 	var tile_ability_script_path = tile_database.TILES[tile_name][1]
-	new_tile_instance.ability_script = load(tile_ability_script_path).new()
 
+	var ability_script = load(tile_ability_script_path).new()
+	new_tile_instance.add_child(ability_script)  # Add to tree FIRST
+	new_tile_instance.ability_script = ability_script  # THEN assign
+	
 	add_child(new_tile_instance)
 	
 	new_tile_instance.name_label.text = tile_name

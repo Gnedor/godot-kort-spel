@@ -5,8 +5,8 @@ var total_money : float = 0
 var base_money : float = 5
 var total_damage : float
 
-var highest_damage : int = 0
-var highest_money : int = 0
+var highest_damage : float = 0
+var highest_money : float = 0
 var round : int = 1
 var stored_cards = []
 var stored_tiles = []

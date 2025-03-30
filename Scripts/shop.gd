@@ -124,8 +124,8 @@ func buy_card(card):
 			deck.cards_in_troop_deck.append(card)
 		else:
 			deck.cards_in_spell_deck.append(card)
-		var deck_reference = get_node("/root/Main/BattleScene/TroopDeck")
-		card.reparent(deck_reference)
+		var card_manager_reference = get_node("/root/Main/BattleScene/CardManager")
+		card.reparent(card_manager_reference)
 		
 	else:
 		tween.tween_property(card.buy_button.button, "modulate", Color(1.0, 0.5, 0.5), 0.0) # tween för att overrita faden under denna om den är igång
@@ -148,11 +148,13 @@ func buy_tile(tile_slot):
 		Global.total_money -= bought_tile.price
 		tween.tween_property(bought_tile, "scale", Vector2(0.9, 0.9), 0.05)
 		await tween.finished
+		
 		bought_tile.visible = false
 		Global.store_tile(bought_tile)
 		tiles_in_shop.erase(bought_tile)
 		var tiles_folder_reference = get_node("/root/Main/BattleScene/TilesFolder")
 		bought_tile.reparent(tiles_folder_reference)
+		
 	else:
 		if tile_slot == $TileSlot:
 			tween.tween_property(buy_button_1.button, "modulate", Color(1.0, 0.5, 0.5), 0.0) # tween för att overrita faden under denna om den är igång
@@ -180,10 +182,13 @@ func make_new_cards():
 		new_card_instance.card_name = card_name
 		var random_price = randi() % (3 + reroll_count) + (4 + reroll_count)
 		new_card_instance.price = random_price
+		new_card_instance.trait_1 = card_database.CARDS[card_name][5]
 		
 		if new_card_instance.card_type != "Troop":
 			var new_card_ability_script_path = card_database.CARDS[card_name][4]
-			new_card_instance.ability_script = load(new_card_ability_script_path).new()
+			var ability_script = load(new_card_ability_script_path).new()
+			new_card_instance.ability_script = ability_script
+			new_card_instance.add_child(ability_script)
 			
 		if new_card_instance.card_type == "Spell":
 			new_card_instance.get_node("Textures/ScaleNode/StatDisplay").visible = false
@@ -227,6 +232,18 @@ func adjust_card_details(card):
 			sprite.texture = texture
 		else:
 			print("Sprite node not found")
+			
+	if card.trait_1:
+		sprite = card.trait_1_sprite
+		image_path = "res://Assets/images/Traits/" + card.trait_1 + "_trait.png"
+		texture = load(image_path)
+		sprite.texture = texture
+		
+	if card.trait_2:
+		sprite = card.trait_2_sprite
+		image_path = "res://Assets/images/Traits/" + card.trait_2 + "_trait.png"
+		texture = load(image_path)
+		sprite.texture = texture
 	
 func make_new_tiles():
 	var tiles = get_random_tile()
@@ -234,10 +251,15 @@ func make_new_tiles():
 	remove_old_tiles(tiles_in_shop.duplicate())
 	tiles_in_shop.clear()
 	remove_tile_price_text()
+	
 	for tile_name in tiles:
 		var new_tile_instance = tile_scene.instantiate()
 		var tile_ability_script_path = tile_database.TILES[tile_name][1]
-		new_tile_instance.ability_script = load(tile_ability_script_path).new()
+		
+		var ability_script = load(tile_ability_script_path).new()
+		new_tile_instance.add_child(ability_script)  # Add to tree FIRST
+		new_tile_instance.ability_script = ability_script  # THEN assign
+		
 		tile_clip_mask.add_child(new_tile_instance)
 		
 		new_tile_instance.description.visible = false
