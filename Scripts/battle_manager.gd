@@ -17,6 +17,8 @@ extends Node2D
 @onready var tiles_folder: Node2D = $"../TilesFolder"
 @onready var scene_manager: Node2D = $"../SceneManager"
 @onready var camera_2d: Camera2D
+@onready var debuff_icons: VBoxContainer = $"../DebuffIcons"
+@onready var debuff_text: VBoxContainer = $"../DebuffText"
 
 var turns : int
 var card_index : int
@@ -27,6 +29,8 @@ var deck_select :  bool = false
 var selected_card : Node2D
 var ability_card : Node2D
 var amount_to_draw : int
+
+var debuffs = [] #{"Debuff": "namn", "amount", float}
 
 var poison : float = 0
 var fracture : float = 0
@@ -64,6 +68,7 @@ func on_enter():
 	
 func new_turn():
 	Global.total_damage += poison
+	fracture = 0
 	update_labels()
 	
 	if turn <= 2:
@@ -90,8 +95,6 @@ func new_turn():
 			Global.highest_money = Global.total_money
 		on_end_round()
 
-
-	
 func attack(played_cards):
 	if tiles_folder.menu_up:
 		for card in played_cards:
@@ -114,11 +117,17 @@ func attack(played_cards):
 				card.multiplier = 1
 				
 				if card.trait_1:
+					var applied : bool = false
 					match card.trait_1:
 						"Poison":
 							poison += damage
+							for debuff in debuffs:
+								if debuff["debuff"] == "poison":
+									debuff["amount"] = poison
+							if !applied:
+								debuffs.append({"debuff": "Poison", "amount": poison})
 						"Fracture":
-							fracture += 10
+							fracture += 20
 	update_labels()
 				
 func check_for_tile(card):
@@ -349,4 +358,28 @@ func remove_text(label):
 	
 func update_labels():
 	total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
+	var child_count = debuff_icons.get_child_count() - 1
+	var i = 0
+	for debuff in debuffs:
+		if i > child_count:
+			var texture_rect = TextureRect.new()
+			texture_rect.texture = load("res://Assets/images/Tags/" + debuffs[i]["debuff"] + ".png")
+			debuff_icons.add_child(texture_rect)
+			
+			var label = Label.new()
+			label.text = str(debuffs[i]["amount"])
+			debuff_text.add_child(label)
+			
+			var label_settings = LabelSettings.new()
+			label_settings.font = load("res://Assets/fonts/PixelOperator8.ttf")
+			label_settings.font_size = 36
+			label_settings.font_color = Color(0.455, 0.765, 0.243)
+			label.label_settings = label_settings
+			
+			i += 1
+			
+		else:
+			var label = debuff_text.get_child(i)
+			label.text = str(debuffs[i]["amount"])
+	
 	
