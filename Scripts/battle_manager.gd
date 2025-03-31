@@ -30,10 +30,11 @@ var selected_card : Node2D
 var ability_card : Node2D
 var amount_to_draw : int
 
-var debuffs = [] #{"Debuff": "namn", "amount", float}
-
-var poison : float = 0
-var fracture : float = 0
+var debuffs = {
+	"poison": 0,
+	"fracture": 0,
+	}
+	#{"Debuff": "namn", "amount", float}
 
 var end_turn_label_position_y
 
@@ -52,8 +53,8 @@ func _ready() -> void:
 func on_enter():
 	Global.total_damage = 0
 	
-	poison = 0
-	fracture = 0
+	for debuff in debuffs:
+		debuff = 0
 	
 	turn = 1
 	end_turn.disabled = false
@@ -67,8 +68,8 @@ func on_enter():
 	end_turn_label_position_y = end_turn_label.position.y
 	
 func new_turn():
-	Global.total_damage += poison
-	fracture = 0
+	Global.total_damage += debuffs["poison"]
+	debuffs["fracture"] = 0
 	update_labels()
 	
 	if turn <= 2:
@@ -112,22 +113,28 @@ func attack(played_cards):
 				animate_invert_blink(sten)
 				camera_2d.apply_shake()
 				
-				var damage = int(round(card.attack * card.multiplier * ((100 + fracture) / 100)))
-				Global.total_damage += damage
+				var damage = card.attack * card.multiplier
+
 				card.multiplier = 1
 				
 				if card.trait_1:
-					var applied : bool = false
+					if debuffs[card.trait_1] == 0:
+						create_debuff_icon(card.trait_1)
+						
 					match card.trait_1:
-						"Poison":
-							poison += damage
-							for debuff in debuffs:
-								if debuff["debuff"] == "poison":
-									debuff["amount"] = poison
-							if !applied:
-								debuffs.append({"debuff": "Poison", "amount": poison})
-						"Fracture":
-							fracture += 20
+						"poison":
+							debuffs["poison"] += damage
+							
+						"fracture":
+							var fracture = debuffs["fracture"]
+							if debuffs["fracture"] != 100:
+								damage *= (debuffs["fracture"] + 100) / 100 
+								debuffs["fracture"] += 20
+							else: 
+								damage *= 3
+								debuffs["fracture"] = 0
+							
+				Global.total_damage += int(round(damage))
 	update_labels()
 				
 func check_for_tile(card):
@@ -155,6 +162,7 @@ func animate_attack(card : Node2D, position : Vector2, rotation : float, speed :
 	tween_position.tween_property(card, "position", original_position, speed).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tween_rotation.tween_property(card, "rotation", original_rotation, speed).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	
+	update_labels()
 	
 func get_rotation_angle(card : Node2D):
 	var rotation = sten.get_node("AttackPoint").global_position.angle_to_point(card.position)
@@ -358,28 +366,31 @@ func remove_text(label):
 	
 func update_labels():
 	total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
-	var child_count = debuff_icons.get_child_count() - 1
-	var i = 0
-	for debuff in debuffs:
-		if i > child_count:
-			var texture_rect = TextureRect.new()
-			texture_rect.texture = load("res://Assets/images/Tags/" + debuffs[i]["debuff"] + ".png")
-			debuff_icons.add_child(texture_rect)
-			
-			var label = Label.new()
-			label.text = str(debuffs[i]["amount"])
-			debuff_text.add_child(label)
-			
-			var label_settings = LabelSettings.new()
-			label_settings.font = load("res://Assets/fonts/PixelOperator8.ttf")
-			label_settings.font_size = 36
-			label_settings.font_color = Color(0.455, 0.765, 0.243)
-			label.label_settings = label_settings
-			
-			i += 1
-			
-		else:
-			var label = debuff_text.get_child(i)
-			label.text = str(debuffs[i]["amount"])
+	var child_count = debuff_icons.get_child_count()
 	
+	var i = 0
+	for label in debuff_text.get_children().duplicate():
+		label.text = str(debuffs[label.name])
+		if debuffs[label.name] == 0:
+			debuff_icons.get_child(i).queue_free()
+			label.queue_free()
+		i += 1
+func create_debuff_icon(debuff_name : String):
+	var texture_rect = TextureRect.new()
+	texture_rect.texture = load("res://Assets/images/Tags/" + debuff_name + ".png")
+	debuff_icons.add_child(texture_rect)
+	texture_rect.name == debuff_name
+			
+	var label = Label.new()
+	label.text = str(debuffs[debuff_name])
+	if debuff_name == "fracture":
+		label.text += "%"
+	debuff_text.add_child(label)
+			
+	var label_settings = LabelSettings.new()
+	label_settings.font = load("res://Assets/fonts/PixelOperator8.ttf")
+	label_settings.font_size = 36
+	label_settings.font_color = Color(0.455, 0.765, 0.243)
+	label.label_settings = label_settings
+	label.name = debuff_name
 	

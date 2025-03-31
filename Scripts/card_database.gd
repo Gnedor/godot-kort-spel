@@ -14,9 +14,9 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Banan" : [10, 10, "OnPlayTroop", "On play, give two bordering cards +1 Actions this turn", "res://Scripts/kortAbilities/Banan.gd", null],
 	"Impossible Shape" : [1, 1, "Troop", "Could this object be built?", null, null],
 	"Gambler" : [1, 1, "Troop", "Guy living in the moment", null, null],
-	"Groovy guy" : [1, 4, "Troop", "Guy with AMAZING dance moves" , null, "Fracture"],
+	"Groovy guy" : [1, 4, "Troop", "Guy with AMAZING dance moves" , null, "fracture"],
 	"Overkiller" : [5, 1, "Troop", "If this card deals over 2x the total Damage done this round, gain +1 Actions this round", "res://Scripts/kortAbilities/Overkiller.gd", null],
-	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "Poison"]
+	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "poison"]
 	
 	#behöver sprites
 	#"Juice Up" : [0, 1, "Spell", "Give a card x3 Damage for 1 turn, the card permanently looses 3 Damage after effect", null, null],
