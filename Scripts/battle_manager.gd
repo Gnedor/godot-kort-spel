@@ -34,7 +34,8 @@ var debuffs = {
 	"poison": 0,
 	"fracture": 0,
 	}
-	#{"Debuff": "namn", "amount", float}
+
+var fracture_level : int = 0
 
 var end_turn_label_position_y
 
@@ -69,7 +70,6 @@ func on_enter():
 	
 func new_turn():
 	Global.total_damage += debuffs["poison"]
-	debuffs["fracture"] = 0
 	update_labels()
 	
 	if turn <= 2:
@@ -100,6 +100,10 @@ func attack(played_cards):
 	if tiles_folder.menu_up:
 		for card in played_cards:
 			if card.is_selected:
+				card.multiplier = 1
+				var mult : float = 1
+				var total_mult : float
+				
 				card.actions -= 1
 				check_for_tile(card)
 				card_manager.update_card(card)
@@ -114,27 +118,37 @@ func attack(played_cards):
 				camera_2d.apply_shake()
 				
 				var damage = card.attack * card.multiplier
+				var apply_poison : bool = false
 
-				card.multiplier = 1
-				
 				if card.trait_1:
 					if debuffs[card.trait_1] == 0:
-						create_debuff_icon(card.trait_1)
+						# om du gör flera exceptions gör en match som defaultar det detta under
+						if card.trait_1 != "fracture":
+							create_debuff_icon(card.trait_1)
+						else:
+							if fracture_level == 0:
+								create_debuff_icon(card.trait_1)
 						
 					match card.trait_1:
 						"poison":
-							debuffs["poison"] += damage
-							
+							apply_poison = true
 						"fracture":
-							var fracture = debuffs["fracture"]
-							if debuffs["fracture"] != 100:
-								damage *= (debuffs["fracture"] + 100) / 100 
-								debuffs["fracture"] += 20
-							else: 
-								damage *= 3
+							if debuffs["fracture"] == 100:
 								debuffs["fracture"] = 0
-							
+								fracture_level += 1
+							else:
+								debuffs["fracture"] += 20
+								
+				for i in range(fracture_level):
+					mult *= 2
+				if apply_poison:
+					debuffs["poison"] += damage
+				
 				Global.total_damage += int(round(damage))
+				
+				total_mult = card.multiplier * mult
+				if total_mult > 1:
+					display_mult(total_mult)
 	update_labels()
 				
 func check_for_tile(card):
@@ -372,9 +386,17 @@ func update_labels():
 	for label in debuff_text.get_children().duplicate():
 		label.text = str(debuffs[label.name])
 		if debuffs[label.name] == 0:
-			debuff_icons.get_child(i).queue_free()
-			label.queue_free()
+			if label.name != "fracture":
+				debuff_icons.get_child(i).queue_free()
+				label.queue_free()
 		i += 1
+		
+		match label.name:
+			"fracture":
+				label.text += "% " + "Lv:" + str(fracture_level)
+			"poison":
+				pass
+		
 func create_debuff_icon(debuff_name : String):
 	var texture_rect = TextureRect.new()
 	texture_rect.texture = load("res://Assets/images/Tags/" + debuff_name + ".png")
@@ -382,15 +404,32 @@ func create_debuff_icon(debuff_name : String):
 	texture_rect.name == debuff_name
 			
 	var label = Label.new()
-	label.text = str(debuffs[debuff_name])
-	if debuff_name == "fracture":
-		label.text += "%"
-	debuff_text.add_child(label)
+	var color : Color
+	
+	match debuff_name:
+		"fracture":
+			color = Color(0.5, 0.5, 0.5)
+		"poison":
+			color = Color(0.455, 0.765, 0.243)
 			
+	debuff_text.add_child(label)
+	
 	var label_settings = LabelSettings.new()
 	label_settings.font = load("res://Assets/fonts/PixelOperator8.ttf")
 	label_settings.font_size = 36
-	label_settings.font_color = Color(0.455, 0.765, 0.243)
+	label_settings.font_color = color
 	label.label_settings = label_settings
 	label.name = debuff_name
+	
+func display_mult(mult):
+	var label = $"../MultiplierDisplay"
+	label.text = "x" + str(snappedf(mult, 0.1))
+	var animation = label.get_child(0)
+	
+	if !animation.is_playing():
+		animation.play("Mult_display")
+	else: 
+		animation.stop()
+		# Gör så att rotationen av animationen reversar
+		animation.play("Mult_display")
 	
