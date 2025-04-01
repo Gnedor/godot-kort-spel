@@ -8,7 +8,7 @@ func _ready() -> void:
 	card_manager_reference = battle_scene.get_node("CardManager")
 	battle_manager_reference = battle_scene.get_node("BattleManager")
 
-func trigger_ability(card_reference, daw, adw, dawdwa):
+func trigger_ability(card_reference):
 	var added_attack : int = 0
 	battle_manager_reference.ability_effect(card_reference)
 	

@@ -8,7 +8,7 @@ func _ready() -> void:
 	card_manager_reference = battle_scene.get_node("CardManager")
 	battle_manager_reference = battle_scene.get_node("BattleManager")
 	
-func trigger_ability(card_reference, dadw, dwa, ad):
+func trigger_ability(card_reference):
 	battle_manager_reference.ability_effect(card_reference)
 	var index = get_card_index(card_reference, card_manager_reference)
 	var affected_cards = find_bordering_cards(index, card_manager_reference)

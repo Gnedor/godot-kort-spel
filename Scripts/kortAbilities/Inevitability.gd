@@ -8,7 +8,7 @@ func _ready() -> void:
 	battle_manager_reference = battle_scene.get_node("BattleManager")
 	deck_reference = battle_scene.get_node("TroopDeck")
 
-func trigger_ability(card, daw, dwadw, dwad):
+func trigger_ability(card):
 	battle_manager_reference.ability_effect(card)
 	var deck_size = deck_reference.cards_in_troop_deck.size()
 	if deck_size > 0:

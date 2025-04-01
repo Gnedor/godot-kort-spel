@@ -14,6 +14,7 @@ extends Node2D
 @onready var timer: Timer = $Timer
 @onready var pause_timer: Timer = $PauseTimer
 
+
 var battle_scene_up
 var battle_scene_down
 
@@ -26,7 +27,7 @@ signal on_scene_enter
 
 func _ready() -> void:
 	battle_manager.end_round.connect(remove_battle_scene)
-	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder]
+	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons"]
 	battle_scene_down = [deck, spell_deck, discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter")]
 	move_battle_ui_out()
 	#move_battle_ui_out()

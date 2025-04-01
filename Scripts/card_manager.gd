@@ -90,7 +90,7 @@ func place_card_on_slot(slot):
 				slot.occupied_tile.ability_script.tile_ability(dragged_card)
 		
 		if dragged_card.card_type == "OnPlayTroop":
-			dragged_card.ability_script.trigger_ability(dragged_card, battle_manager, deck, self)
+			dragged_card.ability_script.trigger_ability(dragged_card)
 		update_card(dragged_card)
 		Global.played_cards.append(dragged_card.card_name)
 	align_cards()

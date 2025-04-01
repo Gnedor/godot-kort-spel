@@ -8,7 +8,7 @@ func _ready() -> void:
 	battle_manager_reference = battle_scene.get_node("BattleManager")
 	card_manager_reference = battle_scene.get_node("CardManager")
 
-func trigger_ability(card_reference, dawda, dawd, dwadawda):
+func trigger_ability(card_reference):
 	var cards = [card_reference]
 	
 	card_manager_reference.cards_in_hand.erase(card_reference)

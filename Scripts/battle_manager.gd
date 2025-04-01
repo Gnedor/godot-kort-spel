@@ -53,9 +53,12 @@ func _ready() -> void:
 	
 func on_enter():
 	Global.total_damage = 0
+	fracture_level = 0
 	
-	for debuff in debuffs:
-		debuff = 0
+	for debuff in debuffs.keys():
+		debuffs[debuff] = 0
+		
+	update_labels()
 	
 	turn = 1
 	end_turn.disabled = false
@@ -81,7 +84,9 @@ func new_turn():
 			card.actions = card.turn_actions
 			card_manager.update_card(card)
 
-			#if card.card_type == "TurnStartTroop":
+		for card in card_manager.played_cards:
+			if card.card_type == "TurnStartTroop":
+				card.ability_script.trigger_ability(card)
 				
 		end_turn.disabled = true
 		await Global.timer(0.1)
@@ -117,7 +122,8 @@ func attack(played_cards):
 				animate_invert_blink(sten)
 				camera_2d.apply_shake()
 				
-				var damage = card.attack * card.multiplier
+				var damage = 0
+				damage = card.attack * card.multiplier
 				var apply_poison : bool = false
 
 				if card.trait_1:
@@ -275,7 +281,7 @@ func activate_card_abilities():
 		
 		if card.card_type == "ActiveTroop" and card.is_selected:
 			card.is_selected = false
-			await card.ability_script.trigger_ability(card, self, deck, card_manager, selected_card)
+			await card.ability_script.trigger_ability(card, selected_card)
 		else:
 			card_manager.deselect_effect(card)
 			
@@ -389,6 +395,10 @@ func update_labels():
 			if label.name != "fracture":
 				debuff_icons.get_child(i).queue_free()
 				label.queue_free()
+			else: 
+				if fracture_level == 0:
+					debuff_icons.get_child(i).queue_free()
+					label.queue_free()
 		i += 1
 		
 		match label.name:
