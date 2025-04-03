@@ -407,7 +407,7 @@ func update_labels():
 		
 		match label.name:
 			"fracture":
-				label.text += "% " + "Lv:" + str(fracture_level)
+				label.text += "% " + "Lv" + str(fracture_level)
 			"poison":
 				pass
 		

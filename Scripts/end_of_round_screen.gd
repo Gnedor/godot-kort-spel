@@ -19,14 +19,6 @@ signal on_scene_exit
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
-	#ui.position = Vector2(0, 44)
-	#round_label.text = "Round " + str(Global.round) + " Results"
-	#total_damage_label.visible_ratio = 0.0
-	#quota_label.visible_ratio = 0.0
-	#money_label.visible_ratio = 0.0
-	#equals_label.visible_ratio = 0.0
-	#total_money.visible_ratio = 0.0
-	#start_end_screen()
 	
 func on_enter_scene():
 	continue_button.disabled = true

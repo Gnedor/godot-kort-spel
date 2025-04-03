@@ -39,7 +39,9 @@ func _on_restart_button_pressed() -> void:
 	await tween.finished
 	
 	Global.reset_game()
-	get_tree().change_scene_to_file("res://Scenes/main.tscn")
+	Global.scene_index = 0
+	get_parent().on_scene_exit.emit()
+	#get_tree().change_scene_to_file("res://Scenes/main.tscn")
 
 
 func _on_menu_button_button_down() -> void:
