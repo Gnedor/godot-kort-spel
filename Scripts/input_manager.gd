@@ -107,7 +107,7 @@ func _input(event):
 				if dragged_card.card_type == "Spell" and raycast_check(SPELL_AREA_MASK) and !battle_manager.deck_select:
 					tiles_folder.animate_folder_up()
 					card_manager.cards_in_hand.erase(dragged_card)
-					dragged_card.ability_script.trigger_ability(dragged_card, battle_manager, deck, card_manager)
+					dragged_card.ability_script.trigger_ability(dragged_card)
 					dragged_card = null
 
 			if card_manager.dragged_card:

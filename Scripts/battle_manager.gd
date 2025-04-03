@@ -147,14 +147,18 @@ func attack(played_cards):
 								
 				for i in range(fracture_level):
 					mult *= 2
+					
+				damage = int(round(damage))
+					
 				if apply_poison:
 					debuffs["poison"] += damage
 				
-				Global.total_damage += int(round(damage))
+				Global.total_damage += damage
 				
 				total_mult = card.multiplier * mult
 				if total_mult > 1:
 					display_mult(total_mult)
+					
 	update_labels()
 				
 func check_for_tile(card):
