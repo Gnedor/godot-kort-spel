@@ -15,7 +15,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Impossible Shape" : [1, 1, "Troop", "Could this object be built?", null, null],
 	"Gambler" : [1, 1, "Troop", "Guy living in the moment", null, null],
 	"Groovy guy" : [1, 2, "Troop", "Guy feeling the groove" , null, "fracture"],
-	"Overkiller" : [5, 1, "Troop", "If this card deals over 2x the total Damage done this round, gain +1 Actions this round", "res://Scripts/kortAbilities/Overkiller.gd", null],
+	"Overkiller" : [5, 1, "OnAttackTroop", "If this card deals more than the total Damage done this round, gain +1 Actions this round", "res://Scripts/kortAbilities/Overkiller.gd", null],
 	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "poison"]
 	
 	#behöver sprites

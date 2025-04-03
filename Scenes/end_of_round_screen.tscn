@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://haftrks0la1y"]
+[gd_scene load_steps=11 format=3 uid="uid://haftrks0la1y"]
 
 [ext_resource type="Script" path="res://Scripts/end_of_round_screen.gd" id="1_ajpby"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="1_ef32e"]
+[ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="2_ene8q"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_glvd4"]
 [ext_resource type="Texture2D" uid="uid://crxc7ydjkvt3h" path="res://Assets/images/divide.png" id="2_op7ie"]
+[ext_resource type="Texture2D" uid="uid://cg4rdd5x1p6xf" path="res://Assets/images/Tags/Poison.png" id="3_kris2"]
 [ext_resource type="Texture2D" uid="uid://d48fil2fy2do" path="res://Assets/images/equals.png" id="3_pg3j8"]
 [ext_resource type="Texture2D" uid="uid://evf007ggceo8" path="res://Assets/images/multiply.png" id="4_1vqt7"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="7_1nflb"]
@@ -16,46 +18,107 @@ script = ExtResource("1_ajpby")
 position = Vector2(960, 588)
 scale = Vector2(1.5, 1.5)
 
-[node name="ColorRect" type="ColorRect" parent="UI"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -248.0
-offset_top = -192.0
-offset_right = 248.0
-offset_bottom = 144.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.184314, 0.184314, 0.184314, 1)
+[node name="NinePatchRect3" type="NinePatchRect" parent="UI"]
+self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
+offset_left = -267.0
+offset_top = -205.0
+offset_right = 266.0
+offset_bottom = 163.0
+texture = ExtResource("2_ene8q")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 24
 
-[node name="ColorRect2" type="ColorRect" parent="UI"]
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -136.0
-offset_right = 240.0
-offset_bottom = 136.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.105882, 0.105882, 0.105882, 1)
-
-[node name="ColorRect4" type="ColorRect" parent="UI"]
-offset_left = -240.0
-offset_top = -184.0
-offset_right = 240.0
-offset_bottom = -142.0
-color = Color(0.105882, 0.105882, 0.105882, 1)
-
-[node name="RoundLabel" type="Label" parent="UI/ColorRect4"]
+[node name="NinePatchRect" type="NinePatchRect" parent="UI/NinePatchRect3"]
+self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
 layout_mode = 0
-offset_right = 480.0
-offset_bottom = 43.0
+offset_left = 187.0
+offset_top = 336.0
+offset_right = 347.0
+offset_bottom = 443.0
+texture = ExtResource("2_ene8q")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="UI/NinePatchRect3/NinePatchRect"]
+self_modulate = Color(0.105882, 0.105882, 0.105882, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.533
+anchor_right = 0.5
+anchor_bottom = 0.533
+offset_left = 69.0
+offset_top = 32.969
+offset_right = 207.0
+offset_bottom = 98.969
+rotation = 3.14159
+texture = ExtResource("2_ene8q")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 24
+
+[node name="TextureRect" type="TextureRect" parent="UI/NinePatchRect3/NinePatchRect/NinePatchRect2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -11.0
+offset_right = 23.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(23, 11)
+texture = ExtResource("3_kris2")
+expand_mode = 3
+stretch_mode = 3
+flip_v = true
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="UI"]
+self_modulate = Color(0.105882, 0.105882, 0.105882, 1)
+offset_left = 256.0
+offset_top = 141.333
+offset_right = 768.0
+offset_bottom = 418.333
+rotation = 3.14159
+texture = ExtResource("2_ene8q")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 24
+
+[node name="NinePatchRect" type="NinePatchRect" parent="UI"]
+self_modulate = Color(0.105882, 0.105882, 0.105882, 1)
+offset_left = 240.0
+offset_top = -146.667
+offset_right = 720.0
+offset_bottom = -98.6667
+rotation = 3.14159
+texture = ExtResource("2_ene8q")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 24
+
+[node name="RoundLabel" type="Label" parent="UI/NinePatchRect"]
+layout_mode = 0
+offset_left = 480.0
+offset_top = 42.6666
+offset_right = 960.0
+offset_bottom = 85.6666
+rotation = 3.14159
 theme_override_fonts/font = ExtResource("2_glvd4")
 theme_override_font_sizes/font_size = 24
 text = "Round 0 Results"
@@ -63,7 +126,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Row1" type="Node2D" parent="UI"]
-position = Vector2(-40, -104)
+position = Vector2(-53.3333, -104)
 
 [node name="ColorRect3" type="ColorRect" parent="UI/Row1"]
 z_index = 2
@@ -97,7 +160,7 @@ theme_override_fonts/font = ExtResource("1_ef32e")
 vertical_alignment = 1
 
 [node name="Row2" type="Node2D" parent="UI"]
-position = Vector2(-40, -32)
+position = Vector2(-53.3333, -32)
 
 [node name="ColorRect3" type="ColorRect" parent="UI/Row2"]
 z_index = 2
@@ -131,7 +194,7 @@ theme_override_fonts/font = ExtResource("1_ef32e")
 vertical_alignment = 1
 
 [node name="Row3" type="Node2D" parent="UI"]
-position = Vector2(-40, 40)
+position = Vector2(-53.3333, 40)
 
 [node name="multiply" type="Sprite2D" parent="UI/Row3"]
 z_index = 3
@@ -150,17 +213,19 @@ texture = ExtResource("3_pg3j8")
 z_index = 2
 offset_left = 192.0
 offset_top = -16.0
-offset_right = 272.0
+offset_right = 299.0
 offset_bottom = 16.0
 color = Color(0.262933, 0.262932, 0.262932, 1)
 
 [node name="TotalMoney" type="Label" parent="UI/Row3/ColorRect6"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
 offset_left = 8.0
-offset_right = 64.0
+offset_right = 107.0
 offset_bottom = 32.0
 theme_override_fonts/font = ExtResource("1_ef32e")
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect3" type="ColorRect" parent="UI/Row3"]
 z_index = 2
@@ -169,6 +234,7 @@ offset_top = -16.0
 offset_right = -96.0
 offset_bottom = 16.0
 color = Color(0.184314, 0.184314, 0.184314, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UI/Row3/ColorRect3"]
 layout_mode = 0
@@ -178,6 +244,7 @@ offset_bottom = 32.0
 theme_override_fonts/font = ExtResource("1_ef32e")
 text = "Money:"
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect5" type="ColorRect" parent="UI/Row3"]
 z_index = 2
@@ -186,6 +253,7 @@ offset_top = -16.0
 offset_right = 136.0
 offset_bottom = 16.0
 color = Color(0.262933, 0.262932, 0.262932, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="EqualsLabel" type="Label" parent="UI/Row3/ColorRect5"]
 layout_mode = 0
@@ -194,6 +262,7 @@ offset_right = 80.0
 offset_bottom = 32.0
 theme_override_fonts/font = ExtResource("1_ef32e")
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect4" type="ColorRect" parent="UI/Row3"]
 z_index = 2
@@ -201,6 +270,7 @@ offset_left = -96.0
 offset_top = -16.0
 offset_bottom = 16.0
 color = Color(0.262745, 0.262745, 0.262745, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="MoneyLabel" type="Label" parent="UI/Row3/ColorRect4"]
 layout_mode = 0
@@ -209,16 +279,17 @@ offset_right = 96.0
 offset_bottom = 32.0
 theme_override_fonts/font = ExtResource("1_ef32e")
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="divide" type="Sprite2D" parent="UI"]
 z_index = 3
-position = Vector2(56, -68)
+position = Vector2(42.5833, -68.0833)
 scale = Vector2(3.7, 3.7)
 texture = ExtResource("2_op7ie")
 
 [node name="equals" type="Sprite2D" parent="UI"]
 z_index = 3
-position = Vector2(56, 4)
+position = Vector2(42.5833, 3.91667)
 scale = Vector2(3.7, 3.7)
 texture = ExtResource("3_pg3j8")
 
@@ -226,10 +297,10 @@ texture = ExtResource("3_pg3j8")
 modulate = Color(0.542318, 0.542318, 0.542318, 1)
 self_modulate = Color(0.262745, 0.262745, 0.262745, 1)
 z_index = 3
-offset_left = 90.6667
-offset_top = 74.6667
-offset_right = 229.667
-offset_bottom = 125.667
+offset_left = 106.667
+offset_top = 77.3333
+offset_right = 245.667
+offset_bottom = 128.334
 focus_mode = 0
 theme = ExtResource("7_1nflb")
 theme_override_fonts/font = ExtResource("1_ef32e")

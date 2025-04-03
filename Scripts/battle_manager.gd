@@ -29,6 +29,7 @@ var deck_select :  bool = false
 var selected_card : Node2D
 var ability_card : Node2D
 var amount_to_draw : int
+var damage
 
 var debuffs = {
 	"poison": 0,
@@ -122,7 +123,7 @@ func attack(played_cards):
 				animate_invert_blink(sten)
 				camera_2d.apply_shake()
 				
-				var damage = 0
+				damage = 0
 				damage = card.attack * card.multiplier
 				var apply_poison : bool = false
 
@@ -153,8 +154,10 @@ func attack(played_cards):
 				if apply_poison:
 					debuffs["poison"] += damage
 				
-				Global.total_damage += damage
-				
+				if card.card_type == "OnAttackTroop":
+					card.ability_script.trigger_ability(card)
+					
+				Global.total_damage += damage				
 				total_mult = card.multiplier * mult
 				if total_mult > 1:
 					display_mult(total_mult)
@@ -416,7 +419,7 @@ func create_debuff_icon(debuff_name : String):
 	texture_rect.texture = load("res://Assets/images/Tags/" + debuff_name + ".png")
 	debuff_icons.add_child(texture_rect)
 	texture_rect.name == debuff_name
-			
+
 	var label = Label.new()
 	var color : Color
 	

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bd45i0vyarmx4"
-path="res://.godot/imported/Card Icons3.png-ff850020c499b0a0f1573058b7983ae1.ctex"
+uid="uid://cynmlvwhdo84o"
+path="res://.godot/imported/Square.png-59f4d1624f1e726ecbf9c85452cd4aa1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/ActionTypes/Card Icons3.png"
-dest_files=["res://.godot/imported/Card Icons3.png-ff850020c499b0a0f1573058b7983ae1.ctex"]
+source_file="res://Assets/images/Square.png"
+dest_files=["res://.godot/imported/Square.png-59f4d1624f1e726ecbf9c85452cd4aa1.ctex"]
 
 [params]
 
