@@ -10,6 +10,7 @@ var highest_money : float = 0
 var round : int = 1
 var stored_cards = []
 var stored_tiles = []
+var stored_tags = []
 var window_size : Vector2 = Vector2(1920, 1080)
 
 var scene_index : int = 0
