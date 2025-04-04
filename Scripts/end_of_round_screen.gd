@@ -17,7 +17,7 @@ var base_money = 3
 signal on_scene_enter
 signal on_scene_exit
 
-var debuffs = ["poison", "fracture", ]
+var debuffs = ["poison", "fracture", "crit"]
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

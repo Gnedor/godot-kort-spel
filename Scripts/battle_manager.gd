@@ -34,6 +34,7 @@ var damage
 var debuffs = {
 	"poison": 0,
 	"fracture": 0,
+	"crit": 0,
 	}
 
 var fracture_level : int = 0
@@ -145,9 +146,15 @@ func attack(played_cards):
 								fracture_level += 1
 							else:
 								debuffs["fracture"] += 20
-								
+						"crit":
+							if debuffs["crit"] < 100:
+								debuffs["crit"] += 10
+							
 				for i in range(fracture_level):
 					mult *= 2
+					
+				if (randi() % 10) * 10 <= debuffs["crit"]:
+					mult *= 3
 					
 				damage = int(round(damage))
 					
@@ -157,7 +164,7 @@ func attack(played_cards):
 				if card.card_type == "OnAttackTroop":
 					card.ability_script.trigger_ability(card)
 					
-				Global.total_damage += damage				
+				Global.total_damage += damage
 				total_mult = card.multiplier * mult
 				if total_mult > 1:
 					display_mult(total_mult)
@@ -413,6 +420,8 @@ func update_labels():
 				label.text += "% " + "Lv" + str(fracture_level)
 			"poison":
 				pass
+			"crit":
+				label.text += "%"
 		
 func create_debuff_icon(debuff_name : String):
 	var texture_rect = TextureRect.new()
@@ -428,6 +437,8 @@ func create_debuff_icon(debuff_name : String):
 			color = Color(0.5, 0.5, 0.5)
 		"poison":
 			color = Color(0.455, 0.765, 0.243)
+		"crit":
+			color = Color(1, 0.1, 0.1)
 			
 	debuff_text.add_child(label)
 	

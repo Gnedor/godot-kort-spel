@@ -13,7 +13,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"BIG ASS SHOE" : [0, 1, "Spell", "Replaces all played cards with random cards from deck", "res://Scripts/kortAbilities/BigAssShoe.gd", null],
 	"Banan" : [2, 2, "OnPlayTroop", "On play, give two bordering cards +1 Actions this turn", "res://Scripts/kortAbilities/Banan.gd", null],
 	"Impossible Shape" : [1, 1, "Troop", "Could this object be built?", null, null],
-	"Gambler" : [1, 1, "Troop", "Guy living in the moment", null, null],
+	"Gambler" : [1, 2, "Troop", "Guy living in the moment", null, "crit"],
 	"Groovy guy" : [1, 2, "Troop", "Guy feeling the groove" , null, "fracture"],
 	"Overkiller" : [5, 1, "OnAttackTroop", "If this card deals more than the total Damage done this round, gain +1 Actions this round", "res://Scripts/kortAbilities/Overkiller.gd", null],
 	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "poison"]
