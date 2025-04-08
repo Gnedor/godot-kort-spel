@@ -25,6 +25,8 @@ var in_deck : bool = true
 var is_selected : bool = false
 var is_discarded : bool = false
 
+var can_poison : bool = true
+
 var attack : int
 var turn_attack : int # what attack should be to end of round
 var base_attack: int # what attack should be at start of turn

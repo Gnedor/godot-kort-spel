@@ -7,6 +7,7 @@ extends Node2D
 @onready var trash_button: Button = $TrashButton
 @onready var trash_label: Label = $TrashButton/Label
 @onready var back_label: Label = $Back/Label
+@onready var tag_folder: NinePatchRect = $TagButton/TagFolder
 
 signal back_pressed
 signal trash_pressed
@@ -43,3 +44,9 @@ func _on_back_button_down() -> void:
 
 func _on_back_button_up() -> void:
 	back_label.position.y -= 2
+
+
+func _on_tag_button_pressed() -> void:
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+	tween.parallel().tween_property(tag_folder, "position:y", 128, 0.2)

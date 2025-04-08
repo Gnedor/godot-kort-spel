@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://buwm6dg8acgmi"]
+[gd_scene load_steps=6 format=3 uid="uid://buwm6dg8acgmi"]
 
 [ext_resource type="Script" path="res://Scripts/shop_card_manager.gd" id="1_h600g"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="1_jibvu"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_6qlgt"]
+[ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="4_jyqna"]
 [ext_resource type="PackedScene" uid="uid://bdfof7mymlvu" path="res://Scenes/trash_card.tscn" id="4_t07mp"]
 
 [node name="Node2D" type="Node2D"]
@@ -31,6 +32,7 @@ vertical_alignment = 1
 
 [node name="TagButton" type="Button" parent="."]
 self_modulate = Color(0.138034, 0.138034, 0.138034, 1)
+z_index = 2
 offset_left = 1304.0
 offset_top = 408.0
 offset_right = 1848.0
@@ -51,6 +53,33 @@ theme_override_font_sizes/font_size = 32
 text = "Add Tag"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TagFolder" type="NinePatchRect" parent="TagButton"]
+self_modulate = Color(0.0941176, 0.0941176, 0.0941176, 1)
+z_index = -2
+layout_mode = 0
+offset_right = 544.0
+offset_bottom = 128.0
+texture = ExtResource("4_jyqna")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="NinePatchRect" type="NinePatchRect" parent="TagButton/TagFolder"]
+self_modulate = Color(0.0475577, 0.0475576, 0.0475576, 1)
+layout_mode = 0
+offset_left = 16.0
+offset_top = -40.0
+offset_right = 528.0
+offset_bottom = 64.0
+rotation = 3.14159
+pivot_offset = Vector2(256.035, 72.012)
+texture = ExtResource("4_jyqna")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
 
 [node name="DamageButton" type="Button" parent="."]
 self_modulate = Color(0.138034, 0.138034, 0.138034, 1)
@@ -103,14 +132,14 @@ vertical_alignment = 1
 z_index = 3
 offset_left = 1616.0
 offset_top = 15.0
-offset_right = 1928.0
+offset_right = 1920.0
 offset_bottom = 159.0
 color = Color(0.184314, 0.184314, 0.184314, 1)
 
 [node name="ColorRect" type="ColorRect" parent="ColorRect2"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.205128
+anchor_right = 0.179487
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 248.0
@@ -121,7 +150,7 @@ metadata/_edit_use_anchors_ = true
 [node name="ColorRect" type="ColorRect" parent="ColorRect2/ColorRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.236842
+anchor_right = 0.21727
 anchor_bottom = 0.0078125
 offset_left = 8.0
 offset_top = 8.0
@@ -133,7 +162,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Label" type="Label" parent="ColorRect2/ColorRect/ColorRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.243243
+anchor_right = 0.217609
 offset_right = 224.0
 offset_bottom = 56.0
 theme_override_fonts/font = ExtResource("3_6qlgt")
@@ -161,6 +190,7 @@ z_index = 150
 position = Vector2(512, 540)
 
 [connection signal="pressed" from="TrashButton" to="." method="_on_trash_button_pressed"]
+[connection signal="pressed" from="TagButton" to="." method="_on_tag_button_pressed"]
 [connection signal="button_down" from="Back" to="." method="_on_back_button_down"]
 [connection signal="button_up" from="Back" to="." method="_on_back_button_up"]
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

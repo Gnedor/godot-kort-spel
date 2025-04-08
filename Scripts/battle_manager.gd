@@ -87,6 +87,7 @@ func new_turn():
 			card_manager.update_card(card)
 
 		for card in card_manager.played_cards:
+			card.can_poison = true
 			if card.card_type == "TurnStartTroop":
 				card.ability_script.trigger_ability(card)
 				
@@ -153,19 +154,24 @@ func attack(played_cards):
 				for i in range(fracture_level):
 					mult *= 2
 					
-				if (randi() % 10) * 10 <= debuffs["crit"]:
+				if (randi() % 10) * 10 < debuffs["crit"]:
 					mult *= 3
 					
 				damage = int(round(damage))
-					
-				if apply_poison:
-					debuffs["poison"] += damage
 				
 				if card.card_type == "OnAttackTroop":
 					card.ability_script.trigger_ability(card)
 					
-				Global.total_damage += damage
 				total_mult = card.multiplier * mult
+				
+				damage = int(round(damage * total_mult))
+				
+				Global.total_damage += damage
+				
+				if apply_poison and card.can_poison:
+					debuffs["poison"] += damage
+					card.can_poison = false
+					
 				if total_mult > 1:
 					display_mult(total_mult)
 					
