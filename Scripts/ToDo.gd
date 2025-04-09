@@ -4,6 +4,7 @@
 # Buggar:
 	# Man har dubbla kort och tiles när man restartar
 	# Man kan ibland ta ett kort när man klickar på deck
+	# Inevitability tar sönder saker
 #Ideer:
 	# Olika former för olika dificulties  t.ex en kvadrat sitället för sten
 	# Crit amplifyer, gör så att crits gör mer skada i %

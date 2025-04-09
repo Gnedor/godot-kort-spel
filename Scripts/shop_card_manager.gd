@@ -14,6 +14,7 @@ signal trash_pressed
 
 var selected_card
 var trash_cost : int = 5
+var tag_folder_down = false
 
 func _process(delta: float) -> void:
 	money_label.text = str(Global.total_money) + "$"
@@ -48,5 +49,14 @@ func _on_back_button_up() -> void:
 
 func _on_tag_button_pressed() -> void:
 	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	
-	tween.parallel().tween_property(tag_folder, "position:y", 128, 0.2)
+	if !tag_folder_down:
+		tag_folder.visible = true
+		tween.parallel().tween_property(tag_folder, "position:y", 120, 0.2)
+		
+		tag_folder_down = true
+	else:
+		tween.parallel().tween_property(tag_folder, "position:y", 0, 0.2)
+		await tween.finished
+		tag_folder.visible = false
+		
+		tag_folder_down = false

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://buwm6dg8acgmi"]
+[gd_scene load_steps=7 format=3 uid="uid://buwm6dg8acgmi"]
 
 [ext_resource type="Script" path="res://Scripts/shop_card_manager.gd" id="1_h600g"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="1_jibvu"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_6qlgt"]
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="4_jyqna"]
 [ext_resource type="PackedScene" uid="uid://bdfof7mymlvu" path="res://Scenes/trash_card.tscn" id="4_t07mp"]
+[ext_resource type="Texture2D" uid="uid://cg4rdd5x1p6xf" path="res://Assets/images/Tags/Poison.png" id="5_awt5v"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_h600g")
@@ -55,7 +56,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TagFolder" type="NinePatchRect" parent="TagButton"]
-self_modulate = Color(0.0941176, 0.0941176, 0.0941176, 1)
+self_modulate = Color(0.31802, 0.31802, 0.31802, 1)
 z_index = -2
 layout_mode = 0
 offset_right = 544.0
@@ -80,6 +81,20 @@ patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TagButton/TagFolder/NinePatchRect"]
+layout_mode = 0
+offset_left = 511.0
+offset_top = 88.0
+offset_right = 681.0
+offset_bottom = 117.0
+rotation = 3.14159
+scale = Vector2(3, 3)
+
+[node name="TextureRect" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_awt5v")
+stretch_mode = 3
 
 [node name="DamageButton" type="Button" parent="."]
 self_modulate = Color(0.138034, 0.138034, 0.138034, 1)
