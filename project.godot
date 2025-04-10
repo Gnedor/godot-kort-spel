@@ -13,6 +13,7 @@ config_version=5
 config/name="kort egen"
 run/main_scene="res://Scenes/start_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+run/max_fps=144
 config/icon="res://icon.svg"
 
 [autoload]

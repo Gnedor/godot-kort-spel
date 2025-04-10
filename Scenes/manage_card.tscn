@@ -13,16 +13,19 @@ script = ExtResource("1_h600g")
 [node name="TrashButton" type="Button" parent="."]
 self_modulate = Color(0.138034, 0.138034, 0.138034, 1)
 offset_left = 1304.0
-offset_top = 560.0
+offset_top = 672.0
 offset_right = 1848.0
 offset_bottom = 872.0
 focus_mode = 0
 theme = ExtResource("1_jibvu")
 
 [node name="Label" type="Label" parent="TrashButton"]
-layout_mode = 0
-offset_right = 544.0
-offset_bottom = 304.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_6qlgt")
 theme_override_font_sizes/font_size = 32
 text = "Trash Card
@@ -40,6 +43,7 @@ offset_right = 1848.0
 offset_bottom = 536.0
 focus_mode = 0
 theme = ExtResource("1_jibvu")
+keep_pressed_outside = true
 
 [node name="Label" type="Label" parent="TagButton"]
 layout_mode = 1
@@ -56,6 +60,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TagFolder" type="NinePatchRect" parent="TagButton"]
+visible = false
 self_modulate = Color(0.31802, 0.31802, 0.31802, 1)
 z_index = -2
 layout_mode = 0
@@ -84,15 +89,43 @@ patch_margin_bottom = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TagButton/TagFolder/NinePatchRect"]
 layout_mode = 0
-offset_left = 511.0
+offset_left = 496.0
 offset_top = 88.0
-offset_right = 681.0
-offset_bottom = 117.0
+offset_right = 603.0
+offset_bottom = 107.0
 rotation = 3.14159
-scale = Vector2(3, 3)
+scale = Vector2(4.5, 4.5)
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_awt5v")
+stretch_mode = 3
+
+[node name="TextureRect2" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_awt5v")
+stretch_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_awt5v")
+stretch_mode = 3
+
+[node name="TextureRect4" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("5_awt5v")
+stretch_mode = 3
+
+[node name="TextureRect5" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("5_awt5v")
 stretch_mode = 3
 
