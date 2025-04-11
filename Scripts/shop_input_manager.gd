@@ -8,6 +8,7 @@ var hovered_tile : Node2D
 const CARD_MASK = 2
 const TILE_MASK = 128
 const COLLECTION_CARD_MASK = 256
+const TAG_MASK = 512
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
