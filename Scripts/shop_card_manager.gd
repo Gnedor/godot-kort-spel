@@ -15,22 +15,27 @@ signal trash_pressed
 
 var selected_card
 var trash_cost : int = 5
-var tag_folder_down : bool = false
+var tag_folder_down_state : bool = false
 var dragged_tag : Control
 var stored_tag_pos : Vector2
 var hovered_tag : Node
 var offset : Vector2
+var tags = []
+
+func _ready() -> void:
+	tags = h_box_container.get_children()
 
 func _process(delta: float) -> void:
 	align_tag_hover()
 	money_label.text = str(Global.total_money) + "$"
 	if dragged_tag:
 		dragged_tag.global_position = Vector2(
-			clamp(get_global_mouse_position().x - offset.x, 3840, 5680), 
-			clamp(get_global_mouse_position().y - offset.y, 0, Global.window_size.y))
+			clamp(get_global_mouse_position().x - offset.x * dragged_tag.scale.x, 3840, 5680), 
+			clamp(get_global_mouse_position().y - offset.y * dragged_tag.scale.y, 0, Global.window_size.y))
 
 func _on_back_pressed() -> void:
 	back_pressed.emit(shop_scene.selected_card)
+	tag_folder_up()
 
 func _on_trash_button_pressed() -> void:
 	if shop_scene.selected_card:
@@ -57,17 +62,26 @@ func _on_back_button_up() -> void:
 
 
 func _on_tag_button_pressed() -> void:
-	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-	if !tag_folder_down:
-		tag_folder.visible = true
-		tween.parallel().tween_property(tag_folder, "position:y", 120, 0.2)
-		
-		tag_folder_down = true
+	if tag_folder_down_state:
+		tag_folder_up()
 	else:
-		tween.parallel().tween_property(tag_folder, "position:y", 0, 0.2)
-		await tween.finished
-		tag_folder.visible = false
-		tag_folder_down = false
+		tag_folder_down()
+
+func tag_folder_down():
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tag_folder.visible = true
+	tween.parallel().tween_property(tag_folder, "position:y", 120, 0.2)
+	await tween.finished
+	toggle_collision(false)
+	tag_folder_down_state = true
+	
+func tag_folder_up():
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(tag_folder, "position:y", 0, 0.2)
+	toggle_collision(true)
+	await tween.finished
+	tag_folder.visible = false
+	tag_folder_down_state = false
 		
 func align_tag():
 	dragged_tag.scale = Vector2(1.0, 1.0)
@@ -84,7 +98,27 @@ func align_tag_hover():
 	for tag in h_box_container.get_children():
 		if tag == hovered_tag:
 			tag.z_index = 100
-			tag.scale = Vector2(1.1, 1.1)
+			if tag != dragged_tag:
+				tag.scale = Vector2(1.1, 1.1)
 		else:
 			tag.z_index = 1
 			tag.scale = Vector2(1.0, 1.0)
+
+func add_tags():
+	for tag in tags:
+		tag.visible = false
+	var i : int = 0
+	for tag_name in Global.stored_tags:
+		var tag = tags[i]
+		tag.visible = true
+		tag.get_node("TextureRect").texture = load("res://Assets/images/Tags/" + tag_name + ".png")
+		tag.name = tag_name
+		i += 1
+		
+func toggle_collision(toggle : bool):
+	for tag in tags:
+		if tag.visible == true:
+			tag.get_node("Area2D/CollisionShape2D").disabled = toggle
+		else:
+			tag.get_node("Area2D/CollisionShape2D").disabled = true
+		

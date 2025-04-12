@@ -170,6 +170,7 @@ func checkPage():
 		button_right.disabled = false
 		
 func toggle_collision(toggle : bool):
+	checkForDeletedCards()
 	for card in cards_in_collection:
-		card.area_2d.monitoring = toggle
+		card.area_2d.get_child(0).disabled = toggle
 	

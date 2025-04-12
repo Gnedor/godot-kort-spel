@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://buwm6dg8acgmi"]
+[gd_scene load_steps=8 format=3 uid="uid://buwm6dg8acgmi"]
 
 [ext_resource type="Script" path="res://Scripts/shop_card_manager.gd" id="1_h600g"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="1_jibvu"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="4_jyqna"]
 [ext_resource type="PackedScene" uid="uid://bdfof7mymlvu" path="res://Scenes/trash_card.tscn" id="4_t07mp"]
 [ext_resource type="PackedScene" uid="uid://yue7hl0l0upn" path="res://Scenes/tag.tscn" id="5_16paj"]
+[ext_resource type="Texture2D" uid="uid://cg4rdd5x1p6xf" path="res://Assets/images/Tags/Poison.png" id="6_t60sr"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_h600g")
@@ -96,7 +97,6 @@ offset_bottom = 175.0
 rotation = 3.14159
 mouse_filter = 0
 theme_override_constants/separation = 16
-alignment = 1
 
 [node name="tag" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer" instance=ExtResource("5_16paj")]
 z_index = 1
@@ -117,6 +117,71 @@ layout_mode = 2
 [node name="tag5" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer" instance=ExtResource("5_16paj")]
 z_index = 1
 layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+offset_left = 416.07
+offset_top = 8.02439
+offset_right = 416.07
+offset_bottom = 93.0244
+scale = Vector2(5, 5)
+texture = ExtResource("6_t60sr")
+expand_mode = 1
+stretch_mode = 2
+flip_v = true
+
+[node name="TextureRect2" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 320.07
+offset_top = 8.02414
+offset_right = 320.07
+offset_bottom = 93.0241
+scale = Vector2(5, 5)
+texture = ExtResource("6_t60sr")
+expand_mode = 1
+stretch_mode = 2
+flip_v = true
+
+[node name="TextureRect3" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 224.07
+offset_top = 8.0239
+offset_right = 224.07
+offset_bottom = 93.0239
+scale = Vector2(5, 5)
+texture = ExtResource("6_t60sr")
+expand_mode = 1
+stretch_mode = 2
+flip_v = true
+
+[node name="TextureRect4" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 128.07
+offset_top = 8.02366
+offset_right = 128.07
+offset_bottom = 93.0237
+scale = Vector2(5, 5)
+texture = ExtResource("6_t60sr")
+expand_mode = 1
+stretch_mode = 2
+flip_v = true
+
+[node name="TextureRect5" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 32.0702
+offset_top = 8.02341
+offset_right = 32.0702
+offset_bottom = 93.0234
+scale = Vector2(5, 5)
+texture = ExtResource("6_t60sr")
+expand_mode = 1
+stretch_mode = 2
+flip_v = true
 
 [node name="DamageButton" type="Button" parent="."]
 self_modulate = Color(0.138034, 0.138034, 0.138034, 1)

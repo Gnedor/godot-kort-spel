@@ -257,17 +257,7 @@ func adjust_card_details_and_script(card):
 	else:
 		sprite.texture = null
 		
-	if card.trait_1:
-		sprite = card.trait_1_sprite
-		image_path = "res://Assets/images/Traits/" + card.trait_1 + "_trait.png"
-		texture = load(image_path)
-		sprite.texture = texture
-		
-	if card.trait_2:
-		sprite = card.trait_2_sprite
-		image_path = "res://Assets/images/Traits/" + card.trait_2 + "_trait.png"
-		texture = load(image_path)
-		sprite.texture = texture
+	card.update_traits()
 		
 func check_for_deleted_cards():
 	for card in cards_in_troop_deck.duplicate():

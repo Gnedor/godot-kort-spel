@@ -100,11 +100,12 @@ func _change_scene(scene_path : String):
 	get_tree().change_scene_to_file(scene_path)
 	
 func get_tag():
-	var random_num = randi() % debuffs.size()
-	tag_texture.texture = load("res://Assets/images/Tags/" + debuffs[random_num] + ".png")
-	
-	tag_texture.scale = Vector2(4.0, 4.0)
-	tag_texture.visible = true
-	var tween = get_tree().create_tween()
-	tween.tween_property(tag_texture, "scale", Vector2(3.0, 3.0), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	Global.stored_tags.append(debuffs[random_num])
+	if Global.stored_tags.size() < 5:
+		var random_num = randi() % debuffs.size()
+		tag_texture.texture = load("res://Assets/images/Tags/" + debuffs[random_num] + ".png")
+		
+		tag_texture.scale = Vector2(4.0, 4.0)
+		tag_texture.visible = true
+		var tween = get_tree().create_tween()
+		tween.tween_property(tag_texture, "scale", Vector2(3.0, 3.0), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		Global.stored_tags.append(debuffs[random_num])

@@ -85,6 +85,8 @@ func add_items_on_start():
 	reroll_label_position_y = reroll_label.position.y
 	continue_label_position_y = continue_label.position.y
 	
+	card_manager_screen.add_tags()
+	
 func get_random_card(amount):
 	var card_keys = card_database.CARDS.keys()
 	var random_cards = []
@@ -231,17 +233,7 @@ func adjust_card_details(card):
 		else:
 			print("Sprite node not found")
 			
-	if card.trait_1:
-		sprite = card.trait_1_sprite
-		image_path = "res://Assets/images/Traits/" + card.trait_1 + "_trait.png"
-		texture = load(image_path)
-		sprite.texture = texture
-		
-	if card.trait_2:
-		sprite = card.trait_2_sprite
-		image_path = "res://Assets/images/Traits/" + card.trait_2 + "_trait.png"
-		texture = load(image_path)
-		sprite.texture = texture
+	card.update_traits()
 	
 func make_new_tiles():
 	var tiles = get_random_tile()
@@ -332,7 +324,6 @@ func _on_button_button_up() -> void:
 	reroll_label.position.y = reroll_label_position_y
 	
 func card_hover_effect():
-	hovered_card = shop_input_manager.hovered_card
 	for card in cards_in_shop:
 		var card_texture = card.get_node("Textures")
 		if card == hovered_card and card_texture.scale != Vector2(1.05, 1.05):
@@ -343,7 +334,6 @@ func card_hover_effect():
 			card.description.visible = false
 			
 func tile_hover_effect():
-	hovered_tile = shop_input_manager.hovered_tile
 	if tiles_in_shop:
 		for tile in tiles_in_shop:
 			if tile == hovered_tile:
@@ -430,7 +420,7 @@ func remove_old_tiles(tiles):
 func _on_manage_card_pressed() -> void:
 	#card_collection.create_cards_global()
 	card_collection.align_cards()
-	shop_scene_manager.move_to_card_collection()
+	await shop_scene_manager.move_to_card_collection()
 	viewing_collection = true
 
 func _on_back_button_pressed() -> void:
@@ -440,7 +430,7 @@ func _on_back_button_pressed() -> void:
 	
 func select_card(card):
 	selected_card = card
-	card_collection.toggle_collision(false)
+	card_collection.toggle_collision(true)
 	shop_scene_manager.move_to_manage_card(selected_card)
 	card_collection.align_card_hover(null)
 	card.stat_display.visible = true
@@ -449,7 +439,7 @@ func select_card(card):
 
 func deselect_card(card):
 	selected_card = null
-	card_collection.toggle_collision(true)
+	card_collection.toggle_collision(false)
 	card.stat_display.visible = false
 
 func _on_back_button_down() -> void:
@@ -477,4 +467,5 @@ func trash_card(card):
 	
 	trash_card_anim.get_node("AnimationPlayer").play("RESET")
 	trash_card_anim.visible = false
+	card_collection.toggle_collision(false)
 	shop_scene_manager.move_from_manage_card(null)

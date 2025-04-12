@@ -77,7 +77,9 @@ func move_to_card_collection():
 	tween.parallel().tween_property(get_parent(), "global_position:x", parent.position.x - 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	for card in card_collection.cards_in_collection:
 		tween.parallel().tween_property(card, "global_position:x", card.position.x - 1920, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		card.stat_display.visible = false
 	card_collection.create_page_indicators()
+	await tween.finished
 	
 func move_from_card_collection():
 	var parent = get_parent()

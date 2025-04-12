@@ -19,6 +19,8 @@ extends Node2D
 @onready var trait_1_sprite: TextureRect = $Textures/ScaleNode/VBoxContainer/TextureRect
 @onready var trait_2_sprite: TextureRect = $Textures/ScaleNode/VBoxContainer/TextureRect2
 @onready var tag_circle: AnimatedSprite2D = $Textures/ScaleNode/CardSprite/TagCircle
+@onready var tag_circle_collider: CollisionShape2D = $Textures/ScaleNode/CardSprite/TagCircle/Area2D/CollisionShape2D
+
 
 var is_placed : bool = false
 var is_hovering : bool = false
@@ -47,3 +49,21 @@ var trait_2
 func _ready() -> void:
 	var unique_material = card_sprite.material.duplicate()
 	card_sprite.material = unique_material
+	
+func place_tag(tag_name : String):
+	$Textures/ScaleNode/CardSprite/TagSprite.visible = true
+	$Textures/ScaleNode/CardSprite/TagSprite.texture = load("res://Assets/images/Tags/" + tag_name + ".png")
+	if !trait_1:
+		trait_1 = tag_name
+	else:
+		trait_2 = tag_name
+	update_traits()
+	
+func update_traits():
+	if trait_1:
+		var image_path = "res://Assets/images/Traits/" + trait_1 + "_trait.png"
+		$Textures/ScaleNode/VBoxContainer/TextureRect.texture = load(image_path)
+		
+	if trait_2:
+		var image_path = "res://Assets/images/Traits/" + trait_2 + "_trait.png"
+		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = load(image_path)
