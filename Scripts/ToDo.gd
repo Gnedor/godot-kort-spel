@@ -18,6 +18,6 @@
 #Kort:
 
 
-
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	# Gör som shop_input manager i vanliga input manager mycket bättre performance
 	# What the kropp, sa Malte medans han slimade över hela bordet

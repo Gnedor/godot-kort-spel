@@ -60,7 +60,7 @@ func _process(delta: float) -> void:
 	
 # kollar vilket knapp som trycks
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and Global.scene_index == 1:
 		# On Press
 		if event.pressed:
 			if hovered_card and !card_manager.viewing_collection:

@@ -106,5 +106,5 @@ func get_tag():
 	tag_texture.scale = Vector2(4.0, 4.0)
 	tag_texture.visible = true
 	var tween = get_tree().create_tween()
-	await tween.tween_property(tag_texture, "scale", Vector2(3.0, 3.0), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(tag_texture, "scale", Vector2(3.0, 3.0), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	Global.stored_tags.append(debuffs[random_num])

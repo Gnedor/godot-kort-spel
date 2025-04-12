@@ -78,8 +78,6 @@ func _process(delta: float) -> void:
 			if viewing_collection and !managing_card:
 				card_collection.align_card_hover(hovered_card)
 				
-
-	
 func add_items_on_start():
 	make_new_cards()
 	make_new_tiles()
@@ -442,13 +440,16 @@ func _on_back_button_pressed() -> void:
 	
 func select_card(card):
 	selected_card = card
+	card_collection.toggle_collision(false)
 	shop_scene_manager.move_to_manage_card(selected_card)
 	card_collection.align_card_hover(null)
+	card.stat_display.visible = true
 	if selected_card.card_type != "Spell":
 		selected_card.visible = true
 
 func deselect_card(card):
 	selected_card = null
+	card_collection.toggle_collision(true)
 	card.stat_display.visible = false
 
 func _on_back_button_down() -> void:
@@ -458,6 +459,7 @@ func _on_back_button_up() -> void:
 	back_label.position.y -= 3
 
 func trash_card(card):
+	card.stat_display.visible = false
 	var trash_card_anim = card_manager_screen.trash_card
 	#var tween = get_tree().create_tween()
 	#tween.tween_property(card, "scale", Vector2(2, 2), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)

@@ -54,20 +54,6 @@ func align_cards():
 		card.position = Vector2 (-100, -100)
 		
 		checkPage()
-	#if troop_cards.size() > spell_cards.size():
-		#max_page = ((troop_cards.size() - 1) / 12)
-	#else:
-		#max_page = ((spell_cards.size() - 1) / 12)
-	
-	#if page == 0:
-		#button_left.disabled = true
-	#else:
-		#button_left.disabled = false
-		#
-	#if page == max_page:
-		#button_right.disabled = true
-	#else:
-		#button_right.disabled = false
 		
 	var scene_pos = global_position.x
 		
@@ -182,3 +168,8 @@ func checkPage():
 		button_right.disabled = true
 	else:
 		button_right.disabled = false
+		
+func toggle_collision(toggle : bool):
+	for card in cards_in_collection:
+		card.area_2d.monitoring = toggle
+	

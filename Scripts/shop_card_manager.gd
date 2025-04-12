@@ -8,16 +8,26 @@ extends Node2D
 @onready var trash_label: Label = $TrashButton/Label
 @onready var back_label: Label = $Back/Label
 @onready var tag_folder: NinePatchRect = $TagButton/TagFolder
+@onready var h_box_container: HBoxContainer = $TagButton/TagFolder/NinePatchRect/HBoxContainer
 
 signal back_pressed
 signal trash_pressed
 
 var selected_card
 var trash_cost : int = 5
-var tag_folder_down = false
+var tag_folder_down : bool = false
+var dragged_tag : Control
+var stored_tag_pos : Vector2
+var hovered_tag : Node
+var offset : Vector2
 
 func _process(delta: float) -> void:
+	align_tag_hover()
 	money_label.text = str(Global.total_money) + "$"
+	if dragged_tag:
+		dragged_tag.global_position = Vector2(
+			clamp(get_global_mouse_position().x - offset.x, 3840, 5680), 
+			clamp(get_global_mouse_position().y - offset.y, 0, Global.window_size.y))
 
 func _on_back_pressed() -> void:
 	back_pressed.emit(shop_scene.selected_card)
@@ -39,7 +49,6 @@ func on_enter():
 func update_labels():
 	trash_label.text = "Trash Card\n\n" + str(trash_cost) + "$"  
 
-
 func _on_back_button_down() -> void:
 	back_label.position.y += 2
 
@@ -58,5 +67,24 @@ func _on_tag_button_pressed() -> void:
 		tween.parallel().tween_property(tag_folder, "position:y", 0, 0.2)
 		await tween.finished
 		tag_folder.visible = false
-		
 		tag_folder_down = false
+		
+func align_tag():
+	dragged_tag.scale = Vector2(1.0, 1.0)
+	var duration = find_duration(dragged_tag.position, stored_tag_pos, 6000)
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(dragged_tag, "position", stored_tag_pos, duration)
+	
+func find_duration(pos1, pos2, speed):
+	var distance = pos1.distance_to(pos2)
+	var duration = distance / speed
+	return duration
+	
+func align_tag_hover():
+	for tag in h_box_container.get_children():
+		if tag == hovered_tag:
+			tag.z_index = 100
+			tag.scale = Vector2(1.1, 1.1)
+		else:
+			tag.z_index = 1
+			tag.scale = Vector2(1.0, 1.0)

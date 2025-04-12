@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://buwm6dg8acgmi"]
+[gd_scene load_steps=7 format=3 uid="uid://buwm6dg8acgmi"]
 
 [ext_resource type="Script" path="res://Scripts/shop_card_manager.gd" id="1_h600g"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="1_jibvu"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="4_jyqna"]
 [ext_resource type="PackedScene" uid="uid://bdfof7mymlvu" path="res://Scenes/trash_card.tscn" id="4_t07mp"]
 [ext_resource type="PackedScene" uid="uid://yue7hl0l0upn" path="res://Scenes/tag.tscn" id="5_16paj"]
-[ext_resource type="Texture2D" uid="uid://cg4rdd5x1p6xf" path="res://Assets/images/Tags/Poison.png" id="5_awt5v"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_h600g")
@@ -61,13 +60,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TagFolder" type="NinePatchRect" parent="TagButton"]
+visible = false
 self_modulate = Color(0.31802, 0.31802, 0.31802, 1)
 z_index = -2
 layout_mode = 0
-offset_left = -152.0
-offset_top = 168.0
-offset_right = 392.0
-offset_bottom = 296.0
+offset_right = 544.0
+offset_bottom = 128.0
 texture = ExtResource("4_jyqna")
 patch_margin_left = 16
 patch_margin_top = 16
@@ -75,7 +73,7 @@ patch_margin_right = 16
 patch_margin_bottom = 16
 
 [node name="NinePatchRect" type="NinePatchRect" parent="TagButton/TagFolder"]
-self_modulate = Color(0.0475577, 0.0475576, 0.0475576, 1)
+self_modulate = Color(0.157274, 0.157274, 0.157274, 1)
 layout_mode = 0
 offset_left = 16.0
 offset_top = -40.0
@@ -92,41 +90,33 @@ patch_margin_bottom = 16
 [node name="HBoxContainer" type="HBoxContainer" parent="TagButton/TagFolder/NinePatchRect"]
 layout_mode = 0
 offset_left = 496.0
-offset_top = 88.0
-offset_right = 603.0
-offset_bottom = 107.0
+offset_top = 90.0
+offset_right = 976.0
+offset_bottom = 175.0
 rotation = 3.14159
-scale = Vector2(4.5, 4.5)
 mouse_filter = 0
-theme_override_constants/separation = 6
+theme_override_constants/separation = 16
 alignment = 1
 
-[node name="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer" instance=ExtResource("5_16paj")]
+[node name="tag" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer" instance=ExtResource("5_16paj")]
+z_index = 1
 layout_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
+[node name="tag2" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer" instance=ExtResource("5_16paj")]
+z_index = 1
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("5_awt5v")
-stretch_mode = 3
 
-[node name="TextureRect3" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
+[node name="tag3" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer" instance=ExtResource("5_16paj")]
+z_index = 1
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("5_awt5v")
-stretch_mode = 3
 
-[node name="TextureRect4" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
+[node name="tag4" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer" instance=ExtResource("5_16paj")]
+z_index = 1
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("5_awt5v")
-stretch_mode = 3
 
-[node name="TextureRect5" type="TextureRect" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer"]
+[node name="tag5" parent="TagButton/TagFolder/NinePatchRect/HBoxContainer" instance=ExtResource("5_16paj")]
+z_index = 1
 layout_mode = 2
-mouse_filter = 2
-texture = ExtResource("5_awt5v")
-stretch_mode = 3
 
 [node name="DamageButton" type="Button" parent="."]
 self_modulate = Color(0.138034, 0.138034, 0.138034, 1)

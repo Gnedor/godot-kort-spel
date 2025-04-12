@@ -1,22 +1,61 @@
 [gd_scene load_steps=3 format=3 uid="uid://yue7hl0l0upn"]
 
-[ext_resource type="Texture2D" uid="uid://c8iriwuup0qdv" path="res://Assets/images/Tags/Crit.png" id="1_4k6u1"]
+[ext_resource type="Texture2D" uid="uid://c57ji65nb7qy3" path="res://Assets/images/Tags/Fracture.png" id="1_go3vj"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4f3tl"]
-radius = 8.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_vhgrj"]
+radius = 6.4
 
-[node name="TextureRect" type="TextureRect"]
-offset_right = 16.0
-offset_bottom = 16.0
-pivot_offset = Vector2(8, 8)
+[node name="tag" type="Control"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 3
+anchors_preset = 0
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = 40.0
+pivot_offset = Vector2(40, 40)
 size_flags_horizontal = 4
-mouse_filter = 2
-texture = ExtResource("1_4k6u1")
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -40.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(4, 4)
+texture = ExtResource("1_go3vj")
+stretch_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect"]
+self_modulate = Color(0, 0, 0, 0.4)
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_go3vj")
 stretch_mode = 3
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(8, 8)
-collision_mask = 512
+position = Vector2(40, 40)
+scale = Vector2(5, 5)
+collision_layer = 512
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CircleShape2D_4f3tl")
+shape = SubResource("CircleShape2D_vhgrj")

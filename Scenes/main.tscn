@@ -7,11 +7,9 @@
 [ext_resource type="Script" path="res://Scripts/main_scene_manager.gd" id="4_7byqg"]
 
 [node name="Main" type="Node2D"]
-position = Vector2(-4, 26)
-rotation = -0.000180377
+position = Vector2(0, 1.90735e-06)
 
 [node name="BattleScene" parent="." instance=ExtResource("1_a2doi")]
-position = Vector2(4.00469, -25.9993)
 
 [node name="ShopScene" parent="." instance=ExtResource("2_mjwp7")]
 position = Vector2(3840, 0)
@@ -23,6 +21,5 @@ position = Vector2(7680, 0)
 script = ExtResource("4_7byqg")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(4.00469, -25.9993)
 anchor_mode = 0
 script = ExtResource("2_1l3wp")

@@ -18,6 +18,7 @@ extends Node2D
 @onready var select_border: AnimatedSprite2D = $Textures/ScaleNode/SelectBorder
 @onready var trait_1_sprite: TextureRect = $Textures/ScaleNode/VBoxContainer/TextureRect
 @onready var trait_2_sprite: TextureRect = $Textures/ScaleNode/VBoxContainer/TextureRect2
+@onready var tag_circle: AnimatedSprite2D = $Textures/ScaleNode/CardSprite/TagCircle
 
 var is_placed : bool = false
 var is_hovering : bool = false
@@ -38,6 +39,7 @@ var card_name : String
 var ability_script
 var price : int
 var multiplier: float = 1
+var tag : String
 
 var trait_1
 var trait_2
