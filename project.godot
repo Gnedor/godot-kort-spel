@@ -19,6 +19,9 @@ config/icon="res://Assets/images/kort/Guy_card.png"
 
 Global="*res://Scripts/global.gd"
 SignalManager="*res://Scripts/signal_manager.gd"
+TagDatabase="*res://Scripts/tag_database.gd"
+CardDatabase="*res://Scripts/card_database.gd"
+TileDatabase="*res://Scripts/tile_database.gd"
 
 [display]
 

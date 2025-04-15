@@ -26,16 +26,13 @@ var turn : int = 1
 var invert_tween
 var active_select : bool = false
 var deck_select :  bool = false
+var card_select : bool = false
 var selected_card : Node2D
 var ability_card : Node2D
 var amount_to_draw : int
 var damage
 
-var debuffs = {
-	"poison": 0,
-	"fracture": 0,
-	"crit": 0,
-	}
+var debuffs = {}
 
 var fracture_level : int = 0
 
@@ -52,6 +49,9 @@ func _ready() -> void:
 	input_manager.untrigger_ability.connect(exit_active_card_activate)
 	input_manager.select_target_card.connect(activate_card_abilities)
 	input_manager.select_deck.connect(on_deck_chosen)
+	input_manager.select_card.connect(on_card_chosen)
+	for debuff in TagDatabase.TAGS:
+		debuffs[debuff["name"]] = 0
 	
 func on_enter():
 	Global.total_damage = 0
@@ -74,7 +74,7 @@ func on_enter():
 	end_turn_label_position_y = end_turn_label.position.y
 	
 func new_turn():
-	Global.total_damage += debuffs["poison"]
+	Global.total_damage += debuffs["Poison"]
 	update_labels()
 	
 	if turn <= 2:
@@ -132,29 +132,29 @@ func attack(played_cards):
 				if card.trait_1:
 					if debuffs[card.trait_1] == 0:
 						# om du gör flera exceptions gör en match som defaultar det detta under
-						if card.trait_1 != "fracture":
+						if card.trait_1 != "Fracture":
 							create_debuff_icon(card.trait_1)
 						else:
 							if fracture_level == 0:
 								create_debuff_icon(card.trait_1)
 						
 					match card.trait_1:
-						"poison":
+						"Poison":
 							apply_poison = true
-						"fracture":
-							if debuffs["fracture"] == 100:
-								debuffs["fracture"] = 0
+						"Fracture":
+							if debuffs["Fracture"] == 100:
+								debuffs["Fracture"] = 0
 								fracture_level += 1
 							else:
-								debuffs["fracture"] += 20
-						"crit":
-							if debuffs["crit"] < 100:
-								debuffs["crit"] += 10
+								debuffs["Fracture"] += 20
+						"Crit":
+							if debuffs["Crit"] < 100:
+								debuffs["Crit"] += 10
 							
 				for i in range(fracture_level):
 					mult *= 2
 					
-				if (randi() % 10) * 10 < debuffs["crit"]:
+				if (randi() % 10) * 10 < debuffs["Crit"]:
 					mult *= 3
 					
 				damage = int(round(damage))
@@ -169,7 +169,7 @@ func attack(played_cards):
 				Global.total_damage += damage
 				
 				if apply_poison and card.can_poison:
-					debuffs["poison"] += damage
+					debuffs["Poison"] += damage
 					card.can_poison = false
 					
 				if total_mult > 1:
@@ -326,19 +326,83 @@ func exit_active_card_activate():
 	hand_info.z_index = card_manager.cards_in_hand.size() + 5
 	hand_info.text = ("")
 	
+func enter_chose_card(played_card):
+	card_select = true
+	ability_card = played_card
+	card_manager.cards_in_hand.erase(played_card)
+	played_card.is_selected = true
+	played_card.scale = Vector2(1.2, 1.2)
+	hand_info.text = ("Chose Card")
+	
+	if card_manager.played_cards.size() > 0:
+		for card in card_manager.cards_in_hand:
+			card.get_node("Area2D/CollisionShape2D").disabled = true
+			
+		sten.get_node("Area2D/CollisionShape2D").disabled = true
+		played_card.get_node("Area2D/CollisionShape2D").disabled = true
+		end_turn.disabled = true
+		tiles_folder.button.disabled = true
+		deck.get_node("Area2D/CollisionShape2D").disabled = true
+		$"../SpellDeck".get_node("Area2D/CollisionShape2D").disabled = true
+		
+		hand_info.z_index = card_manager.cards_in_hand.size() + 10
+		darken_background.z_index = card_manager.cards_in_hand.size() + 4
+		darken_screen()
+		
+		for card in card_manager.played_cards:
+			card.z_index = card_manager.cards_in_hand.size() + 5
+			
+		end_turn.disabled = true
+		
+		await card_manager.animate_card_snap(played_card, Vector2(960, 200), 3000, 1)
+		add_text(hand_info)
+		
+	else:
+		await card_manager.animate_card_snap(played_card, Vector2(960, 200), 3000, 1)
+		await Global.timer(0.3)
+		var cards = [ability_card]
+		card_manager.discard_selected_cards(cards, "Hand")
+	
+func on_card_chosen(card):
+	ability_effect(ability_card)
+	ability_card.ability_script.give_effect(card)
+	await Global.timer(0.2)
+	exit_chose_card()
+	
+func exit_chose_card():
+	var cards = [ability_card]
+	card_select = false
+	
+	await remove_text(hand_info)
+	await brighten_screen()
+	
+	for card in card_manager.cards_in_hand:
+		card.get_node("Area2D/CollisionShape2D").disabled = false
+	sten.get_node("Area2D/CollisionShape2D").disabled = false
+	end_turn.disabled = false
+	tiles_folder.button.disabled = false
+	deck.get_node("Area2D/CollisionShape2D").disabled = false
+	$"../SpellDeck".get_node("Area2D/CollisionShape2D").disabled = false
+		
+	end_turn.disabled = false
+	card_manager.discard_selected_cards(cards, "Hand")
+	
 	
 func enter_chose_deck(played_card, draw_amount):
 	amount_to_draw = draw_amount
 	ability_card = played_card
 	deck_select = true
-	hand_info.visible_ratio = 0.0
 	hand_info.text = ("Chose Deck")
 	
 	for card in card_manager.cards_in_hand:
 		card.get_node("Area2D/CollisionShape2D").disabled = true
+	for card in card_manager.played_cards:
+		card.get_node("Area2D/CollisionShape2D").disabled = true
+	sten.get_node("Area2D/CollisionShape2D").disabled = true
 	played_card.get_node("Area2D/CollisionShape2D").disabled = true
 	end_turn.disabled = true
 	tiles_folder.button.disabled = true
+	$"../DiscardPile".get_node("Area2D/CollisionShape2D").disabled = true
 	played_card.z_index = card_manager.cards_in_hand.size() + 10
 	deck.z_index = card_manager.cards_in_hand.size() + 10
 	deck.spell_deck.z_index = card_manager.cards_in_hand.size() + 10
@@ -350,8 +414,7 @@ func enter_chose_deck(played_card, draw_amount):
 	
 	
 func on_deck_chosen(chosen_deck):
-	var cards = []
-	cards.append(ability_card)
+	ability_effect(ability_card)
 	var clicked_deck = chosen_deck[0].collider.get_parent()
 	if clicked_deck == deck:
 		await card_manager.draw_cards(amount_to_draw, 0)
@@ -362,8 +425,7 @@ func on_deck_chosen(chosen_deck):
 	
 	
 func exit_chose_deck():
-	var cards = []
-	cards.append(ability_card)
+	var cards = [ability_card]
 	deck_select = false
 	await remove_text(hand_info)
 	await brighten_screen()
@@ -371,8 +433,12 @@ func exit_chose_deck():
 	end_turn.disabled = false
 	tiles_folder.button.disabled = false
 	
+	$"../DiscardPile".get_node("Area2D/CollisionShape2D").disabled = false
 	for card in card_manager.cards_in_hand:
 		card.get_node("Area2D/CollisionShape2D").disabled = false
+	for card in card_manager.played_cards:
+		card.get_node("Area2D/CollisionShape2D").disabled = false
+	sten.get_node("Area2D/CollisionShape2D").disabled = false
 	
 	deck.z_index = 1
 	deck.spell_deck.z_index = 1
@@ -398,7 +464,6 @@ func add_text(label):
 	tween.tween_property(label, "visible_ratio", 1.0, 0.2)
 	await tween.finished
 	
-	
 func remove_text(label):
 	var tween = get_tree().create_tween()
 	tween.tween_property(label, "visible_ratio", 0, 0.2)
@@ -412,7 +477,7 @@ func update_labels():
 	for label in debuff_text.get_children().duplicate():
 		label.text = str(debuffs[label.name])
 		if debuffs[label.name] == 0:
-			if label.name != "fracture":
+			if label.name != "Fracture":
 				debuff_icons.get_child(i).queue_free()
 				label.queue_free()
 			else: 
@@ -422,11 +487,11 @@ func update_labels():
 		i += 1
 		
 		match label.name:
-			"fracture":
+			"Fracture":
 				label.text += "% " + "Lv" + str(fracture_level)
-			"poison":
+			"Poison":
 				pass
-			"crit":
+			"Crit":
 				label.text += "%"
 		
 func create_debuff_icon(debuff_name : String):
@@ -439,11 +504,11 @@ func create_debuff_icon(debuff_name : String):
 	var color : Color
 	
 	match debuff_name:
-		"fracture":
+		"Fracture":
 			color = Color(0.5, 0.5, 0.5)
-		"poison":
+		"Poison":
 			color = Color(0.455, 0.765, 0.243)
-		"crit":
+		"Crit":
 			color = Color(1, 0.1, 0.1)
 			
 	debuff_text.add_child(label)

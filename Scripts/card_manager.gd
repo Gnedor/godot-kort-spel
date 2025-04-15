@@ -232,6 +232,20 @@ func find_duration(pos1, pos2, speed):
 	return duration
 	
 func update_card(card):
+	if card.attack < 0:
+		card.attack = 0
+	if card.turn_attack < 0:
+		card.turn_attack = 0
+	if card.base_attack < 0:
+		card.base_attack = 0
+	
+	if card.actions < 0:
+		card.actions = 0
+	if card.turn_actions < 0:
+		card.turn_actions = 0
+	if card.base_actions < 0:
+		card.base_actions = 0
+		
 	card.attack_label.text = str(card.attack)
 	card.actions_label.text = str(card.actions)
 		
@@ -268,9 +282,10 @@ func discard_selected_cards(cards, status : String):
 			card.get_node("Area2D/CollisionShape2D").disabled = true
 			played_cards.erase(card)
 			card.z_index = 0
-			await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED, 1)
+			await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED * 2, 1)
 			discarded_cards.append(card)
 			card.visible = false
+		$"../DiscardPile/DiscardCounter".text = str(discarded_cards.size())
 			
 func show_card_collection():
 	viewing_collection = true
@@ -314,3 +329,32 @@ func on_round_end():
 		slot.occupied_tile = null
 		for card in played_cards:
 			card.is_placed = false
+
+
+func _on_sort_button_button_down() -> void:
+	$"../CardBar/HandSlot2/HandSlot/SortButton/Label".position.y += 3
+
+
+func _on_sort_button_button_up() -> void:
+	$"../CardBar/HandSlot2/HandSlot/SortButton/Label".position.y -= 3
+
+
+func _on_sort_button_pressed() -> void:
+	var troop_cards = []
+	var spell_cards = []
+	for card in cards_in_hand:
+		if card.card_type == "Spell":
+			spell_cards.append(card)
+		else:
+			troop_cards.append(card)
+	
+	troop_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+	spell_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+	
+	cards_in_hand.clear()
+	for card in troop_cards:
+		cards_in_hand.append(card)
+	for card in spell_cards:
+		cards_in_hand.append(card)
+	
+	align_cards()

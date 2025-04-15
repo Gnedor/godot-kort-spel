@@ -57,3 +57,14 @@ func find_common_card():
 			most_common_card = key
 	return most_common_card
 	
+func color_text(label):
+	change_color("Damage", Color.html("#ac3232"), label)
+	change_color("Actions", Color.html("#639bff"), label)
+	change_color("Poison", Color.html("#6abe30"), label)
+	change_color("Fracture", Color.html("#898989"), label)
+	change_color("Crit", Color.html("#ff6161"), label)
+	
+func change_color(word, color, label):
+	var colored_word = "[color=" + color.to_html() + "]" + word + "[/color]"
+	label.text = label.text.replace(word, colored_word)
+	

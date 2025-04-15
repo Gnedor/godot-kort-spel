@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://buwm6dg8acgmi"]
+[gd_scene load_steps=10 format=3 uid="uid://buwm6dg8acgmi"]
 
 [ext_resource type="Script" path="res://Scripts/shop_card_manager.gd" id="1_h600g"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="1_jibvu"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://bdfof7mymlvu" path="res://Scenes/trash_card.tscn" id="4_t07mp"]
 [ext_resource type="PackedScene" uid="uid://yue7hl0l0upn" path="res://Scenes/tag.tscn" id="5_16paj"]
 [ext_resource type="Texture2D" uid="uid://cg4rdd5x1p6xf" path="res://Assets/images/Tags/Poison.png" id="6_t60sr"]
+[ext_resource type="Texture2D" uid="uid://cq1q0wekec80w" path="res://Assets/images/textruta2.png" id="8_j24jj"]
+[ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="9_x7jno"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_h600g")
@@ -290,6 +292,67 @@ vertical_alignment = 1
 [node name="TrashCard" parent="." instance=ExtResource("4_t07mp")]
 z_index = 150
 position = Vector2(512, 540)
+
+[node name="Description" type="MarginContainer" parent="."]
+visible = false
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 1344.0
+offset_top = 640.0
+offset_right = 1808.0
+offset_bottom = 695.0
+grow_horizontal = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Description"]
+layout_mode = 2
+texture = ExtResource("8_j24jj")
+patch_margin_left = 12
+patch_margin_top = 40
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="MarginContainer" type="MarginContainer" parent="Description"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="NameLabel" type="Label" parent="Description/MarginContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_6qlgt")
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Description/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 10
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="Description/MarginContainer/MarginContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/table_v_separation = 0
+theme_override_constants/line_separation = 5
+theme_override_fonts/normal_font = ExtResource("9_x7jno")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
 
 [connection signal="pressed" from="TrashButton" to="." method="_on_trash_button_pressed"]
 [connection signal="pressed" from="TagButton" to="." method="_on_tag_button_pressed"]

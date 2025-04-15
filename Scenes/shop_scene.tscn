@@ -8,7 +8,7 @@
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_ral8i"]
 [ext_resource type="Script" path="res://Scripts/shop_scene_manager.gd" id="6_e8hkw"]
 [ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="8_pd30o"]
-[ext_resource type="Texture2D" uid="uid://5s37xrvdyfoq" path="res://Assets/images/TrachCan2.png" id="9_7hr24"]
+[ext_resource type="Texture2D" uid="uid://b3226gsd6ehqt" path="res://Assets/images/Pen.png" id="9_4m3r7"]
 [ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="10_banbt"]
 [ext_resource type="PackedScene" uid="uid://buwm6dg8acgmi" path="res://Scenes/manage_card.tscn" id="11_fntq0"]
 
@@ -298,10 +298,11 @@ color = Color(0, 0, 0, 0)
 
 [node name="ManageCard" type="Button" parent="."]
 self_modulate = Color(0.212305, 0.212305, 0.212305, 1)
-offset_left = 1008.0
-offset_top = 472.0
-offset_right = 1712.0
-offset_bottom = 792.0
+offset_left = 1024.0
+offset_top = 520.0
+offset_right = 1296.0
+offset_bottom = 656.0
+scale = Vector2(2, 2)
 focus_mode = 0
 theme = ExtResource("2_7pymf")
 keep_pressed_outside = true
@@ -309,21 +310,28 @@ keep_pressed_outside = true
 [node name="Node2D" type="Node2D" parent="ManageCard"]
 
 [node name="Label" type="Label" parent="ManageCard/Node2D"]
-offset_left = 80.0
-offset_top = 24.0
-offset_right = 409.0
-offset_bottom = 288.0
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 12.0
+offset_right = 189.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 1
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("8_pd30o")
-theme_override_font_sizes/font_size = 80
+theme_override_font_sizes/font_size = 40
 text = "Manage 
 CARD"
 vertical_alignment = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="ManageCard/Node2D"]
-position = Vector2(568, 152)
-scale = Vector2(3, 3)
-texture = ExtResource("9_7hr24")
+position = Vector2(208, 68)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("9_4m3r7")
 
 [node name="CardCollection" parent="." instance=ExtResource("10_banbt")]
 position = Vector2(1920, 0)

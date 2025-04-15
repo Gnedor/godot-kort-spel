@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpp2pqvbgncgw"
-path="res://.godot/imported/Impossible Shape_card.png-a490e911f3046d4d628d056a5c39c71d.ctex"
+uid="uid://b3226gsd6ehqt"
+path="res://.godot/imported/Pen.png-54a195a604f289bc5ef225106b3872e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/kort/Impossible Shape_card.png"
-dest_files=["res://.godot/imported/Impossible Shape_card.png-a490e911f3046d4d628d056a5c39c71d.ctex"]
+source_file="res://Assets/images/Pen.png"
+dest_files=["res://.godot/imported/Pen.png-54a195a604f289bc5ef225106b3872e4.ctex"]
 
 [params]
 

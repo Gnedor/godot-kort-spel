@@ -1,8 +1,6 @@
 extends Node2D
 
-var card_database = preload("res://Scripts/card_database.gd")
 var card_scene = preload("res://Scenes/card.tscn")
-var tile_database = preload("res://Scripts/tile_database.gd")
 var tile_scene = load("res://Scenes/tile.tscn")
 
 @onready var card_collection: Node2D = $CardCollection
@@ -88,7 +86,7 @@ func add_items_on_start():
 	card_manager_screen.add_tags()
 	
 func get_random_card(amount):
-	var card_keys = card_database.CARDS.keys()
+	var card_keys = CardDatabase.CARDS.keys()
 	var random_cards = []
 	for i in range(amount):
 		var random_index = randi() % card_keys.size()
@@ -97,7 +95,7 @@ func get_random_card(amount):
 	return random_cards
 	
 func get_random_tile():
-	var tile_keys = tile_database.TILES.keys()
+	var tile_keys = TileDatabase.TILES.keys()
 	var random_tiles = []
 	for i in range(2):
 		var random_index = randi() % tile_keys.size()
@@ -174,18 +172,18 @@ func make_new_cards():
 		var new_card_instance = card_scene.instantiate()
 		new_card_instance.z_index = 0
 
-		new_card_instance.base_attack = card_database.CARDS[card_name][0]
+		new_card_instance.base_attack = CardDatabase.CARDS[card_name][0]
 		new_card_instance.attack = new_card_instance.base_attack
-		new_card_instance.base_actions = card_database.CARDS[card_name][1]
+		new_card_instance.base_actions = CardDatabase.CARDS[card_name][1]
 		new_card_instance.actions = new_card_instance.base_actions
-		new_card_instance.card_type = card_database.CARDS[card_name][2]
+		new_card_instance.card_type = CardDatabase.CARDS[card_name][2]
 		new_card_instance.card_name = card_name
 		var random_price = randi() % (3 + reroll_count) + (4 + reroll_count)
 		new_card_instance.price = random_price
-		new_card_instance.trait_1 = card_database.CARDS[card_name][5]
+		new_card_instance.trait_1 = CardDatabase.CARDS[card_name][5]
 		
 		if new_card_instance.card_type != "Troop":
-			var new_card_ability_script_path = card_database.CARDS[card_name][4]
+			var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
 			var ability_script = load(new_card_ability_script_path).new()
 			new_card_instance.ability_script = ability_script
 			new_card_instance.add_child(ability_script)
@@ -208,9 +206,9 @@ func adjust_card_details(card):
 	adjust_text_size(card)
 	card.name_label.text = card_name
 		
-	if card_database.CARDS[card_name][3]:
-		card.description_label.text = "[center]" + str(card_database.CARDS[card_name][3]) + "[/center]"
-		color_text(card.description_label)
+	if CardDatabase.CARDS[card_name][3]:
+		card.description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
+		Global.color_text(card.description_label)
 	else:
 		card.description_label.text = "[center]Does nothing[/center]"
 	adjust_description_text(card.description_label)
@@ -244,7 +242,7 @@ func make_new_tiles():
 	
 	for tile_name in tiles:
 		var new_tile_instance = tile_scene.instantiate()
-		var tile_ability_script_path = tile_database.TILES[tile_name][1]
+		var tile_ability_script_path = TileDatabase.TILES[tile_name][1]
 		
 		var ability_script = load(tile_ability_script_path).new()
 		new_tile_instance.add_child(ability_script)  # Add to tree FIRST
@@ -256,12 +254,12 @@ func make_new_tiles():
 		new_tile_instance.z_index = 1
 		new_tile_instance.tile_name = tile_name
 		new_tile_instance.price = (5 + reroll_count * 2)
-		new_tile_instance.tile_type = tile_database.TILES[tile_name][2]
+		new_tile_instance.tile_type = TileDatabase.TILES[tile_name][2]
 		new_tile_instance.name_label.text = tile_name
-		new_tile_instance.description_label.text = "[center]" + str(tile_database.TILES[tile_name][0]) + "[/center]"
+		new_tile_instance.description_label.text = "[center]" + str(TileDatabase.TILES[tile_name][0]) + "[/center]"
 		
 		adjust_description_text(new_tile_instance.description_label)
-		color_text(new_tile_instance.description_label)
+		Global.color_text(new_tile_instance.description_label)
 		
 		var image_path = "res://Assets/Images/Tiles/" + tile_name + "_tile.png"
 		var texture = load(image_path)
@@ -395,17 +393,6 @@ func adjust_description_text(label):
 	if label.get_line_count() <= 1:
 		label.custom_minimum_size = Vector2(0, 0)
 		label.set_autowrap_mode(0)
-
-func color_text(label):
-	var target_word = "Damage"
-	var color = Color.html("#ac3232")
-	var colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
-	label.text = label.text.replace(target_word, colored_word)
-	
-	target_word = "Actions"
-	color = Color.html("#639bff")
-	colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
-	label.text = label.text.replace(target_word, colored_word)
 	
 func remove_old_cards(cards):
 	await Global.timer(0.5)

@@ -1,6 +1,5 @@
 extends Node2D
 
-var tile_database = preload("res://Scripts/tile_database.gd")
 var tile_scene = load("res://Scenes/tile.tscn")
 @onready var input_manager: Node2D = $"../InputManager"
 @onready var folder: Node2D = $Folder
@@ -33,7 +32,7 @@ func _ready() -> void:
 	input_manager.tile_relesed_on_slot.connect(place_tile_on_slot)
 	
 	window_size = Vector2(1920, 1080)
-	selected_deck = tile_database.EXAMPLE_DECK
+	selected_deck = TileDatabase.EXAMPLE_DECK
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -118,14 +117,14 @@ func align_tiles():
 func add_tiles_on_start():
 	var tiles
 	if Global.round == 1:
-		tiles = tile_database.EXAMPLE_DECK
+		tiles = TileDatabase.EXAMPLE_DECK
 		for tile in tiles:
 			create_tile(tile)
 	align_tiles()
 		
 func create_tile(tile_name: String):
 	var new_tile_instance = tile_scene.instantiate()
-	var tile_ability_script_path = tile_database.TILES[tile_name][1]
+	var tile_ability_script_path = TileDatabase.TILES[tile_name][1]
 
 	var ability_script = load(tile_ability_script_path).new()
 	new_tile_instance.add_child(ability_script)  # Add to tree FIRST
@@ -134,9 +133,9 @@ func create_tile(tile_name: String):
 	add_child(new_tile_instance)
 	
 	new_tile_instance.name_label.text = tile_name
-	new_tile_instance.tile_type = tile_database.TILES[tile_name][2]
+	new_tile_instance.tile_type = TileDatabase.TILES[tile_name][2]
 	new_tile_instance.tile_name = tile_name
-	new_tile_instance.description_label.text = "[center]" + str(tile_database.TILES[tile_name][0]) + "[/center]"
+	new_tile_instance.description_label.text = "[center]" + str(TileDatabase.TILES[tile_name][0]) + "[/center]"
 	color_text(new_tile_instance.description_label)
 	adjust_description_text(new_tile_instance.description_label)
 

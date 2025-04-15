@@ -1,7 +1,6 @@
 extends Node2D
 
 var card_scene = load("res://Scenes/card.tscn")
-var card_database = preload("res://Scripts/card_database.gd")
 
 var draw_queue = 0
 var cards_in_troop_deck = []
@@ -64,7 +63,7 @@ func on_draw_card(card : Node2D):
 func add_new_card_to_deck(card_name : String, times : int):
 	for i in range(times):
 		var new_card_instance = card_scene.instantiate()
-		var card_type = card_database.CARDS[card_name][2]
+		var card_type = CardDatabase.CARDS[card_name][2]
 		card_manager.add_child(new_card_instance)
 		
 		if card_type != "Spell":
@@ -76,15 +75,15 @@ func add_new_card_to_deck(card_name : String, times : int):
 		new_card_instance.visible = false
 		new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
 		
-		new_card_instance.base_attack = card_database.CARDS[card_name][0]
+		new_card_instance.base_attack = CardDatabase.CARDS[card_name][0]
 		new_card_instance.turn_attack = new_card_instance.base_attack
 		new_card_instance.attack = new_card_instance.base_attack
-		new_card_instance.base_actions = card_database.CARDS[card_name][1]
+		new_card_instance.base_actions = CardDatabase.CARDS[card_name][1]
 		new_card_instance.turn_actions = new_card_instance.base_actions
 		new_card_instance.actions = new_card_instance.base_actions
-		new_card_instance.card_type = card_database.CARDS[card_name][2]
+		new_card_instance.card_type = CardDatabase.CARDS[card_name][2]
 		new_card_instance.card_name = card_name
-		new_card_instance.trait_1 = card_database.CARDS[card_name][5]
+		new_card_instance.trait_1 = CardDatabase.CARDS[card_name][5]
 		
 		adjust_card_details_and_script(new_card_instance)
 			
@@ -97,7 +96,7 @@ func add_new_card_to_deck(card_name : String, times : int):
 		
 func add_card_to_deck(card_name : String, card_attack : int, card_actions : int):
 	var new_card_instance = card_scene.instantiate()
-	var card_type = card_database.CARDS[card_name][2]
+	var card_type = CardDatabase.CARDS[card_name][2]
 	
 	if card_type != "Spell":
 		new_card_instance.position = position
@@ -115,7 +114,7 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 	new_card_instance.base_actions = card_actions
 	new_card_instance.actions = card_actions
 	new_card_instance.turn_actions = card_actions
-	new_card_instance.card_type = card_database.CARDS[card_name][2]
+	new_card_instance.card_type = CardDatabase.CARDS[card_name][2]
 	new_card_instance.card_name = card_name
 	new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
 	
@@ -129,10 +128,8 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 	card_manager.update_card(new_card_instance)
 		
 func add_cards_on_start():
-	#cards_in_troop_deck.clear()
-	#cards_in_spell_deck.clear()
 	if Global.round == 1:
-		selected_deck = card_database.EXAMPLE_DECK
+		selected_deck = CardDatabase.EXAMPLE_DECK
 			
 		for card in selected_deck:
 			add_new_card_to_deck(card["name"], card["amount"])
@@ -164,6 +161,7 @@ func adjust_text_size(card):
 		label.set("theme_override_font_sizes/font_size", font_size)
 		
 func replace_card_with_copy(card, copy_card):
+	print(card.card_name)
 	card.card_name = copy_card.card_name
 	card.card_type = copy_card.card_type
 	card.base_attack = copy_card.turn_attack
@@ -175,10 +173,15 @@ func replace_card_with_copy(card, copy_card):
 	card.card_type = copy_card.card_type
 	card.card_name = copy_card.card_name
 	card.ability_script = copy_card.ability_script
+	card.trait_1 = copy_card.trait_1
+	card.trait_2 = copy_card.trait_2
+	card.tag = copy_card.tag
 	
 	adjust_text_size(card)
 	card_manager.update_card(card)
 	adjust_card_details_and_script(card)
+	card.place_tag(card.tag)
+	card.update_traits()
 	
 func create_card_copy(card):
 	var card_copy = card_scene.instantiate()
@@ -205,34 +208,23 @@ func adjust_description_text(label):
 	if label.get_line_count() <= 1:
 		label.custom_minimum_size = Vector2(0, 0)
 		label.set_autowrap_mode(0)
-		
-func color_text(label):
-	var target_word = "Damage"
-	var color = Color.html("#ac3232")
-	var colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
-	label.text = label.text.replace(target_word, colored_word)
-	
-	target_word = "Actions"
-	color = Color.html("#639bff")
-	colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
-	label.text = label.text.replace(target_word, colored_word)
 	
 func adjust_card_details_and_script(card):
 	var card_name = card.card_name
-	card.card_type = card_database.CARDS[card_name][2]
+	card.card_type = CardDatabase.CARDS[card_name][2]
 	card.get_node("Textures/NamnLabel").text = card_name
 	adjust_text_size(card)
 	card.name_label.text = card_name
 		
-	if card_database.CARDS[card_name][3]:
-		card.description_label.text = "[center]" + str(card_database.CARDS[card_name][3]) + "[/center]"
-		color_text(card.description_label)
+	if CardDatabase.CARDS[card_name][3]:
+		card.description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
+		Global.color_text(card.description_label)
 	else:
 		card.description_label.text = "[center]Does nothing[/center]"
 	adjust_description_text(card.description_label)
 	
 	if card.card_type != "Troop":
-		var new_card_ability_script_path = card_database.CARDS[card_name][4]
+		var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
 		var ability_script = load(new_card_ability_script_path).new()
 		card.ability_script = ability_script
 		card.add_child(ability_script)

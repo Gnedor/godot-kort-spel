@@ -12,7 +12,6 @@ func trigger_ability(card):
 	battle_manager_reference.ability_effect(card)
 	var deck_size = deck_reference.cards_in_troop_deck.size()
 	if deck_size > 0:
-		deck_size = deck_reference.cards_in_troop_deck.size()
 		var random_index1 = randi() % deck_size
 		var	random_index2 = randi() % deck_size
 		if deck_size > 1:

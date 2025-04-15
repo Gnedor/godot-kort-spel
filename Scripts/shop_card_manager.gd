@@ -9,6 +9,7 @@ extends Node2D
 @onready var back_label: Label = $Back/Label
 @onready var tag_folder: NinePatchRect = $TagButton/TagFolder
 @onready var h_box_container: HBoxContainer = $TagButton/TagFolder/NinePatchRect/HBoxContainer
+@onready var tag_description: MarginContainer = $Description
 
 signal back_pressed
 signal trash_pressed
@@ -112,7 +113,7 @@ func add_tags():
 		var tag = tags[i]
 		tag.visible = true
 		tag.get_node("TextureRect").texture = load("res://Assets/images/Tags/" + tag_name + ".png")
-		tag.name = tag_name
+		tag.name = tag_name + str(i)
 		i += 1
 		
 func toggle_collision(toggle : bool):
@@ -121,4 +122,15 @@ func toggle_collision(toggle : bool):
 			tag.get_node("Area2D/CollisionShape2D").disabled = toggle
 		else:
 			tag.get_node("Area2D/CollisionShape2D").disabled = true
+			
+func display_tag_description():
+	var name = hovered_tag.name
+	name = name.left(name.length() - 1)
+	tag_description.visible = true
+	$Description/MarginContainer/NameLabel.text = name
+	for tag in TagDatabase.TAGS:
+		if tag["name"] == name:
+			$Description/MarginContainer/MarginContainer/DescriptionLabel.text = "[center]" + tag["description"] + "[/center]"
+	Global.color_text($Description/MarginContainer/MarginContainer/DescriptionLabel)
+
 		

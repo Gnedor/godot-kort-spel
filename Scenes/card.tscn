@@ -378,6 +378,7 @@ visible = false
 position = Vector2(18.6667, -26.6667)
 
 [node name="StatDisplay" type="Sprite2D" parent="Textures/ScaleNode"]
+visible = false
 z_index = 1
 position = Vector2(0, -66.6667)
 texture = ExtResource("4_4oeem")

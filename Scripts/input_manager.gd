@@ -16,6 +16,7 @@ signal untrigger_ability
 signal select_target_card
 signal select_deck
 signal click_on_deck
+signal select_card
 
 const CARD_MASK = 2
 const CARD_SLOT_MASK = 4
@@ -72,7 +73,10 @@ func _input(event):
 					select_target_card.emit()
 				
 			if raycast_check(CARD_SLOT_MASK) and hovered_card and !card_manager.viewing_collection:
-				card_clicked_on_slot.emit(hovered_card)
+				if !battle_manager.card_select:
+					card_clicked_on_slot.emit(hovered_card)
+				else:
+					select_card.emit(hovered_card)
 				
 			if raycast_check(STEN_MASK):
 				click_on_sten.emit(card_manager.played_cards)
@@ -150,7 +154,7 @@ func raycast_check(mask : int):
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_1:
-			card_manager.draw_cards(3, 0)
+			card_manager.draw_cards(3, 3)
 		elif event.pressed and event.keycode == KEY_SPACE:
 			if !battle_manager.deck_select:
 				if !battle_manager.active_select:

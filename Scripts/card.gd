@@ -51,19 +51,28 @@ func _ready() -> void:
 	card_sprite.material = unique_material
 	
 func place_tag(tag_name : String):
-	$Textures/ScaleNode/CardSprite/TagSprite.visible = true
-	$Textures/ScaleNode/CardSprite/TagSprite.texture = load("res://Assets/images/Tags/" + tag_name + ".png")
-	if !trait_1:
-		trait_1 = tag_name
+	if tag_name:
+		$Textures/ScaleNode/CardSprite/TagSprite.visible = true
+		tag_name = tag_name.left(tag_name.length() - 1)
+		$Textures/ScaleNode/CardSprite/TagSprite.texture = load("res://Assets/images/Tags/" + tag_name + ".png")
+		if !trait_1:
+			trait_1 = tag_name
+		else:
+			trait_2 = tag_name
+		update_traits()
 	else:
-		trait_2 = tag_name
-	update_traits()
-	
+		$Textures/ScaleNode/CardSprite/TagSprite.visible = false
+		$Textures/ScaleNode/CardSprite/TagSprite.texture = null
+		
 func update_traits():
 	if trait_1:
 		var image_path = "res://Assets/images/Traits/" + trait_1 + "_trait.png"
 		$Textures/ScaleNode/VBoxContainer/TextureRect.texture = load(image_path)
+	else:
+		$Textures/ScaleNode/VBoxContainer/TextureRect.texture = null
 		
 	if trait_2:
 		var image_path = "res://Assets/images/Traits/" + trait_2 + "_trait.png"
 		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = load(image_path)
+	else:
+		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = null
