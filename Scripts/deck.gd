@@ -50,7 +50,7 @@ func _on_draw_animation_timeout() -> void:
 func on_draw_card(card : Node2D):
 	card_manager.cards_in_hand.append(card)
 	card.visible = true
-	adjust_text_size(card)
+	card.adjust_text_size()
 	card.get_node("Area2D/CollisionShape2D").disabled = false
 	card.in_deck = false
 	if card.card_type != "Spell":
@@ -85,7 +85,7 @@ func add_new_card_to_deck(card_name : String, times : int):
 		new_card_instance.card_name = card_name
 		new_card_instance.trait_1 = CardDatabase.CARDS[card_name][5]
 		
-		adjust_card_details_and_script(new_card_instance)
+		new_card_instance.adjust_card_details()
 			
 		if card_type != "Spell":
 			cards_in_troop_deck.append(new_card_instance)
@@ -118,7 +118,7 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 	new_card_instance.card_name = card_name
 	new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
 	
-	adjust_card_details_and_script(new_card_instance)
+	new_card_instance.adjust_card_details()
 	
 	if card_type != "Spell":
 		cards_in_troop_deck.append(new_card_instance)
@@ -153,15 +153,14 @@ func add_cards_on_start():
 	troop_deck_counter.text = str(cards_in_troop_deck.size())
 	spell_deck_counter.text = str(cards_in_spell_deck.size())
 	
-func adjust_text_size(card):
-	var label = card.get_node("Textures/NamnLabel")
-	var font_size = 20
-	while label.get_line_count() > 1:
-		font_size -= 1
-		label.set("theme_override_font_sizes/font_size", font_size)
+#func adjust_text_size(card):
+	#var label = card.get_node("Textures/NamnLabel")
+	#var font_size = 20
+	#while label.get_line_count() > 1:
+		#font_size -= 1
+		#label.set("theme_override_font_sizes/font_size", font_size)
 		
 func replace_card_with_copy(card, copy_card):
-	print(card.card_name)
 	card.card_name = copy_card.card_name
 	card.card_type = copy_card.card_type
 	card.base_attack = copy_card.turn_attack
@@ -177,9 +176,9 @@ func replace_card_with_copy(card, copy_card):
 	card.trait_2 = copy_card.trait_2
 	card.tag = copy_card.tag
 	
-	adjust_text_size(card)
+	card.adjust_text_size()
 	card_manager.update_card(card)
-	adjust_card_details_and_script(card)
+	card.adjust_card_details()
 	card.place_tag(card.tag)
 	card.update_traits()
 	
@@ -198,58 +197,58 @@ func create_card_copy(card):
 	card_copy.trait_1 = card.trait_1
 	card_copy.trait_2 = card.trait_2
 	
-	adjust_card_details_and_script(card_copy)
+	card_copy.adjust_card_details()
 	
 	return card_copy
 	
-func adjust_description_text(label):
-	label.custom_minimum_size = Vector2(260, 0)
-	label.set_autowrap_mode(2)
-	if label.get_line_count() <= 1:
-		label.custom_minimum_size = Vector2(0, 0)
-		label.set_autowrap_mode(0)
+#func adjust_description_text(label):
+	#label.custom_minimum_size = Vector2(260, 0)
+	#label.set_autowrap_mode(2)
+	#if label.get_line_count() <= 1:
+		#label.custom_minimum_size = Vector2(0, 0)
+		#label.set_autowrap_mode(0)
 	
-func adjust_card_details_and_script(card):
-	var card_name = card.card_name
-	card.card_type = CardDatabase.CARDS[card_name][2]
-	card.get_node("Textures/NamnLabel").text = card_name
-	adjust_text_size(card)
-	card.name_label.text = card_name
-		
-	if CardDatabase.CARDS[card_name][3]:
-		card.description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
-		Global.color_text(card.description_label)
-	else:
-		card.description_label.text = "[center]Does nothing[/center]"
-	adjust_description_text(card.description_label)
-	
-	if card.card_type != "Troop":
-		var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
-		var ability_script = load(new_card_ability_script_path).new()
-		card.ability_script = ability_script
-		card.add_child(ability_script)
-			
-	var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
-	var texture = load(image_path)
-	var sprite = card.card_sprite
-	if sprite:
-		sprite.texture = texture
-	else:
-		print("Sprite node not found")
-		
-	sprite = card.action_sprite
-	if card.card_type != "Troop":
-		image_path = "res://Assets/images/ActionTypes/" + card.card_type + "_type.png"
-		texture = load(image_path)
-
-		if sprite:
-			sprite.texture = texture
-		else:
-			print("Sprite node not found")
-	else:
-		sprite.texture = null
-		
-	card.update_traits()
+#func adjust_card_details_and_script(card):
+	#var card_name = card.card_name
+	#card.card_type = CardDatabase.CARDS[card_name][2]
+	#card.get_node("Textures/NamnLabel").text = card_name
+	#adjust_text_size(card)
+	#card.name_label.text = card_name
+		#
+	#if CardDatabase.CARDS[card_name][3]:
+		#card.description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
+		#Global.color_text(card.description_label)
+	#else:
+		#card.description_label.text = "[center]Does nothing[/center]"
+	#adjust_description_text(card.description_label)
+	#
+	#if card.card_type != "Troop":
+		#var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
+		#var ability_script = load(new_card_ability_script_path).new()
+		#card.ability_script = ability_script
+		#card.add_child(ability_script)
+			#
+	#var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
+	#var texture = load(image_path)
+	#var sprite = card.card_sprite
+	#if sprite:
+		#sprite.texture = texture
+	#else:
+		#print("Sprite node not found")
+		#
+	#sprite = card.action_sprite
+	#if card.card_type != "Troop":
+		#image_path = "res://Assets/images/ActionTypes/" + card.card_type + "_type.png"
+		#texture = load(image_path)
+#
+		#if sprite:
+			#sprite.texture = texture
+		#else:
+			#print("Sprite node not found")
+	#else:
+		#sprite.texture = null
+		#
+	#card.update_traits()
 		
 func check_for_deleted_cards():
 	for card in cards_in_troop_deck.duplicate():

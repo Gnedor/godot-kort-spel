@@ -319,7 +319,7 @@ func exit_active_card_activate():
 	active_select = false
 	
 	for card in card_manager.played_cards:
-		card.z_index = 2
+		card.z_index = 3
 		card_manager.deselect_effect(card)
 		card.is_selected = false
 		
@@ -470,7 +470,7 @@ func remove_text(label):
 	await tween.finished
 	
 func update_labels():
-	total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
+	fix_damage_text()
 	var child_count = debuff_icons.get_child_count()
 	
 	var i = 0
@@ -531,4 +531,44 @@ func display_mult(mult):
 		animation.stop()
 		# Gör så att rotationen av animationen reversar
 		animation.play("Mult_display")
+		
+func fix_damage_text():
+	var n = Global.total_damage
+	var suffixes = ["", "k", "M", "B", "T"]
+	
+	if n < 100000:
+		total_damage_label.text = str(round(n))
+		return
+	
+	var magnitude = 0
+	while n >= 1000.0 and magnitude <= suffixes.size() - 1:
+		n /= 1000.0
+		magnitude += 1
+
+	# If larger than "T", use scientific notation
+	if magnitude >= suffixes.size():
+		var exponent = int(floor(log(n * pow(1000, magnitude)) / log(10)))
+		var base = (n * pow(1000, magnitude)) / pow(10, exponent)
+		var str_base = str(round(base * 100) / 100.0)  # Keep 2 decimals
+		if str_base.ends_with(".0"):
+			str_base = str_base.substr(0, str_base.length() - 2)
+		total_damage_label.text = str(str_base + "e+" + str(exponent))
+		return
+
+	# Limit to 3 significant digits
+	var str_n := ""
+	if n >= 100:
+		str_n = str(round(n))
+	elif n >= 10:
+		str_n = str(round(n * 10) / 10.0)
+	else:
+		str_n = str(round(n * 100) / 100.0)
+
+	if str_n.ends_with(".0"):
+		str_n = str_n.substr(0, str_n.length() - 2)
+
+	total_damage_label.text = str(str_n + suffixes[magnitude])
+		
+		
+		
 	

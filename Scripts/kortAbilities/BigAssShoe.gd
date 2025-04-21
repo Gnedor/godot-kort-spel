@@ -31,7 +31,7 @@ func trigger_ability(card_reference):
 			
 			card_manager_reference.cards_in_hand.append(card)
 			card.visible = true
-			deck_reference.adjust_text_size(card)
+			card.adjust_text_size()
 			card.get_node("Area2D/CollisionShape2D").disabled = false
 			card.in_deck = false
 			deck_reference.cards_in_troop_deck.remove_at(random_number)

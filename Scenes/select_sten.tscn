@@ -1,0 +1,248 @@
+[gd_scene load_steps=12 format=3 uid="uid://cpf7fw0chw6s8"]
+
+[ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_h8133"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_ce0d7"]
+[ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="2_j783q"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="3_g5ms4"]
+[ext_resource type="Texture2D" uid="uid://bixpneadw16wk" path="res://Assets/images/open button.png" id="4_41g0k"]
+[ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="5_72mkx"]
+[ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="6_ubkps"]
+[ext_resource type="Texture2D" uid="uid://d1daclgg6wlcr" path="res://Assets/images/Meny/Idle.png" id="8_y1e3d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6tux"]
+atlas = ExtResource("8_y1e3d")
+region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kc4ka"]
+atlas = ExtResource("8_y1e3d")
+region = Rect2(48, 0, 48, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_blsm2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y6tux")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kc4ka")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Select Sten" type="Node2D"]
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="."]
+self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 552.0
+offset_top = 384.0
+offset_right = 1368.0
+offset_bottom = 816.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_h8133")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 24
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.186
+anchor_top = 0.037
+anchor_right = 0.814
+anchor_bottom = 0.185
+offset_left = 0.223999
+offset_top = 0.0159998
+offset_right = -0.223999
+offset_bottom = 0.0800018
+grow_horizontal = 2
+texture = ExtResource("1_h8133")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 24
+
+[node name="RoundLabel" type="Label" parent="NinePatchRect3/NinePatchRect"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -18.5
+offset_bottom = 18.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_ce0d7")
+theme_override_font_sizes/font_size = 36
+text = "Sten"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button_left" type="Button" parent="NinePatchRect3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.037
+anchor_right = 0.147
+anchor_bottom = 0.185
+offset_left = 0.360001
+offset_top = 0.0159998
+offset_right = 0.0479965
+offset_bottom = 0.0800018
+focus_mode = 0
+theme = ExtResource("3_g5ms4")
+keep_pressed_outside = true
+
+[node name="Arrow_left" type="Sprite2D" parent="NinePatchRect3/Button_left"]
+position = Vector2(40, 28)
+rotation = 1.5708
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("4_41g0k")
+
+[node name="Button_left2" type="Button" parent="NinePatchRect3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.853
+anchor_top = 0.037
+anchor_right = 0.96
+anchor_bottom = 0.185
+offset_left = -0.688171
+offset_top = 0.0159998
+offset_right = -0.00012207
+offset_bottom = 0.0800018
+grow_horizontal = 0
+focus_mode = 0
+theme = ExtResource("3_g5ms4")
+keep_pressed_outside = true
+
+[node name="Arrow_left" type="Sprite2D" parent="NinePatchRect3/Button_left2"]
+position = Vector2(48, 28)
+rotation = -1.5708
+scale = Vector2(3.5, 3.5)
+texture = ExtResource("4_41g0k")
+
+[node name="NinePatchRect3" type="NinePatchRect" parent="NinePatchRect3"]
+self_modulate = Color(0.0859838, 0.0859838, 0.0859837, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.108
+anchor_top = 0.241
+anchor_right = 0.892
+anchor_bottom = 0.944
+offset_left = -0.128006
+offset_top = -0.112007
+offset_right = 0.127991
+offset_bottom = 0.191986
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_72mkx")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 24
+
+[node name="Label" type="Label" parent="NinePatchRect3/NinePatchRect3"]
+self_modulate = Color(0.435192, 0.435192, 0.435192, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 24.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/line_spacing = 20
+theme_override_fonts/font = ExtResource("6_ubkps")
+theme_override_font_sizes/font_size = 24
+text = "*No effect"
+
+[node name="Button" type="Button" parent="NinePatchRect3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 56.0
+offset_top = 16.0
+offset_right = 344.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_g5ms4")
+
+[node name="Label" type="Label" parent="NinePatchRect3/Button"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.923
+offset_bottom = 0.00799561
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ce0d7")
+theme_override_font_sizes/font_size = 32
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button2" type="Button" parent="NinePatchRect3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -344.0
+offset_top = 16.0
+offset_right = -56.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("3_g5ms4")
+
+[node name="Label" type="Label" parent="NinePatchRect3/Button2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.923
+offset_bottom = 0.00799561
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_ce0d7")
+theme_override_font_sizes/font_size = 32
+text = "Play"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sten" parent="." instance=ExtResource("2_j783q")]
+position = Vector2(960, -24)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(240, 832)
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_blsm2")
+autoplay = "default"
+frame_progress = 0.487416
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(1680, 832)
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_blsm2")
+autoplay = "default"
+frame_progress = 0.108209

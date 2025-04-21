@@ -156,15 +156,15 @@ func _unhandled_input(event):
 		if event.pressed and event.keycode == KEY_1:
 			card_manager.draw_cards(3, 3)
 		elif event.pressed and event.keycode == KEY_SPACE:
-			if !battle_manager.deck_select:
+			if !battle_manager.deck_select and !battle_manager.card_select:
 				if !battle_manager.active_select:
 					trigger_ability.emit()
 				else:
 					untrigger_ability.emit()
 					
 		if event.pressed and event.keycode == KEY_2:
-			Global.total_damage += 100
-			battle_manager.total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
+			Global.total_damage += 1000
+			battle_manager.fix_damage_text()
 
 func check_for_highest_z_index(cards):
 	var card

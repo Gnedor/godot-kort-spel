@@ -26,7 +26,7 @@ func _ready() -> void:
 func on_enter_scene():
 	continue_button.disabled = true
 	ui.visible = true
-	ui.position = Vector2(960, 588)
+	ui.position = Vector2(960, 504)
 	round_label.text = "Round " + str(Global.round) + " Results"
 	total_damage_label.visible_ratio = 0.0
 	quota_label.visible_ratio = 0.0
@@ -52,6 +52,8 @@ func start_end_screen():
 	var multiplier : float = Global.total_damage / Global.quota
 	equals_label.text = str(floor(multiplier / 0.5) * 0.5)
 	var money_gain = Global.base_money * floor(multiplier / 0.5) * 0.5
+	if money_gain > 50:
+		money_gain = 50
 	total_money.text = str(money_gain) + "$"
 	
 	var labels_to_be_updated = [total_damage_label, quota_label, money_label, equals_label, total_money]

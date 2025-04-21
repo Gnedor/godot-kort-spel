@@ -193,45 +193,45 @@ func make_new_cards():
 		card_clip_mask.add_child(new_card_instance)  
 		cards_in_shop.append(new_card_instance)
 		connect_card_signal(new_card_instance)
-		adjust_card_details(new_card_instance)
+		new_card_instance.adjust_card_details()
 		
 	align_new_cards(cards_in_shop)
 	animate_card_reroll(cards_in_shop)
 	await Global.timer(0.5)
 	add_card_price_text()
 	
-func adjust_card_details(card):
-	var card_name = card.card_name
-	card.get_node("Textures/NamnLabel").text = card_name
-	adjust_text_size(card)
-	card.name_label.text = card_name
-		
-	if CardDatabase.CARDS[card_name][3]:
-		card.description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
-		Global.color_text(card.description_label)
-	else:
-		card.description_label.text = "[center]Does nothing[/center]"
-	adjust_description_text(card.description_label)
-			
-	var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
-	var texture = load(image_path)
-	var sprite = card.card_sprite
-	if sprite:
-		sprite.texture = texture
-	else:
-		print("Sprite node not found")
-	card.description.visible = false
-		
-	if card.card_type != "Troop":
-		image_path = "res://Assets/images/ActionTypes/" + card.card_type + "_type.png"
-		texture = load(image_path)
-		sprite = card.action_sprite
-		if sprite:
-			sprite.texture = texture
-		else:
-			print("Sprite node not found")
-			
-	card.update_traits()
+#func adjust_card_details(card):
+	#var card_name = card.card_name
+	#card.get_node("Textures/NamnLabel").text = card_name
+	#adjust_text_size(card)
+	#card.name_label.text = card_name
+		#
+	#if CardDatabase.CARDS[card_name][3]:
+		#card.description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
+		#Global.color_text(card.description_label)
+	#else:
+		#card.description_label.text = "[center]Does nothing[/center]"
+	#adjust_description_text(card.description_label)
+			#
+	#var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
+	#var texture = load(image_path)
+	#var sprite = card.card_sprite
+	#if sprite:
+		#sprite.texture = texture
+	#else:
+		#print("Sprite node not found")
+	#card.description.visible = false
+		#
+	#if card.card_type != "Troop":
+		#image_path = "res://Assets/images/ActionTypes/" + card.card_type + "_type.png"
+		#texture = load(image_path)
+		#sprite = card.action_sprite
+		#if sprite:
+			#sprite.texture = texture
+		#else:
+			#print("Sprite node not found")
+			#
+	#card.update_traits()
 	
 func make_new_tiles():
 	var tiles = get_random_tile()
@@ -282,7 +282,7 @@ func animate_card_reroll(cards):
 		tween.tween_property(card, "position", Vector2(card.position.x + width, card.position.y), 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 		card.attack_label.text = str(card.attack)
 		card.actions_label.text = str(card.actions)
-		adjust_text_size(card)
+		card.adjust_text_size()
 		if card.card_type != "Spell":
 			card.get_node("Textures/ScaleNode/StatDisplay").visible = true
 			
@@ -367,12 +367,12 @@ func remove_tile_price_text():
 	buy_button_1.button.visible = false
 	buy_button_2.button.visible = false
 		
-func adjust_text_size(card):
-	var label = card.get_node("Textures/NamnLabel")
-	var font_size = 20
-	while label.get_line_count() > 1:
-		font_size -= 1
-		label.set("theme_override_font_sizes/font_size", font_size)
+#func adjust_text_size(card):
+	#var label = card.get_node("Textures/NamnLabel")
+	#var font_size = 20
+	#while label.get_line_count() > 1:
+		#font_size -= 1
+		#label.set("theme_override_font_sizes/font_size", font_size)
 		
 func _change_scene(scene_path : String):
 	get_tree().change_scene_to_file(scene_path)

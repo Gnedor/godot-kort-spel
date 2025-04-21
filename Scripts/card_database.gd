@@ -39,7 +39,7 @@ const EXAMPLE_DECK = [
 	{"name": "Eldritch", "amount": 5},
 	{"name": "Chip", "amount" : 5},
 	{"name": "Glaggle", "amount": 3},
-	{"name": "BIG ASS SHOE", "amount": 5},
+	{"name": "BIG ASS SHOE", "amount": 20},
 	{"name": "Banan", "amount": 5},
 	{"name": "Paradox", "amount": 5},
 	{"name": "Gambler", "amount": 5},

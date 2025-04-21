@@ -15,7 +15,7 @@
 script = ExtResource("1_ajpby")
 
 [node name="UI" type="Node2D" parent="."]
-position = Vector2(960, 588)
+position = Vector2(960, 504)
 scale = Vector2(1.5, 1.5)
 
 [node name="NinePatchRect3" type="NinePatchRect" parent="UI"]
@@ -226,6 +226,23 @@ offset_bottom = 32.0
 theme_override_fonts/font = ExtResource("1_ef32e")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UI/Row3/ColorRect6"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -53.5
+offset_top = -21.3333
+offset_right = 53.5
+offset_bottom = 1.66666
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.319255, 0.319255, 0.319255, 1)
+theme_override_fonts/font = ExtResource("1_ef32e")
+theme_override_font_sizes/font_size = 16
+text = "Max 50$"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ColorRect3" type="ColorRect" parent="UI/Row3"]
 z_index = 2

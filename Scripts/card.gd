@@ -76,3 +76,56 @@ func update_traits():
 		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = load(image_path)
 	else:
 		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = null
+		
+func adjust_card_details():
+	card_type = CardDatabase.CARDS[card_name][2]
+	namn_label.text = card_name
+	adjust_text_size()
+	name_label.text = card_name
+		
+	if CardDatabase.CARDS[card_name][3]:
+		description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
+		Global.color_text(description_label)
+	else:
+		description_label.text = "[center]Does nothing[/center]"
+	adjust_description_text()
+	
+	#if card_type != "Troop":
+		#var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
+		#ability_script = load(new_card_ability_script_path).new()
+		#add_child(ability_script)
+			
+	var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
+	var texture = load(image_path)
+	var sprite = card_sprite
+	if sprite:
+		sprite.texture = texture
+	else:
+		print("Sprite node not found")
+		
+	sprite = action_sprite
+	if card_type != "Troop":
+		image_path = "res://Assets/images/ActionTypes/" + card_type + "_type.png"
+		texture = load(image_path)
+
+		if sprite:
+			sprite.texture = texture
+		else:
+			print("Sprite node not found")
+	else:
+		sprite.texture = null
+		
+	update_traits()
+	
+func adjust_text_size():
+	var font_size = 20
+	while namn_label.get_line_count() > 1:
+		font_size -= 1
+		namn_label.set("theme_override_font_sizes/font_size", font_size)
+		
+func adjust_description_text():
+	description_label.custom_minimum_size = Vector2(260, 0)
+	description_label.set_autowrap_mode(2)
+	if description_label.get_line_count() <= 1:
+		description_label.custom_minimum_size = Vector2(0, 0)
+		description_label.set_autowrap_mode(0)
