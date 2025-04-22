@@ -49,3 +49,8 @@ const EXAMPLE_DECK = [
 	{"name": "Juice Up", "amount": 3},
 	{"name": "Dumpster fire", "amount": 3},
 ]
+
+const DECK_1 = [
+	{"name" : "Guy", "amount": 10},
+	{"name" : "Angry Guy", "amount": 5},
+]

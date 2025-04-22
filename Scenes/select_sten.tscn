@@ -32,6 +32,7 @@ animations = [{
 }]
 
 [node name="Select Sten" type="Node2D"]
+position = Vector2(0, -1080)
 
 [node name="NinePatchRect3" type="NinePatchRect" parent="."]
 self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
@@ -53,6 +54,7 @@ patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 24
+metadata/_edit_use_anchors_ = true
 
 [node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect3"]
 layout_mode = 1
@@ -72,6 +74,7 @@ patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 24
+metadata/_edit_use_anchors_ = true
 
 [node name="RoundLabel" type="Label" parent="NinePatchRect3/NinePatchRect"]
 self_modulate = Color(0, 0, 0, 1)
@@ -89,6 +92,7 @@ theme_override_font_sizes/font_size = 36
 text = "Sten"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Button_left" type="Button" parent="NinePatchRect3"]
 layout_mode = 1
@@ -104,6 +108,7 @@ offset_bottom = 0.0800018
 focus_mode = 0
 theme = ExtResource("3_g5ms4")
 keep_pressed_outside = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Arrow_left" type="Sprite2D" parent="NinePatchRect3/Button_left"]
 position = Vector2(40, 28)
@@ -126,6 +131,7 @@ grow_horizontal = 0
 focus_mode = 0
 theme = ExtResource("3_g5ms4")
 keep_pressed_outside = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Arrow_left" type="Sprite2D" parent="NinePatchRect3/Button_left2"]
 position = Vector2(48, 28)
@@ -154,6 +160,7 @@ patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 24
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="NinePatchRect3/NinePatchRect3"]
 self_modulate = Color(0.435192, 0.435192, 0.435192, 1)
@@ -171,6 +178,7 @@ theme_override_constants/line_spacing = 20
 theme_override_fonts/font = ExtResource("6_ubkps")
 theme_override_font_sizes/font_size = 24
 text = "*No effect"
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="NinePatchRect3"]
 layout_mode = 1
@@ -184,6 +192,7 @@ offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_g5ms4")
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="NinePatchRect3/Button"]
 layout_mode = 1
@@ -199,6 +208,7 @@ theme_override_font_sizes/font_size = 32
 text = "Back"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Button2" type="Button" parent="NinePatchRect3"]
 layout_mode = 1
@@ -214,6 +224,7 @@ offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("3_g5ms4")
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="NinePatchRect3/Button2"]
 layout_mode = 1
@@ -229,6 +240,7 @@ theme_override_font_sizes/font_size = 32
 text = "Play"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="sten" parent="." instance=ExtResource("2_j783q")]
 position = Vector2(960, -24)

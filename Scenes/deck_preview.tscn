@@ -1,25 +1,28 @@
-[gd_scene load_steps=5 format=3 uid="uid://cm2edaqrn16jv"]
+[gd_scene load_steps=6 format=3 uid="uid://cm2edaqrn16jv"]
 
 [ext_resource type="Script" path="res://Scripts/deck_preview.gd" id="1_t7cpd"]
 [ext_resource type="Texture2D" uid="uid://c84svmmy7laer" path="res://Assets/images/card backside.png" id="2_omjww"]
 [ext_resource type="Texture2D" uid="uid://cq1q0wekec80w" path="res://Assets/images/textruta2.png" id="3_wrvix"]
+[ext_resource type="Texture2D" uid="uid://gxd7q4jblyi8" path="res://Assets/images/spell card backside.png" id="5_aa6sc"]
 [ext_resource type="PackedScene" uid="uid://dcu0mt4e8ntit" path="res://Scenes/card.tscn" id="5_h88am"]
 
 [node name="DeckPreview" type="Node2D"]
-position = Vector2(712, 424)
 script = ExtResource("1_t7cpd")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Deck1" type="Node2D" parent="."]
+position = Vector2(200, 288)
+
+[node name="Sprite2D" type="Sprite2D" parent="Deck1"]
 scale = Vector2(3, 3)
 texture = ExtResource("2_omjww")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="Deck1"]
 offset_left = 88.0
 offset_top = -96.0
-offset_right = 440.0
+offset_right = 376.0
 offset_bottom = -40.0
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
+[node name="NinePatchRect" type="NinePatchRect" parent="Deck1/MarginContainer"]
 layout_mode = 2
 texture = ExtResource("3_wrvix")
 region_rect = Rect2(0, 0, 64, 64)
@@ -28,17 +31,66 @@ patch_margin_top = 40
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Deck1/MarginContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 37
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Deck1/MarginContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Deck2" type="Node2D" parent="."]
+position = Vector2(712, 288)
+
+[node name="Sprite2D" type="Sprite2D" parent="Deck2"]
+scale = Vector2(3, 3)
+texture = ExtResource("5_aa6sc")
+
+[node name="MarginContainer" type="MarginContainer" parent="Deck2"]
+offset_left = 88.0
+offset_top = -96.0
+offset_right = 376.0
+offset_bottom = -40.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Deck2/MarginContainer"]
+layout_mode = 2
+texture = ExtResource("3_wrvix")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 40
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="MarginContainer" type="MarginContainer" parent="Deck2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 37
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Deck2/MarginContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 4
 
 [node name="Card" parent="." instance=ExtResource("5_h88am")]
-visible = false
-position = Vector2(264, -208)
+position = Vector2(1664, 288)
+
+[node name="Bg" type="ColorRect" parent="."]
+z_index = -10
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 1152.0
+offset_bottom = 1080.0
+mouse_filter = 2
+color = Color(0.18359, 0.18359, 0.18359, 1)
+
+[node name="ColorRect" type="ColorRect" parent="Bg"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 1072.0
+offset_bottom = 952.0
+mouse_filter = 2
+color = Color(0.0646965, 0.0646965, 0.0646965, 1)

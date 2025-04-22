@@ -119,6 +119,7 @@ func adjust_card_details():
 	
 func adjust_text_size():
 	var font_size = 20
+	namn_label.set("theme_override_font_sizes/font_size", font_size)
 	while namn_label.get_line_count() > 1:
 		font_size -= 1
 		namn_label.set("theme_override_font_sizes/font_size", font_size)
