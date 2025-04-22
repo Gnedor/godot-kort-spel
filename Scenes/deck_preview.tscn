@@ -1,61 +1,74 @@
-[gd_scene load_steps=6 format=3 uid="uid://cm2edaqrn16jv"]
+[gd_scene load_steps=12 format=3 uid="uid://cm2edaqrn16jv"]
 
 [ext_resource type="Script" path="res://Scripts/deck_preview.gd" id="1_t7cpd"]
 [ext_resource type="Texture2D" uid="uid://c84svmmy7laer" path="res://Assets/images/card backside.png" id="2_omjww"]
 [ext_resource type="Texture2D" uid="uid://cq1q0wekec80w" path="res://Assets/images/textruta2.png" id="3_wrvix"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_vyof6"]
 [ext_resource type="Texture2D" uid="uid://gxd7q4jblyi8" path="res://Assets/images/spell card backside.png" id="5_aa6sc"]
 [ext_resource type="PackedScene" uid="uid://dcu0mt4e8ntit" path="res://Scenes/card.tscn" id="5_h88am"]
+[ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="7_hae6k"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="8_s7kr7"]
+[ext_resource type="Texture2D" uid="uid://bixpneadw16wk" path="res://Assets/images/open button.png" id="9_nnbya"]
+[ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="10_2lbgs"]
+[ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="11_wquo3"]
 
 [node name="DeckPreview" type="Node2D"]
 script = ExtResource("1_t7cpd")
 
-[node name="Deck1" type="Node2D" parent="."]
-position = Vector2(200, 288)
+[node name="Deck" type="Node2D" parent="."]
+position = Vector2(416, 320)
 
-[node name="Sprite2D" type="Sprite2D" parent="Deck1"]
-scale = Vector2(3, 3)
+[node name="Sprite2D" type="Sprite2D" parent="Deck"]
+position = Vector2(216, 256)
+scale = Vector2(5, 5)
 texture = ExtResource("2_omjww")
 
-[node name="MarginContainer" type="MarginContainer" parent="Deck1"]
-offset_left = 88.0
-offset_top = -96.0
-offset_right = 376.0
-offset_bottom = -40.0
+[node name="ColorRect" type="ColorRect" parent="Deck/Sprite2D"]
+self_modulate = Color(0, 0, 0, 0.447059)
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -30.0
+offset_right = -22.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Deck1/MarginContainer"]
-layout_mode = 2
-texture = ExtResource("3_wrvix")
-region_rect = Rect2(0, 0, 64, 64)
-patch_margin_left = 16
-patch_margin_top = 40
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="MarginContainer" type="MarginContainer" parent="Deck1/MarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 37
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Deck1/MarginContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 4
-
-[node name="Deck2" type="Node2D" parent="."]
-position = Vector2(712, 288)
-
-[node name="Sprite2D" type="Sprite2D" parent="Deck2"]
-scale = Vector2(3, 3)
+[node name="Sprite2D2" type="Sprite2D" parent="Deck"]
+position = Vector2(872, 256)
+scale = Vector2(5, 5)
 texture = ExtResource("5_aa6sc")
 
-[node name="MarginContainer" type="MarginContainer" parent="Deck2"]
-offset_left = 88.0
-offset_top = -96.0
-offset_right = 376.0
-offset_bottom = -40.0
+[node name="ColorRect" type="ColorRect" parent="Deck/Sprite2D2"]
+self_modulate = Color(0, 0, 0, 0.447059)
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -22.0
+offset_top = -30.0
+offset_right = -22.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="Deck2/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Deck"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 400.0
+offset_top = 48.0
+offset_right = 688.0
+offset_bottom = 168.0
+grow_horizontal = 2
+theme_override_constants/separation = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="Deck/VBoxContainer"]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Deck/VBoxContainer/MarginContainer"]
 layout_mode = 2
 texture = ExtResource("3_wrvix")
 region_rect = Rect2(0, 0, 64, 64)
@@ -64,33 +77,181 @@ patch_margin_top = 40
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="MarginContainer" type="MarginContainer" parent="Deck2/MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Deck/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 37
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 15
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Deck2/MarginContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Deck/VBoxContainer/MarginContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 4
 
+[node name="Label" type="Label" parent="Deck/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+theme_override_fonts/font = ExtResource("4_vyof6")
+text = "Guys"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Deck/VBoxContainer"]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Deck/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+texture = ExtResource("3_wrvix")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 40
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="MarginContainer" type="MarginContainer" parent="Deck/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 37
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Deck/VBoxContainer/MarginContainer2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Label" type="Label" parent="Deck/VBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+size_flags_vertical = 0
+size_flags_stretch_ratio = 0.0
+theme_override_fonts/font = ExtResource("4_vyof6")
+text = "Spells"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Card" parent="." instance=ExtResource("5_h88am")]
-position = Vector2(1664, 288)
+visible = false
+position = Vector2(960, 192)
 
 [node name="Bg" type="ColorRect" parent="."]
 z_index = -10
-offset_left = 64.0
-offset_top = 128.0
-offset_right = 1152.0
-offset_bottom = 1080.0
+offset_left = 416.0
+offset_top = 320.0
+offset_right = 1504.0
+offset_bottom = 864.0
 mouse_filter = 2
 color = Color(0.18359, 0.18359, 0.18359, 1)
 
 [node name="ColorRect" type="ColorRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 16.0
 offset_top = 16.0
-offset_right = 1072.0
-offset_bottom = 952.0
+offset_right = -16.0
+offset_bottom = -16.0
 mouse_filter = 2
-color = Color(0.0646965, 0.0646965, 0.0646965, 1)
+color = Color(0.12103, 0.12103, 0.12103, 1)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Bg/ColorRect"]
+self_modulate = Color(0.0646965, 0.0646965, 0.0646964, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 376.0
+offset_top = 15.0
+offset_right = -376.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_hae6k")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Button_left" type="Button" parent="Bg"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = 152.0
+offset_right = 8.0
+offset_bottom = -186.0
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("8_s7kr7")
+keep_pressed_outside = true
+
+[node name="Arrow_left" type="Sprite2D" parent="Bg/Button_left"]
+position = Vector2(40, 96)
+rotation = 1.5708
+scale = Vector2(4, 4)
+texture = ExtResource("9_nnbya")
+
+[node name="Button_left2" type="Button" parent="Bg"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = 136.0
+offset_right = 80.0
+offset_bottom = -202.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("8_s7kr7")
+keep_pressed_outside = true
+
+[node name="Arrow_left" type="Sprite2D" parent="Bg/Button_left2"]
+position = Vector2(48, 96)
+rotation = 4.71239
+scale = Vector2(4, 4)
+texture = ExtResource("9_nnbya")
+
+[node name="Label" type="Label" parent="Bg"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -256.0
+offset_bottom = -120.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("10_2lbgs")
+theme_override_font_sizes/font_size = 64
+text = "Select Deck"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Bg"]
+self_modulate = Color(0.336608, 0.336607, 0.336608, 1)
+layout_mode = 0
+offset_left = 376.0
+offset_top = -40.0
+offset_right = 712.0
+offset_bottom = 24.0
+texture = ExtResource("11_wquo3")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Label" type="Label" parent="Bg/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.875
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_vyof6")
+theme_override_font_sizes/font_size = 24
+text = "Example Deck"
+horizontal_alignment = 1
+vertical_alignment = 1

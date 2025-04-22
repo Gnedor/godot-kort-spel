@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqb1i4fl45ksu"
-path="res://.godot/imported/Magic man_card.png-54ed8c674929acf906d5a4e57ca26187.ctex"
+uid="uid://dpsqcfb1p8hdp"
+path="res://.godot/imported/Poison dagger_card.png-94ca98831739205ba0a2b5050003b366.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/kort/Magic man_card.png"
-dest_files=["res://.godot/imported/Magic man_card.png-54ed8c674929acf906d5a4e57ca26187.ctex"]
+source_file="res://Assets/images/kort/Poison dagger_card.png"
+dest_files=["res://.godot/imported/Poison dagger_card.png-94ca98831739205ba0a2b5050003b366.ctex"]
 
 [params]
 

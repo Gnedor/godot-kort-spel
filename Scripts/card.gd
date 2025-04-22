@@ -90,10 +90,10 @@ func adjust_card_details():
 		description_label.text = "[center]Does nothing[/center]"
 	adjust_description_text()
 	
-	#if card_type != "Troop":
-		#var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
-		#ability_script = load(new_card_ability_script_path).new()
-		#add_child(ability_script)
+	if card_type != "Troop":
+		var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
+		ability_script = load(new_card_ability_script_path).new()
+		add_child(ability_script)
 			
 	var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
 	var texture = load(image_path)

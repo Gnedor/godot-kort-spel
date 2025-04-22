@@ -3,7 +3,7 @@ extends Node
 const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, ability script, starting trait]
 	"Guy" : [3, 2, "Troop", "Just a silly guy", null, null],
 	"Angry guy" : [5, 1, "Troop", "Just a silly guy, but angry", null, null],
-	"Magic man" : [2, 2, "OnPlayTroop", "On play, deal 3 Damage", "res://Scripts/kortAbilities/MagicMan.gd", null],
+	"Magic guy" : [2, 2, "OnPlayTroop", "On play, deal 3 Damage", "res://Scripts/kortAbilities/MagicGuy.gd", null],
 	"Knowledge" : [0, 1, "Spell", "Draw 2 cards from either deck", "res://Scripts/kortAbilities/Knowledge.gd", null],
 	"Shaman" : [1, 2, "ActiveTroop", "Give a unit +2 Damage for 1 turn", "res://Scripts/kortAbilities/Shaman.gd", null],
 	"Evil man" : [2, 2, "OnPlayTroop", "On play, halves Damage on all other played cards and give all removed Damage to self", "res://Scripts/kortAbilities/EvilMan.gd", null],
@@ -21,6 +21,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "Poison"],
 	"Juice Up" : [0, 1, "Spell", "Give a card x2 Damage for 1 turn, the card permanently looses 3 Damage after the effect", "res://Scripts/kortAbilities/JuiceUp.gd", null],
 	"Dumpster fire" : [3, 2, "OnAttackTroop", "This card deals 1.5x Damage for every two cards discarded this round", "res://Scripts/kortAbilities/DumpsterFire.gd", null],
+	"Poison dagger" : [0, 1, "Spell", "Double current poision. If no poision have been applied add 10 poison", "res://Scripts/kortAbilities/PoisonDagger.gd", null]
 	
 	#behöver sprites
 	#"Trash Man" : [3, 2, "OnTrashCard", "When trashed, permanently gain 3 Damage", null, null],
@@ -30,7 +31,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 const EXAMPLE_DECK = [
 	{"name": "Guy", "amount": 10},
 	{"name": "Angry guy", "amount": 7},
-	{"name": "Magic man", "amount": 5},
+	{"name": "Magic guy", "amount": 5},
 	{"name": "Knowledge", "amount": 5},
 	{"name": "Shaman", "amount": 5},
 	{"name": "Evil man", "amount": 5},
@@ -48,9 +49,16 @@ const EXAMPLE_DECK = [
 	{"name": "Goop", "amount": 5},
 	{"name": "Juice Up", "amount": 3},
 	{"name": "Dumpster fire", "amount": 3},
+	{"name": "Poison dagger", "amount": 3},
 ]
 
 const DECK_1 = [
 	{"name" : "Guy", "amount": 10},
-	{"name" : "Angry Guy", "amount": 5},
+	{"name" : "Angry guy", "amount": 5},
+	{"name" : "Magic guy", "amount" : 3},
+	{"name" : "Groovy guy", "amount" : 5},
+	
+	{"name" : "Knowledge", "amount" : 5},
+	{"name" : "Number game", "amount" : 3},
+	
 ]

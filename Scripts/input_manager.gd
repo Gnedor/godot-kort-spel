@@ -163,7 +163,7 @@ func _unhandled_input(event):
 					untrigger_ability.emit()
 					
 		if event.pressed and event.keycode == KEY_2:
-			Global.total_damage += 1000
+			Global.total_damage *= 10
 			battle_manager.fix_damage_text()
 
 func check_for_highest_z_index(cards):

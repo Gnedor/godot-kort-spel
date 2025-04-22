@@ -86,6 +86,8 @@ func add_new_card_to_deck(card_name : String, times : int):
 		new_card_instance.trait_1 = CardDatabase.CARDS[card_name][5]
 		
 		new_card_instance.adjust_card_details()
+		new_card_instance.adjust_description_text()
+		new_card_instance.adjust_text_size()
 			
 		if card_type != "Spell":
 			cards_in_troop_deck.append(new_card_instance)
