@@ -17,7 +17,7 @@ var scene_index : int = 0
 
 var played_cards = []
 
-var selected_deck = "EXAMPLE_DECK"
+var selected_deck = "Example_deck"
 
 func store_card(card):
 	stored_cards.append(card)

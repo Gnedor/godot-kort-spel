@@ -131,7 +131,7 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 		
 func add_cards_on_start():
 	if Global.round == 1:
-		selected_deck = CardDatabase.EXAMPLE_DECK
+		selected_deck = CardDatabase[Global.selected_deck]
 			
 		for card in selected_deck:
 			add_new_card_to_deck(card["name"], card["amount"])

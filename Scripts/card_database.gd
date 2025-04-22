@@ -19,16 +19,16 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Groovy guy" : [1, 2, "Troop", "Guy feeling the groove" , null, "Fracture"],
 	"Overkiller" : [5, 1, "OnAttackTroop", "If this card deals more than the total Damage done this round, gain +1 Actions this round", "res://Scripts/kortAbilities/Overkiller.gd", null],
 	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "Poison"],
-	"Juice Up" : [0, 1, "Spell", "Give a card x2 Damage for 1 turn, the card permanently looses 3 Damage after the effect", "res://Scripts/kortAbilities/JuiceUp.gd", null],
+	"Juice Up" : [0, 1, "Spell", "Give a card 2x Damage for 1 turn, the card permanently looses 3 Damage after the effect", "res://Scripts/kortAbilities/JuiceUp.gd", null],
 	"Dumpster fire" : [3, 2, "OnAttackTroop", "This card deals 1.5x Damage for every two cards discarded this round", "res://Scripts/kortAbilities/DumpsterFire.gd", null],
-	"Poison dagger" : [0, 1, "Spell", "Double current poision. If no poision have been applied add 10 poison", "res://Scripts/kortAbilities/PoisonDagger.gd", null]
+	"Poison dagger" : [0, 1, "Spell", "Double current Poison. If no Poison have been applied, deal 10 Poison", "res://Scripts/kortAbilities/PoisonDagger.gd", null]
 	
 	#behöver sprites
 	#"Trash Man" : [3, 2, "OnTrashCard", "When trashed, permanently gain 3 Damage", null, null],
 
 }
 
-const EXAMPLE_DECK = [
+const Example_deck = [
 	{"name": "Guy", "amount": 10},
 	{"name": "Angry guy", "amount": 7},
 	{"name": "Magic guy", "amount": 5},
@@ -52,7 +52,7 @@ const EXAMPLE_DECK = [
 	{"name": "Poison dagger", "amount": 3},
 ]
 
-const DECK_1 = [
+const Starter_deck = [
 	{"name" : "Guy", "amount": 10},
 	{"name" : "Angry guy", "amount": 5},
 	{"name" : "Magic guy", "amount" : 3},

@@ -319,6 +319,8 @@ func _on_back_button_pressed() -> void:
 	battle_manager.brighten_screen()
 	card_collection.page = 0
 	viewing_collection = false
+	for card in card_collection.cards_in_collection:
+		card.global_position = deck.global_position
 	
 func trigger_card_ability(card):
 	card.ability_script.trigger_ability(card, battle_manager, deck, self)
