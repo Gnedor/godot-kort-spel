@@ -29,10 +29,10 @@ z_index = -1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -22.0
-offset_top = -30.0
-offset_right = -22.0
-offset_bottom = -30.0
+offset_left = -22.4
+offset_top = -30.4
+offset_right = -22.4
+offset_bottom = -30.4
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -47,10 +47,10 @@ z_index = -1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -22.0
-offset_top = -30.0
-offset_right = -22.0
-offset_bottom = -30.0
+offset_left = -22.4
+offset_top = -30.4
+offset_right = -22.4
+offset_bottom = -30.4
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -186,6 +186,7 @@ offset_bottom = -186.0
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("8_s7kr7")
+disabled = true
 keep_pressed_outside = true
 
 [node name="Arrow_left" type="Sprite2D" parent="Bg/Button_left"]
@@ -194,7 +195,7 @@ rotation = 1.5708
 scale = Vector2(4, 4)
 texture = ExtResource("9_nnbya")
 
-[node name="Button_left2" type="Button" parent="Bg"]
+[node name="Button_right" type="Button" parent="Bg"]
 z_index = -1
 layout_mode = 1
 anchors_preset = 11
@@ -211,7 +212,7 @@ focus_mode = 0
 theme = ExtResource("8_s7kr7")
 keep_pressed_outside = true
 
-[node name="Arrow_left" type="Sprite2D" parent="Bg/Button_left2"]
+[node name="Arrow_left" type="Sprite2D" parent="Bg/Button_right"]
 position = Vector2(48, 96)
 rotation = 4.71239
 scale = Vector2(4, 4)
@@ -224,6 +225,10 @@ anchor_right = 1.0
 offset_top = -256.0
 offset_bottom = -120.0
 grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.870588)
+theme_override_constants/shadow_offset_x = 10
+theme_override_constants/shadow_offset_y = 10
+theme_override_constants/shadow_outline_size = 1
 theme_override_fonts/font = ExtResource("10_2lbgs")
 theme_override_font_sizes/font_size = 64
 text = "Select Deck"
@@ -255,3 +260,65 @@ theme_override_font_sizes/font_size = 24
 text = "Example Deck"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="Bg"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 160.0
+offset_top = 16.0
+offset_right = -672.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_s7kr7")
+
+[node name="Label" type="Label" parent="Bg/BackButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.923
+offset_bottom = 0.00799561
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_vyof6")
+theme_override_font_sizes/font_size = 32
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SelectButton" type="Button" parent="Bg"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 672.0
+offset_top = 16.0
+offset_right = -160.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("8_s7kr7")
+
+[node name="Label" type="Label" parent="Bg/SelectButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.923
+offset_bottom = 0.00799561
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_vyof6")
+theme_override_font_sizes/font_size = 32
+text = "Select"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Bg/Button_left" to="." method="_on_button_left_pressed"]
+[connection signal="pressed" from="Bg/Button_right" to="." method="_on_button_right_pressed"]
+[connection signal="pressed" from="Bg/SelectButton" to="." method="_on_select_button_pressed"]

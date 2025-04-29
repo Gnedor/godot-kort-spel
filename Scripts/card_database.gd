@@ -21,12 +21,15 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "Poison"],
 	"Juice Up" : [0, 1, "Spell", "Give a card 2x Damage for 1 turn, the card permanently looses 3 Damage after the effect", "res://Scripts/kortAbilities/JuiceUp.gd", null],
 	"Dumpster fire" : [3, 2, "OnAttackTroop", "This card deals 1.5x Damage for every two cards discarded this round", "res://Scripts/kortAbilities/DumpsterFire.gd", null],
-	"Poison dagger" : [0, 1, "Spell", "Double current Poison. If no Poison have been applied, deal 10 Poison", "res://Scripts/kortAbilities/PoisonDagger.gd", null]
+	"Poison dagger" : [0, 1, "Spell", "Double current Poison. If no Poison have been applied, deal 10 Poison", "res://Scripts/kortAbilities/PoisonDagger.gd", null],
+	"The elements" : [0, 1, "Spell", "Draw one guy for every currently applied status effect", "res://Scripts/kortAbilities/TheElements.gd", null],
 	
 	#behöver sprites
 	#"Trash Man" : [3, 2, "OnTrashCard", "When trashed, permanently gain 3 Damage", null, null],
 
 }
+
+const DECKS = ["Example_deck", "Starter_deck", "Gooby_woobies"]
 
 const Example_deck = [
 	{"name": "Guy", "amount": 10},
@@ -50,15 +53,23 @@ const Example_deck = [
 	{"name": "Juice Up", "amount": 3},
 	{"name": "Dumpster fire", "amount": 3},
 	{"name": "Poison dagger", "amount": 3},
+	{"name": "The elements", "amount": 3}
 ]
 
 const Starter_deck = [
-	{"name" : "Guy", "amount": 10},
-	{"name" : "Angry guy", "amount": 5},
-	{"name" : "Magic guy", "amount" : 3},
-	{"name" : "Groovy guy", "amount" : 5},
+	{"name": "Guy", "amount": 10},
+	{"name": "Angry guy", "amount": 5},
+	{"name": "Magic guy", "amount" : 3},
+	{"name": "Groovy guy", "amount" : 5},
 	
-	{"name" : "Knowledge", "amount" : 5},
-	{"name" : "Number game", "amount" : 3},
+	{"name": "Knowledge", "amount" : 5},
+	{"name": "Number game", "amount" : 3},
 	
+]
+
+const Gooby_woobies = [
+	{"name": "Guy", "amount": 5},
+	{"name": "Goop", "amount": 5},
+	
+	{"name": "Poison dagger", "amount": 3},
 ]

@@ -1,10 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://c6rcddcewp3s6"]
+[gd_scene load_steps=10 format=3 uid="uid://c6rcddcewp3s6"]
 
 [ext_resource type="PackedScene" uid="uid://col4ncuar707o" path="res://Scenes/battle_scene.tscn" id="1_a2doi"]
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="2_1l3wp"]
 [ext_resource type="PackedScene" uid="uid://c8tbmwqdapnsc" path="res://Scenes/shop_scene.tscn" id="2_mjwp7"]
 [ext_resource type="PackedScene" uid="uid://haftrks0la1y" path="res://Scenes/end_of_round_screen.tscn" id="3_cl8ig"]
 [ext_resource type="Script" path="res://Scripts/main_scene_manager.gd" id="4_7byqg"]
+[ext_resource type="PackedScene" uid="uid://cpf7fw0chw6s8" path="res://Scenes/select_sten.tscn" id="5_x5bfc"]
+[ext_resource type="Shader" path="res://shaders/scrolling_bg.gdshader" id="6_v2p2u"]
+[ext_resource type="Texture2D" uid="uid://cdyy1jtutuqg5" path="res://Assets/images/Meny/bg.png" id="7_b5h8l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5n803"]
+shader = ExtResource("6_v2p2u")
 
 [node name="Main" type="Node2D"]
 position = Vector2(0, 1.90735e-06)
@@ -19,6 +25,22 @@ position = Vector2(7680, 0)
 
 [node name="MainSceneManager" type="Node2D" parent="."]
 script = ExtResource("4_7byqg")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.154876, 0.154876, 0.154876, 1)
+z_index = -100
+texture_filter = 1
+material = SubResource("ShaderMaterial_5n803")
+offset_left = -1920.0
+offset_right = -1536.0
+offset_bottom = 216.0
+scale = Vector2(5, 5)
+mouse_filter = 2
+texture = ExtResource("7_b5h8l")
+stretch_mode = 1
+
+[node name="SelectSten" parent="." instance=ExtResource("5_x5bfc")]
+position = Vector2(-1920, -1.90735e-06)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

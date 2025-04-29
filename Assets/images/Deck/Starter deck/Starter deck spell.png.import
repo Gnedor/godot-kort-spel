@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsbm54nb3uxmf"
-path="res://.godot/imported/Poision deck spell.png-e57e3ea7978a9408206d99eeff140ad9.ctex"
+uid="uid://bca24273at7i7"
+path="res://.godot/imported/Starter deck spell.png-f3ec62773c043a30f65ea66d48c21228.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Deck/Poison deck/Poision deck spell.png"
-dest_files=["res://.godot/imported/Poision deck spell.png-e57e3ea7978a9408206d99eeff140ad9.ctex"]
+source_file="res://Assets/images/Deck/Starter deck/Starter deck spell.png"
+dest_files=["res://.godot/imported/Starter deck spell.png-f3ec62773c043a30f65ea66d48c21228.ctex"]
 
 [params]
 
