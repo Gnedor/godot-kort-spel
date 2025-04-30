@@ -72,4 +72,5 @@ const Gooby_woobies = [
 	{"name": "Goop", "amount": 5},
 	
 	{"name": "Poison dagger", "amount": 3},
+	{"name": "The elements", "amount": 3},
 ]

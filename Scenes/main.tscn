@@ -27,7 +27,7 @@ position = Vector2(7680, 0)
 script = ExtResource("4_7byqg")
 
 [node name="TextureRect" type="TextureRect" parent="."]
-self_modulate = Color(0.154876, 0.154876, 0.154876, 1)
+self_modulate = Color(0.775063, 0.775063, 0.775063, 1)
 z_index = -100
 texture_filter = 1
 material = SubResource("ShaderMaterial_5n803")

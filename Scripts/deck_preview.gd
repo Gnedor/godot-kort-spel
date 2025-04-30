@@ -39,6 +39,11 @@ func hide_card_info():
 		show_card_count = 0
 		
 func create_card_labels(deck_name):
+	for child in $Deck/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer.get_children():
+		child.free()
+	for child in $Deck/VBoxContainer/MarginContainer2/MarginContainer/VBoxContainer.get_children():
+		child.free()
+		
 	for card in CardDatabase[deck_name]:
 		if CardDatabase.CARDS[card["name"]][2] != "Spell":
 			var new_label = cardLabel.instantiate()
@@ -51,6 +56,8 @@ func create_card_labels(deck_name):
 			$Deck/VBoxContainer/MarginContainer2/MarginContainer/VBoxContainer.add_child(new_label)
 			new_label.name = card["name"]
 			new_label.get_node("Label").text = str(card["name"]) + " x" + str(card["amount"])
+			
+	connect_signals()
 		
 func adjust_card(name):
 	card.card_name = name
@@ -58,6 +65,8 @@ func adjust_card(name):
 	card.description.visible = true
 	card.adjust_text_size()
 	card.adjust_card_details()
+	card.trait_1 = CardDatabase.CARDS[name][5]
+	card.update_traits()
 	
 func move_deck_to_sides():
 	continue_clicked.emit()
@@ -87,6 +96,7 @@ func display_deck(deck_name : String):
 	$Deck/Sprite2D2.texture = load(image_path)
 	
 func switch_deck():
+	create_card_labels(CardDatabase.DECKS[deck_index])
 	display_deck(CardDatabase.DECKS[deck_index])
 		
 func _on_button_right_pressed() -> void:

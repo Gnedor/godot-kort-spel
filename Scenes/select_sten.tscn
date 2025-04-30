@@ -55,7 +55,7 @@ patch_margin_right = 16
 patch_margin_bottom = 24
 metadata/_edit_use_anchors_ = true
 
-[node name="RoundLabel" type="Label" parent="NinePatchRect3/NinePatchRect"]
+[node name="ShapeLabel" type="Label" parent="NinePatchRect3/NinePatchRect"]
 self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 14
@@ -86,6 +86,7 @@ offset_right = 0.0479965
 offset_bottom = 0.0800018
 focus_mode = 0
 theme = ExtResource("3_g5ms4")
+disabled = true
 keep_pressed_outside = true
 metadata/_edit_use_anchors_ = true
 
@@ -95,7 +96,7 @@ rotation = 1.5708
 scale = Vector2(3.5, 3.5)
 texture = ExtResource("4_41g0k")
 
-[node name="Button_left2" type="Button" parent="NinePatchRect3"]
+[node name="Button_right" type="Button" parent="NinePatchRect3"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.853
@@ -112,7 +113,7 @@ theme = ExtResource("3_g5ms4")
 keep_pressed_outside = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Arrow_left" type="Sprite2D" parent="NinePatchRect3/Button_left2"]
+[node name="Arrow_right" type="Sprite2D" parent="NinePatchRect3/Button_right"]
 position = Vector2(48, 28)
 rotation = -1.5708
 scale = Vector2(3.5, 3.5)
@@ -226,4 +227,7 @@ position = Vector2(960, -1104)
 
 [node name="DeckPreview" parent="." instance=ExtResource("8_ye3qe")]
 
+[connection signal="pressed" from="NinePatchRect3/Button_left" to="." method="_on_button_left_pressed"]
+[connection signal="pressed" from="NinePatchRect3/Button_right" to="." method="_on_button_right_pressed"]
 [connection signal="pressed" from="NinePatchRect3/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="NinePatchRect3/PlayButton" to="." method="_on_play_button_pressed"]
