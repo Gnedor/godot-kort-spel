@@ -181,6 +181,7 @@ func make_new_cards():
 		var random_price = randi() % (3 + reroll_count) + (4 + reroll_count)
 		new_card_instance.price = random_price
 		new_card_instance.trait_1 = CardDatabase.CARDS[card_name][5]
+		new_card_instance.get_node("Area2D/CollisionShape2D").disabled = false
 		
 		if new_card_instance.card_type != "Troop":
 			var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
@@ -326,10 +327,10 @@ func card_hover_effect():
 		var card_texture = card.get_node("Textures")
 		if card == hovered_card and card_texture.scale != Vector2(1.05, 1.05):
 			card_texture.scale = Vector2(1.05, 1.05)
-			card.description.visible = true
+			card.card_description.visible = true
 		elif card != hovered_card and card_texture.scale == Vector2(1.05, 1.05):
 			card_texture.scale = Vector2(1, 1)
-			card.description.visible = false
+			card.card_description.visible = false
 			
 func tile_hover_effect():
 	if tiles_in_shop:

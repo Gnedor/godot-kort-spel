@@ -13,6 +13,7 @@ config_version=5
 config/name="kort egen"
 run/main_scene="res://Scenes/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
+run/max_fps=144
 config/icon="res://Assets/images/kort/Guy_card.png"
 
 [autoload]

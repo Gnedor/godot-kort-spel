@@ -6,6 +6,7 @@
 	# Man kan ibland ta ett kort när man klickar på deck
 	# Inevitability tar sönder saker
 	# kort gör för mycket skada med multipliers
+	# kort får inte tillbaka actions på en ny runda
 	
 #Ideer:
 	# Olika former för olika dificulties  t.ex en kvadrat sitället för sten
@@ -15,6 +16,7 @@
 	# Fixa så att mult animationen roterar åt olika håll förklarar i battle_manager
 	# Om man har två av samma buff kombinerar dem till en bättre
 	# Tutorail texten kan vara vid handinfon
+	# när en status effect inte kommer applieas blir den mörkare t.ex poison efter ett slag
 
 #Tiles:
 	# Tile som duplicerar kort som spelas på den
@@ -25,3 +27,4 @@
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	# Gör som shop_input manager i vanliga input manager mycket bättre performance
 	# What the kropp, sa Malte medans han slimade över hela bordet
+	# Gör så att en ruta kommer up på kort som har status effects som förklarar dem

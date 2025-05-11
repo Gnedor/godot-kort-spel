@@ -95,13 +95,14 @@ func _input(event):
 								card_manager_screen.dragged_tag.visible = false
 								card_manager_screen.dragged_tag.get_node("Area2D/CollisionShape2D").disabled = true
 								Global.stored_tags.erase(String(card_manager_screen.dragged_tag.name))
+								card_manager_screen.dragged_tag = null
 								
 					if card_manager_screen.dragged_tag:
 						card_manager_screen.align_tag()
 						
 					if shop.selected_card:
 						shop.selected_card.tag_circle_collider.disabled = true
-						card_manager_screen.dragged_tag = null
+						#card_manager_screen.dragged_tag = null
 						card_manager_screen.hovered_tag = null
 						
 func raycast_check_mask(mask : int):

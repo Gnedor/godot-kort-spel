@@ -87,14 +87,14 @@ func align_card_hover(hovered_card):
 func hover_effect(card):
 	#var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1.05, 1.05)
-	card.description.visible = true
+	card.card_description.visible = true
 	if card.card_type != "Spell":
 		card.get_node("Textures/ScaleNode/StatDisplay").visible = true
 		
 func hover_off_effect(card):
 	#var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1, 1)
-	card.description.visible = false
+	card.card_description.visible = false
 	card.get_node("Textures/ScaleNode/StatDisplay").visible = false
 
 func create_page_indicators():

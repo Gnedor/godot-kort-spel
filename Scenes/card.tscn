@@ -1,17 +1,15 @@
-[gd_scene load_steps=61 format=3 uid="uid://dcu0mt4e8ntit"]
+[gd_scene load_steps=59 format=3 uid="uid://dcu0mt4e8ntit"]
 
 [ext_resource type="Script" path="res://Scripts/card.gd" id="1_kahvh"]
 [ext_resource type="Shader" path="res://shaders/card.gdshader" id="1_rdoxh"]
 [ext_resource type="Texture2D" uid="uid://c4tdcleth8vlp" path="res://Assets/images/kort/Guy_card.png" id="2_iwdq0"]
-[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_oa0xr"]
 [ext_resource type="Texture2D" uid="uid://co87noq1eieol" path="res://Assets/images/stat display.png" id="4_4oeem"]
 [ext_resource type="Texture2D" uid="uid://bjugnvow22ug1" path="res://Assets/images/tag circle.png" id="4_iftc1"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="5_htu7g"]
 [ext_resource type="Texture2D" uid="uid://cuqg53q4edh2r" path="res://Assets/images/select border.png" id="6_fi7ot"]
 [ext_resource type="Texture2D" uid="uid://tpb2pr6lpho2" path="res://Assets/images/ball.png" id="7_28c2y"]
 [ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="7_ynav2"]
-[ext_resource type="Texture2D" uid="uid://cq1q0wekec80w" path="res://Assets/images/textruta2.png" id="8_ubviv"]
-[ext_resource type="Texture2D" uid="uid://tcd4cfictdgj" path="res://Assets/images/ActionTypes/ActiveTroop_type.png" id="9_kg7od"]
+[ext_resource type="PackedScene" uid="uid://dmgxhbpwvwfrm" path="res://Scenes/description.tscn" id="9_sttlc"]
 [ext_resource type="PackedScene" uid="uid://854dmrdy2jd0" path="res://Scenes/buy_button.tscn" id="10_2hy3d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ve337"]
@@ -446,82 +444,26 @@ vertical_alignment = 1
 autowrap_mode = 1
 justification_flags = 0
 
-[node name="Description" type="MarginContainer" parent="Textures"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Textures"]
+offset_left = -384.0
+offset_top = -88.0
+offset_right = -84.0
+offset_bottom = -33.0
+mouse_filter = 2
+theme_override_constants/separation = 16
+
+[node name="Description" parent="Textures/VBoxContainer" instance=ExtResource("9_sttlc")]
 visible = false
-z_index = 100
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -100.0
-offset_top = -96.0
-offset_right = -76.0
-offset_bottom = -41.0
-grow_horizontal = 0
-size_flags_horizontal = 8
-size_flags_vertical = 0
-
-[node name="NinePatchRect" type="NinePatchRect" parent="Textures/Description"]
 layout_mode = 2
-texture = ExtResource("8_ubviv")
-patch_margin_left = 12
-patch_margin_top = 40
-patch_margin_right = 12
-patch_margin_bottom = 12
 
-[node name="TextureRect" type="TextureRect" parent="Textures/Description/NinePatchRect"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -49.0
-offset_top = -17.0
-offset_right = -33.0
-offset_bottom = -1.0
-grow_horizontal = 0
-scale = Vector2(3, 3)
-size_flags_horizontal = 8
-texture = ExtResource("9_kg7od")
-
-[node name="MarginContainer" type="MarginContainer" parent="Textures/Description"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="NameLabel" type="Label" parent="Textures/Description/MarginContainer"]
-z_index = 1
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("3_oa0xr")
-theme_override_font_sizes/font_size = 16
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="Textures/Description/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 0
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 10
-
-[node name="DescriptionLabel" type="RichTextLabel" parent="Textures/Description/MarginContainer/MarginContainer"]
-clip_contents = false
-custom_minimum_size = Vector2(260, 0)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_constants/table_v_separation = 0
-theme_override_constants/line_separation = 5
-theme_override_fonts/normal_font = ExtResource("5_htu7g")
-theme_override_font_sizes/normal_font_size = 16
-bbcode_enabled = true
-fit_content = true
-scroll_active = false
-autowrap_mode = 2
+[node name="VBoxContainer2" type="VBoxContainer" parent="Textures"]
+visible = false
+offset_left = 88.0
+offset_top = -88.0
+offset_right = 388.0
+offset_bottom = -33.0
+mouse_filter = 2
+theme_override_constants/separation = 16
 
 [node name="Area2D" type="Area2D" parent="."]
 z_index = -1
@@ -530,6 +472,7 @@ collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_h6pkr")
+disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(10, 10)

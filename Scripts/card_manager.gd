@@ -175,16 +175,13 @@ func hover_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1.05, 1.05)
 	animate_card_snap(card_textures, Vector2(0, -75), 700, 1)
-	card.description.visible = true
-	if card.card_type != "Spell":
-		card.stat_display.visible = true
+	card.hover_effect()
 		
 func hover_off_effect(card):
 	var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1, 1)
 	animate_card_snap(card_textures, Vector2(0, 0), 10000, 1)
-	card.description.visible = false
-	card.stat_display.visible = false
+	card.hover_off_effect()
 	
 func select_effect(card):
 	card.scale = Vector2(1.1, 1.1)
@@ -211,10 +208,10 @@ func align_card_hover(hovered_card):
 			hover_off_effect(card)
 			card.is_hovering = false
 	for card in played_cards:
-		if card == hovered_card and !card.description.visible and card.card_type:
-			card.description.visible = true
-		elif card != hovered_card and card.description.visible:
-			card.description.visible = false
+		if card == hovered_card and !card.card_description.visible and card.card_type:
+			card.card_description.visible = true
+		elif card != hovered_card and card.card_description.visible:
+			card.card_description.visible = false
 			
 func animate_card_snap(card, position, speed, num):
 	if card.global_position != position:

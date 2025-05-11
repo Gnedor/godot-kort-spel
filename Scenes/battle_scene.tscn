@@ -234,6 +234,7 @@ vertical_alignment = 1
 position = Vector2(1784, 928)
 
 [node name="SpellDeckCounter" type="Label" parent="SpellDeck"]
+visible = false
 offset_left = -24.0
 offset_top = 32.0
 offset_right = 24.0
@@ -249,6 +250,7 @@ position = Vector2(136, 928)
 script = ExtResource("6_i7knv")
 
 [node name="TroopDeckCounter" type="Label" parent="TroopDeck"]
+visible = false
 offset_left = -24.0
 offset_top = 32.0
 offset_right = 24.0

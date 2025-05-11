@@ -3,11 +3,14 @@ extends Node2D
 @onready var battle_scene_manager = $"../BattleScene".get_node("SceneManager")
 @onready var shop_scene_manager = $"../ShopScene".get_node("ShopSceneManager")
 @onready var round_end_scene_manager = $"../EndOfRoundScreen"
+@onready var select_sten: Node2D = $"../SelectSten"
 
 func _ready() -> void:
 	battle_scene_manager.on_scene_exit.connect(scene_progression)
 	shop_scene_manager.on_scene_exit.connect(scene_progression)
 	round_end_scene_manager.on_scene_exit.connect(scene_progression)
+	select_sten.on_scene_exit.connect(scene_progression)
+	
 	scene_progression()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

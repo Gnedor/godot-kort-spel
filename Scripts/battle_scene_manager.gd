@@ -16,7 +16,9 @@ extends Node2D
 
 
 var battle_scene_up
+var battle_scene_up_first
 var battle_scene_down
+var battle_scene_down_first
 
 var step : int = 1
 
@@ -28,7 +30,10 @@ signal on_scene_enter
 func _ready() -> void:
 	battle_manager.end_round.connect(remove_battle_scene)
 	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons"]
+	battle_scene_up_first = [battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons"]
+	
 	battle_scene_down = [deck, spell_deck, discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter")]
+	battle_scene_down_first = [discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter")]
 	move_battle_ui_out()
 	#move_battle_ui_out()
 	#await add_battle_ui()
@@ -103,10 +108,9 @@ func _on_timer_timeout() -> void:
 		
 func remove_battle_ui():
 	var tween = get_tree().create_tween()
-	
 	for node in battle_scene_up:
 		tween.parallel().tween_property(node, "position:y", node.position.y - 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-
+		
 	for node in battle_scene_down:
 		tween.parallel().tween_property(node, "position:y", node.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		
@@ -116,26 +120,42 @@ func remove_battle_ui():
 	
 func add_battle_ui():
 	var tween = get_tree().create_tween()
-	
-	for node in battle_scene_up:
-		tween.parallel().tween_property(node, "position:y", node.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
-
-	for node in battle_scene_down:
-		tween.parallel().tween_property(node, "position:y", node.position.y - 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	if Global.round == 1:
+		for node in battle_scene_down_first:
+			tween.parallel().tween_property(node, "position:y", node.position.y - 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+			
+		for node in battle_scene_up_first:
+			tween.parallel().tween_property(node, "position:y", node.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+			
+	else:
+		for node in battle_scene_up:
+			tween.parallel().tween_property(node, "position:y", node.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+			
+		for node in battle_scene_down:
+			tween.parallel().tween_property(node, "position:y", node.position.y - 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		
 	await tween.finished
 	
 func move_battle_ui_out():
-	for node in battle_scene_up:
-		node.position.y -= 1000
-	for node in battle_scene_down:
-		node.position.y += 1000
+	if Global.round == 1:
+		for node in battle_scene_down_first:
+			node.position.y += 1000
+		for node in battle_scene_up_first:
+			node.position.y -= 1000
+	else:
+		for node in battle_scene_down:
+			node.position.y += 1000
+		for node in battle_scene_up:
+			node.position.y -= 1000
 		
 func after_ready():
 	await add_battle_ui()
-	deck.add_cards_on_start()
 	tiles_folder.add_tiles_on_start()
+	
+	await Global.timer(0.1)
 	card_manager.draw_cards(3, 2)
+	$"../TroopDeck/TroopDeckCounter".visible = true
+	$"../SpellDeck/SpellDeckCounter".visible = true
 	
 func _change_scene():
 	get_tree().change_scene_to_file("res://Scenes/end_of_round_screen.tscn")

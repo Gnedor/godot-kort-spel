@@ -1,6 +1,6 @@
 extends Node2D
 
-var card_scene = load("res://Scenes/card.tscn")
+var card_scene = preload("res://Scenes/card.tscn")
 
 var draw_queue = 0
 var cards_in_troop_deck = []
@@ -31,6 +31,9 @@ func on_enter():
 		card.get_node("Area2D/CollisionShape2D").disabled = true
 			
 	Global.stored_cards.clear()
+	
+	if Global.round == 1:
+		add_cards_on_start()
 	
 func _on_draw_animation_timeout() -> void:
 	card_manager.cards_in_hand.append(cards_in_troop_deck[0])
@@ -64,7 +67,7 @@ func add_new_card_to_deck(card_name : String, times : int):
 	for i in range(times):
 		var new_card_instance = card_scene.instantiate()
 		var card_type = CardDatabase.CARDS[card_name][2]
-		card_manager.add_child(new_card_instance)
+		var card_data = CardDatabase.CARDS[card_name] 
 		
 		if card_type != "Spell":
 			new_card_instance.position = position
@@ -73,17 +76,18 @@ func add_new_card_to_deck(card_name : String, times : int):
 			
 		new_card_instance.z_index = 0
 		new_card_instance.visible = false
-		new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
 		
-		new_card_instance.base_attack = CardDatabase.CARDS[card_name][0]
-		new_card_instance.turn_attack = new_card_instance.base_attack
-		new_card_instance.attack = new_card_instance.base_attack
-		new_card_instance.base_actions = CardDatabase.CARDS[card_name][1]
-		new_card_instance.turn_actions = new_card_instance.base_actions
-		new_card_instance.actions = new_card_instance.base_actions
-		new_card_instance.card_type = CardDatabase.CARDS[card_name][2]
+		new_card_instance.base_attack = card_data[0]
+		new_card_instance.turn_attack = card_data[0]
+		new_card_instance.attack = card_data[0]
+		new_card_instance.base_actions = card_data[1]
+		new_card_instance.turn_actions = card_data[1]
+		new_card_instance.actions = card_data[1]
+		new_card_instance.card_type = card_data[2]
 		new_card_instance.card_name = card_name
-		new_card_instance.trait_1 = CardDatabase.CARDS[card_name][5]
+		new_card_instance.trait_1 = card_data[5]
+		
+		card_manager.add_child(new_card_instance)
 		
 		new_card_instance.adjust_card_details()
 		new_card_instance.adjust_description_text()
@@ -95,6 +99,9 @@ func add_new_card_to_deck(card_name : String, times : int):
 			cards_in_spell_deck.append(new_card_instance)
 		
 		card_manager.update_card(new_card_instance)
+		
+		if i % 3 == 0:
+			await get_tree().process_frame
 		
 func add_card_to_deck(card_name : String, card_attack : int, card_actions : int):
 	var new_card_instance = card_scene.instantiate()
@@ -134,7 +141,7 @@ func add_cards_on_start():
 		selected_deck = CardDatabase[Global.selected_deck]
 			
 		for card in selected_deck:
-			add_new_card_to_deck(card["name"], card["amount"])
+			await add_new_card_to_deck(card["name"], card["amount"])
 	else:
 		#for card in Global.stored_cards:
 		for card in cards_in_troop_deck:

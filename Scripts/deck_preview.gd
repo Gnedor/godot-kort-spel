@@ -62,7 +62,7 @@ func create_card_labels(deck_name):
 func adjust_card(name):
 	card.card_name = name
 	card.stat_display.visible = true
-	card.description.visible = true
+	card.card_description.visible = true
 	card.adjust_text_size()
 	card.adjust_card_details()
 	card.trait_1 = CardDatabase.CARDS[name][5]
@@ -98,6 +98,7 @@ func display_deck(deck_name : String):
 func switch_deck():
 	create_card_labels(CardDatabase.DECKS[deck_index])
 	display_deck(CardDatabase.DECKS[deck_index])
+	Global.selected_deck = CardDatabase.DECKS[deck_index]
 		
 func _on_button_right_pressed() -> void:
 	deck_index += 1

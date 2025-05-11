@@ -1,5 +1,7 @@
 extends Node2D
 
+var description_scene = preload("res://Scenes/description.tscn")
+
 # SPARA BARA DATA HÄR
 # INGEN LOGIK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -11,10 +13,8 @@ extends Node2D
 @onready var namn_label: Label = $Textures/NamnLabel
 @onready var area_2d: Area2D = $Area2D
 @onready var buy_button: Node2D = $BuyButton
-@onready var description_label: RichTextLabel = $Textures/Description/MarginContainer/MarginContainer/DescriptionLabel
-@onready var name_label: Label = $Textures/Description/MarginContainer/NameLabel
-@onready var description: MarginContainer = $Textures/Description
-@onready var action_sprite: TextureRect = $Textures/Description/NinePatchRect/TextureRect
+@onready var card_description: MarginContainer = $Textures/VBoxContainer/Description
+@onready var trait_description: VBoxContainer = $Textures/VBoxContainer2
 @onready var select_border: AnimatedSprite2D = $Textures/ScaleNode/SelectBorder
 @onready var trait_1_sprite: TextureRect = $Textures/ScaleNode/VBoxContainer/TextureRect
 @onready var trait_2_sprite: TextureRect = $Textures/ScaleNode/VBoxContainer/TextureRect2
@@ -46,9 +46,12 @@ var tag : String
 var trait_1
 var trait_2
 
+signal card_initialized
+
 func _ready() -> void:
 	var unique_material = card_sprite.material.duplicate()
 	card_sprite.material = unique_material
+	emit_signal("card_initialized")
 	
 func place_tag(tag_name : String):
 	if tag_name:
@@ -68,12 +71,14 @@ func update_traits():
 	if trait_1:
 		var image_path = "res://Assets/images/Traits/" + trait_1 + "_trait.png"
 		$Textures/ScaleNode/VBoxContainer/TextureRect.texture = load(image_path)
+		add_trait_description(trait_1)
 	else:
 		$Textures/ScaleNode/VBoxContainer/TextureRect.texture = null
 		
 	if trait_2:
 		var image_path = "res://Assets/images/Traits/" + trait_2 + "_trait.png"
 		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = load(image_path)
+		add_trait_description(trait_2)
 	else:
 		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = null
 		
@@ -81,6 +86,8 @@ func adjust_card_details():
 	card_type = CardDatabase.CARDS[card_name][2]
 	namn_label.text = card_name
 	adjust_text_size()
+	var name_label = card_description.name_label
+	var description_label = card_description.description_label
 	name_label.text = card_name
 		
 	if CardDatabase.CARDS[card_name][3]:
@@ -103,7 +110,7 @@ func adjust_card_details():
 	else:
 		print("Sprite node not found")
 		
-	sprite = action_sprite
+	sprite = card_description.action_sprite
 	if card_type != "Troop":
 		image_path = "res://Assets/images/ActionTypes/" + card_type + "_type.png"
 		texture = load(image_path)
@@ -125,8 +132,38 @@ func adjust_text_size():
 		namn_label.set("theme_override_font_sizes/font_size", font_size)
 		
 func adjust_description_text():
+	var description_label = card_description.description_label
 	description_label.custom_minimum_size = Vector2(260, 0)
 	description_label.set_autowrap_mode(2)
 	if description_label.get_line_count() <= 1:
 		description_label.custom_minimum_size = Vector2(0, 0)
 		description_label.set_autowrap_mode(0)
+		
+func add_trait_description(trait_name):
+	for child in $Textures/VBoxContainer2.get_children():
+		if child.name == trait_1 or child.name == trait_2:
+			return
+	
+	var new_description = description_scene.instantiate()
+	$Textures/VBoxContainer2.add_child(new_description)
+	new_description.name = trait_name
+	new_description.get_node("MarginContainer/NameLabel").text = trait_name
+	var description_label = new_description.get_node("MarginContainer/MarginContainer/DescriptionLabel")
+	for tag in TagDatabase.TAGS:
+		if tag["name"] == trait_name:
+			description_label.text = "[center][font_size=16]" + tag["description"] + "[/font_size][/center]"
+			
+	Global.color_text(description_label)
+	adjust_description_text()
+	
+func hover_effect():
+	card_description.visible = true
+	trait_description.visible = true
+	if card_type != "Spell":
+		stat_display.visible = true
+		
+func hover_off_effect():
+	card_description.visible = false
+	trait_description.visible = false
+	stat_display.visible = false
+	

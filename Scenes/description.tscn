@@ -1,0 +1,89 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmgxhbpwvwfrm"]
+
+[ext_resource type="Texture2D" uid="uid://cq1q0wekec80w" path="res://Assets/images/textruta2.png" id="1_6nlan"]
+[ext_resource type="Script" path="res://Scripts/description.gd" id="1_aixq5"]
+[ext_resource type="Texture2D" uid="uid://tcd4cfictdgj" path="res://Assets/images/ActionTypes/ActiveTroop_type.png" id="2_767yd"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_5twoo"]
+[ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="4_wvrop"]
+
+[node name="Description" type="MarginContainer"]
+z_index = 100
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = -96.0
+offset_right = -76.0
+offset_bottom = -41.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+mouse_filter = 2
+script = ExtResource("1_aixq5")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_6nlan")
+patch_margin_left = 12
+patch_margin_top = 40
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_top = -17.0
+offset_right = -33.0
+offset_bottom = -1.0
+grow_horizontal = 0
+scale = Vector2(3, 3)
+size_flags_horizontal = 8
+mouse_filter = 2
+texture = ExtResource("2_767yd")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="NameLabel" type="Label" parent="MarginContainer"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_5twoo")
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 10
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="MarginContainer/MarginContainer"]
+clip_contents = false
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/table_v_separation = 0
+theme_override_constants/line_separation = 5
+theme_override_fonts/normal_font = ExtResource("4_wvrop")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
