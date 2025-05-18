@@ -1,6 +1,6 @@
 extends Node2D
 @onready var camera: Camera2D = $"../Camera2D"
-@onready var battle_scene_manager = $"../BattleScene2".get_node("SceneManager")
+@onready var battle_scene_manager = $"../BattleScene".get_node("SceneManager")
 @onready var shop_scene_manager = $"../ShopScene".get_node("ShopSceneManager")
 @onready var round_end_scene_manager = $"../EndOfRoundScreen"
 @onready var select_sten: Node2D = $"../SelectSten"
@@ -34,7 +34,7 @@ func scene_progression():
 			Global.scene_index = 0
 
 func move_to_battle_scene():
-	camera.position = $"../BattleScene2".position
+	camera.position = $"../BattleScene".position
 	battle_scene_manager.on_enter_scene()
 	
 func move_to_shop_scene():

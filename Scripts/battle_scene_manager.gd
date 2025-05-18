@@ -45,6 +45,7 @@ func _ready() -> void:
 func on_enter_scene():
 	on_scene_enter.emit()
 	call_deferred("after_ready")
+	display_quota()
 	
 func remove_battle_scene():
 	# Sequentially animate each card
@@ -164,3 +165,19 @@ func pause(duration : float) -> void:
 	pause_timer.wait_time = duration
 	pause_timer.start()
 	await pause_timer.timeout
+	
+func display_quota():
+	var quota_label = $"../Quota/Quota/Label"
+	quota_label.visible_ratio = 0.0
+	quota_label.z_index = 1001
+	$"../BattleManager/DarkenBackground".z_index = 1000
+	battle_manager.darken_screen()
+	await Global.timer(0.2)
+	
+	var tween = get_tree().create_tween()
+	quota_label.global_position = Vector2(807, 540)
+	quota_label.scale = Vector2(3, 3)
+
+	tween.parallel().tween_property($"../NewQuota", "visible_ratio", 1.0, 0.2)
+	tween.parallel().tween_property(quota_label, "visible_ratio", 1.0, 0.2)
+	
