@@ -13,4 +13,5 @@ func trigger_ability(card):
 	
 func give_effect(card):
 	card.actions += 2
-	card_manager_reference.update_card(card)
+	card.animate_stat_change("action")
+	card.update_card()

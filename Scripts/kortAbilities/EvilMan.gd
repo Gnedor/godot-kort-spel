@@ -18,9 +18,9 @@ func trigger_ability(card_reference):
 		added_attack += (original_attack - card.attack)
 		if card.turn_attack > card.attack:
 			card.turn_attack = card.attack
-		card_manager_reference.update_card(card)
+		card.update_card()
 		
 	card_reference.attack += added_attack
 	card_reference.turn_attack = card_reference.attack
-	card_manager_reference.update_card(card_reference)
+	card_reference.update_card()
 		

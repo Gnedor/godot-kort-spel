@@ -26,12 +26,12 @@ func trigger_ability(card_reference):
 		for card in card_manager_reference.played_cards:
 			card.turn_attack += 2
 			card.attack += 2
-			card_manager_reference.update_card(card)
+			card.update_card()
 	else:
 		for card in card_manager_reference.played_cards:
 			card.turn_attack -= 2
 			card.attack -= 2
-			card_manager_reference.update_card(card)
+			card.update_card()
 			
 	await battle_manager_reference.ability_effect(card_reference)
 	unfocus_card()

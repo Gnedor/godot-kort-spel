@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://dcu0mt4e8ntit"]
+[gd_scene load_steps=60 format=3 uid="uid://dcu0mt4e8ntit"]
 
 [ext_resource type="Script" path="res://Scripts/card.gd" id="1_kahvh"]
 [ext_resource type="Shader" path="res://shaders/card.gdshader" id="1_rdoxh"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cuqg53q4edh2r" path="res://Assets/images/select border.png" id="6_fi7ot"]
 [ext_resource type="Texture2D" uid="uid://tpb2pr6lpho2" path="res://Assets/images/ball.png" id="7_28c2y"]
 [ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="7_ynav2"]
+[ext_resource type="Texture2D" uid="uid://blekvhd3e4dqp" path="res://Assets/images/mult display.png" id="8_n5cfj"]
 [ext_resource type="PackedScene" uid="uid://dmgxhbpwvwfrm" path="res://Scenes/description.tscn" id="9_sttlc"]
 [ext_resource type="PackedScene" uid="uid://854dmrdy2jd0" path="res://Scenes/buy_button.tscn" id="10_2hy3d"]
 
@@ -342,6 +343,32 @@ script = ExtResource("1_kahvh")
 use_parent_material = true
 scale = Vector2(3, 3)
 
+[node name="StatDisplay" type="Sprite2D" parent="Textures/ScaleNode"]
+position = Vector2(0, -66.6667)
+texture = ExtResource("4_4oeem")
+
+[node name="AttackLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
+offset_left = -22.0
+offset_top = 22.6667
+offset_right = -4.0
+offset_bottom = 30.6667
+theme_override_fonts/font = ExtResource("5_htu7g")
+theme_override_font_sizes/font_size = 8
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActionsLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
+offset_left = 4.0
+offset_top = 22.6667
+offset_right = 22.0
+offset_bottom = 30.6667
+theme_override_fonts/font = ExtResource("5_htu7g")
+theme_override_font_sizes/font_size = 8
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="CardSprite" type="Sprite2D" parent="Textures/ScaleNode"]
 material = SubResource("ShaderMaterial_ve337")
 texture = ExtResource("2_iwdq0")
@@ -375,34 +402,6 @@ disabled = true
 visible = false
 position = Vector2(18.6667, -26.6667)
 
-[node name="StatDisplay" type="Sprite2D" parent="Textures/ScaleNode"]
-visible = false
-z_index = 1
-position = Vector2(0, -66.6667)
-texture = ExtResource("4_4oeem")
-
-[node name="AttackLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
-offset_left = -22.0
-offset_top = 22.6667
-offset_right = -4.0
-offset_bottom = 30.6667
-theme_override_fonts/font = ExtResource("5_htu7g")
-theme_override_font_sizes/font_size = 8
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ActionsLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
-offset_left = 4.0
-offset_top = 22.6667
-offset_right = 22.0
-offset_bottom = 30.6667
-theme_override_fonts/font = ExtResource("5_htu7g")
-theme_override_font_sizes/font_size = 8
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="SelectBorder" type="AnimatedSprite2D" parent="Textures/ScaleNode"]
 visible = false
 sprite_frames = SubResource("SpriteFrames_pnysk")
@@ -422,6 +421,52 @@ layout_mode = 2
 
 [node name="TextureRect2" type="TextureRect" parent="Textures/ScaleNode/VBoxContainer"]
 layout_mode = 2
+
+[node name="Control" type="Control" parent="Textures/ScaleNode"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -24.0
+offset_top = -59.0
+offset_right = -2.0
+offset_bottom = -48.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Textures/ScaleNode/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -11.0
+offset_right = 11.0
+offset_bottom = 11.0
+grow_horizontal = 2
+
+[node name="MultDisplay" type="NinePatchRect" parent="Textures/ScaleNode/Control/PanelContainer"]
+layout_mode = 2
+texture = ExtResource("8_n5cfj")
+region_rect = Rect2(0, 0, 16, 11)
+patch_margin_left = 3
+patch_margin_top = 4
+patch_margin_right = 3
+patch_margin_bottom = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Textures/ScaleNode/Control/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 1
+
+[node name="AttackLabel" type="Label" parent="Textures/ScaleNode/Control/PanelContainer/MarginContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("5_htu7g")
+theme_override_font_sizes/font_size = 8
+text = "1x"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NamnLabel" type="Label" parent="Textures"]
 anchors_preset = 8

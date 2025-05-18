@@ -281,8 +281,7 @@ func animate_card_reroll(cards):
 	for card in cards:
 		var tween = get_tree().create_tween()
 		tween.tween_property(card, "position", Vector2(card.position.x + width, card.position.y), 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-		card.attack_label.text = str(card.attack)
-		card.actions_label.text = str(card.actions)
+		card.update_card()
 		card.adjust_text_size()
 		if card.card_type != "Spell":
 			card.get_node("Textures/ScaleNode/StatDisplay").visible = true

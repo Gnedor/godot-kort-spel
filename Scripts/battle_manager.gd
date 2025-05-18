@@ -74,6 +74,7 @@ func on_enter():
 	end_turn_label_position_y = end_turn_label.position.y
 	
 func new_turn():
+	SignalManager.signal_emitter("new_turn")
 	Global.total_damage += debuffs["Poison"]
 	update_labels()
 	
@@ -84,9 +85,9 @@ func new_turn():
 		for card in card_manager.played_cards:
 			card.attack = card.turn_attack
 			card.actions = card.turn_actions
-			card_manager.update_card(card)
-
-		for card in card_manager.played_cards:
+			card.turn_mult = card.round_mult
+			
+			card.update_card()
 			card.can_poison = true
 			if card.card_type == "TurnStartTroop":
 				card.ability_script.trigger_ability(card)
@@ -108,16 +109,13 @@ func attack(played_cards):
 	if tiles_folder.menu_up:
 		for card in played_cards:
 			if card.is_selected:
-				card.multiplier = 1
 				var mult : float = 1
-				var total_mult : float
+				var total_mult : float = 1
 				
 				card.actions -= 1
 				check_for_tile(card)
-				card_manager.update_card(card)
-				card.stat_display.visible = false
+				card.update_card()
 				animate_attack(card, sten.attack_point.global_position, get_rotation_angle(card), 0.15)
-				card.stat_display.visible = true
 				card_manager.deselect_effect(card)
 				card.is_selected = false
 				
@@ -126,7 +124,6 @@ func attack(played_cards):
 				camera_2d.apply_shake()
 				
 				damage = 0
-				damage = card.attack * card.multiplier
 				var apply_poison : bool = false
 
 				if card.trait_1:
@@ -157,14 +154,13 @@ func attack(played_cards):
 				if (randi() % 10) * 10 < debuffs["Crit"]:
 					mult *= 3
 					
-				damage = int(round(damage))
+				#damage = int(round(damage))
 				
 				if card.card_type == "OnAttackTroop":
 					card.ability_script.trigger_ability(card)
 					
-				total_mult = card.multiplier * mult
-				
-				damage = int(round(damage * total_mult))
+				total_mult = card.turn_mult * mult
+				damage = round(card.attack * total_mult)
 				
 				Global.total_damage += damage
 				
@@ -223,7 +219,7 @@ func _on_end_turn_button_up() -> void:
 	
 func on_end_round():
 	end_round.emit()
-	
+	SignalManager.signal_emitter("end_round")
 	
 func toggle_invert(node, enable : bool):
 	node.material.set("shader_parameter/invert_strength", 1.0 if enable else 0.0)
@@ -360,6 +356,7 @@ func enter_chose_card(played_card):
 	else:
 		await card_manager.animate_card_snap(played_card, Vector2(960, 200), 3000, 1)
 		await Global.timer(0.3)
+		card_select = false
 		var cards = [ability_card]
 		card_manager.discard_selected_cards(cards, "Hand")
 	
@@ -470,7 +467,7 @@ func remove_text(label):
 	await tween.finished
 	
 func update_labels():
-	fix_damage_text()
+	Global.round_number(total_damage_label, Global.total_damage)
 	var child_count = debuff_icons.get_child_count()
 	
 	var i = 0
@@ -522,7 +519,8 @@ func create_debuff_icon(debuff_name : String):
 	
 func display_mult(mult):
 	var label = $"../MultiplierDisplay"
-	label.text = "x" + str(snappedf(mult, 0.1))
+	Global.round_number(label, mult)
+	label.text = "x" + label.text
 	var animation = label.get_child(0)
 	
 	if !animation.is_playing():
@@ -568,7 +566,3 @@ func fix_damage_text():
 		str_n = str_n.substr(0, str_n.length() - 2)
 
 	total_damage_label.text = str(str_n + suffixes[magnitude])
-		
-		
-		
-	

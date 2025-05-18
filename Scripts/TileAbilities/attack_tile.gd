@@ -1,4 +1,5 @@
 extends Node
 
 func tile_ability(card):
-	card.multiplier *= 2
+	card.round_mult *= 2
+	card.turn_mult *= 2

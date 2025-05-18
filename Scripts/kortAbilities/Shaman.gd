@@ -11,6 +11,6 @@ func _ready() -> void:
 func trigger_ability(card, selected_card):
 	card.actions -= 1
 	selected_card.attack += 2
-	card_manager_reference.update_card(selected_card)
-	card_manager_reference.update_card(card)
+	selected_card.update_card()
+	card.update_card()
 	await battle_manager_reference.ability_effect(card)

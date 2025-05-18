@@ -7,8 +7,6 @@ var description_scene = preload("res://Scenes/description.tscn")
 
 @onready var card_sprite: Sprite2D = $Textures/ScaleNode/CardSprite
 @onready var stat_display: Sprite2D = $Textures/ScaleNode/StatDisplay
-@onready var attack_label: Label = $Textures/ScaleNode/StatDisplay/AttackLabel
-@onready var actions_label: Label = $Textures/ScaleNode/StatDisplay/ActionsLabel
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var namn_label: Label = $Textures/NamnLabel
 @onready var area_2d: Area2D = $Area2D
@@ -33,9 +31,14 @@ var can_poison : bool = true
 var attack : int
 var turn_attack : int # what attack should be to end of round
 var base_attack: int # what attack should be at start of turn
+
 var actions : int
 var turn_actions : int # what actions should be to end of round
 var base_actions : int # what actions should be at start of turn
+
+var turn_mult : float = 1
+var round_mult : float = 1
+
 var card_type : String
 var card_name : String
 var ability_script
@@ -166,4 +169,66 @@ func hover_off_effect():
 	card_description.visible = false
 	trait_description.visible = false
 	stat_display.visible = false
+	
+func animate_stat_change(type : String):
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	if type == "attack":
+		var attack_label = $Textures/ScaleNode/StatDisplay/AttackLabel
+		attack_label.position.y -= 8
+		tween.tween_property(attack_label, "position:y", 22.667, 0.3)
+	elif type == "action":
+		var action_label = $Textures/ScaleNode/StatDisplay/ActionsLabel
+		action_label.position.y -= 8
+		tween.tween_property(action_label, "position:y", 22.667, 0.3)
+	else:
+		var mult_label = $Textures/ScaleNode/Control
+		mult_label.position.y -= 8
+		tween.tween_property(mult_label, "position:y", -59, 0.3)
+		
+func update_card():
+	if attack < 0:
+		attack = 0
+	if turn_attack < 0:
+		turn_attack = 0
+	if base_attack < 0:
+		base_attack = 0
+	
+	if actions < 0:
+		actions = 0
+	if turn_actions < 0:
+		turn_actions = 0
+	if base_actions < 0:
+		base_actions = 0
+		
+	var attack_label = $Textures/ScaleNode/StatDisplay/AttackLabel
+	var actions_label = $Textures/ScaleNode/StatDisplay/ActionsLabel
+	var mult_label = $Textures/ScaleNode/Control/PanelContainer/MarginContainer/AttackLabel
+	
+	if is_placed and turn_mult > 1:
+		$Textures/ScaleNode/Control.visible = true
+	else:
+		$Textures/ScaleNode/Control.visible = false
+		
+	var text = attack_label.text
+	Global.round_number(attack_label, attack)
+	if text != attack_label.text:
+		animate_stat_change("attack")
+	text = null
+		
+	text = actions_label.text
+	Global.round_number(actions_label, actions)
+	if text != actions_label.text:
+		animate_stat_change("action")
+	text = null
+		
+	text = mult_label.text
+	Global.round_number(mult_label, turn_mult)
+	mult_label.text = "x" + mult_label.text
+	if text != mult_label.text:
+		animate_stat_change("mult")
+	text = null
+		
+
+		
+		
 	

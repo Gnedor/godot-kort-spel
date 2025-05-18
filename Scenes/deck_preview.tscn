@@ -273,6 +273,7 @@ offset_right = -672.0
 offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 0
+focus_mode = 0
 theme = ExtResource("8_s7kr7")
 
 [node name="Label" type="Label" parent="Bg/BackButton"]
@@ -302,6 +303,7 @@ offset_right = -160.0
 offset_bottom = 120.0
 grow_horizontal = 2
 grow_vertical = 0
+focus_mode = 0
 theme = ExtResource("8_s7kr7")
 
 [node name="Label" type="Label" parent="Bg/SelectButton"]

@@ -68,3 +68,43 @@ func change_color(word, color, label):
 	var colored_word = "[color=" + color.to_html() + "]" + word + "[/color]"
 	label.text = label.text.replace(word, colored_word)
 	
+func round_number(label, num : float):
+	var suffixes = ["", "k", "M", "B", "T"]
+	
+	if num < 100:
+		label.text = str(snapped(num, 0.01))
+		return
+	
+	if num < 100000:
+		label.text = str(round(num))
+		return
+	
+	var magnitude = 0
+	while num >= 1000.0 and magnitude <= suffixes.size() - 1:
+		num /= 1000.0
+		magnitude += 1
+
+	# If larger than "T", use scientific notation
+	if magnitude >= suffixes.size():
+		var exponent = int(floor(log(num * pow(1000, magnitude)) / log(10)))
+		var base = (num * pow(1000, magnitude)) / pow(10, exponent)
+		var str_base = str(round(base * 100) / 100.0)  # Keep 2 decimals
+		if str_base.ends_with(".0"):
+			str_base = str_base.substr(0, str_base.length() - 2)
+		label.text = str(str_base + "e+" + str(exponent))
+		return
+
+	# Limit to 3 significant digits
+	var str_n := ""
+	if num >= 100:
+		str_n = str(round(num))
+	elif num >= 10:
+		str_n = str(round(num * 10) / 10.0)
+	else:
+		str_n = str(round(num * 100) / 100.0)
+
+	if str_n.ends_with(".0"):
+		str_n = str_n.substr(0, str_n.length() - 2)
+
+	label.text = str(str_n + suffixes[magnitude])
+	

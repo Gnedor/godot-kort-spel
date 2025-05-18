@@ -98,7 +98,7 @@ func add_new_card_to_deck(card_name : String, times : int):
 		else:
 			cards_in_spell_deck.append(new_card_instance)
 		
-		card_manager.update_card(new_card_instance)
+		new_card_instance.update_card()
 		
 		if i % 3 == 0:
 			await get_tree().process_frame
@@ -134,7 +134,7 @@ func add_card_to_deck(card_name : String, card_attack : int, card_actions : int)
 	else:
 		cards_in_spell_deck.append(new_card_instance)
 		
-	card_manager.update_card(new_card_instance)
+	new_card_instance.update_card()
 		
 func add_cards_on_start():
 	if Global.round == 1:
@@ -186,7 +186,7 @@ func replace_card_with_copy(card, copy_card):
 	card.tag = copy_card.tag
 	
 	card.adjust_text_size()
-	card_manager.update_card(card)
+	card.update_card()
 	card.adjust_card_details()
 	card.place_tag(card.tag)
 	card.update_traits()

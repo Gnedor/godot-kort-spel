@@ -15,7 +15,7 @@ func trigger_ability(card_reference):
 	if affected_cards:
 		for card in affected_cards:
 			card.actions += 1
-			card_manager_reference.update_card(card)
+			card.update_card()
 	
 
 func get_card_index(card):

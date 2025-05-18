@@ -27,6 +27,8 @@ var viewing_collection : bool = false
 const CARD_MOVE_SPEED = 3000 # pixels per second
 const CARD_DRAW_SPEED = 4000
 
+signal placed_card
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	battle_manager.end_round.connect(on_round_end)
@@ -70,11 +72,13 @@ func swap_elements(array : Array, index1 : int, index2 : int):
 	
 func place_card_on_slot(slot):
 	if !slot.is_occupied and dragged_card and !dragged_card.is_placed and !dragged_card.card_type == "Spell":
+		placed_card.emit(dragged_card)
 		cards_in_hand.erase(dragged_card)
 		dragged_card.z_index = 3
 		dragged_card.position = slot.position
 		
 		slot.is_occupied = true
+		slot.occupied_card = dragged_card
 		dragged_card.is_placed = true
 		
 		hover_off_effect(dragged_card)
@@ -91,7 +95,7 @@ func place_card_on_slot(slot):
 		
 		if dragged_card.card_type == "OnPlayTroop":
 			dragged_card.ability_script.trigger_ability(dragged_card)
-		update_card(dragged_card)
+		dragged_card.update_card()
 		Global.played_cards.append(dragged_card.card_name)
 	align_cards()
 	
@@ -228,23 +232,30 @@ func find_duration(pos1, pos2, speed):
 	var duration = distance / speed
 	return duration
 	
-func update_card(card):
-	if card.attack < 0:
-		card.attack = 0
-	if card.turn_attack < 0:
-		card.turn_attack = 0
-	if card.base_attack < 0:
-		card.base_attack = 0
-	
-	if card.actions < 0:
-		card.actions = 0
-	if card.turn_actions < 0:
-		card.turn_actions = 0
-	if card.base_actions < 0:
-		card.base_actions = 0
-		
-	card.attack_label.text = str(card.attack)
-	card.actions_label.text = str(card.actions)
+#func update_card(card):
+	#if card.attack < 0:
+		#card.attack = 0
+	#if card.turn_attack < 0:
+		#card.turn_attack = 0
+	#if card.base_attack < 0:
+		#card.base_attack = 0
+	#
+	#if card.actions < 0:
+		#card.actions = 0
+	#if card.turn_actions < 0:
+		#card.turn_actions = 0
+	#if card.base_actions < 0:
+		#card.base_actions = 0
+		#
+	#var text = card.attack_label.text
+	#card.attack_label.text = str(card.attack)
+	#if text != card.attack_label.text:
+		#card.animate_stat_change("attack")
+		#
+	#text = card.actions_label.text
+	#card.actions_label.text = str(card.actions)
+	#if text != card.actions_label.text:
+		#card.animate_stat_change("actions")
 		
 func select_card(card):
 	if !battle_manager.active_select:
@@ -282,7 +293,9 @@ func discard_selected_cards(cards, status : String):
 			await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED * 2, 1)
 			discarded_cards.append(card)
 			card.visible = false
+			SignalManager.signal_emitter("removed_card")
 		$"../DiscardPile/DiscardCounter".text = str(discarded_cards.size())
+
 			
 func show_card_collection():
 	viewing_collection = true
@@ -328,6 +341,10 @@ func on_round_end():
 		slot.occupied_tile = null
 		for card in played_cards:
 			card.is_placed = false
+	for card in played_cards:
+		card.round_mult = 1
+		card.turn_mult = 1
+		card.update_card()
 
 
 func _on_sort_button_button_down() -> void:

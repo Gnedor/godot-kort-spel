@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmgxhbpwvwfrm"]
+[gd_scene load_steps=5 format=3 uid="uid://dmgxhbpwvwfrm"]
 
 [ext_resource type="Texture2D" uid="uid://cq1q0wekec80w" path="res://Assets/images/textruta2.png" id="1_6nlan"]
 [ext_resource type="Script" path="res://Scripts/description.gd" id="1_aixq5"]
-[ext_resource type="Texture2D" uid="uid://tcd4cfictdgj" path="res://Assets/images/ActionTypes/ActiveTroop_type.png" id="2_767yd"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_5twoo"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="4_wvrop"]
 
@@ -42,7 +41,6 @@ grow_horizontal = 0
 scale = Vector2(3, 3)
 size_flags_horizontal = 8
 mouse_filter = 2
-texture = ExtResource("2_767yd")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2

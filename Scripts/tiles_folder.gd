@@ -191,6 +191,11 @@ func place_tile_on_slot(slot):
 		played_tiles.append(dragged_tile)
 		slot.occupied_tile = dragged_tile
 		
+		if slot.occupied_card and dragged_tile.tile_type == "OnPlay":
+			dragged_tile.ability_script.tile_ability(slot.occupied_card)
+			slot.occupied_card.update_card()
+			
+				
 		dragged_tile = null
 	align_tiles()
 		
