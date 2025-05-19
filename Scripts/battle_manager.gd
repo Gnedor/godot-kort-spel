@@ -67,7 +67,7 @@ func on_enter():
 	turn_counter.text = "Turn: " + str(turn) + "/3"
 	round_label.text = "Round: " + str(Global.round)
 	money_label.text = str(Global.total_money) + "$"
-	total_damage_label.text = str(Global.total_damage) + "/" + str(Global.quota)
+	total_damage_label.text = "0"
 	hand_info.text = ("")
 	
 	toggle_invert(sten.get_node("Sprite2D"), false)

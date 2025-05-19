@@ -13,6 +13,7 @@ extends Node2D
 @onready var tag_texture: TextureRect = $UI/NinePatchRect3/NinePatchRect/NinePatchRect2/TextureRect
 
 var base_money = 3
+var max_money = 50
 
 signal on_scene_enter
 signal on_scene_exit
@@ -46,14 +47,14 @@ func start_end_screen():
 	await animate_screen_scale()
 	await get_tree().create_timer(0.2).timeout
 
-	total_damage_label.text = str(Global.total_damage)
-	quota_label.text = str(Global.quota)
+	Global.round_number(total_damage_label, Global.total_damage)
+	Global.round_number(quota_label, Global.quota)
 	money_label.text = str(Global.base_money) + "$"
 	var multiplier : float = Global.total_damage / Global.quota
-	equals_label.text = str(floor(multiplier / 0.5) * 0.5)
+	Global.round_number(equals_label, (floor(multiplier / 0.5) * 0.5))
 	var money_gain = Global.base_money * floor(multiplier / 0.5) * 0.5
-	if money_gain > 50:
-		money_gain = 50
+	if money_gain > max_money:
+		money_gain = max_money
 	total_money.text = str(money_gain) + "$"
 	
 	var labels_to_be_updated = [total_damage_label, quota_label, money_label, equals_label, total_money]
@@ -62,8 +63,6 @@ func start_end_screen():
 		await add_text(label)
 		
 	Global.total_money += money_gain
-	
-
 	
 	if Global.total_damage >= Global.quota:
 		await get_tag()

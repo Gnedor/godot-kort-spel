@@ -29,8 +29,8 @@ signal on_scene_enter
 
 func _ready() -> void:
 	battle_manager.end_round.connect(remove_battle_scene)
-	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons"]
-	battle_scene_up_first = [battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons"]
+	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
+	battle_scene_up_first = [battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
 	
 	battle_scene_down = [deck, spell_deck, discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter")]
 	battle_scene_down_first = [discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter")]
@@ -45,6 +45,9 @@ func _ready() -> void:
 func on_enter_scene():
 	on_scene_enter.emit()
 	call_deferred("after_ready")
+	
+	$"../Quota/Quota/Label".visible = false
+	await Global.timer(0.5)
 	display_quota()
 	
 func remove_battle_scene():
@@ -172,7 +175,7 @@ func display_quota():
 	quota_label.z_index = 1001
 	$"../BattleManager/DarkenBackground".z_index = 1000
 	battle_manager.darken_screen()
-	await Global.timer(0.2)
+	await Global.timer(0.5)
 	
 	var tween = get_tree().create_tween()
 	quota_label.global_position = Vector2(807, 540)
@@ -181,3 +184,23 @@ func display_quota():
 	tween.parallel().tween_property($"../NewQuota", "visible_ratio", 1.0, 0.2)
 	tween.parallel().tween_property(quota_label, "visible_ratio", 1.0, 0.2)
 	
+	await Global.timer(0.5)
+	var new_quota: int = 0
+	
+	quota_label.visible = true
+	while quota_label.text != str(Global.quota):
+		new_quota += Global.quota / 20
+		quota_label.text = str(new_quota)
+		await Global.timer(0.01)
+		
+	await Global.timer(0.3)
+	tween = get_tree().create_tween()
+	tween.tween_property($"../NewQuota", "visible_ratio", 0.0, 0.2)
+	
+	await Global.timer(0.2)
+	battle_manager.brighten_screen()
+	
+	tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(quota_label, "position", Vector2(0, 3), 0.2)
+	tween.parallel().tween_property(quota_label, "scale", Vector2(1, 1), 0.2)
+	quota_label.z_index = 1
