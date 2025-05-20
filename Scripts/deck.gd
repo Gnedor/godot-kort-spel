@@ -8,6 +8,8 @@ var cards_in_spell_deck = []
 
 var selected_deck
 
+signal cards_ready
+
 @onready var card_manager: Node2D = $"../CardManager"
 @onready var troop_deck_counter: Label = $TroopDeckCounter
 @onready var draw_animation: Timer = $DrawAnimation
@@ -34,6 +36,7 @@ func on_enter():
 	
 	if Global.round == 1:
 		add_cards_on_start()
+		
 	
 func _on_draw_animation_timeout() -> void:
 	card_manager.cards_in_hand.append(cards_in_troop_deck[0])
@@ -161,6 +164,8 @@ func add_cards_on_start():
 	
 	troop_deck_counter.text = str(cards_in_troop_deck.size())
 	spell_deck_counter.text = str(cards_in_spell_deck.size())
+	
+	cards_ready.emit()
 	
 #func adjust_text_size(card):
 	#var label = card.get_node("Textures/NamnLabel")

@@ -29,6 +29,7 @@ signal on_scene_enter
 
 func _ready() -> void:
 	battle_manager.end_round.connect(remove_battle_scene)
+	deck.cards_ready.connect(draw_first_cards)
 	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
 	battle_scene_up_first = [battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
 	
@@ -37,7 +38,7 @@ func _ready() -> void:
 	move_battle_ui_out()
 	#move_battle_ui_out()
 	#await add_battle_ui()
-	#
+
 	#deck.add_cards_on_start()
 	#tiles_folder.add_tiles_on_start()
 	#call_deferred("after_ready")
@@ -48,6 +49,8 @@ func on_enter_scene():
 	
 	$"../Quota/Quota/Label".visible = false
 	await Global.timer(0.5)
+	if Global.round > 1:
+		card_manager.draw_cards(3, 2)
 	display_quota()
 	
 func remove_battle_scene():
@@ -79,7 +82,6 @@ func _on_timer_timeout() -> void:
 		tiles_folder.played_tiles.pop_front()
 		await (pause(0.05))
 		tiles_folder.align_tiles()
-
 		
 		if !tiles_folder.played_tiles:
 			await (pause(0.15))
@@ -157,9 +159,12 @@ func after_ready():
 	tiles_folder.add_tiles_on_start()
 	
 	await Global.timer(0.1)
-	card_manager.draw_cards(3, 2)
 	$"../TroopDeck/TroopDeckCounter".visible = true
 	$"../SpellDeck/SpellDeckCounter".visible = true
+	
+func draw_first_cards():
+	await Global.timer(0.1)
+	card_manager.draw_cards(3, 2)
 	
 func _change_scene():
 	get_tree().change_scene_to_file("res://Scenes/end_of_round_screen.tscn")

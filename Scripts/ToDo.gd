@@ -7,6 +7,7 @@
 	# Inevitability tar sönder saker
 	# kort gör för mycket skada med multipliers
 	# kort får inte tillbaka actions på en ny runda
+	# Kort shufflar inte på skoldatorn
 	
 #Ideer:
 	# Olika former för olika dificulties  t.ex en kvadrat sitället för sten
