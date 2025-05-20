@@ -344,7 +344,6 @@ func on_round_end():
 	for card in played_cards:
 		card.round_mult = 1
 		card.turn_mult = 1
-		card.update_card()
 
 
 func _on_sort_button_button_down() -> void:

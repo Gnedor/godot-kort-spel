@@ -23,6 +23,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Dumpster fire" : [3, 2, "Misc", "This card deals 1.5x Damage for every two cards discarded this round", "res://Scripts/kortAbilities/DumpsterFire.gd", null],
 	"Poison dagger" : [0, 1, "Spell", "Double current Poison. If no Poison have been applied, deal 10 Poison", "res://Scripts/kortAbilities/PoisonDagger.gd", null],
 	"The elements" : [0, 1, "Spell", "Draw one guy for every currently applied status effect", "res://Scripts/kortAbilities/TheElements.gd", null],
+	"Brainer" : [1, 2, "Troop", "Någonting när man drar kort", null, "Echo"]
 	
 	#behöver sprites
 	#"Trash Man" : [3, 2, "OnTrashCard", "When trashed, permanently gain 3 Damage", null, null],
@@ -53,7 +54,8 @@ const Example_deck = [
 	{"name": "Juice Up", "amount": 3},
 	{"name": "Dumpster fire", "amount": 3},
 	{"name": "Poison dagger", "amount": 3},
-	{"name": "The elements", "amount": 3}
+	{"name": "The elements", "amount": 3},
+	{"name": "Brainer", "amount": 3},
 ]
 
 const Starter_deck = [

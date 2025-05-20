@@ -343,32 +343,6 @@ script = ExtResource("1_kahvh")
 use_parent_material = true
 scale = Vector2(3, 3)
 
-[node name="StatDisplay" type="Sprite2D" parent="Textures/ScaleNode"]
-position = Vector2(0, -66.6667)
-texture = ExtResource("4_4oeem")
-
-[node name="AttackLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
-offset_left = -22.0
-offset_top = 22.6667
-offset_right = -4.0
-offset_bottom = 30.6667
-theme_override_fonts/font = ExtResource("5_htu7g")
-theme_override_font_sizes/font_size = 8
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ActionsLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
-offset_left = 4.0
-offset_top = 22.6667
-offset_right = 22.0
-offset_bottom = 30.6667
-theme_override_fonts/font = ExtResource("5_htu7g")
-theme_override_font_sizes/font_size = 8
-text = "1"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="CardSprite" type="Sprite2D" parent="Textures/ScaleNode"]
 material = SubResource("ShaderMaterial_ve337")
 texture = ExtResource("2_iwdq0")
@@ -423,6 +397,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Control" type="Control" parent="Textures/ScaleNode"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -24.0
@@ -465,6 +440,33 @@ size_flags_vertical = 1
 theme_override_fonts/font = ExtResource("5_htu7g")
 theme_override_font_sizes/font_size = 8
 text = "1x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatDisplay" type="Sprite2D" parent="Textures/ScaleNode"]
+visible = false
+position = Vector2(0, -66.6667)
+texture = ExtResource("4_4oeem")
+
+[node name="AttackLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
+offset_left = -22.0
+offset_top = 22.6667
+offset_right = -4.0
+offset_bottom = 30.6667
+theme_override_fonts/font = ExtResource("5_htu7g")
+theme_override_font_sizes/font_size = 8
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActionsLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
+offset_left = 4.0
+offset_top = 22.6667
+offset_right = 22.0
+offset_bottom = 30.6667
+theme_override_fonts/font = ExtResource("5_htu7g")
+theme_override_font_sizes/font_size = 8
+text = "1"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -520,6 +522,7 @@ shape = SubResource("RectangleShape2D_h6pkr")
 disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.254902, 0.764706, 1, 1)
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_pxsia")
 animation = &"Ball"

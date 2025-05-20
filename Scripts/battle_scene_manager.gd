@@ -19,6 +19,7 @@ var battle_scene_up
 var battle_scene_up_first
 var battle_scene_down
 var battle_scene_down_first
+var can_draw : bool = false
 
 var step : int = 1
 
@@ -51,6 +52,13 @@ func on_enter_scene():
 	await Global.timer(0.5)
 	if Global.round > 1:
 		card_manager.draw_cards(3, 2)
+	else:
+		while true:
+			if can_draw:
+				card_manager.draw_cards(3, 2)
+				can_draw = false
+				break
+				
 	display_quota()
 	
 func remove_battle_scene():
@@ -163,8 +171,7 @@ func after_ready():
 	$"../SpellDeck/SpellDeckCounter".visible = true
 	
 func draw_first_cards():
-	await Global.timer(0.1)
-	card_manager.draw_cards(3, 2)
+	can_draw = true
 	
 func _change_scene():
 	get_tree().change_scene_to_file("res://Scenes/end_of_round_screen.tscn")

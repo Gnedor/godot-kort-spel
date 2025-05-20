@@ -52,6 +52,7 @@ func align_cards():
 	for card in cards_in_collection:
 		card.visible = true
 		card.position = Vector2 (-100, -100)
+		card.update_card()
 		
 		checkPage()
 		

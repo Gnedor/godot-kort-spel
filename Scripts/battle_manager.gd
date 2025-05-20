@@ -113,8 +113,9 @@ func attack(played_cards):
 				var total_mult : float = 1
 				
 				card.actions -= 1
-				check_for_tile(card)
 				card.update_card()
+				check_for_tile(card)
+
 				animate_attack(card, sten.attack_point.global_position, get_rotation_angle(card), 0.15)
 				card_manager.deselect_effect(card)
 				card.is_selected = false
@@ -147,6 +148,8 @@ func attack(played_cards):
 						"Crit":
 							if debuffs["Crit"] < 100:
 								debuffs["Crit"] += 10
+						"Echo":
+							debuffs["Echo"] += 1
 							
 				for i in range(fracture_level):
 					mult *= 2
@@ -490,6 +493,8 @@ func update_labels():
 				pass
 			"Crit":
 				label.text += "%"
+			"Echo":
+				pass
 		
 func create_debuff_icon(debuff_name : String):
 	var texture_rect = TextureRect.new()
@@ -507,6 +512,8 @@ func create_debuff_icon(debuff_name : String):
 			color = Color(0.455, 0.765, 0.243)
 		"Crit":
 			color = Color(1, 0.1, 0.1)
+		"Echo":
+			color = Color(0.225, 0.765, 1)
 			
 	debuff_text.add_child(label)
 	
