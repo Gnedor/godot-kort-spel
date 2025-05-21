@@ -54,6 +54,7 @@ func on_enter_scene():
 		card_manager.draw_cards(3, 2)
 	else:
 		while true:
+			await Global.timer(0.1)
 			if can_draw:
 				card_manager.draw_cards(3, 2)
 				can_draw = false
