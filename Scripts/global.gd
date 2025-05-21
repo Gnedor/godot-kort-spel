@@ -63,6 +63,7 @@ func color_text(label):
 	change_color("Poison", Color.html("#6abe30"), label)
 	change_color("Fracture", Color.html("#898989"), label)
 	change_color("Crit", Color.html("#ff6161"), label)
+	change_color("Echo", Color.html("#639bff"), label)
 	
 func change_color(word, color, label):
 	var colored_word = "[color=" + color.to_html() + "]" + word + "[/color]"

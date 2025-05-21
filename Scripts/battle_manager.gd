@@ -31,6 +31,7 @@ var selected_card : Node2D
 var ability_card : Node2D
 var amount_to_draw : int
 var damage
+var apply_poison : bool = true
 
 var debuffs = {}
 
@@ -127,37 +128,14 @@ func attack(played_cards):
 				damage = 0
 				var apply_poison : bool = false
 
-				if card.trait_1:
-					if debuffs[card.trait_1] == 0:
-						# om du gör flera exceptions gör en match som defaultar det detta under
-						if card.trait_1 != "Fracture":
-							create_debuff_icon(card.trait_1)
-						else:
-							if fracture_level == 0:
-								create_debuff_icon(card.trait_1)
-						
-					match card.trait_1:
-						"Poison":
-							apply_poison = true
-						"Fracture":
-							if debuffs["Fracture"] == 100:
-								debuffs["Fracture"] = 0
-								fracture_level += 1
-							else:
-								debuffs["Fracture"] += 20
-						"Crit":
-							if debuffs["Crit"] < 100:
-								debuffs["Crit"] += 10
-						"Echo":
-							debuffs["Echo"] += 1
+				apply_trait(card.trait_1)
+				apply_trait(card.trait_2)
 							
 				for i in range(fracture_level):
 					mult *= 2
 					
 				if (randi() % 10) * 10 < debuffs["Crit"]:
 					mult *= 3
-					
-				#damage = int(round(damage))
 				
 				if card.card_type == "OnAttackTroop":
 					card.ability_script.trigger_ability(card)
@@ -175,6 +153,34 @@ func attack(played_cards):
 					display_mult(total_mult)
 					
 	update_labels()
+				
+func apply_trait(trait_):
+	if trait_:
+		if debuffs[trait_] == 0:
+			# om du gör flera exceptions gör en match som defaultar det detta under
+			if trait_ != "Fracture":
+				create_debuff_icon(trait_)
+			else:
+				if fracture_level == 0:
+					create_debuff_icon(trait_)
+			
+		match trait_:
+			"Poison":
+				apply_poison = true
+			"Fracture":
+				if debuffs["Fracture"] == 100:
+					debuffs["Fracture"] = 0
+					fracture_level += 1
+				else:
+					debuffs["Fracture"] += 20
+			"Crit":
+				if debuffs["Crit"] < 100:
+					debuffs["Crit"] += 10
+			"Echo":
+				debuffs["Echo"] += 1
+				if debuffs["Echo"] > 3:
+					debuffs["Echo"] = 0
+					card_manager.draw_cards(1, 1)
 				
 func check_for_tile(card):
 	for slot in card_manager.card_slots.get_children():

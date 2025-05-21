@@ -6,6 +6,8 @@
 	# Inevitability tar sönder saker
 	# Debuff descriptionen visas bara med korten i handen
 	# Måste hitta ett sätt att dislplaya flera debuffs information på ett kort
+	# Tile abilities försvinner inte när nästa runda startar
+	# Alla gubbar visar (1, 1) i deck preview
 	
 	
 #Ideer:

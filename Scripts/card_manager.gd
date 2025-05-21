@@ -214,8 +214,10 @@ func align_card_hover(hovered_card):
 	for card in played_cards:
 		if card == hovered_card and !card.card_description.visible and card.card_type:
 			card.card_description.visible = true
+			card.trait_description.visible = true
 		elif card != hovered_card and card.card_description.visible:
 			card.card_description.visible = false
+			card.trait_description.visible = false
 			
 func animate_card_snap(card, position, speed, num):
 	if card.global_position != position:

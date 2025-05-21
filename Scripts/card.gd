@@ -74,14 +74,14 @@ func update_traits():
 	if trait_1:
 		var image_path = "res://Assets/images/Traits/" + trait_1 + "_trait.png"
 		$Textures/ScaleNode/VBoxContainer/TextureRect.texture = load(image_path)
-		add_trait_description(trait_1)
+		add_trait_description(trait_1, 1)
 	else:
 		$Textures/ScaleNode/VBoxContainer/TextureRect.texture = null
 		
 	if trait_2:
 		var image_path = "res://Assets/images/Traits/" + trait_2 + "_trait.png"
 		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = load(image_path)
-		add_trait_description(trait_2)
+		add_trait_description(trait_2, 2)
 	else:
 		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = null
 		
@@ -142,11 +142,13 @@ func adjust_description_text():
 		description_label.custom_minimum_size = Vector2(0, 0)
 		description_label.set_autowrap_mode(0)
 		
-func add_trait_description(trait_name):
+func add_trait_description(trait_name, num):
 	for child in $Textures/VBoxContainer2.get_children():
-		if child.name == trait_1 or child.name == trait_2:
+		if child.name == trait_1 and num == 1:
 			return
-	
+		if child.name == trait_2 and num == 2:
+			return
+			
 	var new_description = description_scene.instantiate()
 	$Textures/VBoxContainer2.add_child(new_description)
 	new_description.name = trait_name

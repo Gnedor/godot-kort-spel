@@ -17,20 +17,21 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Paradox" : [1, 1, "Troop", "Could this object be built?", null, null],
 	"Gambler" : [1, 2, "Troop", "Guy living in the moment", null, "Crit"],
 	"Groovy guy" : [1, 2, "Troop", "Guy feeling the groove" , null, "Fracture"],
-	"Overkiller" : [5, 1, "OnAttackTroop", "If this card deals more than the total Damage done this round, gain +1 Actions this round", "res://Scripts/kortAbilities/Overkiller.gd", null],
+	"Overkiller" : [5, 1, "OnAttackTroop", "If this card deals more than the total Damage done this round, gain +1 Actions", "res://Scripts/kortAbilities/Overkiller.gd", null],
 	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "Poison"],
 	"Juice Up" : [0, 1, "Spell", "Give a card 2x Damage for 1 turn, the card permanently looses 3 Damage after the effect", "res://Scripts/kortAbilities/JuiceUp.gd", null],
 	"Dumpster fire" : [3, 2, "Misc", "This card deals 1.5x Damage for every two cards discarded this round", "res://Scripts/kortAbilities/DumpsterFire.gd", null],
 	"Poison dagger" : [0, 1, "Spell", "Double current Poison. If no Poison have been applied, deal 10 Poison", "res://Scripts/kortAbilities/PoisonDagger.gd", null],
 	"The elements" : [0, 1, "Spell", "Draw one guy for every currently applied status effect", "res://Scripts/kortAbilities/TheElements.gd", null],
-	"Brainer" : [1, 2, "Troop", "Någonting när man drar kort", null, "Echo"]
+	"Brainer" : [1, 2, "Troop", "Någonting när man drar kort", null, "Echo"],
+	"Hivemind" : [3, 3, "Troop", "Knowledge", null, null],
 	
 	#behöver sprites
 	#"Trash Man" : [3, 2, "OnTrashCard", "When trashed, permanently gain 3 Damage", null, null],
 
 }
 
-const DECKS = ["Example_deck", "Starter_deck", "Gooby_woobies"]
+const DECKS = ["Example_deck", "Starter_deck", "Gooby_woobies", "Intellectual_deck"]
 
 const Example_deck = [
 	{"name": "Guy", "amount": 10},
@@ -56,6 +57,7 @@ const Example_deck = [
 	{"name": "Poison dagger", "amount": 3},
 	{"name": "The elements", "amount": 3},
 	{"name": "Brainer", "amount": 3},
+	{"name": "Hivemind", "amount": 3}
 ]
 
 const Starter_deck = [
@@ -75,4 +77,9 @@ const Gooby_woobies = [
 	
 	{"name": "Poison dagger", "amount": 3},
 	{"name": "The elements", "amount": 3},
+]
+
+const Intellectual_deck = [
+	{"name": "Brainer", "amount": 3},
+	{"name": "Hivemind", "amount": 3}
 ]
