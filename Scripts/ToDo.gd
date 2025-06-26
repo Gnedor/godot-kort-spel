@@ -18,6 +18,8 @@
 	# Tutorail texten kan vara vid handinfon
 	# när en status effect inte kommer applieas blir den mörkare t.ex poison efter ett slag
 	# När man har för många debuffs kommer det upp en meny där man kan se alla
+	
+	# En liten guy uppe i vänster som säger någonting varje gång man går in i menyn finns en sprite
 
 #Tiles:
 	# Tile som duplicerar kort som spelas på den

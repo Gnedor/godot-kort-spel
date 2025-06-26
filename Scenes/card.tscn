@@ -8,14 +8,14 @@
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="5_htu7g"]
 [ext_resource type="Texture2D" uid="uid://cuqg53q4edh2r" path="res://Assets/images/select border.png" id="6_fi7ot"]
 [ext_resource type="Texture2D" uid="uid://tpb2pr6lpho2" path="res://Assets/images/ball.png" id="7_28c2y"]
-[ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="7_ynav2"]
 [ext_resource type="Texture2D" uid="uid://blekvhd3e4dqp" path="res://Assets/images/mult display.png" id="8_n5cfj"]
+[ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="9_o7t0t"]
 [ext_resource type="PackedScene" uid="uid://dmgxhbpwvwfrm" path="res://Scenes/description.tscn" id="9_sttlc"]
 [ext_resource type="PackedScene" uid="uid://854dmrdy2jd0" path="res://Scenes/buy_button.tscn" id="10_2hy3d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ve337"]
+render_priority = 0
 shader = ExtResource("1_rdoxh")
-shader_parameter/hit_opacity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gsysh"]
 atlas = ExtResource("4_iftc1")
@@ -483,7 +483,7 @@ offset_bottom = 21.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("7_ynav2")
+theme_override_fonts/font = ExtResource("9_o7t0t")
 theme_override_font_sizes/font_size = 20
 text = "Exempel"
 horizontal_alignment = 1
@@ -504,7 +504,6 @@ visible = false
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Textures"]
-visible = false
 offset_left = 88.0
 offset_top = -88.0
 offset_right = 388.0

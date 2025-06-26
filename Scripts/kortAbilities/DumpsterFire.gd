@@ -14,8 +14,8 @@ func _ready() -> void:
 func add_mult():
 	trashed_cards += 1
 	if trashed_cards % 2 == 0:
-		get_parent().round_mult *= 2
-		get_parent().turn_mult *= 2
+		get_parent().round_mult *= 1.5
+		get_parent().turn_mult *= 1.5
 		get_parent().update_card()
 
 func remove_mult():

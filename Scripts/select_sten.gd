@@ -2,7 +2,7 @@ extends Node2D
 @onready var battle_scene: Node2D = $"../BattleScene"
 
 
-var shapes = ["Sten", "Square", "Triangle", "Smiley", "Golden sten", ]
+var shapes = ["Sten", "Square", "Pentagon", "Circle", "Smiley", "Golden sten", ]
 var difficulty : int = 0
 
 signal on_scene_exit
@@ -14,6 +14,11 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+	
+func on_enter_scene():
+	$DeckPreview.move_in()
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($"../TextureRect", "modulate", Color(0.755, 0.755, 0.755), 0.4)
 	
 func move_in():
 	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
@@ -60,3 +65,31 @@ func _on_play_button_pressed() -> void:
 	await tween.finished
 	
 	on_scene_exit.emit()
+	
+
+func _on_button_left_button_down() -> void:
+	$NinePatchRect3/Button_left/Arrow_left.position.y += 3
+
+func _on_button_left_button_up() -> void:
+	$NinePatchRect3/Button_left/Arrow_left.position.y -= 3
+	
+	
+func _on_button_right_button_down() -> void:
+	$NinePatchRect3/Button_right/Arrow_right.position.y += 3
+
+func _on_button_right_button_up() -> void:
+	$NinePatchRect3/Button_right/Arrow_right.position.y -= 3
+	
+
+func _on_back_button_button_down() -> void:
+	$NinePatchRect3/BackButton/Label.position.y += 3
+
+func _on_back_button_button_up() -> void:
+	$NinePatchRect3/BackButton/Label.position.y -= 3
+	
+	
+func _on_play_button_button_down() -> void:
+	$NinePatchRect3/PlayButton/Label.position.y += 3
+
+func _on_play_button_button_up() -> void:
+	$NinePatchRect3/PlayButton/Label.position.y -= 3

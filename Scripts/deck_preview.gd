@@ -66,7 +66,18 @@ func adjust_card(name):
 	card.adjust_text_size()
 	card.adjust_card_details()
 	card.trait_1 = CardDatabase.CARDS[name][5]
+	
+	card.attack = CardDatabase.CARDS[name][0]
+	card.actions = CardDatabase.CARDS[name][1]
+	for child in card.trait_description.get_children():
+		child.free()
+	if card.card_type == "Spell":
+		card.stat_display.visible = false
+	else:
+		card.stat_display.visible = true
+		
 	card.update_traits()
+	card.update_card()
 	
 func move_deck_to_sides():
 	continue_clicked.emit()
@@ -99,6 +110,9 @@ func switch_deck():
 	create_card_labels(CardDatabase.DECKS[deck_index])
 	display_deck(CardDatabase.DECKS[deck_index])
 	Global.selected_deck = CardDatabase.DECKS[deck_index]
+	
+func move_in():
+	pass
 		
 func _on_button_right_pressed() -> void:
 	deck_index += 1
@@ -116,3 +130,35 @@ func _on_button_left_pressed() -> void:
 	$Bg/Button_right.disabled = false
 	if deck_index <= 0:
 		$Bg/Button_left.disabled = true
+
+func _on_back_button_pressed() -> void:
+	Global.scene_index = -2
+	get_parent().on_scene_exit.emit()
+
+
+func _on_button_left_button_down() -> void:
+	$Bg/Button_left/Arrow_left.position.y += 3
+
+func _on_button_left_button_up() -> void:
+	$Bg/Button_left/Arrow_left.position.y -= 3
+
+
+func _on_button_right_button_down() -> void:
+	$Bg/Button_right/Arrow_left.position.y += 3
+
+func _on_button_right_button_up() -> void:
+	$Bg/Button_right/Arrow_left.position.y -= 3
+
+
+func _on_back_button_button_down() -> void:
+	$Bg/BackButton/Label.position.y += 3
+
+func _on_back_button_button_up() -> void:
+	$Bg/BackButton/Label.position.y -= 3
+
+
+func _on_select_button_button_down() -> void:
+	$Bg/SelectButton/Label.position.y += 3
+
+func _on_select_button_button_up() -> void:
+	$Bg/SelectButton/Label.position.y -= 3

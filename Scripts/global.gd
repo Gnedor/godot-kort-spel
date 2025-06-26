@@ -13,7 +13,7 @@ var stored_tiles = []
 var stored_tags = []
 var window_size : Vector2 = Vector2(1920, 1080)
 
-var scene_index : int = -1
+var scene_index : int = -2
 
 var played_cards = []
 

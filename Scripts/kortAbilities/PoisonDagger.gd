@@ -25,7 +25,7 @@ func trigger_ability(card_reference):
 		battle_manager_reference.debuffs["Poison"] *= 2
 	else:
 		battle_manager_reference.create_debuff_icon("Poison")
-		battle_manager_reference.debuffs["Poison"] = 10
+		battle_manager_reference.debuffs["Poison"] = 5
 		
 	battle_manager_reference.update_labels()
 	

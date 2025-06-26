@@ -59,7 +59,7 @@ func _ready() -> void:
 	
 	
 func on_enter():
-	pass
+	reroll_count = 0
 	#round_label.text = "Round: " + str(Global.round)
 	#money_label.text = str(Global.total_money) + "$"
 	
@@ -191,6 +191,7 @@ func make_new_cards():
 			
 		if new_card_instance.card_type == "Spell":
 			new_card_instance.get_node("Textures/ScaleNode/StatDisplay").visible = false
+		new_card_instance.get_node("Textures/VBoxContainer2").visible = false
 		card_clip_mask.add_child(new_card_instance)  
 		cards_in_shop.append(new_card_instance)
 		connect_card_signal(new_card_instance)
@@ -420,9 +421,8 @@ func select_card(card):
 	card_collection.toggle_collision(true)
 	shop_scene_manager.move_to_manage_card(selected_card)
 	card_collection.align_card_hover(null)
-	card.stat_display.visible = true
 	if selected_card.card_type != "Spell":
-		selected_card.visible = true
+		selected_card.stat_display.visible = true
 
 func deselect_card(card):
 	selected_card = null

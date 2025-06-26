@@ -1,10 +1,208 @@
-[gd_scene load_steps=2 format=3 uid="uid://3rsw02g48brg"]
+[gd_scene load_steps=14 format=3 uid="uid://3rsw02g48brg"]
 
+[ext_resource type="Script" path="res://Scripts/meny.gd" id="1_nwmer"]
+[ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_p4ujv"]
 [ext_resource type="Texture2D" uid="uid://cjvunkjxebbfw" path="res://Assets/images/Meny/Title.png" id="1_yrpe0"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="3_n788e"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_kalsa"]
+[ext_resource type="Texture2D" uid="uid://dlpxsfxdkb01t" path="res://Assets/images/Meny/guy.png" id="5_lxmk5"]
+[ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="6_mw16p"]
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="Animation" id="Animation_v1rvu"]
+resource_name = "Idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(960, 248), Vector2(960, 264), Vector2(960, 248)]
+}
+
+[sub_resource type="Animation" id="Animation_6j6w1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(960, 232)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_p7qb1"]
+_data = {
+"Idle": SubResource("Animation_v1rvu"),
+"RESET": SubResource("Animation_6j6w1")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3uqk"]
+atlas = ExtResource("5_lxmk5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d86b1"]
+atlas = ExtResource("5_lxmk5")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_62aq3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3uqk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d86b1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="MenuScene" type="Node2D"]
+script = ExtResource("1_nwmer")
+
+[node name="sten" parent="." instance=ExtResource("1_p4ujv")]
+position = Vector2(960, 256)
 
 [node name="Title" type="Sprite2D" parent="."]
-position = Vector2(960, 256)
+position = Vector2(960, 232)
 scale = Vector2(10, 10)
 texture = ExtResource("1_yrpe0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title"]
+libraries = {
+"": SubResource("AnimationLibrary_p7qb1")
+}
+autoplay = "Idle"
+
+[node name="OptionsButton" type="Button" parent="."]
+self_modulate = Color(0.463587, 0.463587, 0.463587, 1)
+offset_left = 800.0
+offset_top = 816.0
+offset_right = 1120.0
+offset_bottom = 880.0
+theme = ExtResource("3_n788e")
+
+[node name="Label" type="Label" parent="OptionsButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_kalsa")
+theme_override_font_sizes/font_size = 24
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="Button" parent="."]
+self_modulate = Color(0.462745, 0.462745, 0.462745, 1)
+offset_left = 784.0
+offset_top = 928.0
+offset_right = 1136.0
+offset_bottom = 1008.0
+theme = ExtResource("3_n788e")
+
+[node name="Label" type="Label" parent="ExitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_kalsa")
+theme_override_font_sizes/font_size = 24
+text = "Exit  :("
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="."]
+self_modulate = Color(0.462745, 0.462745, 0.462745, 1)
+offset_left = 768.0
+offset_top = 664.0
+offset_right = 1152.0
+offset_bottom = 760.0
+theme = ExtResource("3_n788e")
+
+[node name="Label" type="Label" parent="StartButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_kalsa")
+theme_override_font_sizes/font_size = 32
+text = "Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PovGuy" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PovGuy"]
+position = Vector2(96, 96)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_62aq3")
+autoplay = "default"
+frame_progress = 0.18849
+
+[node name="ColorRect" type="ColorRect" parent="PovGuy"]
+z_index = -1
+layout_mode = 0
+offset_left = 160.0
+offset_top = 48.0
+offset_right = 520.0
+offset_bottom = 160.0
+
+[node name="ColorRect2" type="ColorRect" parent="PovGuy/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="PovGuy/ColorRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_mw16p")
+theme_override_font_sizes/font_size = 24
+text = "Hello kind stranger :)"
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

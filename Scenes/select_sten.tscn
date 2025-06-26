@@ -173,6 +173,7 @@ grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
 theme = ExtResource("3_g5ms4")
+keep_pressed_outside = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="NinePatchRect3/BackButton"]
@@ -206,6 +207,7 @@ grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
 theme = ExtResource("3_g5ms4")
+keep_pressed_outside = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="NinePatchRect3/PlayButton"]
@@ -229,7 +231,15 @@ position = Vector2(960, -1104)
 
 [node name="DeckPreview" parent="." instance=ExtResource("8_ye3qe")]
 
+[connection signal="button_down" from="NinePatchRect3/Button_left" to="." method="_on_button_left_button_down"]
+[connection signal="button_up" from="NinePatchRect3/Button_left" to="." method="_on_button_left_button_up"]
 [connection signal="pressed" from="NinePatchRect3/Button_left" to="." method="_on_button_left_pressed"]
+[connection signal="button_down" from="NinePatchRect3/Button_right" to="." method="_on_button_right_button_down"]
+[connection signal="button_up" from="NinePatchRect3/Button_right" to="." method="_on_button_right_button_up"]
 [connection signal="pressed" from="NinePatchRect3/Button_right" to="." method="_on_button_right_pressed"]
+[connection signal="button_down" from="NinePatchRect3/BackButton" to="." method="_on_back_button_button_down"]
+[connection signal="button_up" from="NinePatchRect3/BackButton" to="." method="_on_back_button_button_up"]
 [connection signal="pressed" from="NinePatchRect3/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="button_down" from="NinePatchRect3/PlayButton" to="." method="_on_play_button_button_down"]
+[connection signal="button_up" from="NinePatchRect3/PlayButton" to="." method="_on_play_button_button_up"]
 [connection signal="pressed" from="NinePatchRect3/PlayButton" to="." method="_on_play_button_pressed"]

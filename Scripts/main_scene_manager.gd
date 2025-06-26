@@ -4,12 +4,14 @@ extends Node2D
 @onready var shop_scene_manager = $"../ShopScene".get_node("ShopSceneManager")
 @onready var round_end_scene_manager = $"../EndOfRoundScreen"
 @onready var select_sten: Node2D = $"../SelectSten"
+@onready var menu_scene: Node2D = $"../MenuScene"
 
 func _ready() -> void:
 	battle_scene_manager.on_scene_exit.connect(scene_progression)
 	shop_scene_manager.on_scene_exit.connect(scene_progression)
 	round_end_scene_manager.on_scene_exit.connect(scene_progression)
 	select_sten.on_scene_exit.connect(scene_progression)
+	menu_scene.on_scene_exit.connect(scene_progression)
 	
 	scene_progression()
 
@@ -32,6 +34,10 @@ func scene_progression():
 		-1:
 			move_to_select_scene()
 			Global.scene_index = 0
+		-2:
+			move_to_menu_scene()
+			Global.scene_index = -1
+			
 
 func move_to_battle_scene():
 	camera.position = $"../BattleScene".position
@@ -47,5 +53,11 @@ func move_to_end_round_screen():
 	
 func move_to_select_scene():
 	camera.position = $"../SelectSten".position
+	select_sten.on_enter_scene()
+	
+func move_to_menu_scene():
+	camera.position = $"../MenuScene".position
+	menu_scene.on_enter_scene()
+	
 	
 	

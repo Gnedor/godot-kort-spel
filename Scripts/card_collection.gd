@@ -36,6 +36,7 @@ func move_in_cards():
 		card.z_index = 110
 		card.visible = true
 		card.get_node("Area2D").collision_layer = 1 << 8
+		card.trait_description.visible = false
 
 	align_cards()
 	
@@ -44,6 +45,7 @@ func move_out_cards():
 		card.get_node("Area2D/CollisionShape2D").disabled = true
 		card.get_node("Area2D").collision_layer = 1 << 1
 		card.z_index = 1
+		card.visible = false
 
 func align_cards():
 	update_page_indicators()
@@ -89,6 +91,7 @@ func hover_effect(card):
 	#var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1.05, 1.05)
 	card.card_description.visible = true
+	card.trait_description.visible = true
 	if card.card_type != "Spell":
 		card.get_node("Textures/ScaleNode/StatDisplay").visible = true
 		
@@ -96,6 +99,7 @@ func hover_off_effect(card):
 	#var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1, 1)
 	card.card_description.visible = false
+	card.trait_description.visible = false
 	card.get_node("Textures/ScaleNode/StatDisplay").visible = false
 
 func create_page_indicators():
