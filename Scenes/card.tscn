@@ -14,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://854dmrdy2jd0" path="res://Scenes/buy_button.tscn" id="10_2hy3d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ve337"]
-render_priority = 0
 shader = ExtResource("1_rdoxh")
+shader_parameter/hit_opacity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gsysh"]
 atlas = ExtResource("4_iftc1")
@@ -444,7 +444,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="StatDisplay" type="Sprite2D" parent="Textures/ScaleNode"]
-visible = false
 position = Vector2(0, -66.6667)
 texture = ExtResource("4_4oeem")
 

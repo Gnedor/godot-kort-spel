@@ -122,6 +122,7 @@ func attack(played_cards):
 				card.is_selected = false
 				
 				await get_tree().create_timer(0.15).timeout
+				sten.particle_explode()
 				animate_invert_blink(sten)
 				camera_2d.apply_shake()
 				

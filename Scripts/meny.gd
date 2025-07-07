@@ -14,11 +14,14 @@ var dialog = [
 
 signal on_scene_exit
 
+var move_up
+var move_down
+
+var first_enter : bool = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
-
+	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
@@ -26,6 +29,7 @@ func _process(delta: float) -> void:
 	
 func on_enter_scene():
 	display_dialog()
+	move_in_scene()
 	
 func display_dialog():
 	var dialog_label = $PovGuy/ColorRect/Label
@@ -34,10 +38,11 @@ func display_dialog():
 	await Global.timer(0.5)
 	var tween = get_tree().create_tween()
 	tween.tween_property(dialog_label, "visible_ratio", 1.0, 1)
+	var text_length = 0
+	AudioManager.animate_text_audio(str(dialog_label.get_text()).length(), 1)
 	
 func remove_scene():
-	var move_up = [$sten, $Title, $PovGuy]
-	var move_down = [$OptionsButton, $ExitButton, $StartButton]
+	$Title/AnimationPlayer.stop()
 	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 
 	for obj in move_up:
@@ -48,6 +53,27 @@ func remove_scene():
 		
 	await tween.finished
 		
+func move_in_scene():
+	move_up = [$sten, $Title, $PovGuy]
+	move_down = [$OptionsButton, $ExitButton, $StartButton]
+	
+	if first_enter:
+		for obj in move_up:
+			obj.position.y -= 700
+		for obj in move_down:
+			obj.position.y += 500
+		first_enter = false
+		
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+	for obj in move_up:
+		tween.parallel().tween_property(obj, "position:y", obj.position.y + 700, 0.3)
+		
+	for obj in move_down:
+		tween.parallel().tween_property(obj, "position:y", obj.position.y - 500, 0.3)
+		
+	await tween.finished
+	$Title/AnimationPlayer.play()
 	
 func _on_start_button_pressed() -> void:
 	await remove_scene()

@@ -1,6 +1,6 @@
 extends Node2D
 @onready var battle_scene: Node2D = $"../BattleScene"
-
+@onready var texture_rect: TextureRect = $"../TextureRect"
 
 var shapes = ["Sten", "Square", "Pentagon", "Circle", "Smiley", "Golden sten", ]
 var difficulty : int = 0
@@ -39,6 +39,7 @@ func change_sten():
 		$sten.get_node("Sprite2D").texture = load(image_path)
 
 func _on_button_right_pressed() -> void:
+	AudioManager.play_click_sound()
 	difficulty += 1
 	change_sten()
 	$NinePatchRect3/Button_left.disabled = false
@@ -46,6 +47,7 @@ func _on_button_right_pressed() -> void:
 		$NinePatchRect3/Button_right.disabled = true
 	
 func _on_button_left_pressed() -> void:
+	AudioManager.play_click_sound()
 	difficulty -= 1
 	change_sten()
 	$NinePatchRect3/Button_right.disabled = false

@@ -1,18 +1,22 @@
-[gd_scene load_steps=23 format=3 uid="uid://col4ncuar707o"]
+[gd_scene load_steps=27 format=3 uid="uid://col4ncuar707o"]
 
 [ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_cuqhi"]
 [ext_resource type="Script" path="res://Scripts/battle_scene_manager.gd" id="2_isg24"]
 [ext_resource type="Script" path="res://Scripts/battle_manager.gd" id="3_42q7k"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="4_8niwj"]
+[ext_resource type="AudioStream" uid="uid://brgidl2c06obm" path="res://Assets/audio/sfx/text.wav" id="4_r4uyf"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="5_tjrnk"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="6_ounae"]
 [ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="7_vemiv"]
 [ext_resource type="Script" path="res://Scripts/input_manager.gd" id="8_rf5mg"]
 [ext_resource type="Script" path="res://Scripts/card_manager.gd" id="9_0qvbw"]
 [ext_resource type="PackedScene" uid="uid://dlf5nf8ot7glp" path="res://Scenes/spell_deck.tscn" id="10_imebb"]
+[ext_resource type="AudioStream" uid="uid://oryuasu3r6xm" path="res://Assets/audio/sfx/discard.wav" id="10_tcst3"]
 [ext_resource type="PackedScene" uid="uid://cq8q8qchwy526" path="res://Scenes/deck.tscn" id="11_eeh37"]
+[ext_resource type="AudioStream" uid="uid://iwjpglqt3vnf" path="res://Assets/audio/sfx/draw.wav" id="11_j1shf"]
 [ext_resource type="Script" path="res://Scripts/deck.gd" id="12_5vomw"]
 [ext_resource type="PackedScene" uid="uid://bco7eddmnqek" path="res://Scenes/discard_pile.tscn" id="13_3rrsm"]
+[ext_resource type="AudioStream" uid="uid://d2pju83ffcsos" path="res://Assets/audio/sfx/palce.wav" id="13_8lue7"]
 [ext_resource type="PackedScene" uid="uid://dev8m08gchsr4" path="res://Scenes/card_slot.tscn" id="14_wbgrc"]
 [ext_resource type="PackedScene" uid="uid://daa4mye5x3rm5" path="res://Scenes/tiles_folder.tscn" id="15_uykei"]
 [ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="16_x00fb"]
@@ -137,6 +141,8 @@ position = Vector2(960, -24)
 
 [node name="SceneManager" type="Node2D" parent="."]
 script = ExtResource("2_isg24")
+discard_audio = ExtResource("10_tcst3")
+text_audio = ExtResource("4_r4uyf")
 
 [node name="Timer" type="Timer" parent="SceneManager"]
 wait_time = 0.05
@@ -217,9 +223,13 @@ visible_ratio = 0.0
 
 [node name="InputManager" type="Node2D" parent="."]
 script = ExtResource("8_rf5mg")
+deck_audio = ExtResource("11_j1shf")
 
 [node name="CardManager" type="Node2D" parent="."]
 script = ExtResource("9_0qvbw")
+discard_audio = ExtResource("10_tcst3")
+draw_audio = ExtResource("11_j1shf")
+place_audio = ExtResource("13_8lue7")
 
 [node name="HandCounter" type="Label" parent="CardManager"]
 offset_left = 768.0
@@ -563,7 +573,7 @@ offset_bottom = 7.984
 pivot_offset = Vector2(152, 25)
 theme_override_fonts/font = ExtResource("5_tjrnk")
 theme_override_font_sizes/font_size = 24
-text = "40000000000"
+text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 visible_characters = 0

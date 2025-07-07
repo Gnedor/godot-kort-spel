@@ -14,6 +14,8 @@ extends Node2D
 @onready var timer: Timer = $Timer
 @onready var pause_timer: Timer = $PauseTimer
 
+@export var discard_audio: AudioStream
+@export var text_audio: AudioStream
 
 var battle_scene_up
 var battle_scene_up_first
@@ -69,6 +71,7 @@ func remove_battle_scene():
 		
 func _on_timer_timeout() -> void:
 	if card_manager.played_cards and step == 1:
+		AudioManager.play_audio(discard_audio, 0)
 		var tween = get_tree().create_tween()
 		tween.tween_property(card_manager.played_cards[0], "position", Vector2(2200, 300), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		deck.cards_in_troop_deck.append(card_manager.played_cards[0])
@@ -105,6 +108,7 @@ func _on_timer_timeout() -> void:
 		
 	if card_manager.cards_in_hand and step == 3:
 		var tween = get_tree().create_tween()
+		AudioManager.play_audio(discard_audio, 0)
 		tween.tween_property(card_manager.cards_in_hand[0], "position", Vector2(2200, 500), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		
 		if card_manager.cards_in_hand[0].card_type != "Spell":
@@ -195,6 +199,8 @@ func display_quota():
 	quota_label.scale = Vector2(3, 3)
 
 	tween.parallel().tween_property($"../NewQuota", "visible_ratio", 1.0, 0.2)
+	AudioManager.animate_text_audio(str($"../NewQuota".get_text()).length(), 0.2)
+	
 	tween.parallel().tween_property(quota_label, "visible_ratio", 1.0, 0.2)
 	
 	await Global.timer(0.5)
@@ -202,6 +208,7 @@ func display_quota():
 	
 	quota_label.visible = true
 	while quota_label.text != str(Global.quota):
+		AudioManager.play_audio(text_audio, -20)
 		new_quota += Global.quota / 20
 		quota_label.text = str(new_quota)
 		await Global.timer(0.01)

@@ -127,6 +127,8 @@ func update_page_indicators():
 			page_indicators[i].modulate = Color(0.4, 0.4, 0.4)
 
 func _on_button_left_pressed() -> void:
+	AudioManager.play_click_sound()
+	
 	if page > 0:
 		page -= 1
 		align_cards()
@@ -145,6 +147,8 @@ func _on_button_right_button_up() -> void:
 	arrow_right.position.y -= 2
 
 func _on_button_right_pressed() -> void:
+	AudioManager.play_click_sound()
+	
 	if page < max_page:
 		page += 1
 		align_cards()

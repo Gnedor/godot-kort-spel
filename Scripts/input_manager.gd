@@ -6,6 +6,8 @@ extends Node2D
 @onready var tiles_folder: Node2D = $"../TilesFolder"
 @onready var card_collection: Node2D = $"../CardCollection"
 
+@export var deck_audio: AudioStream
+
 signal card_relesed_on_slot
 signal tile_relesed_on_slot
 signal card_clicked_on_slot
@@ -85,6 +87,8 @@ func _input(event):
 				click_on_discard.emit(card_manager.played_cards, "played")
 				
 			if raycast_check(DECK_MASK) and !card_manager.viewing_collection:
+				AudioManager.play_audio(deck_audio, 0) 
+				
 				if battle_manager.deck_select:
 					select_deck.emit(raycast_check(DECK_MASK))
 				else: 

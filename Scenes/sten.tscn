@@ -1,12 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://7x22732qu3vm"]
+[gd_scene load_steps=12 format=3 uid="uid://7x22732qu3vm"]
 
 [ext_resource type="Shader" path="res://shaders/invert.gdshader" id="1_owjoq"]
 [ext_resource type="Texture2D" uid="uid://cgcbkhnx74sxk" path="res://Assets/images/Stenar/sten.png" id="1_vxhgu"]
+[ext_resource type="Texture2D" uid="uid://bc14udcgxpitn" path="res://Assets/images/Attack-Actions_dot.png" id="3_lesh3"]
 
 [sub_resource type="GDScript" id="GDScript_fax22"]
 script/source = "extends Node2D
 
 @onready var attack_point: Node2D = $AttackPoint
+@onready var explosion_particle: CPUParticles2D = $AttackPoint/CPUParticles2D
 
 var randomStregth : float = 30.0
 var shake_fade : float = 5.0
@@ -15,8 +17,7 @@ var rng = RandomNumberGenerator.new()
 
 var shake_strength : float = 0.0
 	
-func apply_shake(): 
-	print(\"jaho\")
+func apply_shake():
 	shake_strength = randomStregth
 	
 func random_offset() -> Vector2:
@@ -27,11 +28,19 @@ func random_offset() -> Vector2:
 func _process(delta: float) -> void:
 	if shake_strength > 0:
 		shake_strength = lerpf(shake_strength, 0, shake_fade * delta)
+		
+func particle_explode():
+	var temp_particle = explosion_particle.duplicate()
+	$AttackPoint.add_child(temp_particle)
+	temp_particle.emitting = true
+	
+	await temp_particle.emitting
+	temp_particle.queue_free
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tfa6m"]
-render_priority = 0
 shader = ExtResource("1_owjoq")
+shader_parameter/invert_strength = 0.0
 
 [sub_resource type="Animation" id="Animation_2qd4g"]
 resource_name = "Idle"
@@ -74,6 +83,12 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hyj3u"]
 size = Vector2(576, 560)
 
+[sub_resource type="Curve" id="Curve_ejlml"]
+_data = [Vector2(0.495979, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_peeq5"]
+
 [node name="sten" type="Node2D"]
 script = SubResource("GDScript_fax22")
 
@@ -98,3 +113,23 @@ shape = SubResource("RectangleShape2D_hyj3u")
 
 [node name="AttackPoint" type="Node2D" parent="."]
 position = Vector2(0, 192)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="AttackPoint"]
+emitting = false
+amount = 30
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 1.0
+texture = ExtResource("3_lesh3")
+emission_shape = 2
+emission_sphere_radius = 50.0
+spread = 180.0
+gravity = Vector2(0, 2000)
+initial_velocity_min = 477.0
+initial_velocity_max = 1000.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+scale_amount_min = 2.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_ejlml")
+color_ramp = SubResource("Gradient_peeq5")

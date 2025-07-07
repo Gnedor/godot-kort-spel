@@ -93,6 +93,7 @@ func _on_button_button_up() -> void:
 func add_text(label):
 	var tween = get_tree().create_tween()
 	tween.tween_property(label, "visible_ratio", 1.0, 0.1)
+	AudioManager.animate_text_audio(str(label.get_text()).length(), 0.1)
 	await tween.finished
 	
 func move_off_screen():

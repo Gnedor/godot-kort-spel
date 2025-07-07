@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=3 uid="uid://cp4ct3limthbx"]
+
+[ext_resource type="Script" path="res://Assets/audio/audio_manager.gd" id="1_je1hp"]
+[ext_resource type="PackedScene" uid="uid://bg3f5lcvdtjma" path="res://Assets/audio/audio_one_shot.tscn" id="2_0drqq"]
+[ext_resource type="AudioStream" uid="uid://deac4w1oio2j" path="res://Assets/audio/sfx/click.wav" id="3_60cwk"]
+[ext_resource type="AudioStream" uid="uid://brgidl2c06obm" path="res://Assets/audio/sfx/text.wav" id="4_blbq6"]
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_je1hp")
+one_shot_scene = ExtResource("2_0drqq")
+click_audio = ExtResource("3_60cwk")
+text_audio = ExtResource("4_blbq6")
+
+[node name="OneShots" type="Node" parent="."]

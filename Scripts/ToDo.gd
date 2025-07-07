@@ -8,7 +8,7 @@
 	# Måste hitta ett sätt att dislplaya flera debuffs information på ett kort
 	# Tile abilities försvinner inte när nästa runda startar
 	# Alla gubbar visar (1, 1) i deck preview
-	
+	# Kort försvinner i collection i shopen när man lämnar
 	
 #Ideer:
 	# En kort animation i slutet av varje runda som visar att stenen tar skada av t.ex poision med detaljer som t.ex att damage texten blir grön och att en icon animeras

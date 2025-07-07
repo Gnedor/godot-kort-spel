@@ -19,7 +19,6 @@ var description_scene = preload("res://Scenes/description.tscn")
 @onready var tag_circle: AnimatedSprite2D = $Textures/ScaleNode/CardSprite/TagCircle
 @onready var tag_circle_collider: CollisionShape2D = $Textures/ScaleNode/CardSprite/TagCircle/Area2D/CollisionShape2D
 
-
 var is_placed : bool = false
 var is_hovering : bool = false
 var in_deck : bool = true

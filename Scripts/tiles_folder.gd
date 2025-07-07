@@ -68,6 +68,7 @@ func compare_x_position(a, b):
 	return false
 
 func _on_button_pressed() -> void:
+	AudioManager.play_click_sound()
 	if menu_up:
 		animate_folder_down()
 	else:

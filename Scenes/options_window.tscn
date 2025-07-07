@@ -1,0 +1,324 @@
+[gd_scene load_steps=13 format=3 uid="uid://j6m3ogxd6jm"]
+
+[ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_0j3b7"]
+[ext_resource type="Texture2D" uid="uid://pdx3bukdduv" path="res://Assets/images/Meny/options guy.png" id="1_4t84e"]
+[ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="1_rko0j"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_jxjt2"]
+[ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="3_ink5w"]
+[ext_resource type="Theme" uid="uid://b80031dk3mg5e" path="res://Assets/themes/button_theme.tres" id="4_e1cqc"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="4_n843a"]
+[ext_resource type="Texture2D" uid="uid://evf007ggceo8" path="res://Assets/images/multiply.png" id="5_m2h3e"]
+[ext_resource type="Texture2D" uid="uid://bgicgg882mk6t" path="res://Assets/images/minus.png" id="6_i1vlt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8vdpd"]
+atlas = ExtResource("1_4t84e")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ss8qp"]
+atlas = ExtResource("1_4t84e")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qwk3s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8vdpd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ss8qp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="OptionsWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+self_modulate = Color(0.241156, 0.241156, 0.241156, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 624.0
+offset_top = 208.0
+offset_right = -624.0
+offset_bottom = -240.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_0j3b7")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect"]
+self_modulate = Color(0.128344, 0.128344, 0.128344, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 64.0
+offset_right = -16.0
+offset_bottom = -16.0
+texture = ExtResource("1_rko0j")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Options" type="Control" parent="NinePatchRect/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainVolume" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
+layout_mode = 1
+anchor_right = 1.0
+offset_left = 264.0
+offset_top = 56.0
+offset_right = -264.0
+offset_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(56, 0)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
+self_modulate = Color(0.083392, 0.083392, 0.083392, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.015
+anchor_bottom = -0.015
+offset_top = 0.149985
+offset_right = 112.0
+offset_bottom = 48.15
+texture = ExtResource("1_rko0j")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/MainVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.167
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 0.554007
+offset_bottom = 0.570007
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_ink5w")
+theme_override_font_sizes/font_size = 0
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 8.0
+offset_right = 152.0
+offset_bottom = 40.0
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/MainVolume/Button"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_m2h3e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button2" type="Button" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
+offset_left = -40.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 40.0
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/MainVolume/Button2"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_i1vlt")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -32.0
+offset_right = 152.0
+offset_bottom = -9.0
+theme_override_fonts/font = ExtResource("3_ink5w")
+text = "Master"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicVolume" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
+layout_mode = 1
+offset_left = 264.0
+offset_top = 152.0
+offset_right = 376.0
+offset_bottom = 200.0
+pivot_offset = Vector2(56, 0)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
+self_modulate = Color(0.083392, 0.083392, 0.083392, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.015
+anchor_bottom = -0.015
+offset_top = 0.149985
+offset_right = 112.0
+offset_bottom = 48.15
+texture = ExtResource("1_rko0j")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/MusicVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.167
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 0.554007
+offset_bottom = 0.570007
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_ink5w")
+theme_override_font_sizes/font_size = 0
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 8.0
+offset_right = 152.0
+offset_bottom = 40.0
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/MusicVolume/Button"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_m2h3e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button2" type="Button" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
+offset_left = -40.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 40.0
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/MusicVolume/Button2"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_i1vlt")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -32.0
+offset_right = 152.0
+offset_bottom = -9.0
+theme_override_fonts/font = ExtResource("3_ink5w")
+text = "Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="NinePatchRect"]
+position = Vector2(24, 24)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_qwk3s")
+autoplay = "default"
+frame_progress = 0.449613
+
+[node name="Label" type="Label" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.013
+anchor_bottom = 1.0
+offset_left = 80.0
+offset_top = 8.216
+offset_right = 292.0
+offset_bottom = -568.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("2_jxjt2")
+theme_override_font_sizes/font_size = 32
+text = "Options"
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="."]
+self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.778
+anchor_right = 0.2
+anchor_bottom = 0.778
+offset_left = -64.0
+offset_top = -96.2401
+offset_right = 160.0
+offset_bottom = 23.7599
+focus_mode = 0
+theme = ExtResource("4_n843a")
+keep_pressed_outside = true
+
+[node name="BackLabel" type="Label" parent="BackButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_jxjt2")
+theme_override_font_sizes/font_size = 32
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1

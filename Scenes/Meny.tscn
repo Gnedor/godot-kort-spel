@@ -91,6 +91,7 @@ offset_left = 800.0
 offset_top = 816.0
 offset_right = 1120.0
 offset_bottom = 880.0
+focus_mode = 0
 theme = ExtResource("3_n788e")
 
 [node name="Label" type="Label" parent="OptionsButton"]
@@ -114,6 +115,7 @@ offset_left = 784.0
 offset_top = 928.0
 offset_right = 1136.0
 offset_bottom = 1008.0
+focus_mode = 0
 theme = ExtResource("3_n788e")
 
 [node name="Label" type="Label" parent="ExitButton"]
@@ -137,6 +139,7 @@ offset_left = 768.0
 offset_top = 664.0
 offset_right = 1152.0
 offset_bottom = 760.0
+focus_mode = 0
 theme = ExtResource("3_n788e")
 
 [node name="Label" type="Label" parent="StartButton"]

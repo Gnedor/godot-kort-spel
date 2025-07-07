@@ -112,9 +112,13 @@ func switch_deck():
 	Global.selected_deck = CardDatabase.DECKS[deck_index]
 	
 func move_in():
-	pass
-		
+	position.y += 1080
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "position:y", 0, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property($Bg/Label, "visible_ratio", 1.0, 0.3)
+																																								
 func _on_button_right_pressed() -> void:
+	AudioManager.play_click_sound()
 	deck_index += 1
 	switch_deck()
 	
@@ -122,8 +126,8 @@ func _on_button_right_pressed() -> void:
 	if deck_index >= CardDatabase.DECKS.size() - 1:
 		$Bg/Button_right.disabled = true
 
-
 func _on_button_left_pressed() -> void:
+	AudioManager.play_click_sound()
 	deck_index -= 1
 	switch_deck()
 	
@@ -132,6 +136,16 @@ func _on_button_left_pressed() -> void:
 		$Bg/Button_left.disabled = true
 
 func _on_back_button_pressed() -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property($Bg/Label, "visible_ratio", 0.0, 0.2)
+	await Global.timer(0.2)
+	
+	tween = get_tree().create_tween()
+	tween.parallel().tween_property(get_parent().texture_rect, "modulate", Color(0, 0, 0), 0.4)
+	tween.parallel().tween_property(self, "position:y", position.y + 1080, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	
+	await tween.finished
+	
 	Global.scene_index = -2
 	get_parent().on_scene_exit.emit()
 

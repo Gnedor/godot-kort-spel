@@ -24,13 +24,15 @@ SignalManager="*res://Scripts/signal_manager.gd"
 TagDatabase="*res://Scripts/tag_database.gd"
 CardDatabase="*res://Scripts/card_database.gd"
 TileDatabase="*res://Scripts/tile_database.gd"
+AudioManager="*res://Assets/audio/audio_manager_scene.tscn"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=3
 window/size/initial_position_type=0
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 window/vsync/vsync_mode=0
 mouse_cursor/custom_image="res://Assets/images/mus.png"
 

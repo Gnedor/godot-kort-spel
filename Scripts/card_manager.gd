@@ -12,6 +12,10 @@ var card_scene = load("res://Scenes/card.tscn")
 @onready var card_collection: Node2D = $"../CardCollection"
 @onready var back_label: Label = $"../CardCollection/BackButton/BackLabel"
 @onready var darken_background: ColorRect = $"../BattleManager/DarkenBackground"
+@export_category("SFX")
+@export var discard_audio: AudioStream
+@export var draw_audio: AudioStream
+@export var place_audio: AudioStream
 
 var dragged_card : Node2D
 var window_size : Vector2
@@ -72,6 +76,8 @@ func swap_elements(array : Array, index1 : int, index2 : int):
 	
 func place_card_on_slot(slot):
 	if !slot.is_occupied and dragged_card and !dragged_card.is_placed and !dragged_card.card_type == "Spell":
+		AudioManager.play_audio(place_audio, -2)
+		
 		placed_card.emit(dragged_card)
 		cards_in_hand.erase(dragged_card)
 		dragged_card.z_index = 3
@@ -152,6 +158,8 @@ func draw_cards(troop_amount : int, spell_amount : int):
 	var selected_deck
 		
 	for i in amount_to_be_drawn_total:
+		AudioManager.play_audio(draw_audio, 0)
+		
 		if amount_to_be_drawn_troop > 0:
 			drawn_card = deck.cards_in_troop_deck[0]
 			amount_to_be_drawn_troop -= 1
@@ -284,6 +292,8 @@ func discard_selected_cards(cards, status : String):
 					card_slots.get_node("CardSlot" + str(i + 1)).is_occupied = false
 					
 		if card.is_selected == true:
+			AudioManager.play_audio(discard_audio, 0)
+			
 			deselect_effect(card)
 			card.stat_display.visible = false
 			card.is_selected = false
@@ -321,6 +331,8 @@ func _on_back_button_button_up() -> void:
 	back_label.position.y -= 3
 
 func _on_back_button_pressed() -> void:
+	AudioManager.play_audio(discard_audio, 0)
+	
 	var tween = get_tree().create_tween()
 	tween.parallel().tween_property(card_collection, "position", Vector2(0, Global.window_size.y), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	for card in card_collection.cards_in_collection:
