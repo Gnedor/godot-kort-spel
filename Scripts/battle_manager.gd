@@ -71,6 +71,12 @@ func on_enter():
 	total_damage_label.text = "0"
 	hand_info.text = ("")
 	
+	for card in deck.cards_in_troop_deck:
+		card.attack = card.base_attack
+		card.actions = card.base_actions
+		card.multiplier = 1
+		card.update_card()
+	
 	toggle_invert(sten.get_node("Sprite2D"), false)
 	end_turn_label_position_y = end_turn_label.position.y
 	
@@ -127,7 +133,7 @@ func attack(played_cards):
 				camera_2d.apply_shake()
 				
 				damage = 0
-				var apply_poison : bool = false
+				apply_poison = false
 
 				apply_trait(card.trait_1)
 				apply_trait(card.trait_2)

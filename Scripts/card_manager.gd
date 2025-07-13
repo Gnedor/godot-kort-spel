@@ -12,6 +12,7 @@ var card_scene = load("res://Scenes/card.tscn")
 @onready var card_collection: Node2D = $"../CardCollection"
 @onready var back_label: Label = $"../CardCollection/BackButton/BackLabel"
 @onready var darken_background: ColorRect = $"../BattleManager/DarkenBackground"
+
 @export_category("SFX")
 @export var discard_audio: AudioStream
 @export var draw_audio: AudioStream
@@ -21,6 +22,7 @@ var dragged_card : Node2D
 var window_size : Vector2
 var hand_boundry : float
 var is_hovering_over_card : bool = false
+
 var highest_card
 var played_cards = []
 var discarded_cards = []

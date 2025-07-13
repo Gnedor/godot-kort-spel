@@ -1,12 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://j6m3ogxd6jm"]
+[gd_scene load_steps=15 format=3 uid="uid://j6m3ogxd6jm"]
 
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_0j3b7"]
 [ext_resource type="Texture2D" uid="uid://pdx3bukdduv" path="res://Assets/images/Meny/options guy.png" id="1_4t84e"]
+[ext_resource type="Script" path="res://Scripts/options.gd" id="1_enflt"]
 [ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="1_rko0j"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_jxjt2"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="3_ink5w"]
 [ext_resource type="Theme" uid="uid://b80031dk3mg5e" path="res://Assets/themes/button_theme.tres" id="4_e1cqc"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="4_n843a"]
+[ext_resource type="Theme" uid="uid://ciiinsq8i8ijv" path="res://Assets/themes/toggle_button_theme.tres" id="4_qnksc"]
 [ext_resource type="Texture2D" uid="uid://evf007ggceo8" path="res://Assets/images/multiply.png" id="5_m2h3e"]
 [ext_resource type="Texture2D" uid="uid://bgicgg882mk6t" path="res://Assets/images/minus.png" id="6_i1vlt"]
 
@@ -39,6 +41,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_enflt")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 self_modulate = Color(0.241156, 0.241156, 0.241156, 1)
@@ -82,15 +85,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="FullScreen" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
+anchors_preset = 0
+offset_left = 72.0
+offset_top = 112.0
+offset_right = 240.0
+offset_bottom = 136.0
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/FullScreen"]
+layout_mode = 0
+offset_right = 132.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("3_ink5w")
+theme_override_font_sizes/font_size = 16
+text = "Fullscreen"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FullscreenButton" type="Button" parent="NinePatchRect/NinePatchRect/Options/FullScreen"]
+layout_mode = 0
+offset_left = 144.0
+offset_right = 168.0
+offset_bottom = 24.0
+theme = ExtResource("4_qnksc")
+toggle_mode = true
+
 [node name="MainVolume" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
 layout_mode = 1
+anchors_preset = 10
 anchor_right = 1.0
-offset_left = 264.0
-offset_top = 56.0
-offset_right = -264.0
-offset_bottom = 104.0
+offset_left = 424.0
+offset_top = 136.0
+offset_right = -104.0
+offset_bottom = 184.0
 grow_horizontal = 2
-grow_vertical = 2
 pivot_offset = Vector2(56, 0)
 
 [node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
@@ -114,8 +142,8 @@ anchors_preset = -1
 anchor_top = 0.167
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 0.554007
-offset_bottom = 0.570007
+offset_top = -7.016
+offset_bottom = 0.999985
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_ink5w")
@@ -146,6 +174,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Button2" type="Button" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
+layout_mode = 0
 offset_left = -40.0
 offset_top = 8.0
 offset_right = -8.0
@@ -179,10 +208,11 @@ vertical_alignment = 1
 
 [node name="MusicVolume" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
 layout_mode = 1
-offset_left = 264.0
-offset_top = 152.0
-offset_right = 376.0
-offset_bottom = 200.0
+anchors_preset = 0
+offset_left = 424.0
+offset_top = 232.0
+offset_right = 536.0
+offset_bottom = 280.0
 pivot_offset = Vector2(56, 0)
 
 [node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
@@ -206,8 +236,8 @@ anchors_preset = -1
 anchor_top = 0.167
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 0.554007
-offset_bottom = 0.570007
+offset_top = -7.016
+offset_bottom = 0.999985
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_ink5w")
@@ -238,6 +268,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Button2" type="Button" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
+layout_mode = 0
 offset_left = -40.0
 offset_top = 8.0
 offset_right = -8.0
@@ -266,6 +297,100 @@ offset_right = 152.0
 offset_bottom = -9.0
 theme_override_fonts/font = ExtResource("3_ink5w")
 text = "Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SfxVolume" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 424.0
+offset_top = 328.0
+offset_right = 536.0
+offset_bottom = 376.0
+pivot_offset = Vector2(56, 0)
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/Options/SfxVolume"]
+self_modulate = Color(0.083392, 0.083392, 0.083392, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.015
+anchor_bottom = -0.015
+offset_top = 0.149985
+offset_right = 112.0
+offset_bottom = 48.15
+texture = ExtResource("1_rko0j")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/SfxVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.167
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -7.016
+offset_bottom = 0.999985
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_ink5w")
+theme_override_font_sizes/font_size = 0
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="NinePatchRect/NinePatchRect/Options/SfxVolume"]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 8.0
+offset_right = 152.0
+offset_bottom = 40.0
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/SfxVolume/Button"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_m2h3e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Button2" type="Button" parent="NinePatchRect/NinePatchRect/Options/SfxVolume"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 40.0
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/SfxVolume/Button2"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_i1vlt")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/SfxVolume"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -32.0
+offset_right = 152.0
+offset_bottom = -9.0
+theme_override_fonts/font = ExtResource("3_ink5w")
+text = "SFX"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -322,3 +447,5 @@ theme_override_font_sizes/font_size = 32
 text = "Back"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="toggled" from="NinePatchRect/NinePatchRect/Options/FullScreen/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
