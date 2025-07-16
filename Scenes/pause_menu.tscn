@@ -1,0 +1,114 @@
+[gd_scene load_steps=4 format=3 uid="uid://vgonhhkdva5b"]
+
+[ext_resource type="Script" path="res://Scripts/pause_menu.gd" id="1_26wv5"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="1_com1n"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_xnkb4"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_26wv5")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -272.0
+offset_top = -8.0
+offset_right = -272.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.192157)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BackButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0.500095, 0.500095, 0.500095, 1)
+custom_minimum_size = Vector2(256, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_com1n")
+keep_pressed_outside = true
+
+[node name="Label" type="Label" parent="HBoxContainer/BackButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_xnkb4")
+theme_override_font_sizes/font_size = 32
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0.326679, 0.326679, 0.326679, 1)
+custom_minimum_size = Vector2(256, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+theme = ExtResource("1_com1n")
+keep_pressed_outside = true
+
+[node name="Label" type="Label" parent="HBoxContainer/OptionsButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_xnkb4")
+theme_override_font_sizes/font_size = 32
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="Button" parent="HBoxContainer"]
+unique_name_in_owner = true
+self_modulate = Color(0.224304, 0.224304, 0.224304, 1)
+custom_minimum_size = Vector2(256, 128)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("1_com1n")
+keep_pressed_outside = true
+
+[node name="Label" type="Label" parent="HBoxContainer/ExitButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_xnkb4")
+theme_override_font_sizes/font_size = 32
+text = "Exit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="HBoxContainer/BackButton" to="." method="_on_back_button_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/BackButton" to="." method="_on_back_button_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/OptionsButton" to="." method="_on_options_button_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/OptionsButton" to="." method="_on_options_button_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/ExitButton" to="." method="_on_exit_button_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/ExitButton" to="." method="_on_exit_button_mouse_exited"]

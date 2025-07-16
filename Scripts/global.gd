@@ -14,6 +14,7 @@ var stored_tags = []
 var window_size : Vector2 = Vector2(1920, 1080)
 
 var scene_index : int = -2
+var is_game_paused : bool = false
 
 var played_cards = []
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://j6m3ogxd6jm"]
+[gd_scene load_steps=19 format=3 uid="uid://j6m3ogxd6jm"]
 
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_0j3b7"]
 [ext_resource type="Texture2D" uid="uid://pdx3bukdduv" path="res://Assets/images/Meny/options guy.png" id="1_4t84e"]
@@ -11,6 +11,25 @@
 [ext_resource type="Theme" uid="uid://ciiinsq8i8ijv" path="res://Assets/themes/toggle_button_theme.tres" id="4_qnksc"]
 [ext_resource type="Texture2D" uid="uid://evf007ggceo8" path="res://Assets/images/multiply.png" id="5_m2h3e"]
 [ext_resource type="Texture2D" uid="uid://bgicgg882mk6t" path="res://Assets/images/minus.png" id="6_i1vlt"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ef3l1"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Gradient" id="Gradient_6kdyy"]
+offsets = PackedFloat32Array(0, 0.996997)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_2csfj"]
+offsets = PackedFloat32Array(0, 0.99115)
+colors = PackedColorArray(0.03, 0.03, 0.03, 0.690196, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wjvsj"]
+gradient = SubResource("Gradient_2csfj")
+fill_from = Vector2(1, 1)
+fill_to = Vector2(1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8vdpd"]
 atlas = ExtResource("1_4t84e")
@@ -36,405 +55,66 @@ animations = [{
 
 [node name="OptionsWindow" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+mouse_filter = 2
 script = ExtResource("1_enflt")
+
+[node name="DarkBG" type="ColorRect" parent="."]
+layout_mode = 1
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0.764706)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+material = SubResource("CanvasItemMaterial_ef3l1")
+position = Vector2(145, 507)
+amount = 20
+lifetime = 10.0
+texture = ExtResource("1_4t84e")
+spread = 55.13
+gravity = Vector2(0, 0)
+initial_velocity_min = 105.95
+initial_velocity_max = 241.5
+angular_velocity_min = -75.49
+angular_velocity_max = 75.13
+angle_min = -720.0
+angle_max = 149.7
+scale_amount_max = 6.0
+color = Color(0.304462, 0.304462, 0.304462, 1)
+color_ramp = SubResource("Gradient_6kdyy")
+anim_speed_min = 10.0
+anim_speed_max = 12.0
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 self_modulate = Color(0.241156, 0.241156, 0.241156, 1)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 624.0
-offset_top = 208.0
-offset_right = -624.0
-offset_bottom = -240.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = -24.0
+offset_top = 16.0
+offset_right = 456.0
+offset_bottom = 968.0
+pivot_offset = Vector2(0, 476)
 texture = ExtResource("1_0j3b7")
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect"]
-self_modulate = Color(0.128344, 0.128344, 0.128344, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 64.0
-offset_right = -16.0
-offset_bottom = -16.0
-texture = ExtResource("1_rko0j")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="Options" type="Control" parent="NinePatchRect/NinePatchRect"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="FullScreen" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
-anchors_preset = 0
-offset_left = 72.0
-offset_top = 112.0
-offset_right = 240.0
-offset_bottom = 136.0
-
-[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/FullScreen"]
-layout_mode = 0
-offset_right = 132.0
-offset_bottom = 23.0
-theme_override_fonts/font = ExtResource("3_ink5w")
-theme_override_font_sizes/font_size = 16
-text = "Fullscreen"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="FullscreenButton" type="Button" parent="NinePatchRect/NinePatchRect/Options/FullScreen"]
-layout_mode = 0
-offset_left = 144.0
-offset_right = 168.0
-offset_bottom = 24.0
-theme = ExtResource("4_qnksc")
-toggle_mode = true
-
-[node name="MainVolume" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 424.0
-offset_top = 136.0
-offset_right = -104.0
-offset_bottom = 184.0
-grow_horizontal = 2
-pivot_offset = Vector2(56, 0)
-
-[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
-self_modulate = Color(0.083392, 0.083392, 0.083392, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_top = -0.015
-anchor_bottom = -0.015
-offset_top = 0.149985
-offset_right = 112.0
-offset_bottom = 48.15
-texture = ExtResource("1_rko0j")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/MainVolume/NinePatchRect"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.167
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -7.016
-offset_bottom = 0.999985
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("3_ink5w")
-theme_override_font_sizes/font_size = 0
-text = "100%"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Button" type="Button" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
-layout_mode = 0
-offset_left = 120.0
-offset_top = 8.0
-offset_right = 152.0
-offset_bottom = 40.0
-theme = ExtResource("4_e1cqc")
-
-[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/MainVolume/Button"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_m2h3e")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Button2" type="Button" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = 40.0
-theme = ExtResource("4_e1cqc")
-
-[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/MainVolume/Button2"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_right = -8.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("6_i1vlt")
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/MainVolume"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = -32.0
-offset_right = 152.0
-offset_bottom = -9.0
-theme_override_fonts/font = ExtResource("3_ink5w")
-text = "Master"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MusicVolume" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
-layout_mode = 1
-anchors_preset = 0
-offset_left = 424.0
-offset_top = 232.0
-offset_right = 536.0
-offset_bottom = 280.0
-pivot_offset = Vector2(56, 0)
-
-[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
-self_modulate = Color(0.083392, 0.083392, 0.083392, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_top = -0.015
-anchor_bottom = -0.015
-offset_top = 0.149985
-offset_right = 112.0
-offset_bottom = 48.15
-texture = ExtResource("1_rko0j")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/MusicVolume/NinePatchRect"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.167
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -7.016
-offset_bottom = 0.999985
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("3_ink5w")
-theme_override_font_sizes/font_size = 0
-text = "100%"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Button" type="Button" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
-layout_mode = 0
-offset_left = 120.0
-offset_top = 8.0
-offset_right = 152.0
-offset_bottom = 40.0
-theme = ExtResource("4_e1cqc")
-
-[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/MusicVolume/Button"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_m2h3e")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Button2" type="Button" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = 40.0
-theme = ExtResource("4_e1cqc")
-
-[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/MusicVolume/Button2"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_right = -8.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("6_i1vlt")
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/MusicVolume"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = -32.0
-offset_right = 152.0
-offset_bottom = -9.0
-theme_override_fonts/font = ExtResource("3_ink5w")
-text = "Music"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SfxVolume" type="Control" parent="NinePatchRect/NinePatchRect/Options"]
-layout_mode = 1
-anchors_preset = 0
-offset_left = 424.0
-offset_top = 328.0
-offset_right = 536.0
-offset_bottom = 376.0
-pivot_offset = Vector2(56, 0)
-
-[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/Options/SfxVolume"]
-self_modulate = Color(0.083392, 0.083392, 0.083392, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_top = -0.015
-anchor_bottom = -0.015
-offset_top = 0.149985
-offset_right = 112.0
-offset_bottom = 48.15
-texture = ExtResource("1_rko0j")
-patch_margin_left = 16
-patch_margin_top = 16
-patch_margin_right = 16
-patch_margin_bottom = 16
-
-[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/SfxVolume/NinePatchRect"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.167
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -7.016
-offset_bottom = 0.999985
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("3_ink5w")
-theme_override_font_sizes/font_size = 0
-text = "100%"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Button" type="Button" parent="NinePatchRect/NinePatchRect/Options/SfxVolume"]
-layout_mode = 0
-offset_left = 120.0
-offset_top = 8.0
-offset_right = 152.0
-offset_bottom = 40.0
-theme = ExtResource("4_e1cqc")
-
-[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/SfxVolume/Button"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_m2h3e")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Button2" type="Button" parent="NinePatchRect/NinePatchRect/Options/SfxVolume"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = 8.0
-offset_right = -8.0
-offset_bottom = 40.0
-theme = ExtResource("4_e1cqc")
-
-[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/Options/SfxVolume/Button2"]
-self_modulate = Color(0, 0, 0, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 8.0
-offset_right = -8.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("6_i1vlt")
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/Options/SfxVolume"]
-layout_mode = 0
-offset_left = -40.0
-offset_top = -32.0
-offset_right = 152.0
-offset_bottom = -9.0
-theme_override_fonts/font = ExtResource("3_ink5w")
-text = "SFX"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="NinePatchRect"]
-position = Vector2(24, 24)
-scale = Vector2(5, 5)
-sprite_frames = SubResource("SpriteFrames_qwk3s")
-autoplay = "default"
-frame_progress = 0.449613
-
-[node name="Label" type="Label" parent="NinePatchRect"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = -0.013
-anchor_bottom = 1.0
-offset_left = 80.0
-offset_top = 8.216
-offset_right = 292.0
-offset_bottom = -568.0
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_x = 4
-theme_override_constants/shadow_offset_y = 4
-theme_override_fonts/font = ExtResource("2_jxjt2")
-theme_override_font_sizes/font_size = 32
-text = "Options"
-vertical_alignment = 1
-
-[node name="BackButton" type="Button" parent="."]
+[node name="BackButton" type="Button" parent="NinePatchRect"]
 self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.2
-anchor_top = 0.778
-anchor_right = 0.2
-anchor_bottom = 0.778
-offset_left = -64.0
-offset_top = -96.2401
-offset_right = 160.0
-offset_bottom = 23.7599
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 80.0
 focus_mode = 0
 theme = ExtResource("4_n843a")
 keep_pressed_outside = true
 
-[node name="BackLabel" type="Label" parent="BackButton"]
+[node name="BackLabel" type="Label" parent="NinePatchRect/BackButton"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -448,4 +128,508 @@ text = "Back"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="toggled" from="NinePatchRect/NinePatchRect/Options/FullScreen/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect"]
+self_modulate = Color(0.166853, 0.166853, 0.166853, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 128.0
+offset_right = -16.0
+offset_bottom = -16.0
+texture = ExtResource("1_rko0j")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="OptionsContainer" type="VBoxContainer" parent="NinePatchRect/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 32.0
+offset_bottom = 808.0
+grow_horizontal = 2
+
+[node name="Video" type="Control" parent="NinePatchRect/NinePatchRect/OptionsContainer"]
+unique_name_in_owner = true
+clip_children = 2
+clip_contents = true
+custom_minimum_size = Vector2(448, 180)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="HoverEffect" type="ColorRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Video"]
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ShadeEffect" type="TextureRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Video"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 56.0
+texture = SubResource("GradientTexture2D_wjvsj")
+
+[node name="OptionDesc" type="ColorRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Video"]
+offset_right = 448.0
+offset_bottom = 56.0
+mouse_filter = 2
+color = Color(0.0295066, 0.0295066, 0.0295066, 1)
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/OptionsContainer/Video/OptionDesc"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 72.0
+offset_bottom = 56.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_jxjt2")
+theme_override_font_sizes/font_size = 24
+text = "Video"
+vertical_alignment = 1
+
+[node name="OptionList" type="VBoxContainer" parent="NinePatchRect/NinePatchRect/OptionsContainer/Video/OptionDesc"]
+clip_children = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 104.0
+offset_top = 24.0
+offset_bottom = 124.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 32
+
+[node name="FullScreen" type="Control" parent="NinePatchRect/NinePatchRect/OptionsContainer/Video/OptionDesc/OptionList"]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/OptionsContainer/Video/OptionDesc/OptionList/FullScreen"]
+layout_mode = 0
+offset_right = 132.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("3_ink5w")
+theme_override_font_sizes/font_size = 16
+text = "Fullscreen"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FullscreenButton" type="Button" parent="NinePatchRect/NinePatchRect/OptionsContainer/Video/OptionDesc/OptionList/FullScreen"]
+layout_mode = 0
+offset_left = 144.0
+offset_right = 168.0
+offset_bottom = 24.0
+mouse_filter = 1
+theme = ExtResource("4_qnksc")
+toggle_mode = true
+
+[node name="Volume" type="Control" parent="NinePatchRect/NinePatchRect/OptionsContainer"]
+unique_name_in_owner = true
+clip_children = 2
+clip_contents = true
+custom_minimum_size = Vector2(448, 180)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 1
+
+[node name="HoverEffect" type="ColorRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ShadeEffect" type="TextureRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 56.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_wjvsj")
+
+[node name="OptionDesc" type="ColorRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume"]
+offset_right = 448.0
+offset_bottom = 56.0
+mouse_filter = 2
+color = Color(0.0295066, 0.0295066, 0.0295066, 1)
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 72.0
+offset_bottom = 56.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_jxjt2")
+theme_override_font_sizes/font_size = 24
+text = "Volume
+"
+vertical_alignment = 1
+
+[node name="OptionList" type="VBoxContainer" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc"]
+clip_children = 2
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 184.0
+offset_top = 56.0
+offset_right = -152.0
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
+
+[node name="MainVolume" type="Control" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MainVolume"]
+self_modulate = Color(0.083392, 0.083392, 0.083392, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.015
+anchor_bottom = -0.015
+offset_left = -56.0
+offset_top = 0.5
+offset_right = 168.0
+offset_bottom = 48.5
+texture = ExtResource("1_rko0j")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MainVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.167
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -7.016
+offset_bottom = 0.999985
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_ink5w")
+theme_override_font_sizes/font_size = 0
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Up" type="Button" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MainVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 40.0
+offset_bottom = -7.0
+mouse_filter = 1
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MainVolume/NinePatchRect/Up"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_m2h3e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Down" type="Button" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MainVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = 9.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MainVolume/NinePatchRect/Down"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_i1vlt")
+stretch_mode = 5
+
+[node name="TypeLabel" type="Label" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MainVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = -31.0
+offset_bottom = -8.0
+theme_override_fonts/font = ExtResource("3_ink5w")
+text = "Master"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicVolume" type="Control" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MusicVolume"]
+self_modulate = Color(0.083392, 0.083392, 0.083392, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.015
+anchor_bottom = -0.015
+offset_left = -56.0
+offset_top = 0.5
+offset_right = 168.0
+offset_bottom = 48.5
+texture = ExtResource("1_rko0j")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MusicVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.167
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -7.016
+offset_bottom = 0.999985
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_ink5w")
+theme_override_font_sizes/font_size = 0
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Up" type="Button" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MusicVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 40.0
+offset_bottom = -7.0
+mouse_filter = 1
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MusicVolume/NinePatchRect/Up"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_m2h3e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Down" type="Button" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MusicVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = 9.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MusicVolume/NinePatchRect/Down"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_i1vlt")
+stretch_mode = 5
+
+[node name="TypeLabel" type="Label" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/MusicVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = -31.0
+offset_bottom = -8.0
+theme_override_fonts/font = ExtResource("3_ink5w")
+text = "Music"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SfxVolume" type="Control" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/SfxVolume"]
+self_modulate = Color(0.083392, 0.083392, 0.083392, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.015
+anchor_bottom = -0.015
+offset_left = -56.0
+offset_top = 0.5
+offset_right = 168.0
+offset_bottom = 48.5
+texture = ExtResource("1_rko0j")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/SfxVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.167
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -7.016
+offset_bottom = 0.999985
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_ink5w")
+theme_override_font_sizes/font_size = 0
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Up" type="Button" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/SfxVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 40.0
+offset_bottom = -7.0
+mouse_filter = 1
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/SfxVolume/NinePatchRect/Up"]
+modulate = Color(0.0705882, 0.0705882, 0.0705882, 1)
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_m2h3e")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Down" type="Button" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/SfxVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = 9.0
+offset_right = -8.0
+offset_bottom = -7.0
+grow_vertical = 2
+mouse_filter = 1
+theme = ExtResource("4_e1cqc")
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/SfxVolume/NinePatchRect/Down"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_i1vlt")
+stretch_mode = 5
+
+[node name="TypeLabel" type="Label" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume/OptionDesc/OptionList/SfxVolume/NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = -31.0
+offset_bottom = -8.0
+theme_override_fonts/font = ExtResource("3_ink5w")
+text = "SFX"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="NinePatchRect"]
+position = Vector2(478, 76)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_qwk3s")
+autoplay = "default"
+frame_progress = 0.449613
+
+[node name="Label" type="Label" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 24.0
+offset_bottom = 128.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("2_jxjt2")
+theme_override_font_sizes/font_size = 32
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_down" from="NinePatchRect/BackButton" to="." method="_on_back_button_button_down"]
+[connection signal="button_up" from="NinePatchRect/BackButton" to="." method="_on_back_button_button_up"]
+[connection signal="pressed" from="NinePatchRect/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="mouse_entered" from="NinePatchRect/NinePatchRect/OptionsContainer/Video" to="." method="_on_video_mouse_entered"]
+[connection signal="mouse_exited" from="NinePatchRect/NinePatchRect/OptionsContainer/Video" to="." method="_on_video_mouse_exited"]
+[connection signal="toggled" from="NinePatchRect/NinePatchRect/OptionsContainer/Video/OptionDesc/OptionList/FullScreen/FullscreenButton" to="." method="_on_fullscreen_button_toggled"]
+[connection signal="mouse_entered" from="NinePatchRect/NinePatchRect/OptionsContainer/Volume" to="." method="_on_volume_mouse_entered"]
+[connection signal="mouse_exited" from="NinePatchRect/NinePatchRect/OptionsContainer/Volume" to="." method="_on_volume_mouse_exited"]

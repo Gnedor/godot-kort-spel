@@ -39,7 +39,7 @@ var selected_slot : Node2D
 
 func _process(delta: float) -> void:
 	if Global.scene_index == 1:
-		if raycast_check(CARD_MASK) and !card_manager.dragged_card and !dragged_tile and !card_manager.viewing_collection:
+		if raycast_check(CARD_MASK) and !card_manager.dragged_card and !dragged_tile and !card_manager.viewing_collection and !Global.is_game_paused:
 			var highest_card = check_for_highest_z_index(raycast_check(CARD_MASK))
 			hovered_card = highest_card
 		elif raycast_check(COLLECTION_CARD_MASK): 
@@ -63,7 +63,7 @@ func _process(delta: float) -> void:
 	
 # kollar vilket knapp som trycks
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and Global.scene_index == 1:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and Global.scene_index == 1 and !Global.is_game_paused:
 		# On Press
 		if event.pressed:
 			if hovered_card and !card_manager.viewing_collection:
@@ -156,19 +156,23 @@ func raycast_check(mask : int):
 		return null
 		
 func _unhandled_input(event):
-	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_1:
-			card_manager.draw_cards(3, 3)
-		elif event.pressed and event.keycode == KEY_SPACE:
-			if !battle_manager.deck_select and !battle_manager.card_select:
-				if !battle_manager.active_select:
-					trigger_ability.emit()
-				else:
-					untrigger_ability.emit()
-					
-		if event.pressed and event.keycode == KEY_2:
-			Global.total_damage *= 10
-			battle_manager.fix_damage_text()
+	if event is InputEventKey and event.pressed:
+		match (event.keycode):
+			KEY_1:
+				card_manager.draw_cards(3, 3)
+			KEY_SPACE:
+				if !battle_manager.deck_select and !battle_manager.card_select:
+					if !battle_manager.active_select:
+						trigger_ability.emit()
+					else:
+						untrigger_ability.emit()
+			KEY_2:
+				Global.total_damage *= 10
+				battle_manager.fix_damage_text()
+			KEY_ESCAPE:
+				var main_scene_manager = get_tree().get_current_scene().get_node("MainSceneManager")
+				main_scene_manager.pause_game()
+
 
 func check_for_highest_z_index(cards):
 	var card

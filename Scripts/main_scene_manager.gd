@@ -5,6 +5,7 @@ extends Node2D
 @onready var round_end_scene_manager = $"../EndOfRoundScreen"
 @onready var select_sten: Node2D = $"../SelectSten"
 @onready var menu_scene: Node2D = $"../MenuScene"
+@onready var options_window: Control = $"../OptionsWindow"
 
 func _ready() -> void:
 	battle_scene_manager.on_scene_exit.connect(scene_progression)
@@ -12,6 +13,8 @@ func _ready() -> void:
 	round_end_scene_manager.on_scene_exit.connect(scene_progression)
 	select_sten.on_scene_exit.connect(scene_progression)
 	menu_scene.on_scene_exit.connect(scene_progression)
+	
+	options_window.exit_pause.connect(pause_game)
 	
 	scene_progression()
 
@@ -59,5 +62,14 @@ func move_to_menu_scene():
 	camera.position = $"../MenuScene".position
 	menu_scene.on_enter_scene()
 	
+func pause_game():
+	if !Global.is_game_paused:
+		Global.is_game_paused = true
+		options_window.position = camera.position
+		await options_window.enter_pause_anim()
+	else:
+		Global.is_game_paused = false
+		await options_window.exit_pause_anim()
+
 	
 	
