@@ -15,6 +15,7 @@ var window_size : Vector2 = Vector2(1920, 1080)
 
 var scene_index : int = -2
 var is_game_paused : bool = false
+var enter_from_start : bool = true
 
 var played_cards = []
 
@@ -30,6 +31,7 @@ func timer(time):
 	await get_tree().create_timer(time).timeout
 	
 func reset_game():
+	SignalManager.signal_emitter("reset_game")
 	quota = 40
 	total_money = 0
 	base_money = 5

@@ -4,7 +4,7 @@ extends Node2D
 @onready var sten: Node2D = $"../sten"
 @onready var deck: Node2D = $"../TroopDeck"
 @onready var attack_timer: Timer = $AttackTimer
-@onready var total_damage_label: Label = $TotalDamage
+@onready var total_damage_label := $TotalDamage
 @onready var turn_counter: Label = $TurnCounter
 @onready var card_slots: Node2D = $"../CardSlots"
 @onready var end_turn: Button = $EndTurn
@@ -32,6 +32,8 @@ var ability_card : Node2D
 var amount_to_draw : int
 var damage
 var apply_poison : bool = true
+var successfull_crit : bool = false
+var mult : float = 1
 
 var debuffs = {}
 
@@ -51,6 +53,7 @@ func _ready() -> void:
 	input_manager.select_target_card.connect(activate_card_abilities)
 	input_manager.select_deck.connect(on_deck_chosen)
 	input_manager.select_card.connect(on_card_chosen)
+
 	for debuff in TagDatabase.TAGS:
 		debuffs[debuff["name"]] = 0
 	
@@ -82,13 +85,17 @@ func on_enter():
 	
 func new_turn():
 	SignalManager.signal_emitter("new_turn")
-	Global.total_damage += debuffs["Poison"]
 	update_labels()
+	Global.total_damage += debuffs["Poison"]
 	
 	if turn <= 2:
 		turn += 1	
 		turn_counter.text = "Turn: " + str(turn) + "/3"
 		card_manager.draw_cards(3, 1)
+		
+		if debuffs["Poison"] > 0:
+			display_add_damage(debuffs["Poison"], Color.html("#6abe30"))
+			
 		for card in card_manager.played_cards:
 			card.attack = card.turn_attack
 			card.actions = card.turn_actions
@@ -105,6 +112,9 @@ func new_turn():
 
 		await get_tree().create_timer(0.5).timeout
 	else:
+		if debuffs["Poison"] > 0:
+			await display_add_damage(debuffs["Poison"], Color.html("#6abe30"))
+		
 		end_turn.disabled = true
 		if Global.total_damage > Global.highest_damage:
 			Global.highest_damage = Global.total_damage
@@ -116,12 +126,17 @@ func attack(played_cards):
 	if tiles_folder.menu_up:
 		for card in played_cards:
 			if card.is_selected:
-				var mult : float = 1
+				mult = 1
 				var total_mult : float = 1
+				
+				successfull_crit = false
+				if (randi() % 10) * 10 < debuffs["Crit"]:
+					successfull_crit = true
+					mult *= 3
 				
 				card.actions -= 1
 				card.update_card()
-				check_for_tile(card)
+				await check_for_tile(card)
 
 				animate_attack(card, sten.attack_point.global_position, get_rotation_angle(card), 0.15)
 				card_manager.deselect_effect(card)
@@ -140,9 +155,6 @@ func attack(played_cards):
 							
 				for i in range(fracture_level):
 					mult *= 2
-					
-				if (randi() % 10) * 10 < debuffs["Crit"]:
-					mult *= 3
 				
 				if card.card_type == "OnAttackTroop":
 					card.ability_script.trigger_ability(card)
@@ -194,7 +206,7 @@ func check_for_tile(card):
 		if slot.global_position.x == card.global_position.x:
 			if slot.occupied_tile:
 				if slot.occupied_tile.tile_type == "OnAttack":
-					slot.occupied_tile.ability_script.tile_ability(card)
+					await slot.occupied_tile.ability_script.tile_ability(card)
 			
 			
 func _on_attack_timer_timeout() -> void:
@@ -484,6 +496,7 @@ func remove_text(label):
 	
 func update_labels():
 	Global.round_number(total_damage_label, Global.total_damage)
+	total_damage_label.text = str(total_damage_label.text) 
 	var child_count = debuff_icons.get_child_count()
 	
 	var i = 0
@@ -586,3 +599,23 @@ func fix_damage_text():
 		str_n = str_n.substr(0, str_n.length() - 2)
 
 	total_damage_label.text = str(str_n + suffixes[magnitude])
+	
+func display_add_damage(damage: int, color):
+	var damage_step : float = float(damage) / 5
+	var added_damage_label = $AddedDamageLabel
+	
+	added_damage_label.text = "[center][color=" + color.to_html() + "]" + str(damage) + "[/color][/center]"
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	added_damage_label.scale = Vector2(3, 3)
+	tween.tween_property(added_damage_label, "scale", Vector2(1.0, 1.0) ,0.3)
+	await Global.timer(0.8)
+	
+	var current_damage = Global.total_damage - damage
+	
+	for i in range(6):
+		added_damage_label.text = "[center][color=" + color.to_html() + "]" + str(damage - (damage_step * i)) + "[/color][/center]"
+		Global.round_number(total_damage_label, current_damage + (damage_step * i))
+		await Global.timer(0.05)
+		
+	added_damage_label.text = ""
+	

@@ -56,6 +56,7 @@ func _on_button_left_pressed() -> void:
 
 
 func _on_play_button_pressed() -> void:
+	Global.enter_from_start = true
 	battle_scene.get_node("sten/Sprite2D").texture = load("res://Assets/images/Stenar/" + shapes[difficulty] + ".png")
 	battle_scene.get_node("TroopDeck/Sprite2D").texture = $DeckPreview.get_node("Deck/Sprite2D").texture
 	battle_scene.get_node("SpellDeck/Sprite2D").texture = $DeckPreview.get_node("Deck/Sprite2D2").texture
@@ -67,7 +68,6 @@ func _on_play_button_pressed() -> void:
 	await tween.finished
 	
 	on_scene_exit.emit()
-	
 
 func _on_button_left_button_down() -> void:
 	$NinePatchRect3/Button_left/Arrow_left.position.y += 3

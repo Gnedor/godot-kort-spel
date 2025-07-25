@@ -6,7 +6,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Magic guy" : [2, 2, "OnPlayTroop", "On play, deal 3 Damage", "res://Scripts/kortAbilities/MagicGuy.gd", null],
 	"Knowledge" : [0, 1, "Spell", "Draw 2 cards from either deck", "res://Scripts/kortAbilities/Knowledge.gd", null],
 	"Shaman" : [1, 2, "ActiveTroop", "Give a unit +2 Damage for 1 turn", "res://Scripts/kortAbilities/Shaman.gd", null],
-	"Evil man" : [2, 2, "OnPlayTroop", "On play, halves Damage on all other played cards and give all removed Damage to self", "res://Scripts/kortAbilities/EvilMan.gd", null],
+	"Evil man" : [2, 2, "OnPlayTroop", "On play, halves Damage of all other played cards and give all removed Damage to self", "res://Scripts/kortAbilities/EvilMan.gd", null],
 	"Number game" : [0, 1, "Spell", "All played cards get either +2 Damage or -2 Damage this round", "res://Scripts/kortAbilities/NumberGame.gd", null],
 	"Inevitability" :[3, 2, "OnPlayTroop", "On play, make two random guys in deck a copy of this card", "res://Scripts/kortAbilities/Inevitability.gd", null],
 	"Eldritch" : [10, 2, "TurnStartTroop", "Each turn, discard one random played card (including self)", "res://Scripts/kortAbilities/Eldritch.gd", null],
@@ -31,7 +31,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 
 }
 
-const DECKS = ["Example_deck", "Starter_deck", "Gooby_woobies", "Intellectual_deck"]
+const DECKS = ["Example_deck", "Starter_deck", "Gooby_woobies", "Intellectual_deck", "CritTest"]
 
 const Example_deck = [
 	{"name": "Guy", "amount": 10},
@@ -82,4 +82,8 @@ const Gooby_woobies = [
 const Intellectual_deck = [
 	{"name": "Brainer", "amount": 3},
 	{"name": "Hivemind", "amount": 3}
+]
+
+const CritTest = [
+	{"name": "Gambler", "amount": 20}
 ]

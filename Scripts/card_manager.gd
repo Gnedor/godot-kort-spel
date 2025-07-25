@@ -48,6 +48,8 @@ func _ready() -> void:
 	input_manager.card_clicked_on_slot.connect(select_card)
 	input_manager.click_on_discard.connect(discard_selected_cards)
 	input_manager.click_on_deck.connect(show_card_collection)
+	
+	SignalManager.reset_game.connect(reset_game)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -389,3 +391,11 @@ func _on_sort_button_pressed() -> void:
 		cards_in_hand.append(card)
 	
 	align_cards()
+
+func reset_game():
+	for child in get_children():
+		if child.is_class("Node2D"):
+			child.queue_free()
+	played_cards.clear()
+	discarded_cards.clear()
+	cards_in_hand.clear()

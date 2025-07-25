@@ -25,6 +25,7 @@ signal cards_ready
 func _ready() -> void:
 	scene_manager.on_scene_enter.connect(on_enter)
 	SignalManager.removed_card.connect(check_for_deleted_cards)
+	SignalManager.reset_game.connect(delete_all_card_references)
 	
 func on_enter():
 	for card in Global.stored_cards:
@@ -89,9 +90,9 @@ func add_new_card_to_deck(card_name : String, times : int):
 		new_card_instance.card_type = card_data[2]
 		new_card_instance.card_name = card_name
 		new_card_instance.trait_1 = card_data[5]
-		
+	
 		card_manager.add_child(new_card_instance)
-		
+
 		new_card_instance.adjust_card_details()
 		new_card_instance.adjust_description_text()
 		new_card_instance.adjust_text_size()
@@ -272,4 +273,8 @@ func check_for_deleted_cards():
 	for card in cards_in_spell_deck.duplicate():
 		if !is_instance_valid(card):
 			cards_in_spell_deck.erase(card)
+			
+func delete_all_card_references():
+	cards_in_troop_deck.clear()
+	cards_in_spell_deck.clear()
 	

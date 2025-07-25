@@ -17,7 +17,7 @@ const TAG_SLOT_MASK = 1024
 func _process(delta: float) -> void:
 	if Global.scene_index == 0:
 		var hits = raycast_check()
-		if hits:
+		if hits and !Global.is_game_paused:
 			var dragged_tag = card_manager_screen.dragged_tag
 			for node in hits:
 				match node.collider.collision_layer:
@@ -63,7 +63,7 @@ func _process(delta: float) -> void:
 			
 			
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and Global.scene_index == 0:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and Global.scene_index == 0 and !Global.is_game_paused:
 		var hits = raycast_check()
 		if hits:
 			for node in hits:

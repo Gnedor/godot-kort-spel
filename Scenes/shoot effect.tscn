@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjl4d0lsl3dcq"]
+
+[ext_resource type="Texture2D" uid="uid://y6khk6ea2c1f" path="res://Assets/images/Particles/Star_outline.png" id="1_yf5qg"]
+[ext_resource type="Texture2D" uid="uid://cyht1g23crjgv" path="res://Assets/images/Particles/Star.png" id="2_fymib"]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(840, 431)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 10
+lifetime = 3.0
+explosiveness = 1.0
+texture = ExtResource("1_yf5qg")
+direction = Vector2(0, -1)
+initial_velocity_min = 320.62
+initial_velocity_max = 544.56
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+scale_amount_max = 3.0
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+amount = 10
+lifetime = 3.0
+explosiveness = 1.0
+texture = ExtResource("2_fymib")
+direction = Vector2(0, -1)
+initial_velocity_min = 320.62
+initial_velocity_max = 544.56
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+scale_amount_max = 3.0

@@ -23,6 +23,8 @@ var battle_scene_down
 var battle_scene_down_first
 var can_draw : bool = false
 
+var first_enter : bool = true
+
 var step : int = 1
 
 var cards_to_be_removed
@@ -33,6 +35,8 @@ signal on_scene_enter
 func _ready() -> void:
 	battle_manager.end_round.connect(remove_battle_scene)
 	deck.cards_ready.connect(draw_first_cards)
+	SignalManager.reset_game.connect(on_reset)
+	
 	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
 	battle_scene_up_first = [battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
 	
@@ -48,7 +52,8 @@ func _ready() -> void:
 	
 func on_enter_scene():
 	on_scene_enter.emit()
-	call_deferred("after_ready")
+	#call_deferred("after_ready")
+	after_ready()
 	
 	$"../Quota/Quota/Label".visible = false
 	await Global.timer(0.5)
@@ -139,12 +144,13 @@ func remove_battle_ui():
 	
 func add_battle_ui():
 	var tween = get_tree().create_tween()
-	if Global.round == 1:
+	if Global.enter_from_start:
 		for node in battle_scene_down_first:
 			tween.parallel().tween_property(node, "position:y", node.position.y - 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 			
 		for node in battle_scene_up_first:
 			tween.parallel().tween_property(node, "position:y", node.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+		Global.enter_from_start = false
 			
 	else:
 		for node in battle_scene_up:
@@ -224,3 +230,7 @@ func display_quota():
 	tween.parallel().tween_property(quota_label, "position", Vector2(0, 3), 0.2)
 	tween.parallel().tween_property(quota_label, "scale", Vector2(1, 1), 0.2)
 	quota_label.z_index = 1
+	
+func on_reset():
+	var quota_label = $"../Quota/Quota/Label"
+	quota_label.text = "0"

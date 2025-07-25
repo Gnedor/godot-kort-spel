@@ -168,6 +168,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
@@ -178,9 +180,12 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 56.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = SubResource("GradientTexture2D_wjvsj")
 
 [node name="OptionDesc" type="ColorRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Video"]
+layout_mode = 0
 offset_right = 448.0
 offset_bottom = 56.0
 mouse_filter = 2
@@ -252,6 +257,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
@@ -262,10 +269,13 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 56.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_wjvsj")
 
 [node name="OptionDesc" type="ColorRect" parent="NinePatchRect/NinePatchRect/OptionsContainer/Volume"]
+layout_mode = 0
 offset_right = 448.0
 offset_bottom = 56.0
 mouse_filter = 2

@@ -4,6 +4,11 @@ var tween : Tween
 
 signal exit_pause
 
+func _ready() -> void:
+	visible = false
+	await exit_pause_anim()
+	visible = true
+
 func _on_fullscreen_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)

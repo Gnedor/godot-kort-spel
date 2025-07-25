@@ -518,12 +518,10 @@ shape = SubResource("RectangleShape2D_h6pkr")
 disabled = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.254902, 0.764706, 1, 1)
+visible = false
 scale = Vector2(10, 10)
 sprite_frames = SubResource("SpriteFrames_pxsia")
 animation = &"Ball"
-frame = 4
-frame_progress = 1.0
 
 [node name="BuyButton" parent="." instance=ExtResource("10_2hy3d")]
 position = Vector2(0, 128)

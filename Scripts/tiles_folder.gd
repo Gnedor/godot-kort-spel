@@ -27,6 +27,7 @@ const TILE_MOVE_SPEED = 4000 # pixels per second
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	scene_manager.on_scene_enter.connect(on_enter)
+	SignalManager.reset_game.connect(on_reset)
 	window_size = get_viewport().size
 	#$"../BattleManager".end_round.connect(on_round_end)
 	input_manager.tile_relesed_on_slot.connect(place_tile_on_slot)
@@ -137,7 +138,7 @@ func create_tile(tile_name: String):
 	new_tile_instance.tile_type = TileDatabase.TILES[tile_name][2]
 	new_tile_instance.tile_name = tile_name
 	new_tile_instance.description_label.text = "[center]" + str(TileDatabase.TILES[tile_name][0]) + "[/center]"
-	color_text(new_tile_instance.description_label)
+	Global.color_text(new_tile_instance.description_label)
 	adjust_description_text(new_tile_instance.description_label)
 
 	var image_path = "res://Assets/images/Tiles/" + tile_name + "_tile.png"
@@ -205,13 +206,10 @@ func adjust_description_text(label):
 		label.custom_minimum_size = Vector2(0, 0)
 		label.set_autowrap_mode(0)
 		
-func color_text(label):
-	var target_word = "Damage"
-	var color = Color.html("#ac3232")
-	var colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
-	label.text = label.text.replace(target_word, colored_word)
-	
-	target_word = "Actions"
-	color = Color.html("#639bff")
-	colored_word = "[color=" + color.to_html() + "]" + target_word + "[/color]"
-	label.text = label.text.replace(target_word, colored_word)
+func on_reset():
+	for tile in owned_tiles:
+		tile.queue_free()
+	owned_tiles.clear()
+	tiles_in_folder.clear()
+	played_tiles.clear()
+		
