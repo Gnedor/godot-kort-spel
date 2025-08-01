@@ -78,6 +78,7 @@ func on_enter():
 		card.attack = card.base_attack
 		card.actions = card.base_actions
 		card.multiplier = 1
+		card.silenced = false
 		card.update_card()
 	
 	toggle_invert(sten.get_node("Sprite2D"), false)
@@ -87,6 +88,7 @@ func new_turn():
 	SignalManager.signal_emitter("new_turn")
 	update_labels()
 	Global.total_damage += debuffs["Poison"]
+	$"../SceneManager".change_fire()
 	
 	if turn <= 2:
 		turn += 1	
@@ -162,16 +164,22 @@ func attack(played_cards):
 				total_mult = card.turn_mult * mult
 				damage = round(card.attack * total_mult)
 				
-				Global.total_damage += damage
+				if !card.silenced:
+					Global.total_damage += damage
+				else:
+					$"../sten/SilencedMarker/AnimationPlayer".play("SilenceAttack")
 				
 				if apply_poison and card.can_poison:
 					debuffs["Poison"] += damage
 					card.can_poison = false
 					
-				if total_mult > 1:
+				if total_mult > 1 and !card.silenced:
 					display_mult(total_mult)
 					
+				$"../SceneManager".change_fire()
+				
 	update_labels()
+	
 				
 func apply_trait(trait_):
 	if trait_:
@@ -240,7 +248,6 @@ func _on_end_turn_pressed() -> void:
 func _on_end_turn_button_down() -> void:
 	end_turn_label.position.y = end_turn_label_position_y + 3
 	
-	
 func _on_end_turn_button_up() -> void:
 	end_turn_label.position.y = end_turn_label_position_y
 	
@@ -282,6 +289,12 @@ func ability_effect(card : Node2D):
 	
 
 func throw_projectile_from_card(animation_name : String, card : Node2D, time : float, damage : float):
+	var star_particle_scene = load("res://Scenes/shoot_effect.tscn")
+	var star_particle = star_particle_scene.instantiate()
+	card.add_child(star_particle)	
+	star_particle.position.y -= 96
+	star_particle.play_anim()
+	
 	card.animated_sprite.play(animation_name)
 	card.animated_sprite.frame = 0
 	card.animated_sprite.pause()
@@ -300,6 +313,7 @@ func throw_projectile_from_card(animation_name : String, card : Node2D, time : f
 	Global.total_damage += damage
 	total_damage_label.text = str(Global.total_damage)
 	
+	$"../SceneManager".change_fire()
 	
 func enter_active_card_activate():
 	if card_manager.played_cards:
@@ -412,7 +426,6 @@ func exit_chose_card():
 	end_turn.disabled = false
 	card_manager.discard_selected_cards(cards, "Hand")
 	
-	
 func enter_chose_deck(played_card, draw_amount):
 	amount_to_draw = draw_amount
 	ability_card = played_card
@@ -428,6 +441,7 @@ func enter_chose_deck(played_card, draw_amount):
 	end_turn.disabled = true
 	tiles_folder.button.disabled = true
 	$"../DiscardPile".get_node("Area2D/CollisionShape2D").disabled = true
+	
 	played_card.z_index = card_manager.cards_in_hand.size() + 10
 	deck.z_index = card_manager.cards_in_hand.size() + 10
 	deck.spell_deck.z_index = card_manager.cards_in_hand.size() + 10

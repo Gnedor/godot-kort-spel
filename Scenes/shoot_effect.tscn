@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjl4d0lsl3dcq"]
+
+[ext_resource type="Script" path="res://Scenes/shoot_effect.gd" id="1_py66i"]
+[ext_resource type="Texture2D" uid="uid://y6khk6ea2c1f" path="res://Assets/images/Particles/Star_outline.png" id="2_5j46v"]
+[ext_resource type="Texture2D" uid="uid://cyht1g23crjgv" path="res://Assets/images/Particles/Star.png" id="3_orvoo"]
+
+[sub_resource type="Curve" id="Curve_yayy2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.498541), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_vnob7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.498541), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Node2D" type="Node2D"]
+z_index = 10
+script = ExtResource("1_py66i")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 5
+lifetime = 3.0
+explosiveness = 1.0
+texture = ExtResource("2_5j46v")
+direction = Vector2(0, -1)
+initial_velocity_min = 320.62
+initial_velocity_max = 544.56
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+scale_amount_min = 2.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_yayy2")
+
+[node name="CPUParticles2D2" type="CPUParticles2D" parent="."]
+amount = 5
+lifetime = 3.0
+explosiveness = 1.0
+texture = ExtResource("3_orvoo")
+direction = Vector2(0, -1)
+initial_velocity_min = 320.62
+initial_velocity_max = 544.56
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+scale_amount_min = 2.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_vnob7")

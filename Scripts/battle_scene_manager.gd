@@ -13,6 +13,7 @@ extends Node2D
 @onready var tiles_folder: Node2D = $"../TilesFolder"
 @onready var timer: Timer = $Timer
 @onready var pause_timer: Timer = $PauseTimer
+@onready var fire_effect: ColorRect = $"../FireEffect"
 
 @export var discard_audio: AudioStream
 @export var text_audio: AudioStream
@@ -26,6 +27,7 @@ var can_draw : bool = false
 var first_enter : bool = true
 
 var step : int = 1
+var saved_times_quota : int = 1
 
 var cards_to_be_removed
 
@@ -40,8 +42,8 @@ func _ready() -> void:
 	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
 	battle_scene_up_first = [battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
 	
-	battle_scene_down = [deck, spell_deck, discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter")]
-	battle_scene_down_first = [discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter")]
+	battle_scene_down = [deck, spell_deck, discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter"), fire_effect]
+	battle_scene_down_first = [discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter"), fire_effect]
 	move_battle_ui_out()
 	#move_battle_ui_out()
 	#await add_battle_ui()
@@ -73,6 +75,7 @@ func remove_battle_scene():
 	# Sequentially animate each card
 	step = 1
 	timer.start()
+	remove_fire()
 		
 func _on_timer_timeout() -> void:
 	if card_manager.played_cards and step == 1:
@@ -234,3 +237,62 @@ func display_quota():
 func on_reset():
 	var quota_label = $"../Quota/Quota/Label"
 	quota_label.text = "0"
+	
+func change_fire():
+	var offset_base = 2.5
+	var anim_speed_base = 2
+	var offset
+	var anim_speed
+	
+	var times_quota : int = 1
+	var temp = Global.total_damage - Global.quota
+	
+	while temp > (Global.quota * (times_quota)):
+		temp -= Global.quota * times_quota
+		times_quota += 1
+	
+	var remainder = 0
+	var multiplier = temp / (Global.quota * times_quota)
+	
+	offset = 1 - (offset_base * multiplier)
+	anim_speed = anim_speed_base * multiplier
+	
+	if Global.total_damage > Global.quota:
+		if multiplier == 0:
+			fire_effect.material.set_shader_parameter("y_offset", 2)
+		else:
+			fire_effect.material.set_shader_parameter("y_offset", offset)
+				
+	fire_effect.material.set_shader_parameter("animation_speed", anim_speed) 
+	
+	if times_quota != 1:
+		fire_effect.material.set_shader_parameter("background_color", fire_effect.material.get_shader_parameter("flame_color"))
+	
+	var new_color = hue_shift_color(fire_effect.material.get_shader_parameter("flame_color"), times_quota - 1)
+	fire_effect.material.set_shader_parameter("flame_color", new_color)
+	new_color = hue_shift_color(fire_effect.material.get_shader_parameter("secondary_flame_color"), times_quota - 1)
+	fire_effect.material.set_shader_parameter("secondary_flame_color", new_color)
+	
+func hue_shift_color(color : Color, times : int):
+	var h = color.h
+	h = fmod((260 + 40 * times)/ 360.0 , 1.0)
+	if h > 1:
+		h = h - 1
+	
+	var new_color = Color.from_hsv(h, color.s, color.v, color.a)
+	return new_color
+	
+func remove_fire():
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(fire_effect.material, "shader_parameter/background_color", Color(0.0, 0.0, 0.0, 1.0), 0.5)
+	await Global.timer(2)
+	
+	fire_effect.material.set_shader_parameter("y_offset", 2)
+	fire_effect.material.set_shader_parameter("animation_speed", 0) 
+	
+	var new_color = hue_shift_color(fire_effect.material.get_shader_parameter("flame_color"), 0)
+	fire_effect.material.set_shader_parameter("flame_color", new_color)
+	new_color = hue_shift_color(fire_effect.material.get_shader_parameter("secondary_flame_color"), 0)
+	fire_effect.material.set_shader_parameter("secondary_flame_color", new_color)
+	
+	

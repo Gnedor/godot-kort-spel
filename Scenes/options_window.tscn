@@ -54,6 +54,7 @@ animations = [{
 }]
 
 [node name="OptionsWindow" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
@@ -63,6 +64,7 @@ script = ExtResource("1_enflt")
 layout_mode = 1
 offset_right = 1920.0
 offset_bottom = 1080.0
+mouse_filter = 2
 color = Color(0, 0, 0, 0.764706)
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]

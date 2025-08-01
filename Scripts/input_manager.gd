@@ -169,6 +169,10 @@ func _unhandled_input(event):
 			KEY_2:
 				Global.total_damage *= 10
 				battle_manager.fix_damage_text()
+			KEY_3:
+				Global.total_damage += 10
+				battle_manager.fix_damage_text()
+				$"../SceneManager".change_fire()
 			KEY_ESCAPE:
 				var main_scene_manager = get_tree().get_current_scene().get_node("MainSceneManager")
 				main_scene_manager.pause_game()

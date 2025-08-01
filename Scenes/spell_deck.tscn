@@ -1,12 +1,68 @@
-[gd_scene load_steps=3 format=3 uid="uid://dlf5nf8ot7glp"]
+[gd_scene load_steps=8 format=3 uid="uid://dlf5nf8ot7glp"]
 
 [ext_resource type="Texture2D" uid="uid://gxd7q4jblyi8" path="res://Assets/images/spell card backside.png" id="1_m0qvy"]
+[ext_resource type="Script" path="res://Scripts/spell_deck.gd" id="1_tnxbu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8x0n"]
 size = Vector2(48, 64)
 
+[sub_resource type="Animation" id="Animation_m2ali"]
+resource_name = "grow"
+length = 0.015
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.015),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.1, 1.1)]
+}
+
+[sub_resource type="Animation" id="Animation_8qltn"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bd87q"]
+resource_name = "shrink"
+length = 0.03
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.03),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_up3n5"]
+_data = {
+"RESET": SubResource("Animation_8qltn"),
+"grow": SubResource("Animation_m2ali"),
+"shrink": SubResource("Animation_bd87q")
+}
+
 [node name="SpellDeck" type="Node2D"]
 scale = Vector2(3, 3)
+script = ExtResource("1_tnxbu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 z_index = 1
@@ -17,3 +73,12 @@ collision_layer = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_j8x0n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_up3n5")
+}
+playback_auto_capture_transition_type = 8
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

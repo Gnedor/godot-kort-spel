@@ -1,6 +1,5 @@
 extends Node
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -11,4 +10,7 @@ func _process(delta: float) -> void:
 	pass
 	
 func tile_ability(card):
-	card.attack = 0
+	card.silenced = true
+	card.actions += 2
+	card.turn_actions += 2
+	card.update_card()

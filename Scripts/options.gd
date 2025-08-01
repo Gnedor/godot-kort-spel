@@ -6,8 +6,7 @@ signal exit_pause
 
 func _ready() -> void:
 	visible = false
-	await exit_pause_anim()
-	visible = true
+	exit_pause_anim()
 
 func _on_fullscreen_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
@@ -73,9 +72,10 @@ func exit_pause_anim():
 	tween.parallel().tween_property($NinePatchRect, "modulate", Color(0.0, 0.0, 0.0, 0.0), 0.1)
 	tween.parallel().tween_property($NinePatchRect, "scale", Vector2(0.9, 0.9), 0.1)
 	await tween.finished
-	position.y -= 100000000000
+	visible = false
 	
 func enter_pause_anim():
+	visible = true
 	$DarkBG.mouse_filter = 0
 	tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.parallel().tween_property($DarkBG, "color", Color(0.0, 0.0, 0.0, 0.765), 0.1)

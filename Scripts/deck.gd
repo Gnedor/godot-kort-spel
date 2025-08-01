@@ -278,3 +278,10 @@ func delete_all_card_references():
 	cards_in_troop_deck.clear()
 	cards_in_spell_deck.clear()
 	
+	
+func _on_area_2d_mouse_entered() -> void:
+	$AnimationPlayer.play("grow")
+
+func _on_area_2d_mouse_exited() -> void:
+	$AnimationPlayer.play("shrink")
+	

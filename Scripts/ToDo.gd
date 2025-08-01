@@ -10,6 +10,7 @@
 	# Kort försvinner i collection i shopen när man lämnar
 	# Tiles läggs inte tillbaka på rätt plats
 	# korten shufflar inte efter första rundan
+	# elden drar mycket performance när poängen är hög
 	
 #Ideer:
 	# En kort animation i slutet av varje runda som visar att stenen tar skada av t.ex poision med detaljer som t.ex att damage texten blir grön och att en icon animeras

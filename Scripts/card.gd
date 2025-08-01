@@ -25,6 +25,7 @@ var is_hovering : bool = false
 var in_deck : bool = true
 var is_selected : bool = false
 var is_discarded : bool = false
+var silenced :bool = false
 
 var can_poison : bool = true
 

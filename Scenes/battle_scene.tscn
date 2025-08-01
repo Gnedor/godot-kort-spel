@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://col4ncuar707o"]
+[gd_scene load_steps=32 format=3 uid="uid://col4ncuar707o"]
 
 [ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_cuqhi"]
+[ext_resource type="Texture2D" uid="uid://doja875b07fpt" path="res://Assets/images/Tags/silenced damage.png" id="2_e8nsc"]
 [ext_resource type="Script" path="res://Scripts/battle_scene_manager.gd" id="2_isg24"]
 [ext_resource type="Script" path="res://Scripts/battle_manager.gd" id="3_42q7k"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="4_8niwj"]
@@ -22,6 +23,92 @@
 [ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="16_x00fb"]
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="17_xvkue"]
 [ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="18_xlo24"]
+[ext_resource type="PackedScene" uid="uid://c1a041ei1wmsf" path="res://Scenes/fire.tscn" id="23_wla3a"]
+
+[sub_resource type="Animation" id="Animation_68v05"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(4, 4)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_be6hf"]
+resource_name = "SilenceAttack"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.5),
+"transitions": PackedFloat32Array(1, 0.574349, 1),
+"update": 0,
+"values": [Vector2(4, 4), Vector2(4.5, 4.5), Vector2(3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.5),
+"transitions": PackedFloat32Array(1, 0.594604, 1),
+"update": 0,
+"values": [0.0, -0.199228, 0.216479]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_00ovq"]
+_data = {
+"RESET": SubResource("Animation_68v05"),
+"SilenceAttack": SubResource("Animation_be6hf")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cy588"]
 size = Vector2(1919, 758.5)
@@ -138,6 +225,17 @@ _data = {
 
 [node name="sten" parent="." instance=ExtResource("1_cuqhi")]
 position = Vector2(960, -24)
+
+[node name="SilencedMarker" type="Sprite2D" parent="sten"]
+self_modulate = Color(1, 1, 1, 0)
+position = Vector2(0, 200)
+scale = Vector2(4, 4)
+texture = ExtResource("2_e8nsc")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sten/SilencedMarker"]
+libraries = {
+"": SubResource("AnimationLibrary_00ovq")
+}
 
 [node name="SceneManager" type="Node2D" parent="."]
 script = ExtResource("2_isg24")
@@ -599,6 +697,18 @@ theme_override_font_sizes/font_size = 24
 text = "Quota"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="FireEffect" parent="." instance=ExtResource("23_wla3a")]
+z_index = -100
+custom_minimum_size = Vector2(1920, 1080)
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 1
+grow_vertical = 1
+mouse_filter = 2
 
 [connection signal="timeout" from="SceneManager/Timer" to="SceneManager" method="_on_timer_timeout"]
 [connection signal="button_down" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_button_down"]
