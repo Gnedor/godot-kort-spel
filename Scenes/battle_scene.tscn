@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://col4ncuar707o"]
+[gd_scene load_steps=33 format=3 uid="uid://col4ncuar707o"]
 
 [ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_cuqhi"]
 [ext_resource type="Texture2D" uid="uid://doja875b07fpt" path="res://Assets/images/Tags/silenced damage.png" id="2_e8nsc"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="17_xvkue"]
 [ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="18_xlo24"]
 [ext_resource type="PackedScene" uid="uid://c1a041ei1wmsf" path="res://Scenes/fire.tscn" id="23_wla3a"]
+[ext_resource type="PackedScene" uid="uid://bfgbs3oi5chqa" path="res://Scenes/modifier.tscn" id="25_tobve"]
 
 [sub_resource type="Animation" id="Animation_68v05"]
 length = 0.001
@@ -709,6 +710,19 @@ offset_bottom = 1080.0
 grow_horizontal = 1
 grow_vertical = 1
 mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_top = 370.0
+offset_right = 1920.0
+offset_bottom = 451.0
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="Modifier" parent="HBoxContainer" instance=ExtResource("25_tobve")]
+layout_mode = 2
+
+[node name="Modifier2" parent="HBoxContainer" instance=ExtResource("25_tobve")]
+layout_mode = 2
 
 [connection signal="timeout" from="SceneManager/Timer" to="SceneManager" method="_on_timer_timeout"]
 [connection signal="button_down" from="BattleManager/EndTurn" to="BattleManager" method="_on_end_turn_button_down"]
