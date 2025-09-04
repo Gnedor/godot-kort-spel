@@ -36,7 +36,6 @@ var successfull_crit : bool = false
 var mult : float = 1
 
 var debuffs = {}
-
 var fracture_level : int = 0
 
 var end_turn_label_position_y

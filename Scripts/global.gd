@@ -21,6 +21,8 @@ var played_cards = []
 
 var selected_deck = "Example_deck"
 
+var modifiers = {"Burned card": 1}
+
 func store_card(card):
 	stored_cards.append(card)
 

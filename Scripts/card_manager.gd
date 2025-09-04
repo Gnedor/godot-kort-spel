@@ -154,6 +154,11 @@ func draw_cards(troop_amount : int, spell_amount : int):
 	else: 
 		amount_to_be_drawn_spell = spell_amount
 		
+	# Fixa modifier debuffen här tror /////////////////////////////////////////////////
+	if Global.modifiers["Burned card"]:
+		amount_to_be_drawn_troop -= Global.modifiers["Burned card"]
+	# /////////////////////////////////////////////////////////////////////////////////////
+		
 	var amount_to_be_drawn_total = amount_to_be_drawn_troop + amount_to_be_drawn_spell
 		
 	align_cards_on_draw(amount_to_be_drawn_total)
