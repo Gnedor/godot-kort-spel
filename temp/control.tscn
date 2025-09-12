@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvj2t65v7esfr"]
+
+[ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="1_h2k3t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l8ccc"]
+shader = ExtResource("1_h2k3t")
+shader_parameter/speed = 0.5
+
+[sub_resource type="Gradient" id="Gradient_uw8j8"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pnxgw"]
+gradient = SubResource("Gradient_uw8j8")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_l8ccc")
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("GradientTexture1D_pnxgw")
