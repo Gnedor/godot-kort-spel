@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://bfgbs3oi5chqa"]
 
-[ext_resource type="Shader" path="res://shaders/glow.gdshader" id="2_5dm4x"]
+[ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="1_wro2f"]
 [ext_resource type="Texture2D" uid="uid://b5w3gdt3l2xu1" path="res://Assets/images/Modifiers/Burning card.png" id="3_6np02"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cp2jd"]
-shader = ExtResource("2_5dm4x")
+shader = ExtResource("1_wro2f")
 shader_parameter/speed = 0.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3c66e"]
