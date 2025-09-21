@@ -1,0 +1,140 @@
+[gd_scene load_steps=6 format=3 uid="uid://beevi05hvg00g"]
+
+[ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_7pats"]
+[ext_resource type="Script" path="res://Scripts/modifier_screen.gd" id="1_l7cv1"]
+[ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="2_xwg43"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_rrf85"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="5_swji8"]
+
+[node name="Modifier screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_l7cv1")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+clip_contents = false
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.007
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 536.0
+offset_top = 184.44
+offset_right = -536.0
+offset_bottom = -824.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("4_rrf85")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[center][wave amp=20, frec=10]Boss Modifiers"
+fit_content = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 384.0
+offset_top = 448.0
+offset_right = -384.0
+offset_bottom = 910.0
+grow_horizontal = 2
+theme_override_constants/separation = 128
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="NinePatchRect" type="NinePatchRect" parent="VBoxContainer/MarginContainer"]
+self_modulate = Color(0.297093, 0.297093, 0.297093, 1)
+layout_mode = 2
+texture = ExtResource("1_7pats")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 13
+patch_margin_top = 8
+patch_margin_right = 13
+patch_margin_bottom = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 20
+
+[node name="NinePatchRect" type="NinePatchRect" parent="VBoxContainer/MarginContainer/MarginContainer"]
+self_modulate = Color(0.174028, 0.174028, 0.174028, 1)
+layout_mode = 2
+texture = ExtResource("2_xwg43")
+patch_margin_left = 13
+patch_margin_top = 16
+patch_margin_right = 14
+patch_margin_bottom = 8
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/MarginContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="ModContainer" type="BoxContainer" parent="VBoxContainer/MarginContainer/MarginContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 60
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 64
+alignment = 1
+
+[node name="RerollButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+self_modulate = Color(0.3053, 0.71, 0.41322, 1)
+custom_minimum_size = Vector2(400, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("5_swji8")
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/RerollButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.067
+anchor_right = 1.0
+anchor_bottom = 0.75
+offset_top = -5.36
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_rrf85")
+theme_override_font_sizes/font_size = 32
+text = "Reroll x2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RerollButton2" type="Button" parent="VBoxContainer/HBoxContainer"]
+self_modulate = Color(0.309385, 0.309385, 0.309385, 1)
+custom_minimum_size = Vector2(400, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("5_swji8")
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/RerollButton2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.067
+anchor_right = 1.0
+anchor_bottom = 0.75
+offset_top = -5.36
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_rrf85")
+theme_override_font_sizes/font_size = 32
+text = "Continue"
+horizontal_alignment = 1
+vertical_alignment = 1

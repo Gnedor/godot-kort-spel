@@ -92,7 +92,7 @@ func adjust_card_details():
 	adjust_text_size()
 	var name_label = card_description.name_label
 	var description_label = card_description.description_label
-	name_label.text = card_name
+	name_label.text = "[center]" + str(card_name) + "[/center]"
 		
 	if CardDatabase.CARDS[card_name][3]:
 		description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
@@ -116,7 +116,7 @@ func adjust_card_details():
 		
 	sprite = card_description.action_sprite
 	if card_type != "Troop":
-		image_path = "res://Assets/images/ActionTypes/" + card_type + "_type.png"
+		image_path = "F://Assets/images/ActionTypes/" + card_type + "_type.png"
 		texture = load(image_path)
 
 		if sprite:

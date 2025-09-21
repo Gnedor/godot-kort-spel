@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dmgxhbpwvwfrm" path="res://Scenes/description.tscn" id="9_sttlc"]
 [ext_resource type="PackedScene" uid="uid://854dmrdy2jd0" path="res://Scenes/buy_button.tscn" id="10_2hy3d"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wc0p8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bjcp6"]
 shader = ExtResource("1_rdoxh")
 shader_parameter/hit_opacity = 0.0
 
@@ -343,7 +343,7 @@ use_parent_material = true
 scale = Vector2(3, 3)
 
 [node name="CardSprite" type="Sprite2D" parent="Textures/ScaleNode"]
-material = SubResource("ShaderMaterial_wc0p8")
+material = SubResource("ShaderMaterial_bjcp6")
 texture = ExtResource("2_iwdq0")
 
 [node name="ColorRect" type="ColorRect" parent="Textures/ScaleNode/CardSprite"]

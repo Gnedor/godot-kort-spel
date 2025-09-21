@@ -632,3 +632,6 @@ func display_add_damage(damage: int, color):
 		
 	added_damage_label.text = ""
 	
+func get_boss_modifiers():
+	var count = 3
+	

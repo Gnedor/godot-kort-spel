@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cjl4d0lsl3dcq"]
 
-[ext_resource type="Script" path="res://Scenes/shoot_effect.gd" id="1_py66i"]
+[ext_resource type="Script" path="res://Scripts/shoot_effect.gd" id="1_py66i"]
 [ext_resource type="Texture2D" uid="uid://y6khk6ea2c1f" path="res://Assets/images/Particles/Star_outline.png" id="2_5j46v"]
 [ext_resource type="Texture2D" uid="uid://cyht1g23crjgv" path="res://Assets/images/Particles/Star.png" id="3_orvoo"]
 

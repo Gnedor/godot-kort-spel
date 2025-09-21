@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfgbs3oi5chqa"]
+[gd_scene load_steps=8 format=3 uid="uid://bfgbs3oi5chqa"]
 
+[ext_resource type="Script" path="res://Scripts/modifier.gd" id="1_6v6ta"]
 [ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="1_wro2f"]
-[ext_resource type="Texture2D" uid="uid://b5w3gdt3l2xu1" path="res://Assets/images/Modifiers/Burning card.png" id="3_6np02"]
+[ext_resource type="Texture2D" uid="uid://csq6ay1073tw" path="res://Assets/images/Modifiers/Thorns.png" id="3_sv5ux"]
+[ext_resource type="PackedScene" uid="uid://dmgxhbpwvwfrm" path="res://Scenes/description.tscn" id="4_2iycd"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="5_dgara"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cp2jd"]
 shader = ExtResource("1_wro2f")
@@ -11,31 +14,62 @@ shader_parameter/speed = 0.5
 size = Vector2(51, 81)
 
 [node name="Modifier" type="Control"]
-custom_minimum_size = Vector2(51, 81)
+custom_minimum_size = Vector2(51, 104)
 layout_mode = 3
 anchors_preset = 0
-offset_right = 51.0
-offset_bottom = 81.0
+offset_left = 1030.0
+offset_top = 480.0
+offset_right = 1081.0
+offset_bottom = 584.0
+mouse_filter = 2
+script = ExtResource("1_6v6ta")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 material = SubResource("ShaderMaterial_cp2jd")
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.5
-offset_top = -40.5
-offset_right = 25.5
-offset_bottom = 40.5
+anchors_preset = -1
+anchor_left = -0.451
+anchor_right = 1.451
+offset_left = 0.00100136
+offset_right = -0.00100708
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_6np02")
+mouse_filter = 2
+texture = ExtResource("3_sv5ux")
+stretch_mode = 5
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
+priority = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(25.5, 40.5)
 shape = SubResource("RectangleShape2D_3c66e")
+
+[node name="Description" parent="." instance=ExtResource("4_2iycd")]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 82.0
+offset_top = -72.0
+offset_right = 382.0
+offset_bottom = -17.0
+grow_horizontal = 1
+
+[node name="AmountLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 2.0
+offset_top = 88.0
+offset_right = -1.0
+offset_bottom = 104.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("5_dgara")
+text = "1x"
+horizontal_alignment = 1
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
