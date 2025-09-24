@@ -1,7 +1,7 @@
 extends Control
 
 @onready var description: MarginContainer = $Description
-
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -30,8 +30,6 @@ func adjust_mod_details(mod_name : String, amount : int, mod_trait : String):
 			$AmountLabel.text = str(amount) + "x"
 			description.name_label.text = mod_name
 			apply_trait_effect(mod_trait)
-				
-
 	
 func change_image(name):
 	var img_path = "res://Assets/images/Modifiers/" + name + ".png"
@@ -43,4 +41,6 @@ func apply_trait_effect(effect_name):
 		"Rainbow":
 			var temp = description.name_label.text
 			description.name_label.text = "[center][wave amp=10, frec=5][rainbow freq=.2 sat=.9 val=.8]" + temp
+			
+
 		

@@ -116,7 +116,7 @@ func adjust_card_details():
 		
 	sprite = card_description.action_sprite
 	if card_type != "Troop":
-		image_path = "F://Assets/images/ActionTypes/" + card_type + "_type.png"
+		image_path = "res://Assets/images/ActionTypes/" + card_type + "_type.png"
 		texture = load(image_path)
 
 		if sprite:
@@ -153,7 +153,7 @@ func add_trait_description(trait_name, num):
 	var new_description = description_scene.instantiate()
 	$Textures/VBoxContainer2.add_child(new_description)
 	new_description.name = trait_name
-	new_description.get_node("MarginContainer/NameLabel").text = trait_name
+	new_description.get_node("MarginContainer/NameLabel").text = "[center]" + str(trait_name)
 	var description_label = new_description.get_node("MarginContainer/MarginContainer/DescriptionLabel")
 	for tag in TagDatabase.TAGS:
 		if tag["name"] == trait_name:

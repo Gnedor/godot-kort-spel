@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://x3coxfap2ym1"]
+
+[ext_resource type="Texture2D" uid="uid://bkjtd3uyva0ut" path="res://Assets/images/BossIcons/Exempel.png" id="1_u4und"]
+[ext_resource type="Script" path="res://Scripts/boss_icon.gd" id="2_62beh"]
+[ext_resource type="PackedScene" uid="uid://dmgxhbpwvwfrm" path="res://Scenes/description.tscn" id="3_rmoel"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ripa"]
+size = Vector2(192.333, 191.667)
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -96.0
+offset_top = 64.0
+offset_right = 96.0
+offset_bottom = 256.0
+grow_horizontal = 2
+pivot_offset = Vector2(96, 96)
+mouse_filter = 1
+script = ExtResource("2_62beh")
+
+[node name="BossIcon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(96, 95.9999)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 4.63
+mouse_filter = 2
+texture = ExtResource("1_u4und")
+stretch_mode = 4
+
+[node name="Area2D" type="Area2D" parent="BossIcon"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossIcon/Area2D"]
+position = Vector2(95.8333, 96.1667)
+shape = SubResource("RectangleShape2D_5ripa")
+
+[node name="Description" parent="." instance=ExtResource("3_rmoel")]
+visible = false
+layout_mode = 1
+offset_left = 16.0
+offset_top = 48.0
+offset_right = 316.0
+offset_bottom = 103.0
+
+[connection signal="mouse_entered" from="BossIcon/Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="BossIcon/Area2D" to="." method="_on_area_2d_mouse_exited"]

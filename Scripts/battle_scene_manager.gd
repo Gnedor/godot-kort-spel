@@ -234,6 +234,9 @@ func display_quota():
 	tween.parallel().tween_property(quota_label, "scale", Vector2(1, 1), 0.2)
 	quota_label.z_index = 1
 	
+	await Global.timer(0.4)
+	$"../BossScreen".animation_player.play("Enter")
+		
 func on_reset():
 	var quota_label = $"../Quota/Quota/Label"
 	quota_label.text = "0"

@@ -4,6 +4,7 @@ var quota : float = 40
 var total_money : float = 0
 var base_money : float = 5
 var total_damage : float
+var base_modifier_rerolls : int = 2 
 
 var highest_damage : float = 0
 var highest_money : float = 0
