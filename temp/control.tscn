@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dvj2t65v7esfr"]
 
-[ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="1_h2k3t"]
+[ext_resource type="Shader" path="res://shaders/ModifierEffects/Rainbow.gdshader" id="1_h2k3t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l8ccc"]
 shader = ExtResource("1_h2k3t")

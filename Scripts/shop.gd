@@ -67,7 +67,7 @@ func on_enter():
 func _process(delta: float) -> void:
 	money_label.text = str(Global.total_money) + "$"
 	
-	if Global.scene_index == 0:
+	if Global.stage_list[0] == "shop":
 		if start_process:
 			if !rerolling:
 				card_hover_effect()
@@ -196,6 +196,7 @@ func make_new_cards():
 		cards_in_shop.append(new_card_instance)
 		connect_card_signal(new_card_instance)
 		new_card_instance.adjust_card_details()
+		new_card_instance.card_description.visible = false
 		
 	align_new_cards(cards_in_shop)
 	animate_card_reroll(cards_in_shop)

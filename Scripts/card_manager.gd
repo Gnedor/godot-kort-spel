@@ -53,7 +53,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Global.scene_index == 1:
+	if Global.stage_list[0] == "battle":
 		# kollar om man har klickat på ett kort och flyttar kortet till muspekaren
 		if dragged_card:
 			dragged_card.position = Vector2(
@@ -155,7 +155,7 @@ func draw_cards(troop_amount : int, spell_amount : int):
 		amount_to_be_drawn_spell = spell_amount
 		
 	# Fixa modifier debuffen här tror /////////////////////////////////////////////////
-	if Global.modifiers["Burned card"]:
+	if Global.modifiers.has("Burned card"):
 		amount_to_be_drawn_troop -= Global.modifiers["Burned card"]
 	# /////////////////////////////////////////////////////////////////////////////////////
 		

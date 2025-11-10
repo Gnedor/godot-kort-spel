@@ -59,6 +59,7 @@ func remove_shop_ui():
 
 	await tween.finished
 	#call_deferred("_change_scene")
+	
 	on_scene_exit.emit()
 	
 func _change_scene():

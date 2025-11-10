@@ -39,8 +39,8 @@ func _ready() -> void:
 	deck.cards_ready.connect(draw_first_cards)
 	SignalManager.reset_game.connect(on_reset)
 	
-	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
-	battle_scene_up_first = [battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota"]
+	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota", $"../BossScreen"]
+	battle_scene_up_first = [battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota", $"../BossScreen"]
 	
 	battle_scene_down = [deck, spell_deck, discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter"), fire_effect]
 	battle_scene_down_first = [discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter"), fire_effect]
@@ -69,7 +69,11 @@ func on_enter_scene():
 				can_draw = false
 				break
 				
-	display_quota()
+	await display_quota()
+	
+	if Global.stage_list[2] == "Boss":
+		await Global.timer(0.3)
+		new_boss()
 	
 func remove_battle_scene():
 	# Sequentially animate each card
@@ -131,7 +135,8 @@ func _on_timer_timeout() -> void:
 			timer.start()
 		else:
 			timer.stop()
-			remove_battle_ui()
+			await remove_battle_ui()
+			$"../BossScreen".animation_player.play("RESET")
 		
 func remove_battle_ui():
 	var tween = get_tree().create_tween()
@@ -233,9 +238,6 @@ func display_quota():
 	tween.parallel().tween_property(quota_label, "position", Vector2(0, 3), 0.2)
 	tween.parallel().tween_property(quota_label, "scale", Vector2(1, 1), 0.2)
 	quota_label.z_index = 1
-	
-	await Global.timer(0.4)
-	$"../BossScreen".animation_player.play("Enter")
 		
 func on_reset():
 	var quota_label = $"../Quota/Quota/Label"
@@ -298,4 +300,5 @@ func remove_fire():
 	new_color = hue_shift_color(fire_effect.material.get_shader_parameter("secondary_flame_color"), 0)
 	fire_effect.material.set_shader_parameter("secondary_flame_color", new_color)
 	
-	
+func new_boss():
+	$"../BossScreen".animation_player.play("Enter")

@@ -66,7 +66,7 @@ func _on_play_button_pressed() -> void:
 	tween.parallel().tween_property($"../TextureRect", "modulate", Color(0, 0, 0), 0.4)
 	
 	await tween.finished
-	
+	Global.scene_name = "battle"
 	on_scene_exit.emit()
 
 func _on_button_left_button_down() -> void:

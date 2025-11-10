@@ -16,7 +16,7 @@ void fragment() {
 
 	float dist = min(raw_dist, 1.0 - raw_dist);
 
-	final_color.rb += dist;
+	final_color.rg += dist;
 
 	COLOR = final_color;
 }

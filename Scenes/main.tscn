@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c6rcddcewp3s6"]
+[gd_scene load_steps=13 format=3 uid="uid://c6rcddcewp3s6"]
 
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="2_1l3wp"]
 [ext_resource type="PackedScene" uid="uid://c8tbmwqdapnsc" path="res://Scenes/shop_scene.tscn" id="2_mjwp7"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://col4ncuar707o" path="res://Scenes/battle_scene.tscn" id="9_h2q1w"]
 [ext_resource type="PackedScene" uid="uid://3rsw02g48brg" path="res://Scenes/Meny.tscn" id="9_om10x"]
 [ext_resource type="PackedScene" uid="uid://j6m3ogxd6jm" path="res://Scenes/options_window.tscn" id="10_14hrj"]
+[ext_resource type="PackedScene" uid="uid://chg3cbacfnu20" path="res://Scenes/card_editor.tscn" id="11_ph2jy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5n803"]
 shader = ExtResource("6_v2p2u")
@@ -53,3 +54,9 @@ z_index = 4096
 
 [node name="MenuScene" parent="." instance=ExtResource("9_om10x")]
 position = Vector2(-3840, 0)
+
+[node name="CardEditor" parent="." instance=ExtResource("11_ph2jy")]
+offset_left = 9600.0
+offset_top = 1.0
+offset_right = 11520.0
+offset_bottom = 1081.0

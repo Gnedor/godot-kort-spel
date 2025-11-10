@@ -8,9 +8,9 @@ extends Node2D
 @onready var options_window: Control = $"../Camera2D/OptionsWindow"
 
 func _ready() -> void:
-	battle_scene_manager.on_scene_exit.connect(scene_progression)
-	shop_scene_manager.on_scene_exit.connect(scene_progression)
-	round_end_scene_manager.on_scene_exit.connect(scene_progression)
+	battle_scene_manager.on_scene_exit.connect(progress_game_scenes)
+	shop_scene_manager.on_scene_exit.connect(progress_game_scenes)
+	round_end_scene_manager.on_scene_exit.connect(progress_game_scenes)
 	select_sten.on_scene_exit.connect(scene_progression)
 	menu_scene.on_scene_exit.connect(scene_progression)
 	
@@ -22,24 +22,27 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 	
+func progress_game_scenes():
+	Global.progress_stage()
+	scene_progression()
+	
 func scene_progression():
-	match Global.scene_index:
-		0:
+	print(Global.scene_name)
+	match Global.scene_name:
+		"battle":
 			move_to_battle_scene()
-			Global.scene_index = 1
-		1:
+		"result":
 			move_to_end_round_screen()
-			Global.scene_index = 2
-		2:
+		"shop":
 			move_to_shop_scene()
-			Global.scene_index = 0
 			Global.round += 1
-		-1:
+		"editor":
+			move_to_editor_scene()
+			Global.round += 1
+		"sten":
 			move_to_select_scene()
-			Global.scene_index = 0
-		-2:
+		"menu":
 			move_to_menu_scene()
-			Global.scene_index = -1
 			
 
 func move_to_battle_scene():
@@ -62,6 +65,10 @@ func move_to_menu_scene():
 	camera.position = $"../MenuScene".position
 	menu_scene.on_enter_scene()
 	
+func move_to_editor_scene():
+	camera.position = $"../CardEditor".position
+	
+	
 func pause_game():
 	if !Global.is_game_paused:
 		Global.is_game_paused = true
@@ -69,6 +76,4 @@ func pause_game():
 	else:
 		Global.is_game_paused = false
 		await options_window.exit_pause_anim()
-
-	
-	
+		

@@ -1,5 +1,9 @@
 extends Node
 
+func _ready() -> void:
+	add_modifiers_on_start()
+		
+
 var quota : float = 40
 var total_money : float = 0
 var base_money : float = 5
@@ -14,7 +18,7 @@ var stored_tiles = []
 var stored_tags = []
 var window_size : Vector2 = Vector2(1920, 1080)
 
-var scene_index : int = -2
+var scene_name : String = "menu"
 var is_game_paused : bool = false
 var enter_from_start : bool = true
 
@@ -22,7 +26,14 @@ var played_cards = []
 
 var selected_deck = "Example_deck"
 
-var modifiers = {"Burned card": 1}
+var modifiers = {}
+
+# index 2 är aktiv
+#var stage_list = ["Null", "Null", "Sten", "Shop", "Sten", "Editor", "Boss", "Shop"]
+var stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
+
+var special_stage_progression = ["Shop", "Editor", "Temp"]
+# Vilken årdning sakerna ska komma
 
 func store_card(card):
 	stored_cards.append(card)
@@ -42,6 +53,7 @@ func reset_game():
 	highest_money = 0
 	round = 1
 	played_cards.clear()
+	stage_list = ["Sten", "Shop", "Sten", "Editor", "Boss", "Temp"]
 	
 func find_common_card():
 	var frequency := {}
@@ -115,3 +127,20 @@ func round_number(label, num : float):
 
 	label.text = str(str_n + suffixes[magnitude])
 	
+func progress_stage():
+	#if stage_list[0] == "Null":
+		#stage_list.pop_front()
+	#else:
+		#stage_list.push_back(stage_list.pop_front())
+		
+	if scene_name == "battle":
+		scene_name = "result"
+	else:
+		stage_list.push_back(stage_list.pop_front())
+		scene_name = stage_list[0]
+
+		
+		
+func add_modifiers_on_start():
+	for mod in ModifierDatabase.MODIFIERS:
+		modifiers[mod["name"]] = 0

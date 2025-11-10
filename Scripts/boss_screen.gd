@@ -25,6 +25,7 @@ func get_modifiers(amount):
 	for i in range(saved_amount):
 		var r = randi() % ModifierDatabase.MODIFIERS.size()
 		var new_mod_name = ModifierDatabase.MODIFIERS[r]["name"]
+		var mod_trait = "none"
 		
 		if new_modifiers.has(new_mod_name):
 			new_modifiers[new_mod_name]["amount"] += 1
@@ -32,9 +33,12 @@ func get_modifiers(amount):
 				if mod.name == new_mod_name:
 					mod.animation_player.play("pulse text")
 		else: 
+			if i <= ((Global.round / 3) - 1):
+				mod_trait = ModifierDatabase.TRAITS.keys().pick_random()
+			
 			new_modifiers[new_mod_name] = {
 				"amount": 1,
-				"trait": "Rainbow" #Placeholder, ska vara random
+				"trait": mod_trait
 			}
 			add_new_mod_object(new_mod_name)
 		adjust_modifier_info(new_mod_name)

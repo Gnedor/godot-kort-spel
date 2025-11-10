@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform float speed;
+uniform float speed = 0.5f;
 
 float get_dist(float delay, float uv){
 	float target = 1.0f - fract(TIME * speed + delay);

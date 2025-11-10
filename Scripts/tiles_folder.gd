@@ -37,7 +37,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Global.scene_index == 1:
+	if Global.stage_list[0] == "battle":
 		if dragged_tile:
 			dragged_tile.global_position = Vector2(
 				clamp(get_global_mouse_position().x, 0, window_size.x), 

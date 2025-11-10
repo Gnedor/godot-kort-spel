@@ -1,12 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://3rsw02g48brg"]
+[gd_scene load_steps=13 format=3 uid="uid://3rsw02g48brg"]
 
 [ext_resource type="Script" path="res://Scripts/meny.gd" id="1_nwmer"]
 [ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_p4ujv"]
-[ext_resource type="Texture2D" uid="uid://cjvunkjxebbfw" path="res://Assets/images/Meny/Title.png" id="1_yrpe0"]
-[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="3_n788e"]
-[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_kalsa"]
+[ext_resource type="Texture2D" uid="uid://bwne303cm14dh" path="res://Assets/images/Meny/Title outline.png" id="3_4srqh"]
 [ext_resource type="Texture2D" uid="uid://dlpxsfxdkb01t" path="res://Assets/images/Meny/guy.png" id="5_lxmk5"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="6_mw16p"]
+[ext_resource type="PackedScene" uid="uid://dt1wmstlx7vd7" path="res://Scenes/menu_button.tscn" id="6_smb83"]
 
 [sub_resource type="Animation" id="Animation_v1rvu"]
 resource_name = "Idle"
@@ -77,85 +76,13 @@ position = Vector2(960, 256)
 [node name="Title" type="Sprite2D" parent="."]
 position = Vector2(960, 232)
 scale = Vector2(10, 10)
-texture = ExtResource("1_yrpe0")
+texture = ExtResource("3_4srqh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Title"]
 libraries = {
 "": SubResource("AnimationLibrary_p7qb1")
 }
 autoplay = "Idle"
-
-[node name="OptionsButton" type="Button" parent="."]
-self_modulate = Color(0.463587, 0.463587, 0.463587, 1)
-offset_left = 800.0
-offset_top = 816.0
-offset_right = 1120.0
-offset_bottom = 880.0
-focus_mode = 0
-theme = ExtResource("3_n788e")
-
-[node name="Label" type="Label" parent="OptionsButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_kalsa")
-theme_override_font_sizes/font_size = 24
-text = "Options"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ExitButton" type="Button" parent="."]
-self_modulate = Color(0.462745, 0.462745, 0.462745, 1)
-offset_left = 784.0
-offset_top = 928.0
-offset_right = 1136.0
-offset_bottom = 1008.0
-focus_mode = 0
-theme = ExtResource("3_n788e")
-
-[node name="Label" type="Label" parent="ExitButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_kalsa")
-theme_override_font_sizes/font_size = 24
-text = "Exit  :("
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="StartButton" type="Button" parent="."]
-self_modulate = Color(0.462745, 0.462745, 0.462745, 1)
-offset_left = 768.0
-offset_top = 664.0
-offset_right = 1152.0
-offset_bottom = 760.0
-focus_mode = 0
-theme = ExtResource("3_n788e")
-
-[node name="Label" type="Label" parent="StartButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_kalsa")
-theme_override_font_sizes/font_size = 32
-text = "Start"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="PovGuy" type="Control" parent="."]
 layout_mode = 3
@@ -208,4 +135,30 @@ text = "Hello kind stranger :)"
 vertical_alignment = 1
 autowrap_mode = 3
 
-[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 384.0
+offset_top = 680.0
+offset_right = 1534.0
+offset_bottom = 984.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="StartButton" parent="VBoxContainer" instance=ExtResource("6_smb83")]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="OptionsButton" parent="VBoxContainer" instance=ExtResource("6_smb83")]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Options"
+
+[node name="ExitButton" parent="VBoxContainer" instance=ExtResource("6_smb83")]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Exit"
+
+[connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]

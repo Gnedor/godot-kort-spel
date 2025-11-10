@@ -11,6 +11,7 @@ extends Node2D
 @onready var continue_button: Button = $UI/Button
 @onready var fail_screen: Node2D = $FailScreen
 @onready var tag_texture: TextureRect = $UI/NinePatchRect3/NinePatchRect/NinePatchRect2/TextureRect
+@onready var stage_timeline = $StageTimeline
 
 var base_money = 3
 var max_money = 50
@@ -41,6 +42,7 @@ func on_enter_scene():
 	start_end_screen()
 	on_scene_enter.emit()
 	
+	view_timeline()
 	
 func start_end_screen():
 	ui.scale = Vector2(1.7, 1.7)
@@ -99,6 +101,7 @@ func add_text(label):
 func move_off_screen():
 	var tween = get_tree().create_tween()
 	tween.parallel().tween_property(ui, "position:y", ui.position.y + 1500, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property($StageTimeline, "position:y", -200, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
 	
 func _change_scene(scene_path : String):
@@ -115,3 +118,15 @@ func get_tag():
 		var tween = get_tree().create_tween()
 		tween.tween_property(tag_texture, "scale", Vector2(3.0, 3.0), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		Global.stored_tags.append(tags[random_num])
+
+func view_timeline():
+	stage_timeline.position.y = -100
+	stage_timeline.adjust_timeline()
+	
+	await Global.timer(0.5)
+	var tween = get_tree().create_tween()
+	tween.tween_property(stage_timeline, "position:y", 0, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	
+	await Global.timer(0.5)
+	stage_timeline.next_stage()
+	

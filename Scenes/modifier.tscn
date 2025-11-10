@@ -1,14 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://bfgbs3oi5chqa"]
+[gd_scene load_steps=11 format=3 uid="uid://bfgbs3oi5chqa"]
 
 [ext_resource type="Script" path="res://Scripts/modifier.gd" id="1_6v6ta"]
-[ext_resource type="Shader" path="res://shaders/rainbow.gdshader" id="1_wro2f"]
-[ext_resource type="Texture2D" uid="uid://csq6ay1073tw" path="res://Assets/images/Modifiers/Thorns.png" id="3_sv5ux"]
+[ext_resource type="Texture2D" uid="uid://b5w3gdt3l2xu1" path="res://Assets/images/Modifiers/Burning card.png" id="3_0vmwu"]
 [ext_resource type="PackedScene" uid="uid://dmgxhbpwvwfrm" path="res://Scenes/description.tscn" id="4_2iycd"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="5_dgara"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cp2jd"]
-shader = ExtResource("1_wro2f")
-shader_parameter/speed = 0.5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3c66e"]
 size = Vector2(64, 80)
@@ -129,25 +126,26 @@ _data = {
 custom_minimum_size = Vector2(51, 104)
 layout_mode = 3
 anchors_preset = 0
-offset_left = 1024.0
+offset_left = 1025.0
 offset_top = 480.0
-offset_right = 1088.0
+offset_right = 1089.0
 offset_bottom = 584.0
 mouse_filter = 2
 script = ExtResource("1_6v6ta")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visibility_layer = 16385
 material = SubResource("ShaderMaterial_cp2jd")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.125
 anchor_right = 1.125
-offset_bottom = 80.0
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(40, 40)
 mouse_filter = 2
-texture = ExtResource("3_sv5ux")
+texture = ExtResource("3_0vmwu")
 stretch_mode = 5
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -157,17 +155,21 @@ priority = 1
 position = Vector2(32, 40)
 shape = SubResource("RectangleShape2D_3c66e")
 
-[node name="Description" parent="." instance=ExtResource("4_2iycd")]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = -32.0
+offset_right = 136.0
+offset_bottom = 8.0
+theme_override_constants/separation = 16
+
+[node name="Description" parent="VBoxContainer" instance=ExtResource("4_2iycd")]
 visible = false
-layout_mode = 1
-anchors_preset = 0
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 82.0
-offset_top = -72.0
-offset_right = 382.0
-offset_bottom = -17.0
-grow_horizontal = 1
+layout_mode = 2
+
+[node name="TraitDescription" parent="VBoxContainer" instance=ExtResource("4_2iycd")]
+visible = false
+layout_mode = 2
 
 [node name="AmountLabel" type="Label" parent="."]
 layout_mode = 1

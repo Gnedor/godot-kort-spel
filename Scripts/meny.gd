@@ -4,14 +4,27 @@ var dialog = [
 	"Hello kind stranger :)", 
 	"That STEN needs a beating for some reason",
 	"Gip gup gap gep gop gyp",
-	"Don't be mean to dentist, they have fillings to",
+	"Don't be mean to dentists, they have fillings to",
 	"I remember",
 	"I pray for your downfall and untimely demise",
 	"Bush did 7/11",
 	"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH",
 	"What does the mango say?",
-	"Mamamamamango Mamamamamango"]
-
+	"Mamamamamango Mamamamamango",
+	"Sten is Stone in a funny language",
+	"Fun fact: this game was made in under 1 minute",
+	"This is the official STEN game",
+	"I can actually do a handstand",
+	"No text in this game is spell checked",
+	"I posses greater knowledge than any mortal",
+	"My tummy hurts",
+	"I hate the settings guy",
+	"This game began development in 1942",
+	"I wish uppon you a great day",
+	"Minceraft",
+	"A battlepass will soon be added",
+	"I'm in the progress of writing a book"
+	]
 signal on_scene_exit
 
 var move_up
@@ -55,7 +68,7 @@ func remove_scene():
 		
 func move_in_scene():
 	move_up = [$sten, $Title, $PovGuy]
-	move_down = [$OptionsButton, $ExitButton, $StartButton]
+	move_down = [$VBoxContainer]
 	
 	if first_enter:
 		for obj in move_up:
@@ -77,5 +90,5 @@ func move_in_scene():
 	
 func _on_start_button_pressed() -> void:
 	await remove_scene()
-	Global.scene_index = -1
+	Global.scene_name = "sten"
 	on_scene_exit.emit()

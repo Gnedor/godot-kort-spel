@@ -146,7 +146,7 @@ func _on_back_button_pressed() -> void:
 	
 	await tween.finished
 	
-	Global.scene_index = -2
+	Global.scene_name = "menu"
 	get_parent().on_scene_exit.emit()
 
 

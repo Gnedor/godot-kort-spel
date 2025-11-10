@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://haftrks0la1y"]
+[gd_scene load_steps=12 format=3 uid="uid://haftrks0la1y"]
 
 [ext_resource type="Script" path="res://Scripts/end_of_round_screen.gd" id="1_ajpby"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="1_ef32e"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://evf007ggceo8" path="res://Assets/images/multiply.png" id="4_1vqt7"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="7_1nflb"]
 [ext_resource type="PackedScene" uid="uid://b2fq8qe77ht7c" path="res://Scenes/fail_screen.tscn" id="8_n63ae"]
+[ext_resource type="PackedScene" uid="uid://ck3wskswy3n17" path="res://Scenes/StageTimeline.tscn" id="11_gjxjb"]
 
 [node name="EndOfRoundScreen" type="Node2D"]
 script = ExtResource("1_ajpby")
@@ -337,6 +338,10 @@ vertical_alignment = 1
 [node name="FailScreen" parent="." instance=ExtResource("8_n63ae")]
 z_index = 5
 position = Vector2(960, -1000)
+
+[node name="StageTimeline" parent="." instance=ExtResource("11_gjxjb")]
+offset_left = 960.0
+offset_right = 960.0
 
 [connection signal="button_down" from="UI/Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="UI/Button" to="." method="_on_button_button_up"]

@@ -38,7 +38,7 @@ var dragged_tile : Node2D
 var selected_slot : Node2D
 
 func _process(delta: float) -> void:
-	if Global.scene_index == 1:
+	if Global.scene_name == "battle":
 		if raycast_check(CARD_MASK) and !card_manager.dragged_card and !dragged_tile and !card_manager.viewing_collection and !Global.is_game_paused:
 			var highest_card = check_for_highest_z_index(raycast_check(CARD_MASK))
 			hovered_card = highest_card
@@ -63,7 +63,7 @@ func _process(delta: float) -> void:
 	
 # kollar vilket knapp som trycks
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and Global.scene_index == 1 and !Global.is_game_paused:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and Global.scene_name == "battle" and !Global.is_game_paused:
 		# On Press
 		if event.pressed:
 			if hovered_card and !card_manager.viewing_collection:

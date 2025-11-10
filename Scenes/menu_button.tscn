@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://dt1wmstlx7vd7"]
+
+[ext_resource type="Theme" uid="uid://c8ge2xcx21y6j" path="res://Assets/themes/button_menu_theme.tres" id="1_w7eiy"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="2_wfn82"]
+[ext_resource type="Script" path="res://Scripts/menu_button.gd" id="3_ih3om"]
+
+[node name="MenuButton" type="Button"]
+custom_minimum_size = Vector2(574, 90)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -24.0
+offset_right = 85.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+focus_mode = 0
+theme = ExtResource("1_w7eiy")
+theme_override_fonts/font = ExtResource("2_wfn82")
+theme_override_font_sizes/font_size = 32
+keep_pressed_outside = true
+text = "Start"
+script = ExtResource("3_ih3om")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

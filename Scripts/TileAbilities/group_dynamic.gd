@@ -15,7 +15,7 @@ func tile_ability(card):
 		
 			
 func add_mult(card):
-	if card.card_type == placed_card.card_type:
+	if card.card_name == placed_card.card_name:
 		placed_card.round_mult *= 1.5
 		placed_card.turn_mult *= 1.5
 		placed_card.update_card()
