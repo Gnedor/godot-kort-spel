@@ -11,8 +11,13 @@ var spell_cards = []
 var cards_in_collection = []
 var page_indicators = []
 
+const CARD_MASK = 256
+var hovered_card
+
 var page : int = 0
 var max_page : int = 0
+
+var in_focus:= false
 
 @onready var arrow_left: Sprite2D = $Button_left/Arrow_left
 @onready var arrow_right: Sprite2D = $Button_right/Arrow_right
@@ -26,26 +31,41 @@ var page_indicator: PackedScene = preload("res://Scenes/page_indicator.tscn")
 func _ready() -> void:
 	deck = get_tree().current_scene.get_node("BattleScene/TroopDeck")
 	
+func _process(delta: float) -> void:
+	if in_focus:
+		var new_hovered_card = check_for_card()
+		
+		if new_hovered_card != hovered_card and hovered_card:
+			hover_off_effect(hovered_card)
+			
+		hovered_card = new_hovered_card
+			
+		if hovered_card:
+			hover_effect(hovered_card)
+			
 func move_in_cards():
+	in_focus = true
 	troop_cards = deck.cards_in_troop_deck.duplicate()
 	spell_cards = deck.cards_in_spell_deck.duplicate()
 	cards_in_collection = troop_cards + spell_cards
 		
 	for card in cards_in_collection:
 		card.get_node("Area2D/CollisionShape2D").disabled = false
-		card.z_index = 110
+		hover_off_effect(card)
+		card.z_index = z_index + 1
 		card.visible = true
 		card.get_node("Area2D").collision_layer = 1 << 8
-		card.trait_description.visible = false
-
+		
 	align_cards()
 	
 func move_out_cards():
+	in_focus = false
 	for card in cards_in_collection:
 		card.get_node("Area2D/CollisionShape2D").disabled = true
 		card.get_node("Area2D").collision_layer = 1 << 1
 		card.z_index = 1
 		card.visible = false
+		
 
 func align_cards():
 	update_page_indicators()
@@ -63,44 +83,29 @@ func align_cards():
 	for i in range(6):
 		if troop_cards.size() >= i + (12 * page) + 1:
 			var card = troop_cards[i + (12 * page)]
-			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 192)
+			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 192 + global_position.y)
 		
 		if troop_cards.size() >= (6 + i) + (12 * page) + 1:
 			var card = troop_cards[(6 + i) + (12 * page)]
-			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 428)
+			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 428 + global_position.y)
 			
 		if spell_cards.size() >= i + (12 * page) + 1:
 			var card = spell_cards[i + (12 * page)]
-			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 652)
+			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 652 + global_position.y)
 			
 		if spell_cards.size() >= ((6 + i) + (12 * page)) + 1:
 			var card = spell_cards[(6 + i) + (12 * page)]
-			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 888)
-			
-func align_card_hover(hovered_card):
-	for card in cards_in_collection:
-		if card == hovered_card and !card.is_hovering:
-			if !card.is_selected:
-				hover_effect(card)
-				card.is_hovering = true
-		elif card != hovered_card:
-			hover_off_effect(card)
-			card.is_hovering = false
+			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 888 + global_position.y)
 			
 func hover_effect(card):
-	#var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1.05, 1.05)
-	card.card_description.visible = true
-	card.trait_description.visible = true
-	if card.card_type != "Spell":
-		card.get_node("Textures/ScaleNode/StatDisplay").visible = true
+	card.z_index = z_index + 2
+	card.hover_effect()
 		
 func hover_off_effect(card):
-	#var card_textures = card.get_node("Textures")
 	card.scale = Vector2(1, 1)
-	card.card_description.visible = false
-	card.trait_description.visible = false
-	card.get_node("Textures/ScaleNode/StatDisplay").visible = false
+	card.z_index = z_index + 1
+	card.hover_off_effect()
 
 func create_page_indicators():
 	if h_box_container.get_child_count() != max_page + 1:
@@ -182,4 +187,17 @@ func toggle_collision(toggle : bool):
 	checkForDeletedCards()
 	for card in cards_in_collection:
 		card.area_2d.get_child(0).disabled = toggle
+		
+func check_for_card():
+	var space_state = get_world_2d().direct_space_state
+	var parameters = PhysicsPointQueryParameters2D.new()
+	parameters.position = get_global_mouse_position()
+	parameters.collide_with_areas = true
+	parameters.collision_mask = CARD_MASK
+	var result = space_state.intersect_point(parameters)
+	# om den hittar kort returnerar den parent Noden
+	if result.size() > 0:
+		return result[0].collider.get_parent()
+	else:
+		return null
 	

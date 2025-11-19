@@ -13,6 +13,7 @@ offset_left = 128.0
 offset_top = 64.0
 offset_right = 1792.0
 offset_bottom = 1016.0
+mouse_filter = 2
 color = Color(0.219501, 0.219501, 0.219501, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="ColorRect"]
@@ -21,6 +22,7 @@ offset_left = 16.0
 offset_top = 476.0
 offset_right = 1648.0
 offset_bottom = 936.0
+mouse_filter = 2
 color = Color(0.128344, 0.128344, 0.128344, 1)
 
 [node name="Label2" type="Label" parent="ColorRect/ColorRect2"]
@@ -41,6 +43,7 @@ offset_left = 16.0
 offset_top = 16.0
 offset_right = 1648.0
 offset_bottom = 476.0
+mouse_filter = 2
 color = Color(0.0323822, 0.0323822, 0.0323822, 1)
 
 [node name="Label" type="Label" parent="ColorRect/ColorRect"]
@@ -61,6 +64,7 @@ offset_left = -127.0
 offset_top = -64.0
 offset_right = 1784.0
 offset_bottom = 1016.0
+mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
 [node name="Button_left" type="Button" parent="."]
@@ -70,6 +74,7 @@ offset_top = 440.0
 offset_right = 136.0
 offset_bottom = 646.0
 focus_mode = 0
+mouse_filter = 1
 theme = ExtResource("3_ots7o")
 keep_pressed_outside = true
 
@@ -86,6 +91,7 @@ offset_top = 440.0
 offset_right = 1872.0
 offset_bottom = 646.0
 focus_mode = 0
+mouse_filter = 1
 theme = ExtResource("3_ots7o")
 keep_pressed_outside = true
 
@@ -107,6 +113,7 @@ offset_right = 1024.0
 offset_bottom = 1064.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 alignment = 1
 
 [connection signal="button_down" from="Button_left" to="." method="_on_button_left_button_down"]

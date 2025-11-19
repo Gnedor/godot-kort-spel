@@ -3,12 +3,12 @@
 [ext_resource type="Script" path="res://Scripts/card.gd" id="1_kahvh"]
 [ext_resource type="Shader" path="res://shaders/card.gdshader" id="1_rdoxh"]
 [ext_resource type="Texture2D" uid="uid://c4tdcleth8vlp" path="res://Assets/images/kort/Guy_card.png" id="2_iwdq0"]
-[ext_resource type="Texture2D" uid="uid://co87noq1eieol" path="res://Assets/images/stat display.png" id="4_4oeem"]
 [ext_resource type="Texture2D" uid="uid://bjugnvow22ug1" path="res://Assets/images/tag circle.png" id="4_iftc1"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="5_htu7g"]
 [ext_resource type="Texture2D" uid="uid://cuqg53q4edh2r" path="res://Assets/images/select border.png" id="6_fi7ot"]
 [ext_resource type="Texture2D" uid="uid://tpb2pr6lpho2" path="res://Assets/images/ball.png" id="7_28c2y"]
 [ext_resource type="Texture2D" uid="uid://blekvhd3e4dqp" path="res://Assets/images/mult display.png" id="8_n5cfj"]
+[ext_resource type="Texture2D" uid="uid://dnys2x6upkie" path="res://Assets/images/stat display outline.png" id="8_qpmch"]
 [ext_resource type="PackedScene" uid="uid://dmgxhbpwvwfrm" path="res://Scenes/description.tscn" id="9_sttlc"]
 [ext_resource type="PackedScene" uid="uid://854dmrdy2jd0" path="res://Scenes/buy_button.tscn" id="10_2hy3d"]
 
@@ -396,7 +396,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Control" type="Control" parent="Textures/ScaleNode"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -24.0
@@ -431,7 +430,7 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 1
 
-[node name="AttackLabel" type="Label" parent="Textures/ScaleNode/Control/PanelContainer/MarginContainer"]
+[node name="MultLabel" type="Label" parent="Textures/ScaleNode/Control/PanelContainer/MarginContainer"]
 clip_contents = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -443,14 +442,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="StatDisplay" type="Sprite2D" parent="Textures/ScaleNode"]
-position = Vector2(0, -66.6667)
-texture = ExtResource("4_4oeem")
+position = Vector2(0, -41.6667)
+texture = ExtResource("8_qpmch")
 
 [node name="AttackLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
-offset_left = -22.0
-offset_top = 22.6667
-offset_right = -4.0
-offset_bottom = 30.6667
+offset_left = -22.3333
+offset_top = -2.66667
+offset_right = -4.33333
+offset_bottom = 5.33333
 theme_override_fonts/font = ExtResource("5_htu7g")
 theme_override_font_sizes/font_size = 8
 text = "1"
@@ -458,10 +457,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ActionsLabel" type="Label" parent="Textures/ScaleNode/StatDisplay"]
-offset_left = 4.0
-offset_top = 22.6667
-offset_right = 22.0
-offset_bottom = 30.6667
+offset_left = 3.66667
+offset_top = -2.66663
+offset_right = 21.6667
+offset_bottom = 5.33337
 theme_override_fonts/font = ExtResource("5_htu7g")
 theme_override_font_sizes/font_size = 8
 text = "1"

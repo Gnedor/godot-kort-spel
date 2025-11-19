@@ -2,17 +2,24 @@ extends Node2D
 @onready var camera: Camera2D = $"../Camera2D"
 @onready var battle_scene_manager = $"../BattleScene".get_node("SceneManager")
 @onready var shop_scene_manager = $"../ShopScene".get_node("ShopSceneManager")
+@onready var card_editor: Control = $"../CardEditor".get_node("CardEditorSceneManager")
+
+
 @onready var round_end_scene_manager = $"../EndOfRoundScreen"
 @onready var select_sten: Node2D = $"../SelectSten"
 @onready var menu_scene: Node2D = $"../MenuScene"
 @onready var options_window: Control = $"../Camera2D/OptionsWindow"
 
+
 func _ready() -> void:
 	battle_scene_manager.on_scene_exit.connect(progress_game_scenes)
 	shop_scene_manager.on_scene_exit.connect(progress_game_scenes)
 	round_end_scene_manager.on_scene_exit.connect(progress_game_scenes)
+	card_editor.on_scene_exit.connect(progress_game_scenes)
+	
 	select_sten.on_scene_exit.connect(scene_progression)
 	menu_scene.on_scene_exit.connect(scene_progression)
+
 	
 	options_window.exit_pause.connect(pause_game)
 	
@@ -27,9 +34,10 @@ func progress_game_scenes():
 	scene_progression()
 	
 func scene_progression():
-	print(Global.scene_name)
 	match Global.scene_name:
 		"battle":
+			move_to_battle_scene()
+		"boss":
 			move_to_battle_scene()
 		"result":
 			move_to_end_round_screen()

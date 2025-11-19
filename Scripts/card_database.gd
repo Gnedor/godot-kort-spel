@@ -25,6 +25,10 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"The elements" : [0, 1, "Spell", "Draw one guy for every currently applied status effect", "res://Scripts/kortAbilities/TheElements.gd", null],
 	"Brainer" : [1, 2, "Troop", "Knows the first 5 digits of pi", null, "Echo"],
 	"Hivemind" : [3, 3, "Troop", "Knowledge", null, null],
+	"Bomb" : [0, 1, "Spell", "Bombardiro", "res://Scripts/kortAbilities/TheElements.gd", null],
+	"Spajdur" : [1, 1, "Troop", "Bingo bango bongo bish bash bosh", null, "Poison"],
+	"Quench" : [0, 1, "Spell", "Half full", "res://Scripts/kortAbilities/TheElements.gd", null]
+	
 	
 	#behöver sprites
 	#"Trash Man" : [3, 2, "OnTrashCard", "When trashed, permanently gain 3 Damage", null, null],
@@ -57,7 +61,10 @@ const Example_deck = [
 	{"name": "Poison dagger", "amount": 3},
 	{"name": "The elements", "amount": 3},
 	{"name": "Brainer", "amount": 3},
-	{"name": "Hivemind", "amount": 3}
+	{"name": "Hivemind", "amount": 3},
+	{"name": "Bomb", "amount": 3},
+	{"name": "Spajdur", "amount": 3},
+	{"name": "Quench", "amount": 3}
 ]
 
 const Starter_deck = [

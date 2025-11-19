@@ -71,7 +71,7 @@ func on_enter_scene():
 				
 	await display_quota()
 	
-	if Global.stage_list[2] == "Boss":
+	if Global.scene_name == "boss":
 		await Global.timer(0.3)
 		new_boss()
 	

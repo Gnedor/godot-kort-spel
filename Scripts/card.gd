@@ -174,19 +174,37 @@ func hover_off_effect():
 	stat_display.visible = false
 	
 func animate_stat_change(type : String):
-	var tween = get_tree().create_tween().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-	if type == "attack":
-		var attack_label = $Textures/ScaleNode/StatDisplay/AttackLabel
-		attack_label.position.y -= 8
-		tween.tween_property(attack_label, "position:y", 22.667, 0.3)
-	elif type == "action":
-		var action_label = $Textures/ScaleNode/StatDisplay/ActionsLabel
-		action_label.position.y -= 8
-		tween.tween_property(action_label, "position:y", 22.667, 0.3)
+	match type:
+		"attack":
+			animate_stat_label($Textures/ScaleNode/StatDisplay/AttackLabel)
+		"action":
+			animate_stat_label($Textures/ScaleNode/StatDisplay/ActionsLabel)
+		"mult":
+			animate_stat_label($Textures/ScaleNode/Control)
+		_:
+			pass
+		
+func animate_stat_label(node):
+	var base_y
+
+	if node.has_meta("base_y"):
+		base_y = node.get_meta("base_y")
 	else:
-		var mult_label = $Textures/ScaleNode/Control
-		mult_label.position.y -= 8
-		tween.tween_property(mult_label, "position:y", -59, 0.3)
+		base_y = node.position.y
+		node.set_meta("base_y", base_y)
+	
+	base_y = node.get_meta("base_y")
+	if base_y == null:
+		base_y = node.position.y
+		node.set_meta("base_y", base_y)
+
+	# Reset before starting
+	node.position.y = base_y
+	
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	var start_pos = node.position.y
+	node.position.y -= 8
+	tween.tween_property(node, "position:y", start_pos, 0.3)
 		
 func update_card():
 	if attack < 0:
@@ -205,7 +223,7 @@ func update_card():
 		
 	var attack_label = $Textures/ScaleNode/StatDisplay/AttackLabel
 	var actions_label = $Textures/ScaleNode/StatDisplay/ActionsLabel
-	var mult_label = $Textures/ScaleNode/Control/PanelContainer/MarginContainer/AttackLabel
+	var mult_label = $Textures/ScaleNode/Control/PanelContainer/MarginContainer/MultLabel
 	
 	if is_placed and turn_mult > 1:
 		$Textures/ScaleNode/Control.visible = true

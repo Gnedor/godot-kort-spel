@@ -57,6 +57,7 @@ func add_new_mod_object(mod_name : String):
 	new_modifier.animation_player.play("pulse")
 		
 func _input(event):
+	pass
 	if event is InputEventMouseButton or event is InputEventKey:
 		if event.pressed and is_ready:
 			$AnimationPlayer.play("Transition")

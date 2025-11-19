@@ -28,9 +28,8 @@ var selected_deck = "Example_deck"
 
 var modifiers = {}
 
-# index 2 är aktiv
-#var stage_list = ["Null", "Null", "Sten", "Shop", "Sten", "Editor", "Boss", "Shop"]
-var stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
+#var stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
+var stage_list = ["editor", "editor", "battle", "editor", "boss", "temp"]
 
 var special_stage_progression = ["Shop", "Editor", "Temp"]
 # Vilken årdning sakerna ska komma
@@ -133,7 +132,7 @@ func progress_stage():
 	#else:
 		#stage_list.push_back(stage_list.pop_front())
 		
-	if scene_name == "battle":
+	if scene_name == "battle" or scene_name == "boss":
 		scene_name = "result"
 	else:
 		stage_list.push_back(stage_list.pop_front())

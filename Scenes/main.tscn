@@ -45,13 +45,6 @@ stretch_mode = 1
 [node name="SelectSten" parent="." instance=ExtResource("5_x5bfc")]
 position = Vector2(-1920, -1.90735e-06)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-script = ExtResource("2_1l3wp")
-
-[node name="OptionsWindow" parent="Camera2D" instance=ExtResource("10_14hrj")]
-z_index = 4096
-
 [node name="MenuScene" parent="." instance=ExtResource("9_om10x")]
 position = Vector2(-3840, 0)
 
@@ -60,3 +53,10 @@ offset_left = 9600.0
 offset_top = 1.0
 offset_right = 11520.0
 offset_bottom = 1081.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+script = ExtResource("2_1l3wp")
+
+[node name="OptionsWindow" parent="Camera2D" instance=ExtResource("10_14hrj")]
+z_index = 4096

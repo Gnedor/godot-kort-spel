@@ -53,7 +53,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Global.stage_list[0] == "battle":
+	if Global.scene_name == "battle" or Global.scene_name == "boss":
 		# kollar om man har klickat på ett kort och flyttar kortet till muspekaren
 		if dragged_card:
 			dragged_card.position = Vector2(
@@ -326,7 +326,7 @@ func show_card_collection():
 	var tween = get_tree().create_tween()
 	
 	for card in card_collection.cards_in_collection:
-		card.position.y += Global.window_size.y
+		#card.position.y += Global.window_size.y
 		tween.parallel().tween_property(card, "position:y", card.position.y - Global.window_size.y, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		
 	card_collection.create_page_indicators()

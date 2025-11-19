@@ -15,7 +15,7 @@ const TAG_SLOT_MASK = 1024
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Global.stage_list[0] == "battle":
+	if Global.scene_name == "shop":
 		var hits = raycast_check()
 		if hits and !Global.is_game_paused:
 			var dragged_tag = card_manager_screen.dragged_tag
