@@ -264,7 +264,7 @@ func make_new_tiles():
 		adjust_description_text(new_tile_instance.description_label)
 		Global.color_text(new_tile_instance.description_label)
 		
-		var image_path = "res://Assets/Images/Tiles/" + tile_name + "_tile.png"
+		var image_path = "res://Assets/images/Tiles/" + tile_name + "_tile.png"
 		var texture = load(image_path)
 		var sprite = new_tile_instance.get_node("Sprite2D")
 		if sprite:

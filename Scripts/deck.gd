@@ -16,11 +16,6 @@ signal cards_ready
 @onready var spell_deck: Node2D = $"../SpellDeck"
 @onready var spell_deck_counter: Label = $"../SpellDeck/SpellDeckCounter"
 @onready var scene_manager: Node2D = $"../SceneManager"
-
-#func draw_card(amount : int):
-	#draw_queue = amount
-	#if cards_in_deck.size() > 0 and draw_queue > 0:
-		#draw_animation.start()
 	
 func _ready() -> void:
 	scene_manager.on_scene_enter.connect(on_enter)
@@ -32,11 +27,8 @@ func on_enter():
 		card.visible = false
 		card.z_index = 0
 		card.get_node("Area2D/CollisionShape2D").disabled = true
-			
-	Global.stored_cards.clear()
-	
-	if Global.round == 1:
-		add_cards_on_start()
+		
+	add_cards_on_start()
 		
 	
 func _on_draw_animation_timeout() -> void:
@@ -103,43 +95,44 @@ func add_new_card_to_deck(card_name : String, times : int):
 			cards_in_spell_deck.append(new_card_instance)
 		
 		new_card_instance.update_card()
+		Global.store_card(new_card_instance)
 		
 		if i % 3 == 0:
 			await get_tree().process_frame
 		
-func add_card_to_deck(card_name : String, card_attack : int, card_actions : int):
-	var new_card_instance = card_scene.instantiate()
-	var card_type = CardDatabase.CARDS[card_name][2]
+#func add_card_to_deck(card_name : String, card_attack : int, card_actions : int):
+	#var new_card_instance = card_scene.instantiate()
+	#var card_type = CardDatabase.CARDS[card_name][2]
+	#
+	#if card_type != "Spell":
+		#new_card_instance.position = position
+	#else:
+		#new_card_instance.position = spell_deck.position
+	#card_manager.add_child(new_card_instance)
+	#
+	#new_card_instance.z_index = 0
+	#new_card_instance.visible = false
+	#new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
+	#
+	#new_card_instance.base_attack = card_attack
+	#new_card_instance.turn_attack = card_attack
+	#new_card_instance.attack = card_attack
+	#new_card_instance.base_actions = card_actions
+	#new_card_instance.actions = card_actions
+	#new_card_instance.turn_actions = card_actions
+	#new_card_instance.card_type = CardDatabase.CARDS[card_name][2]
+	#new_card_instance.card_name = card_name
+	#new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
+	#
+	#new_card_instance.adjust_card_details()
+#
+	#if card_type != "Spell":
+		#cards_in_troop_deck.append(new_card_instance)
+	#else:
+		#cards_in_spell_deck.append(new_card_instance)
+		#
+	#new_card_instance.update_card()
 	
-	if card_type != "Spell":
-		new_card_instance.position = position
-	else:
-		new_card_instance.position = spell_deck.position
-	card_manager.add_child(new_card_instance)
-	
-	new_card_instance.z_index = 0
-	new_card_instance.visible = false
-	new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
-	
-	new_card_instance.base_attack = card_attack
-	new_card_instance.turn_attack = card_attack
-	new_card_instance.attack = card_attack
-	new_card_instance.base_actions = card_actions
-	new_card_instance.actions = card_actions
-	new_card_instance.turn_actions = card_actions
-	new_card_instance.card_type = CardDatabase.CARDS[card_name][2]
-	new_card_instance.card_name = card_name
-	new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
-	
-	new_card_instance.adjust_card_details()
-	
-	if card_type != "Spell":
-		cards_in_troop_deck.append(new_card_instance)
-	else:
-		cards_in_spell_deck.append(new_card_instance)
-		
-	new_card_instance.update_card()
-		
 func add_cards_on_start():
 	if Global.round == 1:
 		selected_deck = CardDatabase[Global.selected_deck]
@@ -147,19 +140,18 @@ func add_cards_on_start():
 		for card in selected_deck:
 			await add_new_card_to_deck(card["name"], card["amount"])
 	else:
-		#for card in Global.stored_cards:
-		for card in cards_in_troop_deck:
-			card.z_index = 0
-			card.visible = false
-			#cards_in_troop_deck.append(card)
-			card.position = position
-				
-		for card in cards_in_spell_deck:
-			card.z_index = 0
-			card.visible = false
-			#cards_in_spell_deck.append(card)
-			card.position = spell_deck.position
-			
+		cards_in_troop_deck.clear()
+		cards_in_spell_deck.clear()
+		
+		for card in Global.stored_cards:
+			if card.card_type != "Spell":
+				cards_in_troop_deck.append(card)
+				card.position = position
+
+			else:
+				cards_in_spell_deck.append(card)
+				card.position = spell_deck.position
+		
 	cards_in_troop_deck.shuffle()
 	cards_in_spell_deck.shuffle()
 	
@@ -167,13 +159,6 @@ func add_cards_on_start():
 	spell_deck_counter.text = str(cards_in_spell_deck.size())
 	
 	cards_ready.emit()
-	
-#func adjust_text_size(card):
-	#var label = card.get_node("Textures/NamnLabel")
-	#var font_size = 20
-	#while label.get_line_count() > 1:
-		#font_size -= 1
-		#label.set("theme_override_font_sizes/font_size", font_size)
 		
 func replace_card_with_copy(card, copy_card):
 	card.card_name = copy_card.card_name
@@ -215,55 +200,6 @@ func create_card_copy(card):
 	card_copy.adjust_card_details()
 	
 	return card_copy
-	
-#func adjust_description_text(label):
-	#label.custom_minimum_size = Vector2(260, 0)
-	#label.set_autowrap_mode(2)
-	#if label.get_line_count() <= 1:
-		#label.custom_minimum_size = Vector2(0, 0)
-		#label.set_autowrap_mode(0)
-	
-#func adjust_card_details_and_script(card):
-	#var card_name = card.card_name
-	#card.card_type = CardDatabase.CARDS[card_name][2]
-	#card.get_node("Textures/NamnLabel").text = card_name
-	#adjust_text_size(card)
-	#card.name_label.text = card_name
-		#
-	#if CardDatabase.CARDS[card_name][3]:
-		#card.description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
-		#Global.color_text(card.description_label)
-	#else:
-		#card.description_label.text = "[center]Does nothing[/center]"
-	#adjust_description_text(card.description_label)
-	#
-	#if card.card_type != "Troop":
-		#var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
-		#var ability_script = load(new_card_ability_script_path).new()
-		#card.ability_script = ability_script
-		#card.add_child(ability_script)
-			#
-	#var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
-	#var texture = load(image_path)
-	#var sprite = card.card_sprite
-	#if sprite:
-		#sprite.texture = texture
-	#else:
-		#print("Sprite node not found")
-		#
-	#sprite = card.action_sprite
-	#if card.card_type != "Troop":
-		#image_path = "res://Assets/images/ActionTypes/" + card.card_type + "_type.png"
-		#texture = load(image_path)
-#
-		#if sprite:
-			#sprite.texture = texture
-		#else:
-			#print("Sprite node not found")
-	#else:
-		#sprite.texture = null
-		#
-	#card.update_traits()
 		
 func check_for_deleted_cards():
 	for card in cards_in_troop_deck.duplicate():

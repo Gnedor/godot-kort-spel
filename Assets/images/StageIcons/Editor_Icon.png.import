@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4vj15n4yy6m3"
-path="res://.godot/imported/Editor_Icon.png-5a00fe25169c05dc93d069f8fe7563fe.ctex"
+path="res://.godot/imported/editor_Icon.png-5edf53cf0b0c36426f479bc29f5c6298.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/StageIcons/Editor_Icon.png"
-dest_files=["res://.godot/imported/Editor_Icon.png-5a00fe25169c05dc93d069f8fe7563fe.ctex"]
+source_file="res://Assets/images/StageIcons/editor_Icon.png"
+dest_files=["res://.godot/imported/editor_Icon.png-5edf53cf0b0c36426f479bc29f5c6298.ctex"]
 
 [params]
 

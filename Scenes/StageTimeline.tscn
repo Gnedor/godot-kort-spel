@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ck3wskswy3n17"]
 
-[ext_resource type="Texture2D" uid="uid://2ffdeuk5oi6p" path="res://Assets/images/StageIcons/Battle_Icon.png" id="1_dgod4"]
+[ext_resource type="Texture2D" uid="uid://2ffdeuk5oi6p" path="res://Assets/images/StageIcons/battle_Icon.png" id="1_dgod4"]
 [ext_resource type="Script" path="res://Scripts/stage_timeline.gd" id="1_ueqgw"]
 
 [sub_resource type="Gradient" id="Gradient_nqt3b"]

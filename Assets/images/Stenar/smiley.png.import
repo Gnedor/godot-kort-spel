@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c3hx6w4dpa1od"
-path="res://.godot/imported/smiley.png-94ff30f990b90c94b34e205f5b0365c5.ctex"
+path="res://.godot/imported/Smiley.png-cff03fd3bcc4c6f0f6eb9fd114133c28.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Stenar/smiley.png"
-dest_files=["res://.godot/imported/smiley.png-94ff30f990b90c94b34e205f5b0365c5.ctex"]
+source_file="res://Assets/images/Stenar/Smiley.png"
+dest_files=["res://.godot/imported/Smiley.png-cff03fd3bcc4c6f0f6eb9fd114133c28.ctex"]
 
 [params]
 

@@ -92,7 +92,12 @@ func new_turn():
 	if turn <= 2:
 		turn += 1	
 		turn_counter.text = "Turn: " + str(turn) + "/3"
-		card_manager.draw_cards(3, 1)
+		
+		if Global.scene_name == "boss":
+			await burning_card_effect()
+			card_manager.draw_cards(3, 1)
+		else:
+			card_manager.draw_cards(3, 1)
 		
 		if debuffs["Poison"] > 0:
 			display_add_damage(debuffs["Poison"], Color.html("#6abe30"))
@@ -634,4 +639,40 @@ func display_add_damage(damage: int, color):
 	
 func get_boss_modifiers():
 	var count = 3
+	
+func burning_card_effect():
+	if Global.modifiers["Burning card"] == 0 or card_manager.cards_in_hand.size() == 0:
+		return
+		
+	var burn_amount = Global.modifiers["Burning card"]
+	var hand = card_manager.cards_in_hand
+	
+	# If amount >= hand size → discard all
+	if hand.size() <= burn_amount:
+		var all_cards = hand.duplicate()
+		await card_manager.discard_selected_cards(all_cards, "inHand")
+		hand.clear()
+		return
+	
+	# ---- Pick unique random indices ----
+	var indices := []
+	while indices.size() < burn_amount:
+		var r = randi() % hand.size()
+		if r not in indices:
+			indices.append(r)
+			
+	indices.sort()        # sorted ASCENDING
+	indices.reverse()     # now it's DESCENDING
+	
+	# ---- Select cards BEFORE removing ----
+	var cards_to_discard := []
+	for i in indices:
+		cards_to_discard.append(hand[i])
+	
+	# ---- Remove from hand in DESCENDING ORDER ----
+	for i in indices:
+		hand.remove_at(i)
+	
+	# ---- Now discard the selected cards ----
+	await card_manager.discard_selected_cards(cards_to_discard, "inHand")
 	

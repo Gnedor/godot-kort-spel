@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cgcbkhnx74sxk"
-path="res://.godot/imported/sten.png-71f4567c501ebeba4e3ca4e45bca2ba9.ctex"
+path="res://.godot/imported/Sten.png-1f783b5ad32303a806707a64ef152f7d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Stenar/sten.png"
-dest_files=["res://.godot/imported/sten.png-71f4567c501ebeba4e3ca4e45bca2ba9.ctex"]
+source_file="res://Assets/images/Stenar/Sten.png"
+dest_files=["res://.godot/imported/Sten.png-1f783b5ad32303a806707a64ef152f7d.ctex"]
 
 [params]
 

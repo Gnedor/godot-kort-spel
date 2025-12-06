@@ -24,8 +24,7 @@ func animate_text_audio(count : float, time : float):
 	var num = 0
 	var interval : float = time / count 
 	while num < count:
-		play_audio(text_audio , -20)
 		num += 1
+		if num % 2 != 0:
+			play_audio(text_audio , -20)
 		await Global.timer(interval)
-
-	

@@ -154,11 +154,6 @@ func draw_cards(troop_amount : int, spell_amount : int):
 	else: 
 		amount_to_be_drawn_spell = spell_amount
 		
-	# Fixa modifier debuffen här tror /////////////////////////////////////////////////
-	if Global.modifiers.has("Burned card"):
-		amount_to_be_drawn_troop -= Global.modifiers["Burned card"]
-	# /////////////////////////////////////////////////////////////////////////////////////
-		
 	var amount_to_be_drawn_total = amount_to_be_drawn_troop + amount_to_be_drawn_spell
 		
 	align_cards_on_draw(amount_to_be_drawn_total)
@@ -300,21 +295,24 @@ func discard_selected_cards(cards, status : String):
 				if card_slots.get_node("CardSlot" + str(i + 1)).global_position == card.global_position:
 					card_slots.get_node("CardSlot" + str(i + 1)).is_occupied = false
 					
-		if card.is_selected == true:
-			AudioManager.play_audio(discard_audio, 0)
+		if card.is_selected != true and status == "played":
+			continue
 			
-			deselect_effect(card)
-			card.stat_display.visible = false
-			card.is_selected = false
-			card.is_placed = false
-			card.is_discarded = true
-			card.get_node("Area2D/CollisionShape2D").disabled = true
-			played_cards.erase(card)
-			card.z_index = 0
-			await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED * 2, 1)
-			discarded_cards.append(card)
-			card.visible = false
-			SignalManager.signal_emitter("removed_card")
+		AudioManager.play_audio(discard_audio, 0)
+		
+		deselect_effect(card)
+		card.stat_display.visible = false
+		card.is_selected = false
+		card.is_placed = false
+		card.is_discarded = true
+		card.get_node("Area2D/CollisionShape2D").disabled = true
+		
+		played_cards.erase(card)
+		card.z_index = 0
+		await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED * 2, 1)
+		discarded_cards.append(card)
+		card.visible = false
+		SignalManager.signal_emitter("removed_card")
 		$"../DiscardPile/DiscardCounter".text = str(discarded_cards.size())
 
 			

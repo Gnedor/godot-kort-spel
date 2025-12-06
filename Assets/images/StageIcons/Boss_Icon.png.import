@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c5b5cbtig4xv8"
-path="res://.godot/imported/Boss_Icon.png-de452795e868d67c1051c446e75249b1.ctex"
+path="res://.godot/imported/boss_Icon.png-4b51fa041d138c61a932597b73894669.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/StageIcons/Boss_Icon.png"
-dest_files=["res://.godot/imported/Boss_Icon.png-de452795e868d67c1051c446e75249b1.ctex"]
+source_file="res://Assets/images/StageIcons/boss_Icon.png"
+dest_files=["res://.godot/imported/boss_Icon.png-4b51fa041d138c61a932597b73894669.ctex"]
 
 [params]
 

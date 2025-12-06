@@ -20,6 +20,9 @@ func on_enter():
 	rerolls = Global.base_modifier_rerolls
 	
 func get_modifiers(amount):
+	for key in Global.modifiers.keys():
+		Global.modifiers[key] = 0
+	
 	if !have_rerolled:
 		saved_amount = amount
 	for i in range(saved_amount):
@@ -44,6 +47,9 @@ func get_modifiers(amount):
 		adjust_modifier_info(new_mod_name)
 		await Global.timer(0.1)
 	reroll_button.disabled = false
+	
+	for mod_name in new_modifiers.keys():
+		Global.modifiers[mod_name] = new_modifiers[mod_name]["amount"]
 		
 func adjust_modifier_info(mod_name : String):
 	for mod in %ModContainer.get_children():

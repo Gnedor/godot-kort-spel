@@ -18,7 +18,7 @@ var dialog = [
 	"No text in this game is spell checked",
 	"I posses greater knowledge than any mortal",
 	"My tummy hurts",
-	"I hate the settings guy",
+	"I hate the Options guy",
 	"This game began development in 1942",
 	"I wish uppon you a great day",
 	"Minceraft",

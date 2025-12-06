@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cn81i6qb5uh0d"
-path="res://.godot/imported/quench_card.png-87718d0c47ccc09a26581b1537f5607b.ctex"
+path="res://.godot/imported/Quench_card.png-95a6e5b54981a5759dac19d342b48501.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/kort/quench_card.png"
-dest_files=["res://.godot/imported/quench_card.png-87718d0c47ccc09a26581b1537f5607b.ctex"]
+source_file="res://Assets/images/kort/Quench_card.png"
+dest_files=["res://.godot/imported/Quench_card.png-95a6e5b54981a5759dac19d342b48501.ctex"]
 
 [params]
 

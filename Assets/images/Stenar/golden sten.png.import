@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dxfqbdlt6cvi1"
-path="res://.godot/imported/golden sten.png-61f5e169c7955d647a52ebf82329eaa4.ctex"
+path="res://.godot/imported/Golden sten.png-81b8b081113bc8f880c571b3c58c221b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/Stenar/golden sten.png"
-dest_files=["res://.godot/imported/golden sten.png-61f5e169c7955d647a52ebf82329eaa4.ctex"]
+source_file="res://Assets/images/Stenar/Golden sten.png"
+dest_files=["res://.godot/imported/Golden sten.png-81b8b081113bc8f880c571b3c58c221b.ctex"]
 
 [params]
 
