@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://chg3cbacfnu20"]
+[gd_scene load_steps=18 format=3 uid="uid://chg3cbacfnu20"]
 
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_1cf1i"]
 [ext_resource type="Script" path="res://Scripts/card_editor.gd" id="1_m6mbc"]
@@ -11,6 +11,7 @@
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="7_mplpp"]
 [ext_resource type="Texture2D" uid="uid://dnys2x6upkie" path="res://Assets/images/stat display outline.png" id="9_nma5w"]
 [ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="10_i4r5u"]
+[ext_resource type="PackedScene" uid="uid://bdfof7mymlvu" path="res://Scenes/trash_card.tscn" id="12_mo26d"]
 
 [sub_resource type="Gradient" id="Gradient_7c41k"]
 colors = PackedColorArray(0.172549, 0.172549, 0.172549, 1, 0.121569, 0.121569, 0.121569, 1)
@@ -243,69 +244,6 @@ offset_right = 32.0
 offset_bottom = 32.0
 stretch_mode = 5
 
-[node name="MarginContainer" type="MarginContainer" parent="EditArea/Control"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 144.0
-offset_top = 216.0
-offset_right = -144.0
-offset_bottom = 312.0
-grow_horizontal = 2
-theme_override_constants/margin_top = 0
-
-[node name="Description" type="NinePatchRect" parent="EditArea/Control/MarginContainer"]
-self_modulate = Color(0.174028, 0.174028, 0.174028, 1)
-layout_mode = 2
-texture = ExtResource("1_1cf1i")
-patch_margin_left = 13
-patch_margin_top = 10
-patch_margin_right = 11
-patch_margin_bottom = 19
-
-[node name="Description" type="Label" parent="EditArea/Control/MarginContainer/Description"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 32.0
-grow_horizontal = 2
-theme_override_fonts/font = ExtResource("4_nxk2h")
-theme_override_font_sizes/font_size = 16
-text = "Description"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MarginContainer" type="MarginContainer" parent="EditArea/Control/MarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
-
-[node name="NinePatchRect" type="NinePatchRect" parent="EditArea/Control/MarginContainer/MarginContainer"]
-self_modulate = Color(0.0588235, 0.0588235, 0.0588235, 1)
-layout_mode = 2
-texture = ExtResource("2_jfs04")
-patch_margin_left = 18
-patch_margin_top = 19
-patch_margin_right = 13
-patch_margin_bottom = 14
-
-[node name="MarginContainer" type="MarginContainer" parent="EditArea/Control/MarginContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 8
-
-[node name="RichTextLabel" type="RichTextLabel" parent="EditArea/Control/MarginContainer/MarginContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/line_separation = 8
-theme_override_fonts/normal_font = ExtResource("7_mplpp")
-bbcode_enabled = true
-text = "[center]Gloop"
-fit_content = true
-
 [node name="StatDisplay" type="TextureRect" parent="EditArea/Control"]
 layout_mode = 1
 anchors_preset = 10
@@ -343,6 +281,192 @@ theme_override_fonts/font = ExtResource("7_mplpp")
 theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DescriptionBoxes" type="VBoxContainer" parent="EditArea/Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 144.0
+offset_top = 216.0
+offset_right = -144.0
+offset_bottom = 760.0
+grow_horizontal = 2
+theme_override_constants/separation = 16
+
+[node name="Description" type="MarginContainer" parent="EditArea/Control/DescriptionBoxes"]
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="Description" type="NinePatchRect" parent="EditArea/Control/DescriptionBoxes/Description"]
+self_modulate = Color(0.174028, 0.174028, 0.174028, 1)
+layout_mode = 2
+texture = ExtResource("1_1cf1i")
+patch_margin_left = 13
+patch_margin_top = 10
+patch_margin_right = 11
+patch_margin_bottom = 19
+
+[node name="Description" type="Label" parent="EditArea/Control/DescriptionBoxes/Description/Description"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("4_nxk2h")
+theme_override_font_sizes/font_size = 16
+text = "Description"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="EditArea/Control/DescriptionBoxes/Description"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="NinePatchRect" type="NinePatchRect" parent="EditArea/Control/DescriptionBoxes/Description/MarginContainer"]
+self_modulate = Color(0.0588235, 0.0588235, 0.0588235, 1)
+layout_mode = 2
+texture = ExtResource("2_jfs04")
+patch_margin_left = 18
+patch_margin_top = 19
+patch_margin_right = 13
+patch_margin_bottom = 14
+
+[node name="MarginContainer" type="MarginContainer" parent="EditArea/Control/DescriptionBoxes/Description/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="DescriptionText" type="RichTextLabel" parent="EditArea/Control/DescriptionBoxes/Description/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("7_mplpp")
+bbcode_enabled = true
+text = "[center]Gloop"
+fit_content = true
+
+[node name="Trait 1" type="MarginContainer" parent="EditArea/Control/DescriptionBoxes"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="Description" type="NinePatchRect" parent="EditArea/Control/DescriptionBoxes/Trait 1"]
+self_modulate = Color(0.174028, 0.174028, 0.174028, 1)
+layout_mode = 2
+texture = ExtResource("1_1cf1i")
+patch_margin_left = 13
+patch_margin_top = 10
+patch_margin_right = 11
+patch_margin_bottom = 19
+
+[node name="Trait1Name" type="RichTextLabel" parent="EditArea/Control/DescriptionBoxes/Trait 1/Description"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 8.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("4_nxk2h")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]Tararara"
+
+[node name="MarginContainer" type="MarginContainer" parent="EditArea/Control/DescriptionBoxes/Trait 1"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="NinePatchRect" type="NinePatchRect" parent="EditArea/Control/DescriptionBoxes/Trait 1/MarginContainer"]
+self_modulate = Color(0.0588235, 0.0588235, 0.0588235, 1)
+layout_mode = 2
+texture = ExtResource("2_jfs04")
+patch_margin_left = 18
+patch_margin_top = 19
+patch_margin_right = 13
+patch_margin_bottom = 14
+
+[node name="MarginContainer" type="MarginContainer" parent="EditArea/Control/DescriptionBoxes/Trait 1/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Trait1Description" type="RichTextLabel" parent="EditArea/Control/DescriptionBoxes/Trait 1/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("7_mplpp")
+bbcode_enabled = true
+text = "[center]Gloop"
+fit_content = true
+
+[node name="Trait 2" type="MarginContainer" parent="EditArea/Control/DescriptionBoxes"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="Description" type="NinePatchRect" parent="EditArea/Control/DescriptionBoxes/Trait 2"]
+self_modulate = Color(0.174028, 0.174028, 0.174028, 1)
+layout_mode = 2
+texture = ExtResource("1_1cf1i")
+patch_margin_left = 13
+patch_margin_top = 10
+patch_margin_right = 11
+patch_margin_bottom = 19
+
+[node name="Trait2Name" type="RichTextLabel" parent="EditArea/Control/DescriptionBoxes/Trait 2/Description"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 8.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("4_nxk2h")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]Tararara"
+
+[node name="MarginContainer" type="MarginContainer" parent="EditArea/Control/DescriptionBoxes/Trait 2"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="NinePatchRect" type="NinePatchRect" parent="EditArea/Control/DescriptionBoxes/Trait 2/MarginContainer"]
+self_modulate = Color(0.0588235, 0.0588235, 0.0588235, 1)
+layout_mode = 2
+texture = ExtResource("2_jfs04")
+patch_margin_left = 18
+patch_margin_top = 19
+patch_margin_right = 13
+patch_margin_bottom = 14
+
+[node name="MarginContainer" type="MarginContainer" parent="EditArea/Control/DescriptionBoxes/Trait 2/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="Trait2Description" type="RichTextLabel" parent="EditArea/Control/DescriptionBoxes/Trait 2/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("7_mplpp")
+bbcode_enabled = true
+text = "[center]Gloop"
+fit_content = true
 
 [node name="CardArea" type="NinePatchRect" parent="EditArea"]
 self_modulate = Color(0.172549, 0.172549, 0.172549, 1)
@@ -465,6 +589,17 @@ text = "Back"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="TrashCard" parent="." instance=ExtResource("12_mo26d")]
+z_index = 1
+position = Vector2(960, 504)
+
+[node name="Top" parent="TrashCard" index="0"]
+scale = Vector2(4.5, 4.5)
+
+[node name="Bottom" parent="TrashCard" index="1"]
+scale = Vector2(4.5, 4.5)
+
+[connection signal="pressed" from="EditArea/Options/TrashButton" to="CardEditorSceneManager" method="_on_trash_button_pressed"]
 [connection signal="mouse_entered" from="EditArea/CardArea" to="." method="_on_card_slot_mouse_entered"]
 [connection signal="mouse_exited" from="EditArea/CardArea" to="." method="_on_card_slot_mouse_exited"]
 [connection signal="button_down" from="EditArea/CardArea/NinePatchRect/CardSlot" to="CardEditorSceneManager" method="_on_card_slot_button_down"]
@@ -474,3 +609,5 @@ vertical_alignment = 1
 [connection signal="pressed" from="EditArea/CardArea/NinePatchRect/CardSlot" to="CardEditorSceneManager" method="_on_card_slot_pressed"]
 [connection signal="pressed" from="EditArea/ContinueButton" to="CardEditorSceneManager" method="_on_continue_button_pressed"]
 [connection signal="pressed" from="CardCollection/BackButton" to="CardEditorSceneManager" method="_on_back_button_pressed"]
+
+[editable path="TrashCard"]

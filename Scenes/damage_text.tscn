@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnwnddnikchhp"]
+
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="1_e3kuu"]
+
+[node name="DamageText" type="Label"]
+offset_right = 80.0
+offset_bottom = 32.0
+theme_override_fonts/font = ExtResource("1_e3kuu")
+text = "102"
+horizontal_alignment = 1
+vertical_alignment = 1

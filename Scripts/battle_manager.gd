@@ -1,5 +1,7 @@
 extends Node2D
 
+var damage_text = preload("res://Scenes/damage_text.tscn")
+
 @onready var card_manager: Node2D = $"../CardManager"
 @onready var sten: Node2D = $"../sten"
 @onready var deck: Node2D = $"../TroopDeck"
@@ -34,6 +36,8 @@ var damage
 var apply_poison : bool = true
 var successfull_crit : bool = false
 var mult : float = 1
+var timer_finished = true
+var new_damage : int = 0
 
 var debuffs = {}
 var fracture_level : int = 0
@@ -44,6 +48,7 @@ signal end_round
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	BattleContext.battle_manager = self
 	camera_2d = get_parent().get_parent().get_node("Camera2D")
 	scene_manager.on_scene_enter.connect(on_enter)
 	input_manager.click_on_sten.connect(attack)
@@ -179,6 +184,8 @@ func attack(played_cards):
 					
 				if total_mult > 1 and !card.silenced:
 					display_mult(total_mult)
+					
+				make_damage_text(damage)
 					
 				$"../SceneManager".change_fire()
 				
@@ -676,3 +683,77 @@ func burning_card_effect():
 	# ---- Now discard the selected cards ----
 	await card_manager.discard_selected_cards(cards_to_discard, "inHand")
 	
+func make_damage_text(damage : int):
+	new_damage += damage
+	var combine_timer = $"../DamageLabels/CombineTimer"
+	if combine_timer.is_stopped:
+		combine_timer.start()
+	else:
+		combine_timer.time_left = 1.0
+		
+	var new_damage_text = damage_text.instantiate()
+	new_damage_text.text = str(damage)
+	$"../DamageLabels".add_child(new_damage_text)
+	animate_out_damage_text(new_damage_text)
+	
+func animate_out_damage_text(label : Label):
+	var position = get_point_on_curve()
+	var ran_sc = randf_range(1.0, 1.3)
+	
+	label.position = Vector2(0, 0)
+	label.scale = Vector2(0.5, 0.5)
+	
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tween.parallel().tween_property(label, "position", position,0.15)
+	tween.parallel().tween_property(label, "scale", Vector2(ran_sc ,ran_sc), 0.15)
+	var settings := label.label_settings
+	if settings == null:
+		settings = LabelSettings.new()
+		label.label_settings = settings
+	settings.outline_color = Color(1, randf_range(0, 0.7), 0, 1)
+	settings.outline_size = 16
+	settings.font_color = Color(0, 0, 0, 1)
+	settings.font_size = 48
+	
+func get_point_on_curve():
+	var k = 240 #lowest point
+	var a = 0.0015 #steepness
+	
+	var x = randi_range(-470, 470) 
+	var y = -a * pow(x, 2) + k + randi_range(-40, 40)
+	return Vector2(x, y)
+
+func _on_combine_timer_timeout() -> void:
+	combine_damage_text(damage)
+
+	
+func combine_damage_text(damage : int):
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	for label in $"../DamageLabels".get_children():
+		if label is Label:
+			tween.parallel().tween_property(label, "position", Vector2(-label.size.x / 2, 0), 0.2)
+	await tween.finished
+	
+	for label in $"../DamageLabels".get_children():
+		if label is Label and label.name != "TotalDamageLabel":
+			label.queue_free()
+			
+	$"../DamageLabels/AnimationPlayer".play("combine_damage")
+	
+	var new_damage_label = $"../DamageLabels/TotalDamageLabel"
+	new_damage_label.text = str(damage * 0.7)
+	
+	var displayed_damage : float = new_damage * 0.7
+	var add_damage : float = (new_damage * 0.3) / 21
+	
+	for i in range(21):
+		displayed_damage += add_damage
+		Global.round_number(new_damage_label, displayed_damage)
+		new_damage_label.text = str(roundi(displayed_damage))
+		await Global.timer(0.03)
+		
+	new_damage = 0
+	
+	await Global.timer(2)
+	tween = get_tree().create_tween()
+	tween.tween_property(new_damage_label, "modulate", Color(1, 1, 1, 0), 0.2)

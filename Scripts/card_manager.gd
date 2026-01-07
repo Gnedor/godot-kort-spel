@@ -37,6 +37,7 @@ signal placed_card
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	BattleContext.card_manager = self
 	battle_manager.end_round.connect(on_round_end)
 	#window_size = get_viewport().size sätt på om window size ska vara dynamisk
 	window_size = Vector2(1920, 1080)
@@ -312,7 +313,7 @@ func discard_selected_cards(cards, status : String):
 		await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED * 2, 1)
 		discarded_cards.append(card)
 		card.visible = false
-		SignalManager.signal_emitter("removed_card")
+		SignalManager.signal_emitter("trashed_card")
 		$"../DiscardPile/DiscardCounter".text = str(discarded_cards.size())
 
 			

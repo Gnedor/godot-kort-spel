@@ -73,9 +73,6 @@ func _process(delta: float) -> void:
 				card_hover_effect()
 				tile_hover_effect()
 				
-			if viewing_collection and !managing_card:
-				card_collection.align_card_hover(hovered_card)
-				
 func add_items_on_start():
 	make_new_cards()
 	make_new_tiles()
@@ -421,7 +418,6 @@ func select_card(card):
 	selected_card = card
 	card_collection.toggle_collision(true)
 	shop_scene_manager.move_to_manage_card(selected_card)
-	card_collection.align_card_hover(null)
 	if selected_card.card_type != "Spell":
 		selected_card.stat_display.visible = true
 

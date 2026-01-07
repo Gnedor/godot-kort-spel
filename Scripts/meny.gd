@@ -2,7 +2,7 @@ extends Node2D
 
 var dialog = [
 	"Hello kind stranger :)", 
-	"That STEN needs a beating for some reason",
+	"That STEN needs a beating",
 	"Gip gup gap gep gop gyp",
 	"Don't be mean to dentists, they have fillings to",
 	"I remember",
@@ -23,7 +23,9 @@ var dialog = [
 	"I wish uppon you a great day",
 	"Minceraft",
 	"A battlepass will soon be added",
-	"I'm in the progress of writing a book"
+	"I'm in the progress of writing a book",
+	"You wouldn't steal a car",
+	"No animals were hurt in the making of this game"
 	]
 signal on_scene_exit
 

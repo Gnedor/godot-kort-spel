@@ -1,15 +1,9 @@
 extends Node
 
-var battle_scene
-var card_manager_reference
-var battle_manager_reference
-var deck_reference
-
-func _ready() -> void:
-	battle_scene = get_tree().get_root().find_child("BattleScene", true, false)
-	card_manager_reference = battle_scene.get_node("CardManager")
-	battle_manager_reference = battle_scene.get_node("BattleManager")
-	deck_reference = battle_scene.get_node("TroopDeck")
+var card_slots_reference = BattleContext.card_slots
+var card_manager_reference = BattleContext.card_manager
+var battle_manager_reference = BattleContext.battle_manager
+var deck_reference = BattleContext.deck
 
 func trigger_ability(card_reference):
 	card_manager_reference.cards_in_hand.erase(card_reference)
@@ -24,7 +18,7 @@ func trigger_ability(card_reference):
 		card.is_selected = true
 	await card_manager_reference.discard_selected_cards(card_manager_reference.played_cards, "played")
 	
-	for slot in battle_scene.get_node("CardSlots").get_children():
+	for slot in card_slots_reference.get_children():
 		if deck_reference.cards_in_troop_deck.size() > 0:
 			var random_number = randi() % deck_reference.cards_in_troop_deck.size()
 			var card = deck_reference.cards_in_troop_deck[random_number]

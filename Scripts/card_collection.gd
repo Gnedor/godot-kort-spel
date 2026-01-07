@@ -50,6 +50,8 @@ func move_in_cards():
 	cards_in_collection = troop_cards + spell_cards
 		
 	for card in cards_in_collection:
+		if !is_instance_valid(card):
+			continue
 		card.get_node("Area2D/CollisionShape2D").disabled = false
 		hover_off_effect(card)
 		card.z_index = z_index + 1
@@ -61,40 +63,49 @@ func move_in_cards():
 func move_out_cards():
 	in_focus = false
 	for card in cards_in_collection:
+		if !is_instance_valid(card):
+			continue
 		card.get_node("Area2D/CollisionShape2D").disabled = true
 		card.get_node("Area2D").collision_layer = 1 << 1
 		card.z_index = 1
 		card.visible = false
 		
-
 func align_cards():
 	update_page_indicators()
+	
+	# Clean up invalid cards first
+	troop_cards = troop_cards.filter(func(card): return is_instance_valid(card))
+	spell_cards = spell_cards.filter(func(card): return is_instance_valid(card))
+	cards_in_collection = cards_in_collection.filter(func(card): return is_instance_valid(card))
+	
 	troop_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
 	spell_cards.sort_custom(func(a, b): return a.card_name.naturalnocasecmp_to(b.card_name) < 0)
+	
 	for card in cards_in_collection:
 		card.visible = true
-		card.position = Vector2 (-100, -100)
+		card.position = Vector2(-100, -100)
 		card.update_card()
 		
 		checkPage()
 		
 	var scene_pos = global_position.x
+	var page_index = page * 12
 		
 	for i in range(6):
-		if troop_cards.size() >= i + (12 * page) + 1:
-			var card = troop_cards[i + (12 * page)]
+		if troop_cards.size() >= i + (page_index) + 1:
+			var card = troop_cards[i + (page_index)]
 			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 192 + global_position.y)
 		
-		if troop_cards.size() >= (6 + i) + (12 * page) + 1:
-			var card = troop_cards[(6 + i) + (12 * page)]
+		if troop_cards.size() >= (6 + i) + (page_index) + 1:
+			var card = troop_cards[(6 + i) + (page_index)]
 			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 428 + global_position.y)
 			
-		if spell_cards.size() >= i + (12 * page) + 1:
-			var card = spell_cards[i + (12 * page)]
+		if spell_cards.size() >= i + (page_index) + 1:
+			var card = spell_cards[i + (page_index)]
 			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 652 + global_position.y)
 			
-		if spell_cards.size() >= ((6 + i) + (12 * page)) + 1:
-			var card = spell_cards[(6 + i) + (12 * page)]
+		if spell_cards.size() >= ((6 + i) + (page_index)) + 1:
+			var card = spell_cards[(6 + i) + (page_index)]
 			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 888 + global_position.y)
 			
 func hover_effect(card):

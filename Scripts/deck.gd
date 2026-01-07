@@ -18,11 +18,13 @@ signal cards_ready
 @onready var scene_manager: Node2D = $"../SceneManager"
 	
 func _ready() -> void:
+	BattleContext.deck = self
 	scene_manager.on_scene_enter.connect(on_enter)
 	SignalManager.removed_card.connect(check_for_deleted_cards)
 	SignalManager.reset_game.connect(delete_all_card_references)
 	
 func on_enter():
+	Global.stored_cards = Global.stored_cards.filter(func(card): return is_instance_valid(card))
 	for card in Global.stored_cards:
 		card.visible = false
 		card.z_index = 0
@@ -79,12 +81,11 @@ func add_new_card_to_deck(card_name : String, times : int):
 		new_card_instance.base_actions = card_data[1]
 		new_card_instance.turn_actions = card_data[1]
 		new_card_instance.actions = card_data[1]
-		new_card_instance.card_type = card_data[2]
 		new_card_instance.card_name = card_name
 		new_card_instance.trait_1 = card_data[5]
-	
+		
 		card_manager.add_child(new_card_instance)
-
+		
 		new_card_instance.adjust_card_details()
 		new_card_instance.adjust_description_text()
 		new_card_instance.adjust_text_size()
@@ -100,38 +101,6 @@ func add_new_card_to_deck(card_name : String, times : int):
 		if i % 3 == 0:
 			await get_tree().process_frame
 		
-#func add_card_to_deck(card_name : String, card_attack : int, card_actions : int):
-	#var new_card_instance = card_scene.instantiate()
-	#var card_type = CardDatabase.CARDS[card_name][2]
-	#
-	#if card_type != "Spell":
-		#new_card_instance.position = position
-	#else:
-		#new_card_instance.position = spell_deck.position
-	#card_manager.add_child(new_card_instance)
-	#
-	#new_card_instance.z_index = 0
-	#new_card_instance.visible = false
-	#new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
-	#
-	#new_card_instance.base_attack = card_attack
-	#new_card_instance.turn_attack = card_attack
-	#new_card_instance.attack = card_attack
-	#new_card_instance.base_actions = card_actions
-	#new_card_instance.actions = card_actions
-	#new_card_instance.turn_actions = card_actions
-	#new_card_instance.card_type = CardDatabase.CARDS[card_name][2]
-	#new_card_instance.card_name = card_name
-	#new_card_instance.get_node("Area2D/CollisionShape2D").disabled = true
-	#
-	#new_card_instance.adjust_card_details()
-#
-	#if card_type != "Spell":
-		#cards_in_troop_deck.append(new_card_instance)
-	#else:
-		#cards_in_spell_deck.append(new_card_instance)
-		#
-	#new_card_instance.update_card()
 	
 func add_cards_on_start():
 	if Global.round == 1:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://col4ncuar707o"]
+[gd_scene load_steps=38 format=3 uid="uid://66l6y6ie0nag"]
 
 [ext_resource type="PackedScene" uid="uid://7x22732qu3vm" path="res://Scenes/sten.tscn" id="1_cuqhi"]
 [ext_resource type="Texture2D" uid="uid://doja875b07fpt" path="res://Assets/images/Tags/silenced damage.png" id="2_e8nsc"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="16_x00fb"]
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="17_xvkue"]
 [ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="18_xlo24"]
+[ext_resource type="Script" path="res://Scripts/card_slots.gd" id="19_i5aat"]
 [ext_resource type="PackedScene" uid="uid://c1a041ei1wmsf" path="res://Scenes/fire.tscn" id="23_wla3a"]
 [ext_resource type="PackedScene" uid="uid://bfgbs3oi5chqa" path="res://Scenes/modifier.tscn" id="25_tobve"]
 [ext_resource type="PackedScene" uid="uid://beevi05hvg00g" path="res://Scenes/boss_screen.tscn" id="26_cy268"]
@@ -221,6 +222,138 @@ tracks/3/keys = {
 _data = {
 "Mult_display": SubResource("Animation_u2blv"),
 "RESET": SubResource("Animation_sfo12")
+}
+
+[sub_resource type="Animation" id="Animation_hyuq8"]
+resource_name = "combine_damage"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("TotalDamageLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TotalDamageLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.666667),
+"transitions": PackedFloat32Array(0.68302, 1),
+"update": 0,
+"values": [Vector2(-560, 0), Vector2(-560, -36)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TotalDamageLabel:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.666667),
+"transitions": PackedFloat32Array(0.615572, 1),
+"update": 0,
+"values": [Vector2(0.9, 0.9), Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("TotalDamageLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TotalDamageLabel:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_n5f57"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("TotalDamageLabel:theme_override_colors/font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TotalDamageLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-560, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("TotalDamageLabel:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = false
+tracks/3/path = NodePath("TotalDamageLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("TotalDamageLabel:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c8igf"]
+_data = {
+"RESET": SubResource("Animation_n5f57"),
+"combine_damage": SubResource("Animation_hyuq8")
 }
 
 [node name="BattleScene" type="Node2D"]
@@ -457,6 +590,7 @@ mouse_filter = 2
 color = Color(0.674815, 0.674815, 0.674815, 1)
 
 [node name="CardSlots" type="Node2D" parent="."]
+script = ExtResource("19_i5aat")
 
 [node name="CardSlot1" parent="CardSlots" instance=ExtResource("14_wbgrc")]
 position = Vector2(424, 597)
@@ -726,6 +860,39 @@ layout_mode = 2
 [node name="Modifier2" parent="HBoxContainer" instance=ExtResource("25_tobve")]
 layout_mode = 2
 
+[node name="DamageLabels" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 960.0
+offset_top = 96.0
+offset_right = 960.0
+offset_bottom = 96.0
+
+[node name="CombineTimer" type="Timer" parent="DamageLabels"]
+one_shot = true
+
+[node name="TotalDamageLabel" type="Label" parent="DamageLabels"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -560.0
+offset_right = 560.0
+offset_bottom = 96.0
+grow_horizontal = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(560, 48)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("6_ounae")
+theme_override_font_sizes/font_size = 96
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="DamageLabels"]
+libraries = {
+"": SubResource("AnimationLibrary_c8igf")
+}
+
 [node name="BossScreen" parent="." instance=ExtResource("26_cy268")]
 anchors_preset = 0
 anchor_right = 0.0
@@ -747,3 +914,4 @@ grow_vertical = 1
 [connection signal="button_down" from="CardCollection/BackButton" to="CardManager" method="_on_back_button_button_down"]
 [connection signal="button_up" from="CardCollection/BackButton" to="CardManager" method="_on_back_button_button_up"]
 [connection signal="pressed" from="CardCollection/BackButton" to="CardManager" method="_on_back_button_pressed"]
+[connection signal="timeout" from="DamageLabels/CombineTimer" to="BattleManager" method="_on_combine_timer_timeout"]

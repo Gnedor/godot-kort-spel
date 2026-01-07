@@ -1,13 +1,8 @@
 extends Node
 
-var card_manager_reference
-var battle_manager_reference
+var card_manager_reference = BattleContext.card_manager
+var battle_manager_reference = BattleContext.battle_manager
 var rng = RandomNumberGenerator.new()
-
-func _ready() -> void:
-	var battle_scene = get_tree().get_root().find_child("BattleScene", true, false)
-	card_manager_reference = battle_scene.get_node("CardManager")
-	battle_manager_reference = battle_scene.get_node("BattleManager")
 
 func trigger_ability(card):
 	battle_manager_reference.ability_effect(card)

@@ -1,12 +1,7 @@
 extends Node
 
-var card_manager_reference
-var battle_manager_reference
-
-func _ready() -> void:
-	var battle_scene = get_tree().get_root().find_child("BattleScene", true, false)
-	card_manager_reference = battle_scene.get_node("CardManager")
-	battle_manager_reference = battle_scene.get_node("BattleManager")
+var card_manager_reference = BattleContext.card_manager
+var battle_manager_reference = BattleContext.battle_manager
 
 func trigger_ability(card_reference):
 	var added_attack : int = 0

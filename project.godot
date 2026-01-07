@@ -26,6 +26,7 @@ TileDatabase="*res://Scripts/tile_database.gd"
 AudioManager="*res://Assets/audio/audio_manager_scene.tscn"
 ModifierDatabase="*res://Scripts/modifier_database.gd"
 BossDatabase="*res://Scripts/boss_database.gd"
+BattleContext="*res://Scripts/BattleContext.gd"
 
 [display]
 

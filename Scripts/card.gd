@@ -249,7 +249,3 @@ func update_card():
 		animate_stat_change("mult")
 	text = null
 		
-
-		
-		
-	

@@ -1,12 +1,7 @@
 extends Node
 
-var battle_manager_reference
-var deck_reference
-
-func _ready() -> void:
-	var battle_scene = get_tree().get_root().find_child("BattleScene", true, false)
-	battle_manager_reference = battle_scene.get_node("BattleManager")
-	deck_reference = battle_scene.get_node("TroopDeck")
+var battle_manager_reference = BattleContext.battle_manager
+var deck_reference = BattleContext.deck
 
 func trigger_ability(card):
 	battle_manager_reference.ability_effect(card)
