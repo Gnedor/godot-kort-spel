@@ -3,11 +3,16 @@ extends Control
 @onready var scene_manager: Control = $CardEditorSceneManager
 
 var stored_card
+var clicked_tag
+var stored_tag_pos
+
+const TAG_MASK = 512
+const TAG_SLOT_MASK = 1024
 
 func _input(event):
-	if Global.scene_name != "editor":
+	if Global.scene_name != "editor" or event is not InputEventMouseButton or event.button_index != MOUSE_BUTTON_LEFT:
 		return
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and $CardEditorSceneManager.in_collection:
+	if $CardEditorSceneManager.in_collection:
 		var card = $CardCollection.check_for_card()
 		if !card or card == stored_card:
 			return
@@ -19,14 +24,57 @@ func _input(event):
 
 		scene_manager.collection_down()
 		await Global.timer(0.5)
-		
+
 		adjust_description(card)
 		card.global_position = %CardPoint.global_position
 		card.visible = true
 		card.scale = Vector2(1.2, 1.2)
 		var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 		tween.tween_property(card, "scale", Vector2(1.0, 1.0), 0.1)
+	else:
+		var hit = raycast_check(TAG_MASK)
+		if hit:
+			on_tag_action(hit, event)
 
+func on_tag_action(tag : Control, event):
+	if event.pressed:
+		stored_tag_pos = tag.position
+		clicked_tag = tag
+		tag.z_index = 2
+		
+		if stored_card:
+			stored_card.area_2d.get_child(0).disabled = true
+			if stored_card.card_type != "spell":
+				stored_card.tag_circle.visible = true
+	else:
+		if !stored_card:
+			release_tag(tag)
+			return
+			
+		if raycast_check(TAG_SLOT_MASK):
+			apply_tag()
+		else:
+			release_tag(tag)
+	
+func apply_tag():
+	print("apply tag")
+	stored_card.apply_tag(clicked_tag.name)
+
+
+func _process(delta: float) -> void:
+	if !clicked_tag:
+		return
+	var mouse_pos = get_global_mouse_position()
+	clicked_tag.global_position = Vector2(mouse_pos.x - clicked_tag.size.x / 2, mouse_pos.y - clicked_tag.size.y / 2)
+
+func release_tag(tag):
+	if stored_card:
+		stored_card.area_2d.get_child(0).disabled = false
+		stored_card.tag_circle.visible = false
+		
+	tag.z_index = 0
+	clicked_tag = null
+	tag.position = stored_tag_pos
 
 func adjust_description(card):
 	var description_label = %DescriptionText
@@ -97,3 +145,17 @@ func play_trash_animation():
 	$TrashCard.get_node("AnimationPlayer").play("trash_card_anim")
 	await Global.timer(0.1667)
 	stored_card.visible = false
+	
+func raycast_check(mask : int):
+	var space_state = get_world_2d().direct_space_state
+	var parameters = PhysicsPointQueryParameters2D.new()
+	parameters.position = get_global_mouse_position()
+	parameters.collide_with_areas = true
+	parameters.collision_mask = mask
+	var result = space_state.intersect_point(parameters)
+	# om den hittar kort returnerar den parent Noden
+	if result.size() > 0:
+		print(result[0].collider.get_parent())
+		return result[0].collider.get_parent()
+	else:
+		return null

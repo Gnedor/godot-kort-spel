@@ -23,10 +23,6 @@ func _ready() -> void:
 	options_window.exit_pause.connect(pause_game)
 	
 	scene_progression()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
 func progress_game_scenes():
 	Global.progress_stage()
@@ -46,6 +42,9 @@ func scene_progression():
 		"editor":
 			move_to_editor_scene()
 			Global.round += 1
+
+#------------------------v MENY SCENER v------------------------#
+
 		"sten":
 			move_to_select_scene()
 		"menu":

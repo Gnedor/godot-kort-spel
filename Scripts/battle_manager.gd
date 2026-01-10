@@ -741,10 +741,10 @@ func combine_damage_text(damage : int):
 	$"../DamageLabels/AnimationPlayer".play("combine_damage")
 	
 	var new_damage_label = $"../DamageLabels/TotalDamageLabel"
-	new_damage_label.text = str(damage * 0.7)
+	new_damage_label.text = str(damage * 0.5)
 	
-	var displayed_damage : float = new_damage * 0.7
-	var add_damage : float = (new_damage * 0.3) / 21
+	var displayed_damage : float = new_damage * 0.5
+	var add_damage : float = (new_damage * 0.5) / 21
 	
 	for i in range(21):
 		displayed_damage += add_damage

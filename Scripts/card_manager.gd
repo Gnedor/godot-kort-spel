@@ -166,9 +166,14 @@ func draw_cards(troop_amount : int, spell_amount : int):
 		AudioManager.play_audio(draw_audio, 0)
 		
 		if amount_to_be_drawn_troop > 0:
+			if deck.cards_in_troop_deck.is_empty():
+				continue
+				
 			drawn_card = deck.cards_in_troop_deck[0]
 			amount_to_be_drawn_troop -= 1
 		else:
+			if deck.cards_in_spell_deck.is_empty():
+				continue
 			drawn_card = deck.cards_in_spell_deck[0]
 			amount_to_be_drawn_spell -= 1
 			
@@ -313,7 +318,7 @@ func discard_selected_cards(cards, status : String):
 		await animate_card_snap(card, discard_pile.position, CARD_MOVE_SPEED * 2, 1)
 		discarded_cards.append(card)
 		card.visible = false
-		SignalManager.signal_emitter("trashed_card")
+		SignalManager.signal_emitter("trashed_card", card)
 		$"../DiscardPile/DiscardCounter".text = str(discarded_cards.size())
 
 			

@@ -5,11 +5,11 @@
 [ext_resource type="Script" path="res://Scripts/card_label.gd" id="2_hs5mj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8wxsj"]
-size = Vector2(320, 32)
+size = Vector2(256, 32)
 
 [node name="CardLabel" type="NinePatchRect"]
 self_modulate = Color(0.128344, 0.128344, 0.128344, 1)
-offset_right = 320.0
+offset_right = 256.0
 offset_bottom = 32.0
 pivot_offset = Vector2(160, 16)
 size_flags_vertical = 0
@@ -38,8 +38,7 @@ vertical_alignment = 1
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
-position = Vector2(160, 16)
+position = Vector2(128, 16)
 shape = SubResource("RectangleShape2D_8wxsj")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]

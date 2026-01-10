@@ -28,8 +28,8 @@ var selected_deck = "Example_deck"
 
 var modifiers = {}
 
-var stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
-#var stage_list = ["editor", "editor", "battle", "editor", "boss", "temp"]
+var stage_list = ["battle", "editor", "battle", "editor", "boss", "temp"]
+#rätt stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
 
 func store_card(card):
 	stored_cards.append(card)
@@ -49,7 +49,7 @@ func reset_game():
 	highest_money = 0
 	round = 1
 	played_cards.clear()
-	stage_list = ["sten", "shop", "sten", "editor", "boss", "temp"]
+	stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
 	
 func find_common_card():
 	var frequency := {}
@@ -129,7 +129,9 @@ func progress_stage():
 	else:
 		stage_list.push_back(stage_list.pop_front())
 		scene_name = stage_list[0]
+		print(scene_name)
 
 func add_modifiers_on_start():
 	for mod in ModifierDatabase.MODIFIERS:
 		modifiers[mod["name"]] = 0
+	
