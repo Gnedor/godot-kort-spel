@@ -20,6 +20,6 @@ void fragment() {
 	final_color.r += 2.0 * get_dist(0, diag_uv);
 	//final_color.rgb -= 1.5 * get_dist(0.5f, diag_uv);
 	final_color.rgb -= 0.7;
-	
+
 	COLOR = final_color;
 }

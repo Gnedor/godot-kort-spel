@@ -45,7 +45,7 @@ var card_name : String
 var ability_script
 var price : int
 var multiplier: float = 1
-var tag : String
+var tag : String = ""
 
 var trait_1
 var trait_2
@@ -59,6 +59,7 @@ func _ready() -> void:
 	
 func place_tag(tag_name : String):
 	if tag_name:
+		tag = tag_name
 		$Textures/ScaleNode/CardSprite/TagSprite.visible = true
 		tag_name = tag_name.left(tag_name.length() - 1)
 		$Textures/ScaleNode/CardSprite/TagSprite.texture = load("res://Assets/images/Tags/" + tag_name + ".png")
@@ -249,3 +250,6 @@ func update_card():
 		animate_stat_change("mult")
 	text = null
 		
+func disable_tag_circle(state : bool):
+	$Textures/ScaleNode/CardSprite/TagCircle/Area2D/CollisionShape2D.disabled = state
+	$Textures/ScaleNode/CardSprite/TagCircle.visible = !state

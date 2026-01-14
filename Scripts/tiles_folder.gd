@@ -36,7 +36,7 @@ func _ready() -> void:
 	selected_deck = TileDatabase.EXAMPLE_DECK
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Global.stage_list[0] == "battle":
 		if dragged_tile:
 			dragged_tile.global_position = Vector2(

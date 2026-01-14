@@ -10,21 +10,11 @@ signal continue_clicked
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	create_card_labels("Starter_deck")
-	connect_signals()
+	create_card_labels("Example_deck")
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-	
-func connect_signals():
-	for label in $Deck/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer.get_children():
-		label.label_hovered.connect(show_card_info)
-		label.label_hovered_off.connect(hide_card_info)
-		
-	for label in $Deck/VBoxContainer/MarginContainer2/MarginContainer/VBoxContainer.get_children():
-		label.label_hovered.connect(show_card_info)
-		label.label_hovered_off.connect(hide_card_info)
 		
 func show_card_info(name):
 	show_card_count += 1
@@ -48,6 +38,10 @@ func create_card_labels(deck_name):
 		if CardDatabase.CARDS[card["name"]][2] != "Spell":
 			var new_label = cardLabel.instantiate()
 			$Deck/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer.add_child(new_label)
+			
+			new_label.label_hovered.connect(show_card_info)
+			new_label.label_hovered_off.connect(hide_card_info)
+			
 			new_label.name = card["name"]
 			new_label.get_node("Label").text = str(card["name"]) + " x" + str(card["amount"])
 			
@@ -56,8 +50,6 @@ func create_card_labels(deck_name):
 			$Deck/VBoxContainer/MarginContainer2/MarginContainer/VBoxContainer.add_child(new_label)
 			new_label.name = card["name"]
 			new_label.get_node("Label").text = str(card["name"]) + " x" + str(card["amount"])
-			
-	connect_signals()
 		
 func adjust_card(name):
 	card.card_name = name
@@ -116,7 +108,8 @@ func move_in():
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "position:y", 0, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property($Bg/Label, "visible_ratio", 1.0, 0.3)
-																																								
+
+
 func _on_button_right_pressed() -> void:
 	AudioManager.play_click_sound()
 	deck_index += 1

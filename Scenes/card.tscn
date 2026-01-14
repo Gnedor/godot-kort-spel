@@ -369,7 +369,6 @@ priority = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Textures/ScaleNode/CardSprite/TagCircle/Area2D"]
 shape = SubResource("CircleShape2D_arv3v")
-disabled = true
 
 [node name="TagSprite" type="Sprite2D" parent="Textures/ScaleNode/CardSprite"]
 visible = false

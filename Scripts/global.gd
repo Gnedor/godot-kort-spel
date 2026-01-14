@@ -15,7 +15,7 @@ var highest_money : float = 0
 var round : int = 1
 var stored_cards = []
 var stored_tiles = []
-var stored_tags = []
+var stored_tags = ["Poison", "Fracture", "Echo"]
 var window_size : Vector2 = Vector2(1920, 1080)
 
 var scene_name : String = "menu"
@@ -28,7 +28,7 @@ var selected_deck = "Example_deck"
 
 var modifiers = {}
 
-var stage_list = ["battle", "editor", "battle", "editor", "boss", "temp"]
+var stage_list = ["editor", "shop", "battle", "editor", "boss", "temp"]
 #rätt stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
 
 func store_card(card):

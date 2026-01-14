@@ -256,7 +256,7 @@ func change_fire():
 		temp -= Global.quota * times_quota
 		times_quota += 1
 	
-	var remainder = 0
+	#var remainder = 0
 	var multiplier = temp / (Global.quota * times_quota)
 	
 	offset = 1 - (offset_base * multiplier)

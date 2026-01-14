@@ -4,12 +4,16 @@ extends Control
 @onready var card_editor: Control = $".."
 
 signal on_scene_exit
+signal on_scene_enter
 
 var tween
 var first_up := true
 var in_collection := false #används så man inte klickar flera kort i collectionen
 
+var tag_desc_down : bool = false
+
 func on_enter_scene():
+	on_scene_enter.emit()
 	%"Trait 1".visible = false
 	%"Trait 2".visible = false
 
@@ -67,3 +71,26 @@ func _on_card_slot_mouse_exited() -> void:
 
 func _on_trash_button_pressed() -> void:
 	card_editor.trash_card()
+
+func drop_tag_description():
+	var tag_description = $"../EditArea/Options/TagArea/TagDescription"
+	
+	$"../EditArea/Options/TagArea/TagDescription/MarginContainer/MarginContainer/DescriptionText".text = ""
+	tag_description.custom_minimum_size.y = 0
+	tag_description.size.y = 0
+	
+	if tween and tween.is_running():
+		tween.kill()
+	
+	tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
+	tween.tween_property(tag_description, "custom_minimum_size:y", 300, 0.2)
+	
+func remove_tag_descripton():
+	if tween and tween.is_running():
+		tween.kill()
+			
+	var tag_description = $"../EditArea/Options/TagArea/TagDescription"
+	
+	$"../EditArea/Options/TagArea/TagDescription/MarginContainer/MarginContainer/DescriptionText".text = ""
+	tag_description.custom_minimum_size.y = 0
+	tag_description.size.y = 0

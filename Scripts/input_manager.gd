@@ -37,7 +37,7 @@ var dragged_tile : Node2D
 
 var selected_slot : Node2D
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Global.scene_name == "battle" or Global.scene_name == "boss":
 		if raycast_check(CARD_MASK) and !card_manager.dragged_card and !dragged_tile and !card_manager.viewing_collection and !Global.is_game_paused:
 			var highest_card = check_for_highest_z_index(raycast_check(CARD_MASK))

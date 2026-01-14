@@ -20,7 +20,7 @@ const CARDS = { # "Namn" : [Attack, Actions, Card type, ability description, abi
 	"Overkiller" : [5, 1, "OnAttackTroop", "If this card deals more than the total Damage done this round, gain +1 Actions", "res://Scripts/kortAbilities/Overkiller.gd", null],
 	"Goop" : [2, 2, "Troop", "Gooby wooby", null, "Poison"],
 	"Juice Up" : [0, 1, "Spell", "Give a card 2x Damage for 1 turn, the card permanently lose 3 Damage after the effect", "res://Scripts/kortAbilities/JuiceUp.gd", null],
-	"Dumpster fire" : [3, 2, "Misc", "This card deals 1.5x Damage for every five cards discarded this round", "res://Scripts/kortAbilities/DumpsterFire.gd", null],
+	"Dumpster fire" : [3, 2, "Misc", "Deals 1.5x Damage for every five cards discarded this round", "res://Scripts/kortAbilities/DumpsterFire.gd", null],
 	"Poison dagger" : [0, 1, "Spell", "Double current Poison. If no Poison have been applied, apply 5 Poison", "res://Scripts/kortAbilities/PoisonDagger.gd", null],
 	"The elements" : [0, 1, "Spell", "Draw one guy for every currently applied status effect", "res://Scripts/kortAbilities/TheElements.gd", null],
 	"Brainer" : [1, 2, "Troop", "Knows the first 5 digits of pi", null, "Echo"],

@@ -1,13 +1,28 @@
 extends Control
 
+@onready var tag_area: NinePatchRect = $EditArea/Options/TagArea/NinePatchRect2
 @onready var scene_manager: Control = $CardEditorSceneManager
+const TAG_SCENE = preload("res://Scenes/tag.tscn")
 
 var stored_card
 var clicked_tag
 var stored_tag_pos
+var stored_tags = []
+
+const TAG_Y = 6
+const TAG_X = 4
+const TAG_SPACING = 96
 
 const TAG_MASK = 512
 const TAG_SLOT_MASK = 1024
+
+func _ready() -> void:
+	$CardEditorSceneManager.on_scene_enter.connect(on_enter)
+	
+func _process(_delta: float) -> void:
+	if clicked_tag:
+		var mouse_pos = get_global_mouse_position()
+		clicked_tag.global_position = Vector2(mouse_pos.x - clicked_tag.size.x / 2, mouse_pos.y - clicked_tag.size.y / 2)
 
 func _input(event):
 	if Global.scene_name != "editor" or event is not InputEventMouseButton or event.button_index != MOUSE_BUTTON_LEFT:
@@ -34,47 +49,52 @@ func _input(event):
 	else:
 		var hit = raycast_check(TAG_MASK)
 		if hit:
-			on_tag_action(hit, event)
-
-func on_tag_action(tag : Control, event):
-	if event.pressed:
-		stored_tag_pos = tag.position
-		clicked_tag = tag
-		tag.z_index = 2
-		
-		if stored_card:
-			stored_card.area_2d.get_child(0).disabled = true
-			if stored_card.card_type != "spell":
-				stored_card.tag_circle.visible = true
-	else:
-		if !stored_card:
-			release_tag(tag)
-			return
-			
-		if raycast_check(TAG_SLOT_MASK):
-			apply_tag()
+			on_tag_click(hit)
 		else:
-			release_tag(tag)
+			on_release()
+			
+func on_enter():
+	get_tags()
+
+func on_tag_click(tag : Control):
+	var tag_name = String(tag.name)
+	var i := int(tag_name[-1])
+	stored_tag_pos = Vector2(TAG_X + (TAG_SPACING * i), TAG_Y)
+	clicked_tag = tag
+	tag.z_index = 2
+	for child in tag_area.get_children():
+		child.disable_collision(true)
 	
-func apply_tag():
-	print("apply tag")
-	stored_card.apply_tag(clicked_tag.name)
-
-
-func _process(delta: float) -> void:
-	if !clicked_tag:
-		return
-	var mouse_pos = get_global_mouse_position()
-	clicked_tag.global_position = Vector2(mouse_pos.x - clicked_tag.size.x / 2, mouse_pos.y - clicked_tag.size.y / 2)
+	if stored_card:
+		stored_card.area_2d.get_child(0).disabled = true
+		if stored_card.card_type != "Spell" and stored_card.tag == "":
+			stored_card.disable_tag_circle(false)
+				
+func on_release():
+	if clicked_tag:
+		release_tag(clicked_tag)
+	
+func apply_tag(tag):
+	stored_card.place_tag(tag.name)
+	adjust_description(stored_card)
+	tag.queue_free()
 
 func release_tag(tag):
+	if raycast_check(TAG_SLOT_MASK):
+		apply_tag(tag)
+	
 	if stored_card:
 		stored_card.area_2d.get_child(0).disabled = false
-		stored_card.tag_circle.visible = false
+		stored_card.disable_tag_circle(true)
 		
+	for child in tag_area.get_children():
+		child.disable_collision(false)
 	tag.z_index = 0
 	clicked_tag = null
-	tag.position = stored_tag_pos
+	
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(tag, "position", stored_tag_pos, 0.1)
+	#tag.position = stored_tag_pos
 
 func adjust_description(card):
 	var description_label = %DescriptionText
@@ -109,7 +129,7 @@ func adjust_description(card):
 		
 	if card.trait_2:
 		%"Trait 2".visible = true
-		adjust_trait_description(%Trait2Name, %Trait2Description, card.trait_1)
+		adjust_trait_description(%Trait2Name, %Trait2Description, card.trait_2)
 	else:
 		%"Trait 2".visible = false
 	
@@ -155,7 +175,46 @@ func raycast_check(mask : int):
 	var result = space_state.intersect_point(parameters)
 	# om den hittar kort returnerar den parent Noden
 	if result.size() > 0:
-		print(result[0].collider.get_parent())
 		return result[0].collider.get_parent()
 	else:
 		return null
+		
+func get_tags():
+	for tag in $EditArea/Options/TagArea/NinePatchRect2.get_children():
+		tag.queue_free()
+	
+	var i := 0
+	for tag_name in Global.stored_tags:
+		var new_tag = TAG_SCENE.instantiate()
+		new_tag.name = tag_name + str(i)
+		$EditArea/Options/TagArea/NinePatchRect2.add_child(new_tag)
+		new_tag.on_hover.connect(on_tag_hover)
+		new_tag.on_hover_off.connect(on_tag_hover_off)
+		new_tag.get_node("TextureRect").texture = load("res://Assets/images/Tags/" + tag_name + ".png")
+		new_tag.position = Vector2(TAG_X + (TAG_SPACING * i), TAG_Y)
+		
+		i += 1
+		
+func on_tag_hover(tag : Control):
+	scene_manager.drop_tag_description()
+	set_tag_desc_text(tag)
+	
+func on_tag_hover_off():
+	scene_manager.remove_tag_descripton()
+		
+func set_tag_desc_text(tag : Control):
+	var tag_name = tag.name
+	tag_name = tag_name.left(tag_name.length() - 1)
+	var desc_label = $EditArea/Options/TagArea/TagDescription/MarginContainer/MarginContainer/DescriptionText
+	var tag_desc : String
+	for t in TagDatabase.TAGS:
+		if t["name"] == tag_name:
+			tag_desc = t["description"]
+			
+	desc_label.text = "\n\n\n[center][font_size=20]" + tag_name + "[/font_size][/center]\n\n" + tag_desc
+	Global.color_text(desc_label)
+	
+	var anim_time = get_anim_time(desc_label)
+	desc_label.visible_ratio = 0
+	var tween = get_tree().create_tween()
+	tween.tween_property(desc_label, "visible_ratio", 1.0, 0.2)

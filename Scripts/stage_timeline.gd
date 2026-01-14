@@ -34,9 +34,10 @@ func adjust_timeline():
 		var v_value = 1 - (brightnes_decrease * pos_value)
 		child.modulate = Color.from_hsv(0, 0, v_value, 1.0)
 		child.custom_minimum_size.x = 60 - (15 * pos_value)
-	
-		var texture = load("res://Assets/images/StageIcons/" + stage_list[position] + "_icon.png")
-		child.texture = texture
+		
+		if stage_list[position] != "null":
+			var texture = load("res://Assets/images/StageIcons/" + stage_list[position] + "_icon.png")
+			child.texture = texture
 		
 		position += 1
 

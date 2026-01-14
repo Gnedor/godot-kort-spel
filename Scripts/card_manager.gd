@@ -53,7 +53,7 @@ func _ready() -> void:
 	SignalManager.reset_game.connect(reset_game)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Global.scene_name == "battle" or Global.scene_name == "boss":
 		# kollar om man har klickat på ett kort och flyttar kortet till muspekaren
 		if dragged_card:
@@ -160,7 +160,7 @@ func draw_cards(troop_amount : int, spell_amount : int):
 	align_cards_on_draw(amount_to_be_drawn_total)
 	var amount_in_hand = cards_in_hand.size()
 	var drawn_card
-	var selected_deck
+	#var selected_deck
 		
 	for i in amount_to_be_drawn_total:
 		AudioManager.play_audio(draw_audio, 0)

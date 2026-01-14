@@ -26,7 +26,7 @@ var tags = []
 func _ready() -> void:
 	tags = h_box_container.get_children()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	align_tag_hover()
 	money_label.text = str(Global.total_money) + "$"
 	if dragged_tag:

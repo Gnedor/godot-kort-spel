@@ -522,7 +522,7 @@ func remove_text(label):
 func update_labels():
 	Global.round_number(total_damage_label, Global.total_damage)
 	total_damage_label.text = str(total_damage_label.text) 
-	var child_count = debuff_icons.get_child_count()
+	#var child_count = debuff_icons.get_child_count()
 	
 	var i = 0
 	for label in debuff_text.get_children().duplicate():
@@ -551,7 +551,7 @@ func create_debuff_icon(debuff_name : String):
 	var texture_rect = TextureRect.new()
 	texture_rect.texture = load("res://Assets/images/Tags/" + debuff_name + ".png")
 	debuff_icons.add_child(texture_rect)
-	texture_rect.name == debuff_name
+	texture_rect.name = debuff_name
 
 	var label = Label.new()
 	var color : Color
@@ -645,7 +645,8 @@ func display_add_damage(damage: int, color):
 	added_damage_label.text = ""
 	
 func get_boss_modifiers():
-	var count = 3
+	pass
+	#var count = 3
 	
 func burning_card_effect():
 	if Global.modifiers["Burning card"] == 0 or card_manager.cards_in_hand.size() == 0:

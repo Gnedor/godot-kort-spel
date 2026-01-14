@@ -16,7 +16,7 @@ func _on_fullscreen_button_toggled(toggled_on: bool) -> void:
 		
 func scale_window(option : Control, target_scale : Vector2):
 	var base_min_size_x : int = 448
-	var base_min_size_y : int = 180
+	#var base_min_size_y : int = 180
 	var time : float = 0.3
 	
 	var options_list = option.get_node("OptionDesc/OptionList")

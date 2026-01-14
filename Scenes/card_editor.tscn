@@ -1,11 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://chg3cbacfnu20"]
+[gd_scene load_steps=17 format=3 uid="uid://chg3cbacfnu20"]
 
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_1cf1i"]
 [ext_resource type="Script" path="res://Scripts/card_editor.gd" id="1_m6mbc"]
 [ext_resource type="Script" path="res://Scripts/card_editor_scene_manager.gd" id="2_06cxi"]
 [ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="2_jfs04"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="3_icw2p"]
-[ext_resource type="PackedScene" uid="uid://yue7hl0l0upn" path="res://Scenes/tag.tscn" id="3_rorqg"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_nxk2h"]
 [ext_resource type="Texture2D" uid="uid://bmvvhihmid8iw" path="res://Assets/images/card slot.png" id="6_hyxf0"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="7_mplpp"]
@@ -35,6 +34,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -123,79 +124,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.121569, 0.121569, 0.121569, 1)
-
-[node name="CardArea" type="NinePatchRect" parent="EditArea"]
-self_modulate = Color(0.172549, 0.172549, 0.172549, 1)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.119
-anchor_right = 0.5
-anchor_bottom = 0.844
-offset_left = -104.0
-offset_top = 154.704
-offset_right = 104.0
-offset_bottom = -149.696
-mouse_filter = 1
-texture = ExtResource("1_1cf1i")
-region_rect = Rect2(0, 0, 64, 64)
-patch_margin_left = 10
-patch_margin_top = 9
-patch_margin_right = 14
-patch_margin_bottom = 19
-
-[node name="NinePatchRect" type="NinePatchRect" parent="EditArea/CardArea"]
-self_modulate = Color(0.059126, 0.0591259, 0.0591259, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = -24.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(88, 112)
-mouse_filter = 1
-texture = ExtResource("2_jfs04")
-region_rect = Rect2(0, 0, 64, 64)
-patch_margin_left = 10
-patch_margin_top = 19
-patch_margin_right = 14
-patch_margin_bottom = 19
-
-[node name="CardSlot" type="Button" parent="EditArea/CardArea/NinePatchRect"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = -16.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(72, 96)
-focus_mode = 0
-mouse_filter = 1
-theme_override_styles/hover = SubResource("StyleBoxTexture_omrvp")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_hvstn")
-theme_override_styles/normal = SubResource("StyleBoxTexture_0n8rc")
-
-[node name="CardPoint" type="Control" parent="EditArea/CardArea/NinePatchRect/CardSlot"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 72.0
-offset_top = 96.0
-offset_right = -72.0
-offset_bottom = -96.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="ContinueButton" type="Button" parent="EditArea"]
 self_modulate = Color(0.207843, 0.207843, 0.207843, 1)
@@ -494,7 +422,81 @@ bbcode_enabled = true
 text = "[center]Gloop"
 fit_content = true
 
+[node name="CardArea" type="NinePatchRect" parent="EditArea"]
+self_modulate = Color(0.172549, 0.172549, 0.172549, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.119
+anchor_right = 0.5
+anchor_bottom = 0.844
+offset_left = -104.0
+offset_top = 154.704
+offset_right = 104.0
+offset_bottom = -149.696
+mouse_filter = 1
+texture = ExtResource("1_1cf1i")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 10
+patch_margin_top = 9
+patch_margin_right = 14
+patch_margin_bottom = 19
+
+[node name="NinePatchRect" type="NinePatchRect" parent="EditArea/CardArea"]
+self_modulate = Color(0.059126, 0.0591259, 0.0591259, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(88, 112)
+mouse_filter = 1
+texture = ExtResource("2_jfs04")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 10
+patch_margin_top = 19
+patch_margin_right = 14
+patch_margin_bottom = 19
+
+[node name="CardSlot" type="Button" parent="EditArea/CardArea/NinePatchRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(72, 96)
+focus_mode = 0
+mouse_filter = 1
+theme_override_styles/hover = SubResource("StyleBoxTexture_omrvp")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hvstn")
+theme_override_styles/normal = SubResource("StyleBoxTexture_0n8rc")
+
+[node name="CardPoint" type="Control" parent="EditArea/CardArea/NinePatchRect/CardSlot"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 72.0
+offset_top = 96.0
+offset_right = -72.0
+offset_bottom = -96.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Options" type="Control" parent="EditArea"]
+z_index = 1
 layout_mode = 1
 anchor_right = 0.5
 anchor_bottom = 1.0
@@ -508,9 +510,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 144.0
+offset_left = 136.0
 offset_top = 72.0
-offset_right = -136.0
+offset_right = -128.0
 offset_bottom = -592.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -527,9 +529,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
+offset_left = 16.0
 offset_top = 10.0
-offset_right = -8.0
+offset_right = -16.0
 offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -540,40 +542,90 @@ patch_margin_top = 30
 patch_margin_right = 17
 patch_margin_bottom = 17
 
-[node name="fracture" parent="EditArea/Options/TagArea/NinePatchRect2" instance=ExtResource("3_rorqg")]
-layout_mode = 2
-offset_left = 4.0
-offset_top = 6.0
-offset_right = 84.0
-offset_bottom = 86.0
+[node name="TagName" type="NinePatchRect" parent="EditArea/Options/TagArea"]
+self_modulate = Color(0.172549, 0.172549, 0.172549, 1)
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 168.0
+offset_top = -40.0
+offset_right = -168.0
+offset_bottom = -113.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_1cf1i")
+region_rect = Rect2(0, 0, 64, 23)
+patch_margin_left = 11
+patch_margin_top = 21
+patch_margin_right = 17
+patch_margin_bottom = 15
 
-[node name="Fracture" parent="EditArea/Options/TagArea/NinePatchRect2" instance=ExtResource("3_rorqg")]
-layout_mode = 2
-offset_left = 100.0
-offset_top = 6.0
-offset_right = 180.0
-offset_bottom = 86.0
+[node name="Label" type="Label" parent="EditArea/Options/TagArea/TagName"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.851
+offset_bottom = 7.811
+theme_override_fonts/font = ExtResource("4_nxk2h")
+theme_override_font_sizes/font_size = 24
+text = "Tags"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="tag3" parent="EditArea/Options/TagArea/NinePatchRect2" instance=ExtResource("3_rorqg")]
-layout_mode = 2
-offset_left = 196.0
-offset_top = 6.0
-offset_right = 276.0
-offset_bottom = 86.0
+[node name="TagDescription" type="MarginContainer" parent="EditArea/Options/TagArea"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 23.0
+offset_top = 24.0
+offset_right = -25.0
+offset_bottom = 96.0
+grow_horizontal = 2
+mouse_filter = 2
 
-[node name="tag4" parent="EditArea/Options/TagArea/NinePatchRect2" instance=ExtResource("3_rorqg")]
+[node name="Description" type="NinePatchRect" parent="EditArea/Options/TagArea/TagDescription"]
+self_modulate = Color(0.123473, 0.123473, 0.123473, 1)
 layout_mode = 2
-offset_left = 292.0
-offset_top = 6.0
-offset_right = 372.0
-offset_bottom = 86.0
+texture = ExtResource("1_1cf1i")
+patch_margin_left = 13
+patch_margin_top = 10
+patch_margin_right = 13
+patch_margin_bottom = 17
 
-[node name="tag5" parent="EditArea/Options/TagArea/NinePatchRect2" instance=ExtResource("3_rorqg")]
+[node name="MarginContainer" type="MarginContainer" parent="EditArea/Options/TagArea/TagDescription"]
 layout_mode = 2
-offset_left = 388.0
-offset_top = 6.0
-offset_right = 468.0
-offset_bottom = 86.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="NinePatchRect" type="NinePatchRect" parent="EditArea/Options/TagArea/TagDescription/MarginContainer"]
+self_modulate = Color(0.0588235, 0.0588235, 0.0588235, 1)
+layout_mode = 2
+texture = ExtResource("2_jfs04")
+patch_margin_left = 18
+patch_margin_top = 14
+patch_margin_right = 13
+patch_margin_bottom = 14
+
+[node name="MarginContainer" type="MarginContainer" parent="EditArea/Options/TagArea/TagDescription/MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 8
+
+[node name="DescriptionText" type="RichTextLabel" parent="EditArea/Options/TagArea/TagDescription/MarginContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/line_separation = 8
+theme_override_fonts/normal_font = ExtResource("7_mplpp")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+fit_content = true
 
 [node name="TrashButton" type="Button" parent="EditArea/Options"]
 self_modulate = Color(0.18, 0.18, 0.18, 1)
@@ -609,6 +661,7 @@ scale = Vector2(4.5, 4.5)
 scale = Vector2(4.5, 4.5)
 
 [connection signal="pressed" from="CardCollection/BackButton" to="CardEditorSceneManager" method="_on_back_button_pressed"]
+[connection signal="pressed" from="EditArea/ContinueButton" to="CardEditorSceneManager" method="_on_continue_button_pressed"]
 [connection signal="mouse_entered" from="EditArea/CardArea" to="." method="_on_card_slot_mouse_entered"]
 [connection signal="mouse_exited" from="EditArea/CardArea" to="." method="_on_card_slot_mouse_exited"]
 [connection signal="button_down" from="EditArea/CardArea/NinePatchRect/CardSlot" to="CardEditorSceneManager" method="_on_card_slot_button_down"]
@@ -616,7 +669,6 @@ scale = Vector2(4.5, 4.5)
 [connection signal="mouse_entered" from="EditArea/CardArea/NinePatchRect/CardSlot" to="CardEditorSceneManager" method="_on_card_slot_mouse_entered"]
 [connection signal="mouse_exited" from="EditArea/CardArea/NinePatchRect/CardSlot" to="CardEditorSceneManager" method="_on_card_slot_mouse_exited"]
 [connection signal="pressed" from="EditArea/CardArea/NinePatchRect/CardSlot" to="CardEditorSceneManager" method="_on_card_slot_pressed"]
-[connection signal="pressed" from="EditArea/ContinueButton" to="CardEditorSceneManager" method="_on_continue_button_pressed"]
 [connection signal="pressed" from="EditArea/Options/TrashButton" to="CardEditorSceneManager" method="_on_trash_button_pressed"]
 
 [editable path="TrashCard"]

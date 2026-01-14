@@ -35,7 +35,7 @@ func particle_explode():
 	temp_particle.emitting = true
 	
 	await temp_particle.emitting
-	temp_particle.queue_free
+	temp_particle.queue_free()
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tfa6m"]

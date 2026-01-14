@@ -38,7 +38,7 @@ var first_enter : bool = true
 func _ready() -> void:
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 	
 	
@@ -53,7 +53,7 @@ func display_dialog():
 	await Global.timer(0.5)
 	var tween = get_tree().create_tween()
 	tween.tween_property(dialog_label, "visible_ratio", 1.0, 1)
-	var text_length = 0
+	#var text_length = 0
 	AudioManager.animate_text_audio(str(dialog_label.get_text()).length(), 1)
 	
 func remove_scene():

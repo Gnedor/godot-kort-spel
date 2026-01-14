@@ -15,51 +15,52 @@ const TAG_SLOT_MASK = 1024
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Global.scene_name == "shop":
-		var hits = raycast_check()
-		if hits and !Global.is_game_paused:
-			var dragged_tag = card_manager_screen.dragged_tag
-			for node in hits:
-				match node.collider.collision_layer:
-					CARD_MASK:
-						hovered_card = node.collider.get_parent()
-						shop.hovered_card = hovered_card
-							
-					COLLECTION_CARD_MASK:
-						hovered_card = node.collider.get_parent()
-						shop.hovered_card = hovered_card
-							
-					TILE_MASK:
-						hovered_tile = node.collider.get_parent()
-						shop.hovered_tile = hovered_tile
-					
-					TAG_MASK:
-						if !shop.selected_card.tag:
-							shop.selected_card.tag_circle.visible = true
-						if !dragged_tag:
-							card_manager_screen.hovered_tag = node.collider.get_parent()
-							card_manager_screen.display_tag_description()
-							
-					TAG_SLOT_MASK:
-						if dragged_tag and !shop.selected_card.tag:
-							hovering_tag_slot = true
-							
-			if dragged_tag:
-				if hovering_tag_slot:
-					dragged_tag.scale = Vector2(1.5, 1.5)
-				else:
-					dragged_tag.scale = Vector2(1.1, 1.1)
-				hovering_tag_slot = false
-		else:
-			hovered_card = null
-			shop.hovered_card = null
-			hovered_tile = null
-			shop.hovered_tile = null
-			if !card_manager_screen.dragged_tag:
-				card_manager_screen.hovered_tag = null
-				card_manager_screen.tag_description.visible = false
-			if shop.selected_card:
-				shop.selected_card.tag_circle.visible = false
+	if Global.scene_name != "shop":
+		return
+	var hits = raycast_check()
+	if hits and !Global.is_game_paused:
+		var dragged_tag = card_manager_screen.dragged_tag
+		for node in hits:
+			match node.collider.collision_layer:
+				CARD_MASK:
+					hovered_card = node.collider.get_parent()
+					shop.hovered_card = hovered_card
+						
+				COLLECTION_CARD_MASK:
+					hovered_card = node.collider.get_parent()
+					shop.hovered_card = hovered_card
+						
+				TILE_MASK:
+					hovered_tile = node.collider.get_parent()
+					shop.hovered_tile = hovered_tile
+				
+				TAG_MASK:
+					if !shop.selected_card.tag:
+						shop.selected_card.tag_circle.visible = true
+					if !dragged_tag:
+						card_manager_screen.hovered_tag = node.collider.get_parent()
+						card_manager_screen.display_tag_description()
+						
+				TAG_SLOT_MASK:
+					if dragged_tag and !shop.selected_card.tag:
+						hovering_tag_slot = true
+						
+		if dragged_tag:
+			if hovering_tag_slot:
+				dragged_tag.scale = Vector2(1.5, 1.5)
+			else:
+				dragged_tag.scale = Vector2(1.1, 1.1)
+			hovering_tag_slot = false
+	else:
+		hovered_card = null
+		shop.hovered_card = null
+		hovered_tile = null
+		shop.hovered_tile = null
+		if !card_manager_screen.dragged_tag:
+			card_manager_screen.hovered_tag = null
+			card_manager_screen.tag_description.visible = false
+		if shop.selected_card:
+			shop.selected_card.tag_circle.visible = false
 			
 			
 func _input(event):
