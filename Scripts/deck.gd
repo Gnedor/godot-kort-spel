@@ -20,8 +20,8 @@ signal cards_ready
 func _ready() -> void:
 	BattleContext.deck = self
 	scene_manager.on_scene_enter.connect(on_enter)
-	SignalManager.removed_card.connect(check_for_deleted_cards)
-	SignalManager.reset_game.connect(delete_card)
+	SignalManager.removed_card.connect(delete_card)
+	SignalManager.reset_game.connect(delete_all_card_references)
 	
 func on_enter():
 	Global.stored_cards = Global.stored_cards.filter(func(card): return is_instance_valid(card))
@@ -169,7 +169,7 @@ func create_card_copy(card):
 	card_copy.adjust_card_details()
 	
 	return card_copy
-	
+		
 func delete_card(r_card):
 	for card in cards_in_troop_deck.duplicate():
 		if r_card == card:
