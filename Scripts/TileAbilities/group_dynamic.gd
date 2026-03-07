@@ -26,7 +26,7 @@ func add_mult(card):
 		placed_card.update_card()
 		
 func remove_mult(card):
-	if placed_card == card:
+	if placed_card == card or !placed_card:
 		return
 	if card.card_name == placed_card.card_name:
 		placed_card.round_mult /= BONUS_MULT

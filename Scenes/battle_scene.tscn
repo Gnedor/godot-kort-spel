@@ -848,9 +848,9 @@ mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 visible = false
-offset_top = 370.0
+offset_top = 320.0
 offset_right = 1920.0
-offset_bottom = 451.0
+offset_bottom = 424.0
 theme_override_constants/separation = 64
 alignment = 1
 

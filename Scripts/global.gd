@@ -28,7 +28,7 @@ var selected_deck = "Example_deck"
 
 var modifiers = {}
 
-var stage_list = ["editor", "shop", "battle", "editor", "boss", "temp"]
+var stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
 #rätt stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
 
 func store_card(card):

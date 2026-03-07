@@ -158,7 +158,7 @@ func trash_card():
 	if stored_card:
 		await play_trash_animation()
 		stored_card.free()
-		SignalManager.signal_emitter("removed_card")
+		SignalManager.signal_emitter("removed_card", stored_card)
 		stored_card = null
 	
 func play_trash_animation():
