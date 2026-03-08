@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c8tbmwqdapnsc"]
+[gd_scene load_steps=11 format=3 uid="uid://c8tbmwqdapnsc"]
 
 [ext_resource type="Script" path="res://Scripts/shop.gd" id="1_obqh1"]
 [ext_resource type="FontFile" uid="uid://donxec21iqi2o" path="res://Assets/fonts/PixelOperator8.ttf" id="1_s31jl"]
@@ -7,10 +7,8 @@
 [ext_resource type="Script" path="res://Scripts/shop_input_manager.gd" id="3_ernqd"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="4_ral8i"]
 [ext_resource type="Script" path="res://Scripts/shop_scene_manager.gd" id="6_e8hkw"]
-[ext_resource type="FontFile" uid="uid://cxpul0hcnrfyt" path="res://Assets/fonts/PixelDigivolve-mOm9.ttf" id="8_pd30o"]
-[ext_resource type="Texture2D" uid="uid://b3226gsd6ehqt" path="res://Assets/images/Pen.png" id="9_4m3r7"]
+[ext_resource type="PackedScene" uid="uid://dlf5nf8ot7glp" path="res://Scenes/spell_deck.tscn" id="9_58p7x"]
 [ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="10_banbt"]
-[ext_resource type="PackedScene" uid="uid://buwm6dg8acgmi" path="res://Scenes/manage_card.tscn" id="11_fntq0"]
 [ext_resource type="PackedScene" uid="uid://lg2unrdvo3vs" path="res://Scenes/bg_light.tscn" id="12_6xy3s"]
 
 [node name="ShopScene" type="Node2D"]
@@ -75,16 +73,16 @@ color = Color(0.00234459, 0.00234459, 0.00234459, 1)
 [node name="TileClipMask" type="ColorRect" parent="."]
 clip_children = 1
 z_index = 1
-offset_left = 312.0
-offset_top = 472.0
-offset_right = 952.0
-offset_bottom = 792.0
+offset_left = 640.0
+offset_top = 480.0
+offset_right = 1280.0
+offset_bottom = 800.0
 
 [node name="TileSlot" type="ColorRect" parent="."]
-offset_left = 312.0
-offset_top = 456.0
-offset_right = 616.0
-offset_bottom = 808.0
+offset_left = 640.0
+offset_top = 464.0
+offset_right = 944.0
+offset_bottom = 816.0
 color = Color(0.184314, 0.184314, 0.184314, 1)
 
 [node name="ColorRect" type="ColorRect" parent="TileSlot"]
@@ -117,10 +115,10 @@ position = Vector2(152, 385)
 anchors_preset = -1
 anchor_left = 1.105
 anchor_right = 1.105
-offset_left = 648.0
-offset_top = 456.0
-offset_right = 952.0
-offset_bottom = 808.0
+offset_left = 976.0
+offset_top = 464.0
+offset_right = 1280.0
+offset_bottom = 816.0
 color = Color(0.184314, 0.184314, 0.184314, 1)
 
 [node name="ColorRect" type="ColorRect" parent="TileSlot2"]
@@ -297,52 +295,35 @@ offset_right = 3840.0
 offset_bottom = 1080.0
 color = Color(0, 0, 0, 0)
 
-[node name="ManageCard" type="Button" parent="."]
-self_modulate = Color(0.212305, 0.212305, 0.212305, 1)
-offset_left = 1024.0
-offset_top = 520.0
-offset_right = 1296.0
-offset_bottom = 656.0
-scale = Vector2(2, 2)
-focus_mode = 0
-theme = ExtResource("2_7pymf")
-keep_pressed_outside = true
+[node name="BGLight" parent="." instance=ExtResource("12_6xy3s")]
+visible = false
+z_index = -10
+custom_minimum_size = Vector2(1920, 1080)
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 3840.0
+offset_bottom = 1080.0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="Node2D" type="Node2D" parent="ManageCard"]
-
-[node name="Label" type="Label" parent="ManageCard/Node2D"]
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = 24.0
-offset_top = 12.0
-offset_right = 189.0
-offset_bottom = 111.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 1
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("8_pd30o")
-theme_override_font_sizes/font_size = 40
-text = "Manage 
-CARD"
-vertical_alignment = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="ManageCard/Node2D"]
-position = Vector2(208, 68)
-scale = Vector2(1.5, 1.5)
-texture = ExtResource("9_4m3r7")
+[node name="SpellDeck" parent="." instance=ExtResource("9_58p7x")]
+position = Vector2(136, 928)
 
 [node name="CardCollection" parent="." instance=ExtResource("10_banbt")]
 position = Vector2(1920, 0)
 
 [node name="BackButton" type="Button" parent="CardCollection"]
 self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 64.0
-offset_top = 936.0
+offset_top = 904.0
 offset_right = 288.0
-offset_bottom = 1056.0
+offset_bottom = 1044.0
+grow_horizontal = 2
+grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("2_7pymf")
 keep_pressed_outside = true
@@ -361,32 +342,10 @@ text = "Back"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CardManagingPosition" type="Node2D" parent="CardCollection"]
-position = Vector2(512, 540)
-
-[node name="CardManagerScreen" parent="CardCollection" instance=ExtResource("11_fntq0")]
-visible = false
-z_index = 120
-position = Vector2(1920, 0)
-
-[node name="BGLight" parent="." instance=ExtResource("12_6xy3s")]
-z_index = -10
-custom_minimum_size = Vector2(1920, 1080)
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_right = 1920.0
-offset_bottom = 1080.0
-grow_horizontal = 1
-grow_vertical = 1
-
 [connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
 [connection signal="button_up" from="Button" to="." method="_on_button_button_up"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="button_down" from="ContinueButton" to="." method="_on_continue_button_button_down"]
 [connection signal="button_up" from="ContinueButton" to="." method="_on_continue_button_button_up"]
 [connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="pressed" from="ManageCard" to="." method="_on_manage_card_pressed"]
-[connection signal="button_down" from="CardCollection/BackButton" to="." method="_on_back_button_down"]
-[connection signal="button_up" from="CardCollection/BackButton" to="." method="_on_back_button_up"]
-[connection signal="pressed" from="CardCollection/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="CardCollection/BackButton" to="ShopInputManager" method="_on_back_button_pressed"]

@@ -118,7 +118,10 @@ func adjust_card_details():
 	sprite = card_description.action_sprite
 	if card_type != "Troop":
 		image_path = "res://Assets/images/ActionTypes/" + card_type + "_type.png"
-		texture = load(image_path)
+		
+		texture = null
+		if ResourceLoader.exists(image_path, "Image"):
+			texture = load(image_path)
 
 		if sprite:
 			sprite.texture = texture

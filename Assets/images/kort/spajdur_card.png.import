@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bck6gsi3csv5p"
-path="res://.godot/imported/spajdur_card.png-c274cd137e82485cab7835cb8960b376.ctex"
+path="res://.godot/imported/Spajdur_card.png-a124a69c680cbc68fe363d5e945a0dbe.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/kort/spajdur_card.png"
-dest_files=["res://.godot/imported/spajdur_card.png-c274cd137e82485cab7835cb8960b376.ctex"]
+source_file="res://Assets/images/kort/Spajdur_card.png"
+dest_files=["res://.godot/imported/Spajdur_card.png-a124a69c680cbc68fe363d5e945a0dbe.ctex"]
 
 [params]
 

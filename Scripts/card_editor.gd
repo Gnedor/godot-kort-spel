@@ -112,7 +112,10 @@ func adjust_description(card):
 		$EditArea/Control/StatDisplay/ActionsLabel.text = ""
 	
 	var image_path = "res://Assets/images/ActionTypes/" + card.card_type + "_type.png"
-	%CardType.texture = load(image_path)
+	
+	%CardType.texture = null
+	if ResourceLoader.exists(image_path, "Image"):
+		%CardType.texture = load(image_path)
 	
 	var tween = get_tree().create_tween()
 	
@@ -214,7 +217,7 @@ func set_tag_desc_text(tag : Control):
 	desc_label.text = "\n\n\n[center][font_size=20]" + tag_name + "[/font_size][/center]\n\n" + tag_desc
 	Global.color_text(desc_label)
 	
-	var anim_time = get_anim_time(desc_label)
+	#var anim_time = get_anim_time(desc_label)
 	desc_label.visible_ratio = 0
 	var tween = get_tree().create_tween()
 	tween.tween_property(desc_label, "visible_ratio", 1.0, 0.2)

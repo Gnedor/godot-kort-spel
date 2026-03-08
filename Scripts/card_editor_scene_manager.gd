@@ -64,10 +64,8 @@ func _on_back_button_pressed() -> void:
 func _on_card_slot_mouse_entered() -> void:
 	%CardSlot.scale = Vector2(1.05, 1.05)
 
-
 func _on_card_slot_mouse_exited() -> void:
 	%CardSlot.scale = Vector2(1, 1)
-
 
 func _on_trash_button_pressed() -> void:
 	card_editor.trash_card()

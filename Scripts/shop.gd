@@ -3,7 +3,6 @@ extends Node2D
 var card_scene = preload("res://Scenes/card.tscn")
 var tile_scene = load("res://Scenes/tile.tscn")
 
-@onready var card_collection: Node2D = $CardCollection
 @onready var card_clip_mask: ColorRect = $CardSlot/ColorRect/ColorRect/CardClipMask
 @onready var button: Button = $Button
 @onready var reroll_label: Label = $Button/Label
@@ -15,9 +14,6 @@ var tile_scene = load("res://Scenes/tile.tscn")
 @onready var tile_clip_mask: ColorRect = $TileClipMask
 @onready var buy_button_1: Node2D = $TileSlot/BuyButton1
 @onready var buy_button_2: Node2D = $TileSlot2/BuyButton2
-@onready var card_manager_screen: Node2D = $CardCollection/CardManagerScreen
-
-@onready var back_label: Label = $CardCollection/BackButton/BackLabel
 
 var deck
 
@@ -33,7 +29,6 @@ var tile_labels = []
 
 var start_process : bool = false
 var rerolling : bool = false
-var viewing_collection : bool = false
 var managing_card : bool = false
 var reroll_label_position_y
 var continue_label_position_y
@@ -43,9 +38,7 @@ signal exit_shop
 const CARD_MASK = 2
 const LABEL_MAX_SIZE = 280
 	
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	card_manager_screen.trash_pressed.connect(trash_card)
 	deck = get_tree().current_scene.get_node("BattleScene/TroopDeck")
 	
 	tile_labels = [buy_button_1.label, buy_button_2.label]
@@ -54,16 +47,9 @@ func _ready() -> void:
 	buy_button_1.buy_button_pressed.connect(buy_tile)
 	buy_button_2.buy_button_pressed.connect(buy_tile)
 	
-	#round_label.text = "Round: " + str(Global.round)
-	#money_label.text = str(Global.total_money) + "$"
-	
-	
 func on_enter():
 	reroll_count = 0
-	#round_label.text = "Round: " + str(Global.round)
-	#money_label.text = str(Global.total_money) + "$"
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	money_label.text = str(Global.total_money) + "$"
 	
@@ -79,8 +65,6 @@ func add_items_on_start():
 	
 	reroll_label_position_y = reroll_label.position.y
 	continue_label_position_y = continue_label.position.y
-	
-	card_manager_screen.add_tags()
 	
 func get_random_card(amount):
 	var card_keys = CardDatabase.CARDS.keys()
@@ -199,39 +183,6 @@ func make_new_cards():
 	animate_card_reroll(cards_in_shop)
 	await Global.timer(0.5)
 	add_card_price_text()
-	
-#func adjust_card_details(card):
-	#var card_name = card.card_name
-	#card.get_node("Textures/NamnLabel").text = card_name
-	#adjust_text_size(card)
-	#card.name_label.text = card_name
-		#
-	#if CardDatabase.CARDS[card_name][3]:
-		#card.description_label.text = "[center]" + str(CardDatabase.CARDS[card_name][3]) + "[/center]"
-		#Global.color_text(card.description_label)
-	#else:
-		#card.description_label.text = "[center]Does nothing[/center]"
-	#adjust_description_text(card.description_label)
-			#
-	#var image_path = "res://Assets/images/kort/" + card_name + "_card.png"
-	#var texture = load(image_path)
-	#var sprite = card.card_sprite
-	#if sprite:
-		#sprite.texture = texture
-	#else:
-		#print("Sprite node not found")
-	#card.description.visible = false
-		#
-	#if card.card_type != "Troop":
-		#image_path = "res://Assets/images/ActionTypes/" + card.card_type + "_type.png"
-		#texture = load(image_path)
-		#sprite = card.action_sprite
-		#if sprite:
-			#sprite.texture = texture
-		#else:
-			#print("Sprite node not found")
-			#
-	#card.update_traits()
 	
 func make_new_tiles():
 	var tiles = get_random_tile()
@@ -402,54 +353,4 @@ func remove_old_tiles(tiles):
 	await Global.timer(0.5)
 	for tile in tiles:
 		tile.queue_free()
-
-func _on_manage_card_pressed() -> void:
-	#card_collection.create_cards_global()
-	card_collection.align_cards()
-	await shop_scene_manager.move_to_card_collection()
-	viewing_collection = true
-
-func _on_back_button_pressed() -> void:
-	shop_scene_manager.move_from_card_collection()
-	viewing_collection = false
-	card_collection.page = 0
 	
-func select_card(card):
-	selected_card = card
-	card_collection.toggle_collision(true)
-	shop_scene_manager.move_to_manage_card(selected_card)
-	if selected_card.card_type != "Spell":
-		selected_card.stat_display.visible = true
-
-func deselect_card(card):
-	selected_card = null
-	card_collection.toggle_collision(false)
-	card.stat_display.visible = false
-
-func _on_back_button_down() -> void:
-	back_label.position.y += 3
-
-func _on_back_button_up() -> void:
-	back_label.position.y -= 3
-
-func trash_card(card):
-	card.stat_display.visible = false
-	var trash_card_anim = card_manager_screen.trash_card
-	#var tween = get_tree().create_tween()
-	#tween.tween_property(card, "scale", Vector2(2, 2), 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	trash_card_anim.get_node("AnimationPlayer").play("trash_card_anim")
-	trash_card_anim.visible = true
-	
-	#await tween.finished
-	await Global.timer(0.15)
-	
-	selected_card = null
-	card.free()
-	SignalManager.signal_emitter("removed_card")
-
-	await Global.timer(0.4)
-	
-	trash_card_anim.get_node("AnimationPlayer").play("RESET")
-	trash_card_anim.visible = false
-	card_collection.toggle_collision(false)
-	shop_scene_manager.move_from_manage_card(null)
