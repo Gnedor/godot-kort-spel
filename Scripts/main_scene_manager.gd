@@ -3,7 +3,7 @@ extends Node2D
 @onready var battle_scene_manager = $"../BattleScene".get_node("SceneManager")
 @onready var shop_scene_manager = $"../ShopScene".get_node("ShopSceneManager")
 @onready var card_editor_scene_manager: Control = $"../CardEditor".get_node("CardEditorSceneManager")
-
+@onready var reward_scene_manager: Node = $"../RewardScene".get_node("SceneManager")
 
 @onready var round_end_scene_manager = $"../EndOfRoundScreen"
 @onready var select_sten: Node2D = $"../SelectSten"
@@ -42,6 +42,9 @@ func scene_progression():
 		"editor":
 			move_to_editor_scene()
 			Global.round += 1
+		"reward":
+			move_to_reward_scene()
+			Global.round += 1
 
 #------------------------v MENY SCENER v------------------------#
 
@@ -73,6 +76,10 @@ func move_to_menu_scene():
 	
 func move_to_editor_scene():
 	camera.position = $"../CardEditor".position
+	card_editor_scene_manager.on_enter_scene()
+
+func move_to_reward_scene():
+	camera.position = $"../RewardScene".position
 	card_editor_scene_manager.on_enter_scene()
 	
 	

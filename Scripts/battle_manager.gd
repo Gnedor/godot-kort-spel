@@ -189,6 +189,8 @@ func attack(played_cards):
 					
 				$"../SceneManager".change_fire()
 				
+				await thorns_effect(card)
+				
 	update_labels()
 	
 				
@@ -410,8 +412,7 @@ func enter_chose_card(played_card):
 		await card_manager.animate_card_snap(played_card, Vector2(960, 200), 3000, 1)
 		await Global.timer(0.3)
 		card_select = false
-		var cards = [ability_card]
-		card_manager.discard_selected_cards(cards, "Hand")
+		card_manager.discard_card(ability_card)
 	
 func on_card_chosen(card):
 	ability_effect(ability_card)
@@ -420,7 +421,6 @@ func on_card_chosen(card):
 	exit_chose_card()
 	
 func exit_chose_card():
-	var cards = [ability_card]
 	card_select = false
 	
 	await remove_text(hand_info)
@@ -435,7 +435,7 @@ func exit_chose_card():
 	$"../SpellDeck".get_node("Area2D/CollisionShape2D").disabled = false
 		
 	end_turn.disabled = false
-	card_manager.discard_selected_cards(cards, "Hand")
+	card_manager.discard_card(ability_card)
 	
 func enter_chose_deck(played_card, draw_amount):
 	amount_to_draw = draw_amount
@@ -475,7 +475,6 @@ func on_deck_chosen(chosen_deck):
 	
 	
 func exit_chose_deck():
-	var cards = [ability_card]
 	deck_select = false
 	await remove_text(hand_info)
 	await brighten_screen()
@@ -494,8 +493,7 @@ func exit_chose_deck():
 	deck.spell_deck.z_index = 1
 	
 	ability_card.z_index = 1
-	card_manager.discard_selected_cards(cards, "Hand")
-	
+	card_manager.discard_card(ability_card)
 	
 func darken_screen():
 	var tween = get_tree().create_tween()
@@ -644,21 +642,17 @@ func display_add_damage(damage: int, color):
 		
 	added_damage_label.text = ""
 	
-func get_boss_modifiers():
-	pass
-	#var count = 3
-	
 func burning_card_effect():
 	if Global.modifiers["Burning card"] == 0 or card_manager.cards_in_hand.size() == 0:
 		return
 		
-	var burn_amount = Global.modifiers["Burning card"]
+	var burn_amount = Global.modifiers["Burning card"] * ModifierDatabase.MODIFIERS["Burning card"]["stack"]
 	var hand = card_manager.cards_in_hand
 	
 	# If amount >= hand size → discard all
 	if hand.size() <= burn_amount:
 		var all_cards = hand.duplicate()
-		await card_manager.discard_selected_cards(all_cards, "inHand")
+		await card_manager.discard_card(all_cards)
 		hand.clear()
 		return
 	
@@ -682,8 +676,17 @@ func burning_card_effect():
 		hand.remove_at(i)
 	
 	# ---- Now discard the selected cards ----
-	await card_manager.discard_selected_cards(cards_to_discard, "inHand")
+	await card_manager.discard_card(cards_to_discard)
 	
+func thorns_effect(card):
+	if Global.modifiers["Thorns"] == 0:
+		return
+		
+	var thorn_chance = ModifierDatabase.MODIFIERS["Thorns"]["start"] + (ModifierDatabase.MODIFIERS["Thorns"]["stack"] * Global.modifiers["Thorns"])
+	var r = randf_range(0.0, 1.0) * 100
+	if r <= thorn_chance:
+		await card_manager.discard_card(card)
+		
 func make_damage_text(damage : int):
 	new_damage += damage
 	var combine_timer = $"../DamageLabels/CombineTimer"

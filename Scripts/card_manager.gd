@@ -142,6 +142,9 @@ func align_cards_on_draw(amount_drawn : int):
 		i += 1
 			
 func draw_cards(troop_amount : int, spell_amount : int):
+	if battle_manager.turn == 3 and Global.boss_name == "STOP":
+		return
+		
 	var amount_to_be_drawn_troop
 	var amount_to_be_drawn_spell
 	
@@ -294,18 +297,28 @@ func deselect_all():
 func sort_played_cards():
 	played_cards.sort_custom(func(a, b): return a.position.x < b.position.x)
 	
-func discard_selected_cards(cards, status : String):
-	for card in cards.duplicate():
-		if status == "played":
+func discard_selected_cards():
+	for card in played_cards.duplicate():
+		if card.is_selected:
+			discard_card(card)
+			
+func discard_card(card_or_array):
+	var cards = []
+	
+	# Handle both single card and array
+	if card_or_array is Array:
+		cards = card_or_array
+	else:
+		cards = [card_or_array]
+	
+	for card in cards:
+		if card.is_placed:
 			for i in range(5):
 				if card_slots.get_node("CardSlot" + str(i + 1)).global_position == card.global_position:
 					card_slots.get_node("CardSlot" + str(i + 1)).is_occupied = false
 					
-		if card.is_selected != true and status == "played":
-			continue
-			
 		AudioManager.play_audio(discard_audio, 0)
-		
+			
 		deselect_effect(card)
 		card.stat_display.visible = false
 		card.is_selected = false
@@ -319,8 +332,9 @@ func discard_selected_cards(cards, status : String):
 		discarded_cards.append(card)
 		card.visible = false
 		SignalManager.signal_emitter("trashed_card", card)
-		$"../DiscardPile/DiscardCounter".text = str(discarded_cards.size())
-
+	
+	$"../DiscardPile/DiscardCounter".text = str(discarded_cards.size())
+	align_cards()
 			
 func show_card_collection():
 	viewing_collection = true
@@ -374,11 +388,11 @@ func on_round_end():
 
 
 func _on_sort_button_button_down() -> void:
-	$"../CardBar/HandSlot2/HandSlot/SortButton/Label".position.y += 3
+	$"../CardBar/SortButton/Label".position.y += 3
 
 
 func _on_sort_button_button_up() -> void:
-	$"../CardBar/HandSlot2/HandSlot/SortButton/Label".position.y -= 3
+	$"../CardBar/SortButton/Label".position.y -= 3
 
 
 func _on_sort_button_pressed() -> void:

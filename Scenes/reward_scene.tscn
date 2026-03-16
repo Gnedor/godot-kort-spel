@@ -1,0 +1,279 @@
+[gd_scene load_steps=9 format=3 uid="uid://dmdufos7rnb86"]
+
+[ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_7r6o1"]
+[ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="2_034uj"]
+[ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_5b8vf"]
+[ext_resource type="PackedScene" uid="uid://cx30ut2ciemib" path="res://Scenes/tile.tscn" id="4_4wwij"]
+[ext_resource type="PackedScene" uid="uid://yue7hl0l0upn" path="res://Scenes/tag.tscn" id="4_oqeh5"]
+[ext_resource type="PackedScene" uid="uid://dcu0mt4e8ntit" path="res://Scenes/card.tscn" id="6_kkstj"]
+[ext_resource type="Script" path="res://Scripts/reward_scene_manager.gd" id="7_liq8v"]
+[ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="8_jchsf"]
+
+[node name="RewardScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_liq8v")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -480.0
+offset_top = -180.0
+offset_right = 480.0
+offset_bottom = 212.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_7r6o1")
+region_rect = Rect2(0, 0, 64, 64)
+patch_margin_left = 12
+patch_margin_top = 22
+patch_margin_right = 12
+patch_margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -320.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="RewardBox1" type="NinePatchRect" parent="NinePatchRect/HBoxContainer"]
+self_modulate = Color(0.105882, 0.105882, 0.105882, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_034uj")
+region_rect = Rect2(0, 0, 54, 64)
+patch_margin_left = 12
+patch_margin_top = 16
+patch_margin_right = 14
+patch_margin_bottom = 15
+
+[node name="TagName" type="NinePatchRect" parent="NinePatchRect/HBoxContainer/RewardBox1"]
+self_modulate = Color(0.105882, 0.105882, 0.105882, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = -56.0
+offset_right = -8.0
+offset_bottom = -16.0
+grow_horizontal = 2
+texture = ExtResource("2_034uj")
+patch_margin_left = 15
+patch_margin_top = 14
+patch_margin_right = 16
+patch_margin_bottom = 20
+
+[node name="Label" type="Label" parent="NinePatchRect/HBoxContainer/RewardBox1/TagName"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_5b8vf")
+text = "Fracture"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TagRewardSlot" type="ColorRect" parent="NinePatchRect/HBoxContainer/RewardBox1"]
+unique_name_in_owner = true
+clip_children = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.079
+anchor_top = -0.054
+anchor_right = 3.079
+anchor_bottom = 1.081
+offset_left = 25.016
+offset_top = 15.984
+offset_right = -631.016
+offset_bottom = -23.976
+
+[node name="tag" parent="NinePatchRect/HBoxContainer/RewardBox1/TagRewardSlot" instance=ExtResource("4_oqeh5")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RewardBox2" type="NinePatchRect" parent="NinePatchRect/HBoxContainer"]
+self_modulate = Color(0.150075, 0.150075, 0.150075, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_034uj")
+region_rect = Rect2(8, 0, 48, 64)
+patch_margin_left = 12
+patch_margin_top = 16
+patch_margin_right = 14
+patch_margin_bottom = 15
+
+[node name="TileName" type="NinePatchRect" parent="NinePatchRect/HBoxContainer/RewardBox2"]
+self_modulate = Color(0.14902, 0.14902, 0.14902, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = -56.0
+offset_right = -8.0
+offset_bottom = -16.0
+grow_horizontal = 2
+texture = ExtResource("2_034uj")
+patch_margin_left = 15
+patch_margin_top = 14
+patch_margin_right = 16
+patch_margin_bottom = 20
+
+[node name="Label" type="Label" parent="NinePatchRect/HBoxContainer/RewardBox2/TileName"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_5b8vf")
+text = "Speed Tile"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TileRewardSlot" type="ColorRect" parent="NinePatchRect/HBoxContainer/RewardBox2"]
+unique_name_in_owner = true
+clip_children = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.079
+anchor_top = -0.054
+anchor_right = 2.079
+anchor_bottom = 1.081
+offset_left = 328.016
+offset_top = 15.984
+offset_right = -328.016
+offset_bottom = -23.976
+
+[node name="Tile" parent="NinePatchRect/HBoxContainer/RewardBox2/TileRewardSlot" instance=ExtResource("4_4wwij")]
+position = Vector2(152, 148)
+
+[node name="RewardBox3" type="NinePatchRect" parent="NinePatchRect/HBoxContainer"]
+self_modulate = Color(0.125911, 0.125911, 0.125911, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_034uj")
+region_rect = Rect2(10, 0, 54, 64)
+patch_margin_left = 12
+patch_margin_top = 16
+patch_margin_right = 14
+patch_margin_bottom = 15
+
+[node name="CardName" type="NinePatchRect" parent="NinePatchRect/HBoxContainer/RewardBox3"]
+self_modulate = Color(0.12549, 0.12549, 0.12549, 1)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 8.0
+offset_top = -56.0
+offset_right = -8.0
+offset_bottom = -16.0
+grow_horizontal = 2
+texture = ExtResource("2_034uj")
+patch_margin_left = 15
+patch_margin_top = 14
+patch_margin_right = 16
+patch_margin_bottom = 20
+
+[node name="Label" type="Label" parent="NinePatchRect/HBoxContainer/RewardBox3/CardName"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_5b8vf")
+text = "Guy"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CardRewardSlot" type="ColorRect" parent="NinePatchRect/HBoxContainer/RewardBox3"]
+unique_name_in_owner = true
+clip_children = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -2.079
+anchor_top = -0.054
+anchor_right = 1.079
+anchor_bottom = 1.081
+offset_left = 632.016
+offset_top = 15.984
+offset_right = -24.016
+offset_bottom = -23.976
+
+[node name="Card" parent="NinePatchRect/HBoxContainer/RewardBox3/CardRewardSlot" instance=ExtResource("6_kkstj")]
+z_index = 0
+position = Vector2(152, 148)
+
+[node name="Control" parent="NinePatchRect/HBoxContainer/RewardBox3/CardRewardSlot/Card/Textures/ScaleNode" index="3"]
+visible = false
+
+[node name="SceneManager" type="Node" parent="."]
+script = ExtResource("7_liq8v")
+
+[node name="Title" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_top = 96.0
+offset_bottom = 192.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("3_5b8vf")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[wave amp=20, frec=10][center]Rewards"
+
+[node name="RerollButton" type="Button" parent="."]
+self_modulate = Color(0.305882, 0.709804, 0.411765, 1)
+layout_mode = 0
+offset_left = 512.0
+offset_top = 776.0
+offset_right = 896.0
+offset_bottom = 856.0
+theme = ExtResource("8_jchsf")
+
+[node name="Label" type="Label" parent="RerollButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_5b8vf")
+theme_override_font_sizes/font_size = 24
+text = "Reroll 5$"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="RerollButton" to="." method="_on_reroll_button_pressed"]
+
+[editable path="NinePatchRect/HBoxContainer/RewardBox3/CardRewardSlot/Card"]

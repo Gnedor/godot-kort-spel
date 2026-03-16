@@ -153,26 +153,12 @@ func make_new_cards():
 		var new_card_instance = card_scene.instantiate()
 		new_card_instance.z_index = 0
 
-		new_card_instance.base_attack = CardDatabase.CARDS[card_name][0]
-		new_card_instance.attack = new_card_instance.base_attack
-		new_card_instance.base_actions = CardDatabase.CARDS[card_name][1]
-		new_card_instance.actions = new_card_instance.base_actions
-		new_card_instance.card_type = CardDatabase.CARDS[card_name][2]
-		new_card_instance.card_name = card_name
+		new_card_instance.set_base_stats(card_name)
 		var random_price = randi() % (3 + reroll_count) + (4 + reroll_count)
 		new_card_instance.price = random_price
-		new_card_instance.trait_1 = CardDatabase.CARDS[card_name][5]
 		new_card_instance.get_node("Area2D/CollisionShape2D").disabled = false
-		
-		if new_card_instance.card_type != "Troop":
-			var new_card_ability_script_path = CardDatabase.CARDS[card_name][4]
-			var ability_script = load(new_card_ability_script_path).new()
-			new_card_instance.ability_script = ability_script
-			new_card_instance.add_child(ability_script)
 			
-		if new_card_instance.card_type == "Spell":
-			new_card_instance.get_node("Textures/ScaleNode/StatDisplay").visible = false
-		new_card_instance.get_node("Textures/VBoxContainer2").visible = false
+		#new_card_instance.get_node("Textures/VBoxContainer2").visible = false
 		card_clip_mask.add_child(new_card_instance)  
 		cards_in_shop.append(new_card_instance)
 		connect_card_signal(new_card_instance)
@@ -316,13 +302,6 @@ func remove_tile_price_text():
 	await Global.timer(0.2)
 	buy_button_1.button.visible = false
 	buy_button_2.button.visible = false
-		
-#func adjust_text_size(card):
-	#var label = card.get_node("Textures/NamnLabel")
-	#var font_size = 20
-	#while label.get_line_count() > 1:
-		#font_size -= 1
-		#label.set("theme_override_font_sizes/font_size", font_size)
 		
 func _change_scene(scene_path : String):
 	get_tree().change_scene_to_file(scene_path)

@@ -12,7 +12,7 @@ var cards_in_collection = []
 var page_indicators = []
 
 const CARD_MASK = 256
-var hovered_card
+var hovered_card = null
 
 var page : int = 0
 var max_page : int = 0
@@ -35,13 +35,16 @@ func _process(delta: float) -> void:
 	if in_focus:
 		var new_hovered_card = check_for_card()
 		
-		if new_hovered_card != hovered_card and hovered_card:
-			hover_off_effect(hovered_card)
-			
-		hovered_card = new_hovered_card
-			
-		if hovered_card:
-			hover_effect(hovered_card)
+		if new_hovered_card:
+			if new_hovered_card != hovered_card:
+				if hovered_card:
+					hover_off_effect(hovered_card)
+				hover_effect(new_hovered_card)
+				hovered_card = new_hovered_card
+		else:
+			if hovered_card:
+				hover_off_effect(hovered_card)
+				hovered_card = null
 			
 func move_in_cards():
 	in_focus = true
@@ -110,12 +113,12 @@ func align_cards():
 			
 func hover_effect(card):
 	card.scale = Vector2(1.05, 1.05)
-	card.z_index = z_index + 2
+	card.z_index += 1
 	card.hover_effect()
 		
 func hover_off_effect(card):
 	card.scale = Vector2(1, 1)
-	card.z_index = z_index + 1
+	card.z_index -= 1
 	card.hover_off_effect()
 
 func create_page_indicators():

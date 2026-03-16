@@ -9,7 +9,6 @@ func trigger_ability(card):
 	var played_cards = card_manager_reference.played_cards
 	var random_number = randi() % played_cards.size()
 	
-	var destroy_cards = [played_cards[random_number]]
-	played_cards[random_number].is_selected = true
-	card_manager_reference.discard_selected_cards(destroy_cards, "played")
+	var destroyed_card = played_cards[random_number]
+	card_manager_reference.discard_card(destroyed_card)
 	

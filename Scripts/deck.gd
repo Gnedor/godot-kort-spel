@@ -64,10 +64,9 @@ func on_draw_card(card : Node2D):
 func add_new_card_to_deck(card_name : String, times : int):
 	for i in range(times):
 		var new_card_instance = card_scene.instantiate()
-		var card_type = CardDatabase.CARDS[card_name][2]
-		var card_data = CardDatabase.CARDS[card_name] 
+		new_card_instance.set_base_stats(card_name)
 		
-		if card_type != "Spell":
+		if new_card_instance.card_type != "Spell":
 			new_card_instance.position = position
 		else:
 			new_card_instance.position = spell_deck.position
@@ -75,22 +74,13 @@ func add_new_card_to_deck(card_name : String, times : int):
 		new_card_instance.z_index = 0
 		new_card_instance.visible = false
 		
-		new_card_instance.base_attack = card_data[0]
-		new_card_instance.turn_attack = card_data[0]
-		new_card_instance.attack = card_data[0]
-		new_card_instance.base_actions = card_data[1]
-		new_card_instance.turn_actions = card_data[1]
-		new_card_instance.actions = card_data[1]
-		new_card_instance.card_name = card_name
-		new_card_instance.trait_1 = card_data[5]
-		
 		card_manager.add_child(new_card_instance)
 		
 		new_card_instance.adjust_card_details()
 		new_card_instance.adjust_description_text()
 		new_card_instance.adjust_text_size()
 			
-		if card_type != "Spell":
+		if new_card_instance.card_type != "Spell":
 			cards_in_troop_deck.append(new_card_instance)
 		else:
 			cards_in_spell_deck.append(new_card_instance)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c6rcddcewp3s6"]
+[gd_scene load_steps=14 format=3 uid="uid://c6rcddcewp3s6"]
 
 [ext_resource type="Script" path="res://Scripts/camera_2d.gd" id="2_1l3wp"]
 [ext_resource type="PackedScene" uid="uid://c8tbmwqdapnsc" path="res://Scenes/shop_scene.tscn" id="2_mjwp7"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cdyy1jtutuqg5" path="res://Assets/images/Meny/bg.png" id="7_b5h8l"]
 [ext_resource type="PackedScene" uid="uid://66l6y6ie0nag" path="res://Scenes/battle_scene.tscn" id="9_h2q1w"]
 [ext_resource type="PackedScene" uid="uid://3rsw02g48brg" path="res://Scenes/Meny.tscn" id="9_om10x"]
+[ext_resource type="PackedScene" uid="uid://dmdufos7rnb86" path="res://Scenes/reward_scene.tscn" id="10_4jpi3"]
 [ext_resource type="PackedScene" uid="uid://j6m3ogxd6jm" path="res://Scenes/options_window.tscn" id="10_14hrj"]
 [ext_resource type="PackedScene" uid="uid://chg3cbacfnu20" path="res://Scenes/card_editor.tscn" id="11_ph2jy"]
 
@@ -53,6 +54,13 @@ offset_left = 9600.0
 offset_top = 1.0
 offset_right = 11520.0
 offset_bottom = 1081.0
+
+[node name="RewardScene" parent="." instance=ExtResource("10_4jpi3")]
+visible = false
+custom_minimum_size = Vector2(1920, 1080)
+offset_left = 11520.0
+offset_right = 13440.0
+offset_bottom = 1080.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0

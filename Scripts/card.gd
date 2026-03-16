@@ -256,3 +256,16 @@ func update_card():
 func disable_tag_circle(state : bool):
 	$Textures/ScaleNode/CardSprite/TagCircle/Area2D/CollisionShape2D.disabled = state
 	$Textures/ScaleNode/CardSprite/TagCircle.visible = !state
+	
+func set_base_stats(name):
+	card_name = name
+	var card_data = CardDatabase.CARDS[card_name] 
+	
+	base_attack = card_data[0]
+	turn_attack = card_data[0]
+	attack = card_data[0]
+	base_actions = card_data[1]
+	turn_actions = card_data[1]
+	actions = card_data[1]
+	trait_1 = card_data[5]
+	card_type = card_data[2]

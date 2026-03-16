@@ -13,6 +13,7 @@ var base_modifier_rerolls : int = 2
 var highest_damage : float = 0
 var highest_money : float = 0
 var round : int = 1
+var boss_name : String
 var stored_cards = []
 var stored_tiles = []
 var stored_tags = ["Poison", "Fracture", "Echo"]
@@ -20,7 +21,7 @@ var window_size : Vector2 = Vector2(1920, 1080)
 
 var scene_name : String = "menu"
 var is_game_paused : bool = false
-var enter_from_start : bool = true
+var enter_from_start : bool = true	
 
 var played_cards = []
 
@@ -28,8 +29,8 @@ var selected_deck = "Example_deck"
 
 var modifiers = {}
 
-var stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
-#rätt stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
+var stage_list = ["battle", "reward", "battle", "editor", "boss", "reward"]
+#rätt stage_list = ["battle", "shop", "battle", "editor", "boss", "reward"]
 
 func store_card(card):
 	stored_cards.append(card)
@@ -49,7 +50,7 @@ func reset_game():
 	highest_money = 0
 	round = 1
 	played_cards.clear()
-	stage_list = ["battle", "shop", "battle", "editor", "boss", "temp"]
+	stage_list = ["battle", "shop", "battle", "editor", "boss", "reward"]
 	
 func find_common_card():
 	var frequency := {}
@@ -129,9 +130,8 @@ func progress_stage():
 	else:
 		stage_list.push_back(stage_list.pop_front())
 		scene_name = stage_list[0]
-		print(scene_name)
 
 func add_modifiers_on_start():
 	for mod in ModifierDatabase.MODIFIERS:
-		modifiers[mod["name"]] = 0
+		modifiers[mod] = 0
 	

@@ -78,7 +78,7 @@ func _input(event):
 				click_on_sten.emit(card_manager.played_cards)
 				
 			if raycast_check(DISCARD_MASK):
-				click_on_discard.emit(card_manager.played_cards, "played")
+				click_on_discard.emit()
 				
 			if raycast_check(DECK_MASK) and !card_manager.viewing_collection:
 				AudioManager.play_audio(deck_audio, 0) 

@@ -16,7 +16,7 @@ func trigger_ability(card_reference):
 	
 	for card in card_manager_reference.played_cards:
 		card.is_selected = true
-	await card_manager_reference.discard_selected_cards(card_manager_reference.played_cards, "played")
+	await card_manager_reference.discard_card(card_manager_reference.played_cards)
 	
 	for slot in card_slots_reference.get_children():
 		if deck_reference.cards_in_troop_deck.size() > 0:
@@ -38,5 +38,4 @@ func trigger_ability(card_reference):
 			card_manager_reference.place_card_on_slot(slot)
 			card_manager_reference.dragged_card = null
 		
-	var cards = [card_reference]
-	card_manager_reference.discard_selected_cards(cards, "Hand")
+	card_manager_reference.discard_card(card_reference)

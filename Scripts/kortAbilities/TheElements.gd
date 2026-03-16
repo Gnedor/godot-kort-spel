@@ -4,8 +4,6 @@ var battle_manager_reference = BattleContext.battle_manager
 var card_manager_reference = BattleContext.card_manager
 
 func trigger_ability(card_reference):
-	var cards = [card_reference]
-	
 	card_manager_reference.cards_in_hand.erase(card_reference)
 	card_reference.is_selected = true
 	card_reference.scale = Vector2(1.2, 1.2)
@@ -26,7 +24,7 @@ func trigger_ability(card_reference):
 	
 	unfocus_card()
 	
-	card_manager_reference.discard_selected_cards(cards, "Hand")
+	card_manager_reference.discard_card(card_reference)
 	
 func focus_card():
 	battle_manager_reference.darken_background.z_index = card_manager_reference.cards_in_hand.size() + 3

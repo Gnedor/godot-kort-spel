@@ -301,4 +301,6 @@ func remove_fire():
 	fire_effect.material.set_shader_parameter("secondary_flame_color", new_color)
 	
 func new_boss():
-	$"../BossScreen".animation_player.play("Enter")
+	var boss_screen = $"../BossScreen"
+	boss_screen.get_boss()
+	boss_screen.animation_player.play("Enter")

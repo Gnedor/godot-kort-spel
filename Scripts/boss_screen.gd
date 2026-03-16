@@ -10,6 +10,7 @@ var have_rerolled : bool
 var rerolls : int
 
 var new_modifiers = {} #name, amount, trait
+var used_bosses = []
 
 @export var is_ready : bool = false
 
@@ -19,6 +20,10 @@ func _ready() -> void:
 func on_enter():
 	rerolls = Global.base_modifier_rerolls
 	
+func get_boss():
+	Global.boss_name = BossDatabase.BOSS_DESCRIPTIONS.keys().pick_random()
+	$BossIcon.adjust_details(Global.boss_name)
+	
 func get_modifiers(amount):
 	for key in Global.modifiers.keys():
 		Global.modifiers[key] = 0
@@ -26,8 +31,7 @@ func get_modifiers(amount):
 	if !have_rerolled:
 		saved_amount = amount
 	for i in range(saved_amount):
-		var r = randi() % ModifierDatabase.MODIFIERS.size()
-		var new_mod_name = ModifierDatabase.MODIFIERS[r]["name"]
+		var new_mod_name = ModifierDatabase.MODIFIERS.keys().pick_random()
 		var mod_trait = "none"
 		
 		if new_modifiers.has(new_mod_name):

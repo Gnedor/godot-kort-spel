@@ -32,3 +32,7 @@
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	# What the kropp, sa Malte medans han slimade över hela bordet
+	
+# 10/03-26: Gör klart STOP bossen och alla modifiers
+# 11/03-26: Gör grund reward_scene
+# 12/03-26: Randomisa rewards och info display 
