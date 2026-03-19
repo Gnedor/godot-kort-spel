@@ -112,12 +112,12 @@ func align_cards():
 			card.position = Vector2(scene_pos + 240 + (CARD_BOUNDRY * (i + 1) / 6), 888 + global_position.y)
 			
 func hover_effect(card):
-	card.scale = Vector2(1.05, 1.05)
+	#card.scale = Vector2(1.05, 1.05)
 	card.z_index += 1
 	card.hover_effect()
 		
 func hover_off_effect(card):
-	card.scale = Vector2(1, 1)
+	#card.scale = Vector2(1, 1)
 	card.z_index -= 1
 	card.hover_off_effect()
 

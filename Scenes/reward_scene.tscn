@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://dmdufos7rnb86"]
+[gd_scene load_steps=10 format=3 uid="uid://dmdufos7rnb86"]
 
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_7r6o1"]
+[ext_resource type="Script" path="res://Scenes/reward_scene.gd" id="1_ox1l4"]
 [ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="2_034uj"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_5b8vf"]
 [ext_resource type="PackedScene" uid="uid://cx30ut2ciemib" path="res://Scenes/tile.tscn" id="4_4wwij"]
@@ -16,7 +17,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("7_liq8v")
+script = ExtResource("1_ox1l4")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
@@ -274,6 +275,33 @@ text = "Reroll 5$"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ContinueButton" type="Button" parent="."]
+self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
+layout_mode = 0
+offset_left = 1024.0
+offset_top = 776.0
+offset_right = 1408.0
+offset_bottom = 856.0
+theme = ExtResource("8_jchsf")
+
+[node name="Label" type="Label" parent="ContinueButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_5b8vf")
+theme_override_font_sizes/font_size = 24
+text = "Continue"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox1" to="." method="_on_tag_area_mouse_entered"]
+[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox2" to="." method="_on_tile_area_mouse_entered"]
+[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox3" to="." method="_on_card_area_mouse_entered"]
 [connection signal="pressed" from="RerollButton" to="." method="_on_reroll_button_pressed"]
+[connection signal="pressed" from="ContinueButton" to="SceneManager" method="_on_continue_button_pressed"]
 
 [editable path="NinePatchRect/HBoxContainer/RewardBox3/CardRewardSlot/Card"]

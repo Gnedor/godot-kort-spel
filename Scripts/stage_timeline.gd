@@ -38,6 +38,8 @@ func adjust_timeline():
 		if stage_list[position] != "null":
 			var texture = load("res://Assets/images/StageIcons/" + stage_list[position] + "_icon.png")
 			child.texture = texture
+		else:
+			child.texture = null
 		
 		position += 1
 

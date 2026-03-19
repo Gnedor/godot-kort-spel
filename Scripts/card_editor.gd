@@ -81,7 +81,8 @@ func apply_tag(tag):
 
 func release_tag(tag):
 	if raycast_check(TAG_SLOT_MASK):
-		apply_tag(tag)
+		if stored_card.card_type != "Spell":
+			apply_tag(tag)
 	
 	if stored_card:
 		stored_card.area_2d.get_child(0).disabled = false

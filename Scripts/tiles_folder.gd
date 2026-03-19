@@ -152,21 +152,21 @@ func create_tile(tile_name: String):
 	tiles_in_folder.append(new_tile_instance)
 	owned_tiles.append(new_tile_instance)
 	
-func hover_effect(tile):
-	tile.description.visible = true
-	if !tile.is_placed:
-		tile.scale = Vector2(1.1, 1.1)
-	
-func hover_off_effect(tile):
-	tile.description.visible = false
-	tile.scale = Vector2(1.0, 1.0)
-	
+#func hover_effect(tile):
+	#tile.description.visible = true
+	#if !tile.is_placed:
+		#tile.scale = Vector2(1.1, 1.1)
+	#
+#func hover_off_effect(tile):
+	#tile.description.visible = false
+	#tile.scale = Vector2(1.0, 1.0)
+	#
 func align_tile_hover(hover_tile):
 	for tile in owned_tiles:
 		if tile == hover_tile:
-			hover_effect(tile)
+			tile.hover_effect()
 		else:
-			hover_off_effect(tile)
+			tile.hover_off_effect()
 			
 func animate_tile_snap(tile, position, speed, num):
 	var tween = get_tree().create_tween()

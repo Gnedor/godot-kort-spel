@@ -56,7 +56,6 @@ offset_right = 11520.0
 offset_bottom = 1081.0
 
 [node name="RewardScene" parent="." instance=ExtResource("10_4jpi3")]
-visible = false
 custom_minimum_size = Vector2(1920, 1080)
 offset_left = 11520.0
 offset_right = 13440.0

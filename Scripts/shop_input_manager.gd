@@ -3,9 +3,8 @@ extends Node2D
 @onready var shop: Node2D = $".."
 @onready var shop_scene_manager: Node2D = $"../ShopSceneManager"
 
-var hovered_card : Node2D
-var hovered_tile : Node2D
-var hovering_tag_slot : bool = false
+var hovered_card : Node2D = null
+var hovered_tile : Node2D = null
 
 const CARD_MASK = 2
 const DECK_MASK = 8
@@ -18,17 +17,31 @@ func _process(delta: float) -> void:
 		
 	var hits = raycast_check()
 	if !hits or Global.is_game_paused:
+		shop.hover_off_card(hovered_card)
+		shop.hover_off_tile(hovered_tile)
 		return
 		
 	for node in hits:
 		match node.collider.collision_layer:
 			CARD_MASK:
-				hovered_card = node.collider.get_parent()
-				shop.hovered_card = hovered_card
+				var new_hovered_card = node.collider.get_parent()
+				if hovered_card:
+					if hovered_card != new_hovered_card:
+						shop.hover_off_card(hovered_card)
+						shop.hover_card(new_hovered_card)
+
+				hovered_card = new_hovered_card
+				shop.hover_card(hovered_card)
 					
 			TILE_MASK:
-				hovered_tile = node.collider.get_parent()
-				shop.hovered_tile = hovered_tile
+				var new_hovered_tile = node.collider.get_parent()
+				if hovered_tile:
+					if hovered_tile != new_hovered_tile:
+						shop.hover_off_tile(hovered_tile)
+						shop.hover_tile(new_hovered_tile)
+
+				hovered_tile = new_hovered_tile
+				shop.hover_tile(hovered_tile)
 			
 func _input(event):
 	if !(event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and Global.scene_name == "shop" and !Global.is_game_paused):

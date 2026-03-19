@@ -6,12 +6,12 @@ func _ready() -> void:
 	SignalManager.trashed_card.connect(add_mult)
 	SignalManager.end_round.connect(remove_mult)
 	
-func add_mult():
+func add_mult(variabel_så_att_jag_int_får_någon_jävla_error):
 	trashed_cards += 1
 	if trashed_cards % 5 == 0:
 		get_parent().round_mult *= 1.5
 		get_parent().turn_mult *= 1.5
 		get_parent().update_card()
 
-func remove_mult():
+func remove_mult(variabel_så_att_jag_int_får_någon_jävla_error):
 	trashed_cards = 0

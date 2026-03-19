@@ -16,6 +16,7 @@ func _ready() -> void:
 	shop_scene_manager.on_scene_exit.connect(progress_game_scenes)
 	round_end_scene_manager.on_scene_exit.connect(progress_game_scenes)
 	card_editor_scene_manager.on_scene_exit.connect(progress_game_scenes)
+	reward_scene_manager.on_scene_exit.connect(progress_game_scenes)
 	
 	select_sten.on_scene_exit.connect(scene_progression)
 	menu_scene.on_scene_exit.connect(scene_progression)

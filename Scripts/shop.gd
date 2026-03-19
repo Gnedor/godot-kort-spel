@@ -19,8 +19,6 @@ var deck
 
 var reroll_count : int = 0
 var shop_card_amount : int = 5
-var hovered_card : Node2D
-var hovered_tile : Node2D
 var selected_card : Node2D
 
 var cards_in_shop = []
@@ -52,12 +50,6 @@ func on_enter():
 	
 func _process(delta: float) -> void:
 	money_label.text = str(Global.total_money) + "$"
-	
-	if Global.stage_list[0] == "shop":
-		if start_process:
-			if !rerolling:
-				card_hover_effect()
-				tile_hover_effect()
 				
 func add_items_on_start():
 	make_new_cards()
@@ -159,11 +151,12 @@ func make_new_cards():
 		new_card_instance.get_node("Area2D/CollisionShape2D").disabled = false
 			
 		#new_card_instance.get_node("Textures/VBoxContainer2").visible = false
-		card_clip_mask.add_child(new_card_instance)  
+		card_clip_mask.add_child(new_card_instance)
 		cards_in_shop.append(new_card_instance)
 		connect_card_signal(new_card_instance)
 		new_card_instance.adjust_card_details()
 		new_card_instance.card_description.visible = false
+		new_card_instance.trait_description.visible = false
 		
 	align_new_cards(cards_in_shop)
 	animate_card_reroll(cards_in_shop)
@@ -220,7 +213,9 @@ func animate_card_reroll(cards):
 		card.update_card()
 		card.adjust_text_size()
 		if card.card_type != "Spell":
-			card.get_node("Textures/ScaleNode/StatDisplay").visible = true
+			card.stat_display.visible = true
+		else:
+			card.stat_display.visible = false
 			
 func animate_tile_reroll(tiles):
 	for tile in tiles:
@@ -256,26 +251,6 @@ func _on_button_button_down() -> void:
 	
 func _on_button_button_up() -> void:
 	reroll_label.position.y = reroll_label_position_y
-	
-func card_hover_effect():
-	for card in cards_in_shop:
-		var card_texture = card.get_node("Textures")
-		if card == hovered_card and card_texture.scale != Vector2(1.05, 1.05):
-			card_texture.scale = Vector2(1.05, 1.05)
-			card.card_description.visible = true
-		elif card != hovered_card and card_texture.scale == Vector2(1.05, 1.05):
-			card_texture.scale = Vector2(1, 1)
-			card.card_description.visible = false
-			
-func tile_hover_effect():
-	if tiles_in_shop:
-		for tile in tiles_in_shop:
-			if tile == hovered_tile:
-				tile.scale = Vector2(1.05, 1.05)
-				tile.description.visible = true
-			elif tile != hovered_tile:
-				tile.scale = Vector2(1, 1)
-				tile.description.visible = false
 			
 func add_card_price_text():
 	for card in cards_in_shop:
@@ -332,4 +307,26 @@ func remove_old_tiles(tiles):
 	await Global.timer(0.5)
 	for tile in tiles:
 		tile.queue_free()
+	
+func hover_card(card):
+	if !card:
+		return
+	card.hover_effect()
+	
+func hover_off_card(card):
+	if !card:
+		return
+	card.hover_off_effect()
+	if card.card_type != "Spell":
+		card.stat_display.visible = true
+	
+func hover_tile(tile):
+	if !tile:
+		return
+	tile.hover_effect()
+	
+func hover_off_tile(tile):
+	if !tile:
+		return
+	tile.hover_off_effect()
 	

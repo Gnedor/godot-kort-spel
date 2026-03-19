@@ -303,4 +303,5 @@ func remove_fire():
 func new_boss():
 	var boss_screen = $"../BossScreen"
 	boss_screen.get_boss()
+	boss_screen.visible = true
 	boss_screen.animation_player.play("Enter")

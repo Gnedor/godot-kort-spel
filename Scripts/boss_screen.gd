@@ -12,7 +12,7 @@ var rerolls : int
 var new_modifiers = {} #name, amount, trait
 var used_bosses = []
 
-@export var is_ready : bool = false
+var is_ready : bool = false
 
 func _ready() -> void:
 	pass
@@ -67,10 +67,10 @@ func add_new_mod_object(mod_name : String):
 	new_modifier.animation_player.play("pulse")
 		
 func _input(event):
-	pass
 	if event is InputEventMouseButton or event is InputEventKey:
 		if event.pressed and is_ready:
 			$AnimationPlayer.play("Transition")
+			is_ready = false
 			
 func reroll():
 	reroll_button.disabled = true

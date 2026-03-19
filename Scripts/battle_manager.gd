@@ -57,6 +57,8 @@ func _ready() -> void:
 	input_manager.select_target_card.connect(activate_card_abilities)
 	input_manager.select_deck.connect(on_deck_chosen)
 	input_manager.select_card.connect(on_card_chosen)
+	
+	darken_background.color = Color(0, 0, 0, 0)
 
 	for debuff in TagDatabase.TAGS:
 		debuffs[debuff["name"]] = 0

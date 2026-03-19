@@ -171,11 +171,14 @@ func hover_effect():
 	trait_description.visible = true
 	if card_type != "Spell":
 		stat_display.visible = true
+	if !is_placed:
+		scale = Vector2(1.05, 1.05)
 		
 func hover_off_effect():
 	card_description.visible = false
 	trait_description.visible = false
 	stat_display.visible = false
+	scale = Vector2(1.0, 1.0)
 	
 func animate_stat_change(type : String):
 	match type:

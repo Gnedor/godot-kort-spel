@@ -198,13 +198,13 @@ func draw_cards(troop_amount : int, spell_amount : int):
 		
 func hover_effect(card):
 	var card_textures = card.get_node("Textures")
-	card.scale = Vector2(1.05, 1.05)
+	#card.scale = Vector2(1.05, 1.05)
 	animate_card_snap(card_textures, Vector2(0, -75), 700, 1)
 	card.hover_effect()
 		
 func hover_off_effect(card):
 	var card_textures = card.get_node("Textures")
-	card.scale = Vector2(1, 1)
+	#card.scale = Vector2(1, 1)
 	animate_card_snap(card_textures, Vector2(0, 0), 10000, 1)
 	card.hover_off_effect()
 	
@@ -254,31 +254,6 @@ func find_duration(pos1, pos2, speed):
 	var distance = pos1.distance_to(pos2)
 	var duration = distance / speed
 	return duration
-	
-#func update_card(card):
-	#if card.attack < 0:
-		#card.attack = 0
-	#if card.turn_attack < 0:
-		#card.turn_attack = 0
-	#if card.base_attack < 0:
-		#card.base_attack = 0
-	#
-	#if card.actions < 0:
-		#card.actions = 0
-	#if card.turn_actions < 0:
-		#card.turn_actions = 0
-	#if card.base_actions < 0:
-		#card.base_actions = 0
-		#
-	#var text = card.attack_label.text
-	#card.attack_label.text = str(card.attack)
-	#if text != card.attack_label.text:
-		#card.animate_stat_change("attack")
-		#
-	#text = card.actions_label.text
-	#card.actions_label.text = str(card.actions)
-	#if text != card.actions_label.text:
-		#card.animate_stat_change("actions")
 		
 func select_card(card):
 	if !battle_manager.active_select:
