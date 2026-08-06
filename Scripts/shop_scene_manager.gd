@@ -23,6 +23,8 @@ signal on_scene_exit
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#MainSceneManager.shop_scene_manager = self
+	
 	shop.exit_shop.connect(remove_shop_ui)
 	shop_scene_up = [card_slot, button, round_display]
 	shop_scene_down = [tile_slot, tile_slot_2, continue_button, tile_clip_mask, spell_deck]
@@ -87,10 +89,13 @@ func enter_collection():
 		tween.parallel().tween_property(card, "position:x", card.global_position.x - 1920, 0.3)
 		
 func exit_collection():
-	var tween
-	tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+
+	var tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	tween.parallel().tween_property(shop, "position:x", 3840, 0.3)
 	
 	for card in card_collection.cards_in_collection:
 		tween.parallel().tween_property(card, "position:x", card.global_position.x + 1920, 0.3)
+	
+	await tween.finished
+	card_collection.move_out_cards()
 	

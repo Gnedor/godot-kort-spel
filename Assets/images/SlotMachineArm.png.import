@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btkyxcqjimwc6"
-path="res://.godot/imported/reward_icon.png-cdf4ff590f23908dc59cd632024d016b.ctex"
+uid="uid://c6o5r3urwqgat"
+path="res://.godot/imported/SlotMachineArm.png-da3b5d238ced5ef78a56d8e142956f4e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/StageIcons/reward_icon.png"
-dest_files=["res://.godot/imported/reward_icon.png-cdf4ff590f23908dc59cd632024d016b.ctex"]
+source_file="res://Assets/images/SlotMachineArm.png"
+dest_files=["res://.godot/imported/SlotMachineArm.png-da3b5d238ced5ef78a56d8e142956f4e.ctex"]
 
 [params]
 

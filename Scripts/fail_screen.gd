@@ -41,7 +41,7 @@ func _on_restart_button_pressed() -> void:
 	Global.reset_game()
 	#gör att scene_listan resetar ?
 	Global.scene_name = "battle"
-	get_parent().on_scene_exit.emit()
+	#get_parent().on_scene_exit.emit()
 	#get_tree().change_scene_to_file("res://Scenes/main.tscn")
 
 

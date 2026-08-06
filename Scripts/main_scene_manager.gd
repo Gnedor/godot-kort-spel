@@ -1,11 +1,15 @@
 extends Node2D
 @onready var camera: Camera2D = $"../Camera2D"
+@onready var battle_scene: Node2D = $"../BattleScene"
 @onready var battle_scene_manager = $"../BattleScene".get_node("SceneManager")
-@onready var shop_scene_manager = $"../ShopScene".get_node("ShopSceneManager")
-@onready var card_editor_scene_manager: Control = $"../CardEditor".get_node("CardEditorSceneManager")
-@onready var reward_scene_manager: Node = $"../RewardScene".get_node("SceneManager")
+@onready var shop_scene: Node2D = $"../ShopScene"
+@onready var shop_scene_manager = shop_scene.get_node("ShopSceneManager")
+@onready var card_editor: Control = $"../CardEditor"
+@onready var card_editor_scene_manager: Control = card_editor.get_node("CardEditorSceneManager")
+@onready var reward_scene: Control = $"../RewardScene"
+@onready var reward_scene_manager: Node = reward_scene.get_node("SceneManager")
 
-@onready var round_end_scene_manager = $"../EndOfRoundScreen"
+@onready var round_end_scene = $"../EndOfRoundScreen"
 @onready var select_sten: Node2D = $"../SelectSten"
 @onready var menu_scene: Node2D = $"../MenuScene"
 @onready var options_window: Control = $"../Camera2D/OptionsWindow"
@@ -14,7 +18,7 @@ extends Node2D
 func _ready() -> void:
 	battle_scene_manager.on_scene_exit.connect(progress_game_scenes)
 	shop_scene_manager.on_scene_exit.connect(progress_game_scenes)
-	round_end_scene_manager.on_scene_exit.connect(progress_game_scenes)
+	round_end_scene.on_scene_exit.connect(progress_game_scenes)
 	card_editor_scene_manager.on_scene_exit.connect(progress_game_scenes)
 	reward_scene_manager.on_scene_exit.connect(progress_game_scenes)
 	
@@ -22,6 +26,8 @@ func _ready() -> void:
 	menu_scene.on_scene_exit.connect(scene_progression)
 
 	options_window.exit_pause.connect(pause_game)
+	
+	SignalManager.reset_game.connect(move_to_battle_scene)
 	
 	scene_progression()
 	
@@ -56,32 +62,32 @@ func scene_progression():
 			
 
 func move_to_battle_scene():
-	camera.position = $"../BattleScene".position
+	camera.position = battle_scene.position
 	battle_scene_manager.on_enter_scene()
 	
 func move_to_shop_scene():
-	camera.position = $"../ShopScene".position
+	camera.position = shop_scene.position
 	shop_scene_manager.on_enter_scene()
 	
 func move_to_end_round_screen():
-	camera.position = $"../EndOfRoundScreen".position
-	round_end_scene_manager.on_enter_scene()
+	camera.position = round_end_scene.position
+	round_end_scene.on_enter_scene()
 	
 func move_to_select_scene():
-	camera.position = $"../SelectSten".position
+	camera.position = select_sten.position
 	select_sten.on_enter_scene()
 	
 func move_to_menu_scene():
-	camera.position = $"../MenuScene".position
+	camera.position = menu_scene.position
 	menu_scene.on_enter_scene()
 	
 func move_to_editor_scene():
-	camera.position = $"../CardEditor".position
+	camera.position = card_editor.position
 	card_editor_scene_manager.on_enter_scene()
 
 func move_to_reward_scene():
-	camera.position = $"../RewardScene".position
-	card_editor_scene_manager.on_enter_scene()
+	camera.position = reward_scene.position
+	reward_scene_manager.on_enter_scene()
 	
 	
 func pause_game():

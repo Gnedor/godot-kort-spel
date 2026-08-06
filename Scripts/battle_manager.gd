@@ -21,6 +21,7 @@ var damage_text = preload("res://Scenes/damage_text.tscn")
 @onready var camera_2d: Camera2D
 @onready var debuff_icons: VBoxContainer = $"../DebuffIcons"
 @onready var debuff_text: VBoxContainer = $"../DebuffText"
+@onready var boss_screen: Control = $"../BossScreen"
 
 var turns : int
 var card_index : int
@@ -57,6 +58,7 @@ func _ready() -> void:
 	input_manager.select_target_card.connect(activate_card_abilities)
 	input_manager.select_deck.connect(on_deck_chosen)
 	input_manager.select_card.connect(on_card_chosen)
+	SignalManager.reset_game.connect(reset_game)
 	
 	darken_background.color = Color(0, 0, 0, 0)
 
@@ -65,15 +67,22 @@ func _ready() -> void:
 	
 func on_enter():
 	Global.total_damage = 0
-	fracture_level = 0
-	
+	if Global.stage_list[0] != "boss":
+		end_turn.disabled = false
+		boss_screen.remove_modifiers()
+		
 	for debuff in debuffs.keys():
 		debuffs[debuff] = 0
-		
+	
+	fracture_level = 0
+	
 	update_labels()
 	
+	for slot in $"../CardSlots".get_children():
+		if slot.is_disabled:
+			slot.toggle_blocked()
+	
 	turn = 1
-	end_turn.disabled = false
 	turn_counter.text = "Turn: " + str(turn) + "/3"
 	round_label.text = "Round: " + str(Global.round)
 	money_label.text = str(Global.total_money) + "$"
@@ -763,3 +772,15 @@ func combine_damage_text(damage : int):
 	await Global.timer(2)
 	tween = get_tree().create_tween()
 	tween.tween_property(new_damage_label, "modulate", Color(1, 1, 1, 0), 0.2)
+	
+func apply_boss_effect():
+	print(Global.boss_name)
+	match Global.boss_name:
+		"Exempel":
+			print("funkar")
+			$"../CardSlots/CardSlot1".toggle_blocked()
+			$"../CardSlots/CardSlot5".toggle_blocked()
+			
+func reset_game():
+	turn = 1
+	

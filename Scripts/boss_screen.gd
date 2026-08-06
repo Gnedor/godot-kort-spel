@@ -5,6 +5,8 @@ const MODIFIER = preload("res://Scenes/modifier.tscn")
 @onready var reroll_button: Button = $ModifierScreen/HBoxContainer/RerollButton
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+signal boss_ready
+
 var saved_amount : int
 var have_rerolled : bool
 var rerolls : int
@@ -55,6 +57,8 @@ func get_modifiers(amount):
 	for mod_name in new_modifiers.keys():
 		Global.modifiers[mod_name] = new_modifiers[mod_name]["amount"]
 		
+	new_modifiers.clear()
+		
 func adjust_modifier_info(mod_name : String):
 	for mod in %ModContainer.get_children():
 		if mod.name == mod_name:
@@ -86,6 +90,13 @@ func _on_reroll_button_pressed() -> void:
 	if rerolls <= 0:
 		reroll_button.disabled = true
 
-
 func _on_continue_button_pressed() -> void:
 	animation_player.play("On Continue")
+	await Global.timer(0.8)
+	boss_ready.emit()
+	
+func remove_modifiers():
+	for key in Global.modifiers.keys():
+		Global.modifiers[key] = 0
+	for mod in %ModContainer.get_children():
+		mod.queue_free()

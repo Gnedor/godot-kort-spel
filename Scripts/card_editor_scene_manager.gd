@@ -2,23 +2,36 @@ extends Control
 
 @onready var card_collection: Node2D = $"../CardCollection"
 @onready var card_editor: Control = $".."
+@onready var edit_area: TextureRect = $"../EditArea"
 
 signal on_scene_exit
 signal on_scene_enter
 
 var tween
-var first_up := true
+var first_up : bool = true
+var first_enter : bool = true
 var in_collection := false #används så man inte klickar flera kort i collectionen
 
 var tag_desc_down : bool = false
 
+func _ready() -> void:
+	#MainSceneManager.card_editor_scene_manager = self
+	pass
+
 func on_enter_scene():
 	on_scene_enter.emit()
+	
+	if first_enter:
+		edit_area.position.y -= 1080
+		first_enter = false
+	move_in_scene()
+	
 	%"Trait 1".visible = false
 	%"Trait 2".visible = false
 
 func _on_continue_button_pressed() -> void:
 	first_up = true
+	await move_out_scene()
 	on_scene_exit.emit()
 	
 func _on_card_slot_pressed() -> void:
@@ -60,7 +73,6 @@ func collection_down():
 func _on_back_button_pressed() -> void:
 	collection_down()
 
-
 func _on_card_slot_mouse_entered() -> void:
 	%CardSlot.scale = Vector2(1.05, 1.05)
 
@@ -92,3 +104,15 @@ func remove_tag_descripton():
 	$"../EditArea/Options/TagArea/TagDescription/MarginContainer/MarginContainer/DescriptionText".text = ""
 	tag_description.custom_minimum_size.y = 0
 	tag_description.size.y = 0
+	
+func move_out_scene():
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(edit_area, "position:y", edit_area.position.y - 1080, 0.3)
+	
+	await tween.finished
+	
+func move_in_scene():
+	var tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(edit_area, "position:y", edit_area.position.y + 1080, 0.5)
+	
+	await tween.finished

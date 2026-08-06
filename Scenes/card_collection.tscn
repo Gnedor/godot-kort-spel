@@ -59,13 +59,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ColorRect3" type="ColorRect" parent="ColorRect"]
+z_index = -1
 layout_mode = 0
 offset_left = -127.0
 offset_top = -64.0
-offset_right = 1784.0
+offset_right = 1792.0
 offset_bottom = 1016.0
 mouse_filter = 2
-color = Color(1, 1, 1, 0)
+color = Color(0, 0, 0, 0)
 
 [node name="Button_left" type="Button" parent="."]
 z_index = -1

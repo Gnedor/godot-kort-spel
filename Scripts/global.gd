@@ -21,7 +21,7 @@ var window_size : Vector2 = Vector2(1920, 1080)
 
 var scene_name : String = "menu"
 var is_game_paused : bool = false
-var enter_from_start : bool = true	
+var enter_from_start : bool = true
 
 var played_cards = []
 
@@ -51,6 +51,8 @@ func reset_game():
 	round = 1
 	played_cards.clear()
 	stage_list = ["battle", "shop", "battle", "editor", "boss", "reward"]
+	stored_cards.clear()
+	stored_tiles.clear()
 	
 func find_common_card():
 	var frequency := {}

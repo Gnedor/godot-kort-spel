@@ -14,6 +14,7 @@ extends Node2D
 @onready var timer: Timer = $Timer
 @onready var pause_timer: Timer = $PauseTimer
 @onready var fire_effect: ColorRect = $"../FireEffect"
+@onready var boss_screen: Control = $"../BossScreen"
 
 @export var discard_audio: AudioStream
 @export var text_audio: AudioStream
@@ -35,9 +36,12 @@ signal on_scene_exit
 signal on_scene_enter
 
 func _ready() -> void:
+	#MainSceneManager.battle_scene_manager = self
+	
 	battle_manager.end_round.connect(remove_battle_scene)
 	deck.cards_ready.connect(draw_first_cards)
 	SignalManager.reset_game.connect(on_reset)
+	boss_screen.boss_ready.connect(on_boss_ready)
 	
 	battle_scene_up = [sten, battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota", $"../BossScreen"]
 	battle_scene_up_first = [battle_manager.get_node("TotalDamage"), round_box, money_box, tiles_folder, $"../DebuffText", $"../DebuffIcons", $"../Quota", $"../BossScreen"]
@@ -301,7 +305,12 @@ func remove_fire():
 	fire_effect.material.set_shader_parameter("secondary_flame_color", new_color)
 	
 func new_boss():
-	var boss_screen = $"../BossScreen"
 	boss_screen.get_boss()
 	boss_screen.visible = true
 	boss_screen.animation_player.play("Enter")
+	
+	battle_manager.apply_boss_effect()
+
+func on_boss_ready():
+	var end_turn = $"../BattleManager/EndTurn"
+	end_turn.disabled = false

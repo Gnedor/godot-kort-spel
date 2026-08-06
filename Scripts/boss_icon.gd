@@ -3,7 +3,8 @@ extends Control
 @onready var description: MarginContainer = $Description
 
 func _ready() -> void:
-	adjust_details("STOP")
+	pass
+	#adjust_details("")
 
 func _on_area_2d_mouse_entered() -> void:
 	description.visible = true

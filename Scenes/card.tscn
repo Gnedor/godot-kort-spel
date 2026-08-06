@@ -352,6 +352,7 @@ offset_left = -22.3333
 offset_top = -29.3333
 offset_right = 25.6667
 offset_bottom = 33.6667
+mouse_filter = 2
 color = Color(0, 0, 0, 0.4)
 
 [node name="TagCircle" type="AnimatedSprite2D" parent="Textures/ScaleNode/CardSprite"]
@@ -395,6 +396,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Control" type="Control" parent="Textures/ScaleNode"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = -24.0

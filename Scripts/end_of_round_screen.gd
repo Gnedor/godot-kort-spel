@@ -10,7 +10,6 @@ extends Node2D
 @onready var continue_label: Label = $UI/Button/Label
 @onready var continue_button: Button = $UI/Button
 @onready var fail_screen: Node2D = $FailScreen
-@onready var tag_texture: TextureRect = $UI/NinePatchRect3/NinePatchRect/NinePatchRect2/TextureRect
 @onready var stage_timeline = $StageTimeline
 
 var base_money = 3
@@ -19,7 +18,6 @@ var max_money = 50
 signal on_scene_enter
 signal on_scene_exit
 
-var tags = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,9 +33,6 @@ func on_enter_scene():
 	money_label.visible_ratio = 0.0
 	equals_label.visible_ratio = 0.0
 	total_money.visible_ratio = 0.0
-	tag_texture.visible = false
-	for tag in TagDatabase.TAGS:
-		tags.append(tag["name"])
 		
 	start_end_screen()
 	on_scene_enter.emit()
@@ -67,7 +62,6 @@ func start_end_screen():
 	Global.total_money += money_gain
 	
 	if Global.total_damage >= Global.quota:
-		await get_tag()
 		continue_button.disabled = false
 		continue_button.modulate = Color(1, 1, 1)
 	else:
@@ -107,17 +101,6 @@ func move_off_screen():
 func _change_scene(scene_path : String):
 	Global.total_damage = 0
 	get_tree().change_scene_to_file(scene_path)
-	
-func get_tag():
-	if Global.stored_tags.size() < 5:
-		var random_num = randi() % tags.size()
-		tag_texture.texture = load("res://Assets/images/Tags/" + tags[random_num] + ".png")
-		
-		tag_texture.scale = Vector2(4.0, 4.0)
-		tag_texture.visible = true
-		var tween = get_tree().create_tween()
-		tween.tween_property(tag_texture, "scale", Vector2(3.0, 3.0), 0.2).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-		Global.stored_tags.append(tags[random_num])
 
 func view_timeline():
 	stage_timeline.position.y = -100

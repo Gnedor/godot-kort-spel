@@ -80,7 +80,7 @@ func swap_elements(array : Array, index1 : int, index2 : int):
 	array[index2] = temp
 	
 func place_card_on_slot(slot):
-	if !slot.is_occupied and dragged_card and !dragged_card.is_placed and !dragged_card.card_type == "Spell":
+	if !slot.is_occupied and !slot.is_disabled and dragged_card and !dragged_card.is_placed and !dragged_card.card_type == "Spell":
 		AudioManager.play_audio(place_audio, -2)
 		
 		placed_card.emit(dragged_card)
@@ -172,6 +172,7 @@ func draw_cards(troop_amount : int, spell_amount : int):
 			if deck.cards_in_troop_deck.is_empty():
 				continue
 				
+			print(deck.cards_in_troop_deck)
 			drawn_card = deck.cards_in_troop_deck[0]
 			amount_to_be_drawn_troop -= 1
 		else:

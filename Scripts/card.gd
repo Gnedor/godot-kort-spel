@@ -260,9 +260,10 @@ func disable_tag_circle(state : bool):
 	$Textures/ScaleNode/CardSprite/TagCircle/Area2D/CollisionShape2D.disabled = state
 	$Textures/ScaleNode/CardSprite/TagCircle.visible = !state
 	
+# Sätter ett korts stats enligt basen i card_database beroende på namnet
 func set_base_stats(name):
 	card_name = name
-	var card_data = CardDatabase.CARDS[card_name] 
+	var card_data = CardDatabase.CARDS[card_name]
 	
 	base_attack = card_data[0]
 	turn_attack = card_data[0]

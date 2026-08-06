@@ -25,16 +25,19 @@ func next_stage():
 		tween.parallel().tween_property(child, "custom_minimum_size:x", 60 - (15 * pos_value), 0.5)
 		position += 1
 	
+# sätter timelinen i grundposition och bestämmer grundvärden för alla ikoner
 func adjust_timeline():
 	animation_player.play("RESET")
 	var stage_list = get_stage_list()
 	var position = 0
 	for child in $TextureRect/HBoxContainer.get_children():
+		# sätter storlek och ljusstyrka
 		var pos_value = abs(position - 2)
 		var v_value = 1 - (brightnes_decrease * pos_value)
 		child.modulate = Color.from_hsv(0, 0, v_value, 1.0)
 		child.custom_minimum_size.x = 60 - (15 * pos_value)
 		
+		# sätter rätt sprite med hjälp av stage list namnen
 		if stage_list[position] != "null":
 			var texture = load("res://Assets/images/StageIcons/" + stage_list[position] + "_icon.png")
 			child.texture = texture
@@ -48,6 +51,7 @@ func get_stage_list():
 	var new_list = Global.stage_list.duplicate(true)
 	for i in range(4):
 		new_list.push_back(new_list.pop_front())
+	#Första rundan ska inte visa något vänster om första banan
 	if Global.round == 1:
 		new_list[0] = "null"
 		new_list[1] = "null"

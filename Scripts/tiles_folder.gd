@@ -126,29 +126,11 @@ func add_tiles_on_start():
 		
 func create_tile(tile_name: String):
 	var new_tile_instance = tile_scene.instantiate()
-	var tile_ability_script_path = TileDatabase.TILES[tile_name][1]
 
-	var ability_script = load(tile_ability_script_path).new()
-	new_tile_instance.add_child(ability_script)  # Add to tree FIRST
-	new_tile_instance.ability_script = ability_script  # THEN assign
-	
 	add_child(new_tile_instance)
 	
-	new_tile_instance.name_label.text = tile_name
-	new_tile_instance.tile_type = TileDatabase.TILES[tile_name][2]
-	new_tile_instance.tile_name = tile_name
-	new_tile_instance.description_label.text = "[center]" + str(TileDatabase.TILES[tile_name][0]) + "[/center]"
-	Global.color_text(new_tile_instance.description_label)
-	adjust_description_text(new_tile_instance.description_label)
-
-	var image_path = "res://Assets/images/Tiles/" + tile_name + "_tile.png"
-	var texture = load(image_path)
-	var sprite = new_tile_instance.get_node("Sprite2D")
-	if sprite:
-		sprite.texture = texture
-	else:
-		print("Sprite node not found in card instance")
-		
+	new_tile_instance.set_details(tile_name)
+	
 	tiles_in_folder.append(new_tile_instance)
 	owned_tiles.append(new_tile_instance)
 	
@@ -194,17 +176,13 @@ func place_tile_on_slot(slot):
 		slot.occupied_tile = dragged_tile
 		
 		if slot.occupied_card and dragged_tile.tile_type == "OnPlay":
+			print(dragged_tile)
 			dragged_tile.ability_script.tile_ability(slot.occupied_card)
 			slot.occupied_card.update_card()
 			
 				
 		dragged_tile = null
 	align_tiles()
-		
-func adjust_description_text(label):
-	if label.get_line_count() <= 1:
-		label.custom_minimum_size = Vector2(0, 0)
-		label.set_autowrap_mode(0)
 		
 func on_reset():
 	for tile in owned_tiles:

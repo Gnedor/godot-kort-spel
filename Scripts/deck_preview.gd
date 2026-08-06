@@ -35,25 +35,20 @@ func create_card_labels(deck_name):
 		child.free()
 		
 	for card in CardDatabase[deck_name]:
+		var new_label = cardLabel.instantiate()
+		
 		if CardDatabase.CARDS[card["name"]][2] != "Spell":
-			var new_label = cardLabel.instantiate()
 			$Deck/VBoxContainer/MarginContainer/MarginContainer/VBoxContainer.add_child(new_label)
-			
-			new_label.label_hovered.connect(show_card_info)
-			new_label.label_hovered_off.connect(hide_card_info)
-			
-			new_label.name = card["name"]
-			new_label.get_node("Label").text = str(card["name"]) + " x" + str(card["amount"])
-			
 		else:
-			var new_label = cardLabel.instantiate()
 			$Deck/VBoxContainer/MarginContainer2/MarginContainer/VBoxContainer.add_child(new_label)
-			new_label.name = card["name"]
-			new_label.get_node("Label").text = str(card["name"]) + " x" + str(card["amount"])
+
+		new_label.name = card["name"]
+		new_label.get_node("Label").text = str(card["name"]) + " x" + str(card["amount"])
+		new_label.label_hovered.connect(show_card_info)
+		new_label.label_hovered_off.connect(hide_card_info)
 		
 func adjust_card(name):
 	card.card_name = name
-	card.stat_display.visible = true
 	card.card_description.visible = true
 	card.adjust_text_size()
 	card.adjust_card_details()

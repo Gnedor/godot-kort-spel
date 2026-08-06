@@ -19,7 +19,7 @@ void fragment() {
 	final_color.rgb += vec3(UV.y - y_offset);
 	final_color.rgb -= vec3(1.0 - UV.y);
 
-	//final_color.rgb = step(final_color.rgb, vec3(0.5));
+	//Sätt primärfärgen tills kanterna där sekundärfärgen visas
 	if (all(greaterThan(final_color.rgb, vec3(0.5)))){
 		final_color.rgb = flame_color.rgb;
 	}

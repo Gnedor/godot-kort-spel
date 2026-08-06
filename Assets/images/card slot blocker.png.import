@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btkyxcqjimwc6"
-path="res://.godot/imported/reward_icon.png-cdf4ff590f23908dc59cd632024d016b.ctex"
+uid="uid://cjeowhj7vggva"
+path="res://.godot/imported/card slot blocker.png-670d6100be41f29011597b6f36ae2ddd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/images/StageIcons/reward_icon.png"
-dest_files=["res://.godot/imported/reward_icon.png-cdf4ff590f23908dc59cd632024d016b.ctex"]
+source_file="res://Assets/images/card slot blocker.png"
+dest_files=["res://.godot/imported/card slot blocker.png-670d6100be41f29011597b6f36ae2ddd.ctex"]
 
 [params]
 

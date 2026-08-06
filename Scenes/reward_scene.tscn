@@ -1,14 +1,68 @@
-[gd_scene load_steps=10 format=3 uid="uid://dmdufos7rnb86"]
+[gd_scene load_steps=17 format=3 uid="uid://dmdufos7rnb86"]
 
 [ext_resource type="Texture2D" uid="uid://cynmlvwhdo84o" path="res://Assets/images/Square.png" id="1_7r6o1"]
-[ext_resource type="Script" path="res://Scenes/reward_scene.gd" id="1_ox1l4"]
+[ext_resource type="Script" path="res://Scripts/reward_scene.gd" id="1_ox1l4"]
 [ext_resource type="Texture2D" uid="uid://mhucvphj4i4e" path="res://Assets/images/Square2.png" id="2_034uj"]
 [ext_resource type="FontFile" uid="uid://d2voppd6fmkh6" path="res://Assets/fonts/PixelOperator8-Bold.ttf" id="3_5b8vf"]
 [ext_resource type="PackedScene" uid="uid://cx30ut2ciemib" path="res://Scenes/tile.tscn" id="4_4wwij"]
 [ext_resource type="PackedScene" uid="uid://yue7hl0l0upn" path="res://Scenes/tag.tscn" id="4_oqeh5"]
+[ext_resource type="Texture2D" uid="uid://dp8s68vxeacb5" path="res://Assets/images/Ram.png" id="5_4t7ql"]
 [ext_resource type="PackedScene" uid="uid://dcu0mt4e8ntit" path="res://Scenes/card.tscn" id="6_kkstj"]
 [ext_resource type="Script" path="res://Scripts/reward_scene_manager.gd" id="7_liq8v"]
 [ext_resource type="Theme" uid="uid://cs64m8jorbkrh" path="res://Assets/themes/button big_theme.tres" id="8_jchsf"]
+[ext_resource type="Texture2D" uid="uid://c6o5r3urwqgat" path="res://Assets/images/SlotMachineArm.png" id="11_3bohf"]
+[ext_resource type="PackedScene" uid="uid://dlf5nf8ot7glp" path="res://Scenes/spell_deck.tscn" id="12_5677c"]
+[ext_resource type="PackedScene" uid="uid://4gv81wu465g1" path="res://Scenes/card_collection.tscn" id="13_u28d2"]
+
+[sub_resource type="Animation" id="Animation_b2rw6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NinePatchRect/Control/TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_hejvk"]
+resource_name = "pull arm"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("NinePatchRect/Control/TextureRect:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(0.420448, 0.378929, 1),
+"update": 0,
+"values": [0.0, 1.5708, 0.0]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"slot_screen_shake"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1f2yw"]
+_data = {
+"RESET": SubResource("Animation_b2rw6"),
+"pull arm": SubResource("Animation_hejvk")
+}
 
 [node name="RewardScene" type="Control"]
 layout_mode = 3
@@ -17,7 +71,34 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_ox1l4")
+
+[node name="Tile" parent="." instance=ExtResource("4_4wwij")]
+visible = false
+position = Vector2(960, 580)
+
+[node name="Card" parent="." instance=ExtResource("6_kkstj")]
+process_priority = -1
+visible = false
+z_index = 0
+position = Vector2(1264, 580)
+
+[node name="tag" parent="." instance=ExtResource("4_oqeh5")]
+visible = false
+light_mask = 8193
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -888.0
+offset_top = -508.0
+offset_right = -808.0
+offset_bottom = -428.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
@@ -91,33 +172,33 @@ offset_top = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_5b8vf")
-text = "Fracture"
+text = "BIG"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="HoverBorder" type="NinePatchRect" parent="NinePatchRect/HBoxContainer/RewardBox1"]
+visible = false
+layout_mode = 0
+offset_right = 304.0
+offset_bottom = 296.0
+texture = ExtResource("5_4t7ql")
+draw_center = false
+patch_margin_left = 12
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 20
+
 [node name="TagRewardSlot" type="ColorRect" parent="NinePatchRect/HBoxContainer/RewardBox1"]
 unique_name_in_owner = true
+show_behind_parent = true
 clip_children = 1
-layout_mode = 1
-anchors_preset = -1
+z_index = 1
+layout_mode = 2
 anchor_left = -0.079
-anchor_top = -0.054
 anchor_right = 3.079
-anchor_bottom = 1.081
-offset_left = 25.016
-offset_top = 15.984
-offset_right = -631.016
-offset_bottom = -23.976
-
-[node name="tag" parent="NinePatchRect/HBoxContainer/RewardBox1/TagRewardSlot" instance=ExtResource("4_oqeh5")]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
+anchor_bottom = 1.0
+offset_left = 24.016
+offset_right = -632.016
 
 [node name="RewardBox2" type="NinePatchRect" parent="NinePatchRect/HBoxContainer"]
 self_modulate = Color(0.150075, 0.150075, 0.150075, 1)
@@ -155,9 +236,21 @@ offset_top = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_5b8vf")
-text = "Speed Tile"
+text = "WIN"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HoverBorder" type="NinePatchRect" parent="NinePatchRect/HBoxContainer/RewardBox2"]
+visible = false
+layout_mode = 2
+offset_right = 304.0
+offset_bottom = 296.0
+texture = ExtResource("5_4t7ql")
+draw_center = false
+patch_margin_left = 12
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 20
 
 [node name="TileRewardSlot" type="ColorRect" parent="NinePatchRect/HBoxContainer/RewardBox2"]
 unique_name_in_owner = true
@@ -172,9 +265,6 @@ offset_left = 328.016
 offset_top = 15.984
 offset_right = -328.016
 offset_bottom = -23.976
-
-[node name="Tile" parent="NinePatchRect/HBoxContainer/RewardBox2/TileRewardSlot" instance=ExtResource("4_4wwij")]
-position = Vector2(152, 148)
 
 [node name="RewardBox3" type="NinePatchRect" parent="NinePatchRect/HBoxContainer"]
 self_modulate = Color(0.125911, 0.125911, 0.125911, 1)
@@ -212,9 +302,21 @@ offset_top = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("3_5b8vf")
-text = "Guy"
+text = "MACHINE"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="HoverBorder" type="NinePatchRect" parent="NinePatchRect/HBoxContainer/RewardBox3"]
+visible = false
+layout_mode = 0
+offset_right = 304.0
+offset_bottom = 296.0
+texture = ExtResource("5_4t7ql")
+draw_center = false
+patch_margin_left = 12
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 20
 
 [node name="CardRewardSlot" type="ColorRect" parent="NinePatchRect/HBoxContainer/RewardBox3"]
 unique_name_in_owner = true
@@ -229,13 +331,95 @@ offset_left = 632.016
 offset_top = 15.984
 offset_right = -24.016
 offset_bottom = -23.976
+mouse_filter = 1
 
-[node name="Card" parent="NinePatchRect/HBoxContainer/RewardBox3/CardRewardSlot" instance=ExtResource("6_kkstj")]
-z_index = 0
-position = Vector2(152, 148)
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect"]
+self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
+z_index = -1
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 248.0
+offset_top = -88.0
+offset_right = -248.0
+offset_bottom = 24.0
+grow_horizontal = 2
+texture = ExtResource("1_7r6o1")
+patch_margin_left = 24
+patch_margin_top = 12
+patch_margin_right = 16
+patch_margin_bottom = 16
 
-[node name="Control" parent="NinePatchRect/HBoxContainer/RewardBox3/CardRewardSlot/Card/Textures/ScaleNode" index="3"]
-visible = false
+[node name="NinePatchRect" type="NinePatchRect" parent="NinePatchRect/NinePatchRect"]
+self_modulate = Color(0.123473, 0.123473, 0.123473, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.786
+offset_left = 16.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = -8.032
+texture = ExtResource("2_034uj")
+patch_margin_left = 16
+patch_margin_top = 24
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="Label" type="Label" parent="NinePatchRect/NinePatchRect/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_5b8vf")
+theme_override_font_sizes/font_size = 24
+text = "BIG WIN MACHINE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control" type="Control" parent="NinePatchRect"]
+z_index = -1
+layout_mode = 1
+anchor_left = 0.75
+anchor_top = 0.333
+anchor_right = 0.75
+anchor_bottom = 0.696
+offset_left = 240.0
+offset_top = -130.536
+offset_right = 280.0
+offset_bottom = -272.832
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/Control"]
+layout_mode = 1
+offset_left = -96.0
+offset_top = 136.0
+offset_right = -9.0
+offset_bottom = 223.0
+scale = Vector2(6, 6)
+pivot_offset = Vector2(24, 62.8889)
+mouse_filter = 2
+texture = ExtResource("11_3bohf")
+
+[node name="ColorRect" type="ColorRect" parent="NinePatchRect/Control"]
+layout_mode = 0
+offset_left = -13.0
+offset_top = 40.0
+offset_right = 6.0
+offset_bottom = 344.0
+color = Color(0, 0, 0, 1)
+
+[node name="SlotButton" type="Button" parent="NinePatchRect/Control"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 167.0
+offset_top = -173.0
+offset_right = 301.0
+offset_bottom = -39.0
+focus_mode = 0
+keep_pressed_outside = true
 
 [node name="SceneManager" type="Node" parent="."]
 script = ExtResource("7_liq8v")
@@ -251,29 +435,6 @@ theme_override_fonts/normal_font = ExtResource("3_5b8vf")
 theme_override_font_sizes/normal_font_size = 64
 bbcode_enabled = true
 text = "[wave amp=20, frec=10][center]Rewards"
-
-[node name="RerollButton" type="Button" parent="."]
-self_modulate = Color(0.305882, 0.709804, 0.411765, 1)
-layout_mode = 0
-offset_left = 512.0
-offset_top = 776.0
-offset_right = 896.0
-offset_bottom = 856.0
-theme = ExtResource("8_jchsf")
-
-[node name="Label" type="Label" parent="RerollButton"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -8.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("3_5b8vf")
-theme_override_font_sizes/font_size = 24
-text = "Reroll 5$"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="ContinueButton" type="Button" parent="."]
 self_modulate = Color(0.184314, 0.184314, 0.184314, 1)
@@ -298,10 +459,70 @@ text = "Continue"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox1" to="." method="_on_tag_area_mouse_entered"]
-[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox2" to="." method="_on_tile_area_mouse_entered"]
-[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox3" to="." method="_on_card_area_mouse_entered"]
-[connection signal="pressed" from="RerollButton" to="." method="_on_reroll_button_pressed"]
-[connection signal="pressed" from="ContinueButton" to="SceneManager" method="_on_continue_button_pressed"]
+[node name="SlotAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1f2yw")
+}
 
-[editable path="NinePatchRect/HBoxContainer/RewardBox3/CardRewardSlot/Card"]
+[node name="SpellDeck" parent="." instance=ExtResource("12_5677c")]
+z_index = 1
+position = Vector2(136, 928)
+
+[node name="Sprite2D" parent="SpellDeck" index="0"]
+scale = Vector2(1.1, 1.1)
+
+[node name="DarkenScreen" type="ColorRect" parent="."]
+z_index = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="CardCollection" parent="." instance=ExtResource("13_u28d2")]
+z_index = 4
+position = Vector2(0, 1080)
+
+[node name="BackButton" type="Button" parent="CardCollection"]
+self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
+offset_left = 64.0
+offset_top = 936.0
+offset_right = 288.0
+offset_bottom = 1056.0
+focus_mode = 0
+theme = ExtResource("8_jchsf")
+keep_pressed_outside = true
+
+[node name="BackLabel" type="Label" parent="CardCollection/BackButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_5b8vf")
+theme_override_font_sizes/font_size = 32
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox1" to="." method="_on_tag_area_mouse_entered"]
+[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox1/TagRewardSlot" to="." method="_on_tag_reward_slot_mouse_entered"]
+[connection signal="mouse_exited" from="NinePatchRect/HBoxContainer/RewardBox1/TagRewardSlot" to="." method="_on_tag_reward_slot_mouse_exited"]
+[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox2" to="." method="_on_tile_area_mouse_entered"]
+[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox2/TileRewardSlot" to="." method="_on_tile_reward_slot_mouse_entered"]
+[connection signal="mouse_exited" from="NinePatchRect/HBoxContainer/RewardBox2/TileRewardSlot" to="." method="_on_tile_reward_slot_mouse_exited"]
+[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox3" to="." method="_on_card_area_mouse_entered"]
+[connection signal="mouse_entered" from="NinePatchRect/HBoxContainer/RewardBox3/CardRewardSlot" to="." method="_on_card_reward_slot_mouse_entered"]
+[connection signal="mouse_exited" from="NinePatchRect/HBoxContainer/RewardBox3/CardRewardSlot" to="." method="_on_card_reward_slot_mouse_exited"]
+[connection signal="pressed" from="NinePatchRect/Control/SlotButton" to="." method="_on_slot_button_pressed"]
+[connection signal="pressed" from="ContinueButton" to="SceneManager" method="_on_continue_button_pressed"]
+[connection signal="input_event" from="SpellDeck/Area2D" to="SceneManager" method="_on_deck_click"]
+[connection signal="pressed" from="CardCollection/BackButton" to="SceneManager" method="_on_back_button_pressed"]
+
+[editable path="Card"]
+[editable path="SpellDeck"]

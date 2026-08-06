@@ -7,7 +7,6 @@ var dialog = [
 	"Don't be mean to dentists, they have fillings to",
 	"I remember",
 	"I pray for your downfall and untimely demise",
-	"Bush did 7/11",
 	"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH",
 	"What does the mango say?",
 	"Mamamamamango Mamamamamango",
@@ -16,7 +15,7 @@ var dialog = [
 	"This is the official STEN game",
 	"I can actually do a handstand",
 	"No text in this game is spell checked",
-	"I posses greater knowledge than any mortal",
+	"I posses great knowledge",
 	"My tummy hurts",
 	"I hate the Options guy",
 	"This game began development in 1942",
@@ -27,6 +26,7 @@ var dialog = [
 	"You wouldn't steal a car",
 	"No animals were hurt in the making of this game"
 	]
+	
 signal on_scene_exit
 
 var move_up
