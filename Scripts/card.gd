@@ -273,3 +273,22 @@ func set_base_stats(name):
 	actions = card_data[1]
 	trait_1 = card_data[5]
 	card_type = card_data[2]
+	
+func deactivate_poison():
+	var image_path = "res://Assets/images/Traits/Poison_off_trait.png"
+	can_poison = false
+	if trait_1 == "Poison":
+		$Textures/ScaleNode/VBoxContainer/TextureRect.texture = load(image_path)
+		
+	if trait_2 == "Poison":
+		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = load(image_path)
+		
+func activate_poison():
+	var image_path = "res://Assets/images/Traits/Poison_trait.png"
+	can_poison = true
+	
+	if trait_1 == "Poison":
+		$Textures/ScaleNode/VBoxContainer/TextureRect.texture = load(image_path)
+		
+	if trait_2 == "Poison":
+		$Textures/ScaleNode/VBoxContainer/TextureRect2.texture = load(image_path)

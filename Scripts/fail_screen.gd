@@ -35,15 +35,11 @@ func _on_restart_button_button_up() -> void:
 
 func _on_restart_button_pressed() -> void:
 	var tween = get_tree().create_tween()
-	tween.tween_property(self, "global_position:y", -700, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(self, "global_position:y", -1000, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
 	
 	Global.reset_game()
-	#gör att scene_listan resetar ?
 	Global.scene_name = "battle"
-	#get_parent().on_scene_exit.emit()
-	#get_tree().change_scene_to_file("res://Scenes/main.tscn")
-
 
 func _on_menu_button_button_down() -> void:
 	menu_label.position.y += 3

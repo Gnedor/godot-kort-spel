@@ -163,14 +163,18 @@ func create_card_copy(card):
 func delete_card(r_card):
 	for card in cards_in_troop_deck.duplicate():
 		if r_card == card:
+			
 			print("troop")
 			cards_in_troop_deck.erase(card)
+			card.queue_free()
 			return
 			
 	for card in cards_in_spell_deck.duplicate():
 		if r_card == card:
+			
 			print("spell")
 			cards_in_spell_deck.erase(card)
+			card.queue_free()
 			return
 		
 func check_for_deleted_cards():
@@ -185,7 +189,6 @@ func check_for_deleted_cards():
 func delete_all_card_references():
 	cards_in_troop_deck.clear()
 	cards_in_spell_deck.clear()
-	print(cards_in_troop_deck)
 	
 func _on_area_2d_mouse_entered() -> void:
 	$AnimationPlayer.play("grow")

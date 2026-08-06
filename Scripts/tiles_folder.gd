@@ -52,6 +52,7 @@ func on_enter():
 			tiles_in_folder.append(tile)
 			owned_tiles.append(tile)
 		Global.stored_tiles.clear()
+		
 	for tile in tiles_in_folder:
 		tile.scale = Vector2(1, 1)
 		tile.global_position = Vector2(-100, -100)

@@ -105,8 +105,11 @@ func new_turn():
 	Global.total_damage += debuffs["Poison"]
 	$"../SceneManager".change_fire()
 	
+	for card in card_manager.played_cards:
+		card.activate_poison()
+		
 	if turn <= 2:
-		turn += 1	
+		turn += 1
 		turn_counter.text = "Turn: " + str(turn) + "/3"
 		
 		if Global.scene_name == "boss":
@@ -124,7 +127,6 @@ func new_turn():
 			card.turn_mult = card.round_mult
 			
 			card.update_card()
-			card.can_poison = true
 			if card.card_type == "TurnStartTroop":
 				card.ability_script.trigger_ability(card)
 				
@@ -191,7 +193,7 @@ func attack(played_cards):
 				
 				if apply_poison and card.can_poison:
 					debuffs["Poison"] += damage
-					card.can_poison = false
+					card.deactivate_poison()
 					
 				if total_mult > 1 and !card.silenced:
 					display_mult(total_mult)

@@ -172,7 +172,6 @@ func draw_cards(troop_amount : int, spell_amount : int):
 			if deck.cards_in_troop_deck.is_empty():
 				continue
 				
-			print(deck.cards_in_troop_deck)
 			drawn_card = deck.cards_in_troop_deck[0]
 			amount_to_be_drawn_troop -= 1
 		else:

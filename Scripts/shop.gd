@@ -44,6 +44,7 @@ func _ready() -> void:
 	shop_scene_manager.on_scene_enter.connect(on_enter)
 	buy_button_1.buy_button_pressed.connect(buy_tile)
 	buy_button_2.buy_button_pressed.connect(buy_tile)
+	SignalManager.reset_game.connect(remove_items)
 	
 func on_enter():
 	reroll_count = 0
@@ -329,4 +330,14 @@ func hover_off_tile(tile):
 	if !tile:
 		return
 	tile.hover_off_effect()
+	
+func remove_items():
+	for card in card_clip_mask.get_children():
+		card.queue_free()
+	cards_in_shop.clear()
+	
+	for tile in tile_clip_mask.get_children():
+		tile.queue_free()
+	tiles_in_shop.clear()
+	
 	

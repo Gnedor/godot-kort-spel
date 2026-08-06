@@ -161,7 +161,8 @@ func adjust_trait_description(name_label, description_label, trait_name):
 func trash_card():
 	if stored_card:
 		await play_trash_animation()
-		stored_card.free()
+		#stored_card.free()
+		stored_card.visible = false
 		SignalManager.signal_emitter("removed_card", stored_card)
 		stored_card = null
 	

@@ -42,7 +42,6 @@ func timer(time):
 	await get_tree().create_timer(time).timeout
 	
 func reset_game():
-	SignalManager.signal_emitter("reset_game")
 	quota = 40
 	total_money = 0
 	base_money = 5
@@ -53,6 +52,8 @@ func reset_game():
 	stage_list = ["battle", "shop", "battle", "editor", "boss", "reward"]
 	stored_cards.clear()
 	stored_tiles.clear()
+	
+	SignalManager.signal_emitter("reset_game")
 	
 func find_common_card():
 	var frequency := {}
