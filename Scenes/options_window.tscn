@@ -98,6 +98,14 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
+[node name="ExitMenuButton" type="Button" parent="NinePatchRect"]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 912.0
+offset_right = 1136.0
+offset_bottom = 1048.0
+text = "exit to menu"
+
 [node name="BackButton" type="Button" parent="NinePatchRect"]
 self_modulate = Color(0.253238, 0.253238, 0.253238, 1)
 layout_mode = 1
@@ -634,6 +642,7 @@ text = "Options"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="pressed" from="NinePatchRect/ExitMenuButton" to="." method="_on_exit_menu_button_pressed"]
 [connection signal="button_down" from="NinePatchRect/BackButton" to="." method="_on_back_button_button_down"]
 [connection signal="button_up" from="NinePatchRect/BackButton" to="." method="_on_back_button_button_up"]
 [connection signal="pressed" from="NinePatchRect/BackButton" to="." method="_on_back_button_pressed"]

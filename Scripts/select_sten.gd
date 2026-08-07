@@ -62,13 +62,17 @@ func _on_play_button_pressed() -> void:
 	battle_scene.get_node("SpellDeck/Sprite2D").texture = $DeckPreview.get_node("Deck/Sprite2D2").texture
 	
 	var tween = get_tree().create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
-	tween.parallel().tween_property($NinePatchRect3, "position", Vector2(552, 1080 - 696), 0.2)
+	tween.parallel().tween_property($NinePatchRect3, "position:y", 1080 - 696, 0.2)
 	tween.parallel().tween_property($"../TextureRect", "modulate", Color(0, 0, 0), 0.4)
 	
 	await tween.finished
 	#Global.scene_name = "battle"
 	Global.scene_name = Global.stage_list[0]
 	on_scene_exit.emit()
+	
+	move_out()
+	$NinePatchRect3.position.y = -696
+	$DeckPreview.move_deck_in()
 
 func _on_button_left_button_down() -> void:
 	$NinePatchRect3/Button_left/Arrow_left.position.y += 3

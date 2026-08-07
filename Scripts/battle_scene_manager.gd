@@ -25,7 +25,7 @@ var battle_scene_down
 var battle_scene_down_first
 var can_draw : bool = false
 
-var first_enter : bool = true
+#var first_enter : bool = true
 
 var step : int = 1
 var saved_times_quota : int = 1
@@ -49,16 +49,9 @@ func _ready() -> void:
 	battle_scene_down = [deck, spell_deck, discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter"), fire_effect]
 	battle_scene_down_first = [discard_pile, ui, card_slots, battle_manager.get_node("TurnCounter"), battle_manager.get_node("EndTurn"), card_manager.get_node("HandCounter"), fire_effect]
 	move_battle_ui_out()
-	#move_battle_ui_out()
-	#await add_battle_ui()
-
-	#deck.add_cards_on_start()
-	#tiles_folder.add_tiles_on_start()
-	#call_deferred("after_ready")
 	
 func on_enter_scene():
 	on_scene_enter.emit()
-	#call_deferred("after_ready")
 	after_ready()
 	
 	$"../Quota/Quota/Label".visible = false
@@ -314,3 +307,4 @@ func new_boss():
 func on_boss_ready():
 	var end_turn = $"../BattleManager/EndTurn"
 	end_turn.disabled = false
+	

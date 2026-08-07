@@ -55,6 +55,10 @@ func reset_game():
 	
 	SignalManager.signal_emitter("reset_game")
 	
+func restart_game():
+	reset_game()
+	SignalManager.signal_emitter("reset_stage")
+	
 func find_common_card():
 	var frequency := {}
 	

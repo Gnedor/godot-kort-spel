@@ -27,7 +27,8 @@ func _ready() -> void:
 
 	options_window.exit_pause.connect(pause_game)
 	
-	SignalManager.reset_game.connect(move_to_battle_scene)
+	SignalManager.reset_stage.connect(move_to_battle_scene)
+	SignalManager.return_menu.connect(return_to_menu)
 	
 	scene_progression()
 	
@@ -36,6 +37,7 @@ func progress_game_scenes():
 	scene_progression()
 	
 func scene_progression():
+	print(Global.scene_name)
 	match Global.scene_name:
 		"battle":
 			move_to_battle_scene()
@@ -97,4 +99,36 @@ func pause_game():
 	else:
 		Global.is_game_paused = false
 		await options_window.exit_pause_anim()
+		
+func return_to_menu():
+	reset_current_scene(Global.scene_name)
+	Global.scene_name = "menu"
+	scene_progression()
+	
+func reset_current_scene(scene_name : String):
+	match scene_name:
+		"battle":
+			print("batlis")
+			battle_scene_manager.remove_battle_scene()
+		"boss":
+			battle_scene_manager.remove_battle_scene()
+		"result":
+			round_end_scene.move_off_screen()
+		"shop":
+			move_to_shop_scene()
+			Global.round += 1
+		"editor":
+			move_to_editor_scene()
+			Global.round += 1
+		"reward":
+			move_to_reward_scene()
+			Global.round += 1
+
+#------------------------v MENY SCENER v------------------------#
+
+		"sten":
+			move_to_select_scene()
+		"menu":
+			move_to_menu_scene()
+	
 		

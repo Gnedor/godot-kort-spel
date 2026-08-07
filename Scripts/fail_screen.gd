@@ -10,13 +10,6 @@ extends Node2D
 
 func _ready() -> void:
 	get_parent().on_scene_enter.connect(on_enter)
-	#damage_label.text = str(Global.highest_damage)
-	#money_label.text = str(Global.highest_money) + "$"
-	#round_label.text = str(Global.round)
-	#if Global.find_common_card():
-		#card_label.text = Global.find_common_card()
-	#else:
-		#card_label.text = "None"
 
 func on_enter():
 	damage_label.text = str(Global.highest_damage)
@@ -38,7 +31,7 @@ func _on_restart_button_pressed() -> void:
 	tween.tween_property(self, "global_position:y", -1000, 0.5).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
 	
-	Global.reset_game()
+	Global.restart_game()
 	Global.scene_name = "battle"
 
 func _on_menu_button_button_down() -> void:
@@ -49,4 +42,4 @@ func _on_menu_button_button_up() -> void:
 
 func _on_menu_button_pressed() -> void:
 	Global.reset_game()
-	get_tree().change_scene_to_file("res://Scenes/start_menu.tscn")
+	

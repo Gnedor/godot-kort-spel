@@ -8,14 +8,9 @@ var deck_index : int = 0
 
 signal continue_clicked 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	create_card_labels("Example_deck")
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-		
 func show_card_info(name):
 	show_card_count += 1
 	adjust_card(name)
@@ -103,7 +98,6 @@ func move_in():
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "position:y", 0, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property($Bg/Label, "visible_ratio", 1.0, 0.3)
-
 
 func _on_button_right_pressed() -> void:
 	AudioManager.play_click_sound()

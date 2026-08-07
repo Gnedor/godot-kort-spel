@@ -62,7 +62,6 @@ func _on_back_button_button_up() -> void:
 func _on_back_button_button_down() -> void:
 	$NinePatchRect/BackButton/BackLabel.position.y += 3
 	
-	
 func exit_pause_anim():
 	$DarkBG.mouse_filter = 2
 	tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -84,3 +83,8 @@ func enter_pause_anim():
 	tween.parallel().tween_property($NinePatchRect, "modulate", Color(1.0, 1.0, 1.0, 1.0), 0.1)
 	tween.parallel().tween_property($NinePatchRect, "scale", Vector2(1.0, 1.0), 0.1)
 	await tween.finished
+
+
+func _on_exit_menu_button_pressed() -> void:
+	SignalManager.signal_emitter("return_menu")
+	Global.reset_game()
