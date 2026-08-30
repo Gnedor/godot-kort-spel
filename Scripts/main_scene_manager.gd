@@ -109,9 +109,9 @@ func reset_current_scene(scene_name : String):
 	match scene_name:
 		"battle":
 			print("batlis")
-			battle_scene_manager.remove_battle_scene()
+			battle_scene_manager.remove_battle_ui()
 		"boss":
-			battle_scene_manager.remove_battle_scene()
+			battle_scene_manager.remove_battle_ui()
 		"result":
 			round_end_scene.move_off_screen()
 		"shop":

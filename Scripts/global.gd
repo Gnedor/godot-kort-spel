@@ -2,7 +2,6 @@ extends Node
 
 func _ready() -> void:
 	add_modifiers_on_start()
-		
 
 var quota : float = 40
 var total_money : float = 0

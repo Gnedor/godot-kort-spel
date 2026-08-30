@@ -133,7 +133,14 @@ func _on_timer_timeout() -> void:
 		else:
 			timer.stop()
 			await remove_battle_ui()
+			on_scene_exit.emit()
 			$"../BossScreen".animation_player.play("RESET")
+			
+	else:
+		timer.stop()
+		await remove_battle_ui()
+		on_scene_exit.emit()
+		$"../BossScreen".animation_player.play("RESET")
 		
 func remove_battle_ui():
 	var tween = get_tree().create_tween()
@@ -144,8 +151,6 @@ func remove_battle_ui():
 		tween.parallel().tween_property(node, "position:y", node.position.y + 1000, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 		
 	await tween.finished
-	# call_deferred("_change_scene")
-	on_scene_exit.emit()
 	
 func add_battle_ui():
 	var tween = get_tree().create_tween()
